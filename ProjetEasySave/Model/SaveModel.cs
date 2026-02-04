@@ -16,7 +16,7 @@
         // Destructor
         ~SaveModel()
         {
-            SaveToConfig();
+            saveToConfig();
         }
 
         // Methods
@@ -116,7 +116,7 @@
         }
 
         // Private method to save the current SaveSpaces to the config file
-        private void SaveToConfig()
+        private void saveToConfig()
         {
             try
             {
