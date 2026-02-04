@@ -1,59 +1,65 @@
-EasySave – Logiciel de sauvegarde
+# EasySave – Logiciel de sauvegarde
 
-Projet fil rouge – ProSoft
+---
+
+### Projet fil rouge – ProSoft
 
 Groupe (5 membres) : Noa PIERRÉ - Thomas DE CALUWE - Iyas AL HARIRI - Nathan AURICCHIO - Clément MOURGUE
 
-📌 Contexte du projet
+---
+
+## 📌 Contexte du projet
 
 Ce projet s’inscrit dans le cadre de l’intégration de l’équipe au sein de l’éditeur de logiciels ProSoft, sous la responsabilité du DSI.
 L’objectif est de concevoir et développer EasySave, un logiciel de sauvegarde professionnel, en respectant des contraintes fortes de qualité, de maintenabilité et de gestion des versions.
 
 Le projet se déroule sous la forme de livrables successifs, simulant un cycle de vie logiciel accéléré avec versions majeures et mineures.
 
-🗂️ Calendrier & Livrables
+---
 
-🔹 Livrable 0 & Livrable 1 – EasySave v1.0 (évalué)
+## 🗂️ Calendrier & Livrables
 
-Jour 1 :
+### 🔹 Livrable 0 & Livrable 1 – EasySave v1.0 (évalué)
+
+- Jour 1 :
 
 Lancement du projet
 
 Cahier des charges – version 1.0
 
-Jour 3 :
+- Jour 3 :
 
 Mise en place de l’environnement de travail
 
 Invitation du tuteur sur le dépôt GitHub
 
-Veille du livrable 1 :
+- Veille du livrable 1 :
 
 Livraison des diagrammes UML
 
-Jour du livrable 1 :
+- Jour du livrable 1 :
 
 Livraison d’EasySave v1.0
 
 Documentation associée
 
-🔹 Livrable 2 – EasySave v2.0 & v1.1 (non évalué)
+### 🔹 Livrable 2 – EasySave v2.0 & v1.1 (non évalué)
 
-Lendemain du livrable 1 :
+- Lendemain du livrable 1 :
 
 Cahiers des charges v2.0 et v1.1
 
-Veille du livrable 2 :
+- Veille du livrable 2 :
 
 Livraison des diagrammes UML
 
-Jour du livrable 2 :
+- Jour du livrable 2 :
 
 Livraison des versions
 
-🔹 Livrable 3 – EasySave v3.0
+### 🔹 Livrable 3 – EasySave v3.0
 
-Lendemain du livrable 2 :
+- Lendemain du livrable 2 :
 
 Cahier des charges v3.0
 
@@ -61,15 +67,17 @@ Avant-veille soutenance :
 
 Livraison des diagrammes UML
 
-Veille soutenance :
+- Veille soutenance :
 
 Livraison d’EasySave v3.0
 
-Jour de soutenance :
+- Jour de soutenance :
 
 Soutenance du projet
 
-💼 Positionnement Produit – Suite ProSoft
+---
+
+## 💼 Positionnement Produit – Suite ProSoft
 
 EasySave est un logiciel professionnel intégré à la politique tarifaire ProSoft.
 
@@ -85,7 +93,9 @@ Mises à jour incluses
 
 Tacite reconduction avec revalorisation indexée SYNTEC
 
-📚 Documentation attendue
+---
+
+## 📚 Documentation attendue
 
 Le projet inclut obligatoirement :
 
@@ -109,24 +119,27 @@ Diagrammes UML (par version)
 
 Release notes obligatoires
 
-🛠️ Outils & Technologies
-Environnement de développement
+---
+
+## 🛠️ Outils & Technologies
+
+### Environnement de développement
 
 Visual Studio 2022 ou supérieur
 
 GitHub (gestion du code et des documents)
 
-ArgoUML (préconisé pour les diagrammes UML)
+Draw.io (préconisé pour les diagrammes UML)
 
 ⚠️ Le tuteur/pilote doit être invité sur le dépôt GitHub.
 
-Langage & Framework
+### Langage & Framework
 
 Langage : C#
 
 Framework : .NET 8.0
 
-✅ Exigences de qualité
+### ✅ Exigences de qualité
 Lisibilité & maintenabilité
 
 Code, commentaires et documents en anglais
@@ -153,7 +166,9 @@ Logiciel destiné à être distribué chez des clients
 
 IHM soignées et ergonomiques obligatoires
 
-🚀 Objectifs globaux
+---
+
+## 🚀 Objectifs globaux
 
 Développer un logiciel de sauvegarde fiable et évolutif
 
@@ -163,6 +178,8 @@ Produire une base logicielle réutilisable par d’autres équipes
 
 Respecter les standards industriels de qualité logicielle
 
-📦 Statut du projet
+---
+
+## 📦 Statut du projet
 
 📌 Projet en cours – versions livrées selon le calendrier pédagogique.
