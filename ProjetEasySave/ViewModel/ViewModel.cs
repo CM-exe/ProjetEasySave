@@ -16,39 +16,39 @@ namespace ProjetEasySave.ViewModel
         }
 
         // Methods
-        public bool AddSaveSpace(string name, string sourcePath, string destinationPath, string typeSave)
+        public bool addSaveSpace(string name, string sourcePath, string destinationPath, string typeSave)
         {
             return _model.addSaveSpace(name, sourcePath, destinationPath, typeSave);
         }
 
-        public bool RemoveSaveSpace(string name)
+        public bool removeSaveSpace(string name)
         {
             return _model.removeSaveSpace(name);
         }
 
-        public bool StartSave(string name)
+        public bool startSave(string name)
         {
             return _model.startSave(name);
         }
 
-        public List<SaveSpace> GetSaveSpaces()
+        public List<SaveSpace> getSaveSpaces()
         {
             return _model.getSaveSpaces();
         }
 
-        public void SetLanguage(string languageCode)
+        public void setLanguage(string languageCode)
         {
-            _languageService.SetLanguage(languageCode);
+            _languageService.setLanguage(languageCode);
         }
 
-        public string GetLanguage()
+        public string getLanguage()
         {
-            return _languageService.GetLanguage();
+            return _languageService.getLanguage();
         }
 
-        public string Translate(string key)
+        public string translate(string key)
         {
-            return _languageService.Translate(key);
+            return _languageService.translate(key);
         }
     }
 }

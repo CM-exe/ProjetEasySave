@@ -29,7 +29,7 @@ namespace ProjetEasySave.ViewModel
         }
 
         // Methods
-        public void SetLanguage(string languageCode)
+        public void setLanguage(string languageCode)
         {
             if (_translations.ContainsKey(languageCode))
             {
@@ -37,12 +37,12 @@ namespace ProjetEasySave.ViewModel
             }
         }
 
-        public string GetLanguage()
+        public string getLanguage()
         {
             return _currentLanguage;
         }
 
-        public string Translate(string key)
+        public string translate(string key)
         {
             if (_translations.ContainsKey(_currentLanguage) && _translations[_currentLanguage].ContainsKey(key))
             {
