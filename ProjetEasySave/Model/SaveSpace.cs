@@ -2,29 +2,14 @@ namespace ProjetEasySave;
 
 public class SaveSpace
 {
-    private readonly string _sourceFolder;
-    private readonly string _destinationFolder;
-    private readonly string _name;
+    public string Name { get; set; }
+    public string SourceFolder { get; set; }
+    public string DestinationFolder { get; set; }
 
-    public SaveSpace(string sourceFolder, string destinationFolder, string name)
+    public SaveSpace(string name, string sourceFolder, string destinationFolder)
     {
-        _sourceFolder = sourceFolder;
-        _destinationFolder = destinationFolder;
-        _name = name;
-    }
-
-    public string getSourceFolder()
-    {
-        return _sourceFolder;
-    }
-
-    public string getDestinationFolder()
-    {
-        return _destinationFolder;
-    }
-
-    public string getName()
-    {
-        return _name;
+        Name = name;
+        SourceFolder = sourceFolder;
+        DestinationFolder = destinationFolder;
     }
 }
