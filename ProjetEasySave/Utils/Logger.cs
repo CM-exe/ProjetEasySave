@@ -16,12 +16,20 @@ namespace ProjetEasySave.Utils
         // Attributes
         private static Logger singletonInstance; // Doit être static
         private string logDirectoryPath;
+        private string logRealTimeFile;
 
         // Constructors
         private Logger()
         {
             // Default log directory path
-            logDirectoryPath = @"\\localhost\c$\Windows\Temp";
+            logDirectoryPath = @"\\localhost\c$\EasyProject\Logs\";
+            // Create the log directory if it doesn't exist
+            if (!System.IO.Directory.Exists(logDirectoryPath))
+            {
+                System.IO.Directory.CreateDirectory(logDirectoryPath);
+            }
+            // Default log file for real-time logging
+            logRealTimeFile = System.IO.Path.Combine(logDirectoryPath, "real_time_log.json");
         }
 
         // Methods
@@ -88,6 +96,45 @@ namespace ProjetEasySave.Utils
 
             System.IO.File.WriteAllText(logFilePath, "[" + jsonString + "]");
             return true;
+        }
+
+        public bool logRealTime(Dictionary<string, string> message)
+        {
+            // Check if logFile is set
+            if (logDirectoryPath == null)
+            {
+                return false;
+            }
+            // Build the message at the good format
+            StringBuilder jsonMessage = new StringBuilder();
+            jsonMessage.Append("{");
+            foreach (var kvp in message)
+            {
+                jsonMessage.AppendFormat("\"{0}\": \"{1}\",", kvp.Key, kvp.Value);
+            }
+            if (message.Count > 0)
+            {
+                jsonMessage.Length--;
+            }
+            jsonMessage.Append("}");
+            string jsonString = jsonMessage.ToString();
+            // Write the message to the real-time log file
+            System.IO.File.WriteAllText(logRealTimeFile, jsonString);
+            return true;
+        }
+
+        public static Dictionary<string, string> formatInfoRealTimeMessage(string name, string source, string target, string time, SaveTaskState saveTaskState)
+        {
+            // Format the log message as a dictionary
+            Dictionary<string, string> logMessage = new Dictionary<string, string>
+            {
+                { "name", name },
+                { "sourceFile", source },
+                { "targetFile", target },
+                { "time", time },
+                { "saveTaskState", saveTaskState.ToString() }
+            };
+            return logMessage;
         }
 
         public static Dictionary<string, string> formatLogMessage(string name, string source, string target, int size, double transferTime, string time)

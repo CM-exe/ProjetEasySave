@@ -174,7 +174,17 @@ namespace ProjetEasySave.View
             Console.Write(_viewModel.translate("SaveType") + " (complete/differential): ");
             var typeSave = Console.ReadLine() ?? string.Empty;
 
-            var ok = _viewModel.addSaveSpace(name, source, destination, typeSave);
+            var completeSavePath = string.Empty;
+            if (typeSave.ToLower() == "differential") {
+                Console.Write(_viewModel.translate("CompleteSavePath") + ": ");
+                completeSavePath = Console.ReadLine() ?? string.Empty;
+            }
+            else
+            {
+                completeSavePath = "";
+            }
+
+            var ok = _viewModel.addSaveSpace(name, source, destination, typeSave, completeSavePath);
             renderResult(ok, _viewModel.translate("SaveSpaceAdded"), _viewModel.translate("SaveSpaceAddFailed"));
             pause();
         }
@@ -215,7 +225,14 @@ namespace ProjetEasySave.View
             {
                 foreach (var space in spaces)
                 {
-                    Console.WriteLine($"- {space.getName()} | {space.getSourcePath()} -> {space.getDestinationPath()} | {space.getTypeSave()}");
+                    if (space.getTypeSave() == "differential") {
+                         Console.WriteLine($"- {space.getName()} | {space.getSourcePath()} -> {space.getDestinationPath()} (Complete save : {space.getCompleteSavePath()}) | {space.getTypeSave()}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"- {space.getName()} | {space.getSourcePath()} -> {space.getDestinationPath()} | {space.getTypeSave()}");
+                    }
+                        
                 }
             }
 

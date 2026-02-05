@@ -16,9 +16,9 @@ namespace ProjetEasySave.ViewModel
         }
 
         // Methods
-        public bool addSaveSpace(string name, string sourcePath, string destinationPath, string typeSave)
+        public bool addSaveSpace(string name, string sourcePath, string destinationPath, string typeSave, string completeSavePath = "")
         {
-            return _model.addSaveSpace(name, sourcePath, destinationPath, typeSave);
+            return _model.addSaveSpace(name, sourcePath, destinationPath, typeSave, completeSavePath);
         }
 
         public bool removeSaveSpace(string name)

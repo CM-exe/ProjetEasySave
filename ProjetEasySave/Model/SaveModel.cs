@@ -32,7 +32,7 @@ namespace ProjetEasySave.Model
         // Serialization/Deserialization constructor
 
         // Methods
-        public bool addSaveSpace(string name, string sourcePath, string destinationPath, string typeSave)
+        public bool addSaveSpace(string name, string sourcePath, string destinationPath, string typeSave, string completeSavePath = "")
         {
             try
             {
@@ -62,7 +62,7 @@ namespace ProjetEasySave.Model
 
 
                 // Create and add the new SaveSpace
-                var newSaveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSave);
+                var newSaveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSave, completeSavePath);
                 _saveSpaces.Add(newSaveSpace);
 
                 // Update Config
@@ -120,7 +120,11 @@ namespace ProjetEasySave.Model
                         .Select(e => e.GetString() ?? "")
                         .ToList();
                     var typeSaveValue = typeSave.Count > 0 ? typeSave[0] : "";
-                    var saveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSaveValue);
+                    var completeSavePath = element.GetProperty("_saveTaskCompleteSavePaths").EnumerateArray()
+                        .Select(e => e.GetString() ?? "")
+                        .ToList();
+                    var completeSavePathValue = completeSavePath.Count > 0 ? completeSavePath[0] : "";
+                    var saveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSaveValue, completeSavePathValue);
                     spaces.Add(saveSpace);
                 }
                 _saveSpaces = spaces;

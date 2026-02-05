@@ -8,7 +8,7 @@
         private SaveTaskState _state;
 
         // Constructor
-        public SaveTask(string strategy, SaveSpace space)
+        public SaveTask(string strategy, SaveSpace space, string completeFolder = "")
         {
             switch (strategy.ToLower())
             {
@@ -16,7 +16,11 @@
                     _saveStrategy = new CompleteSave();
                     break;
                 case "differential":
-                    _saveStrategy = new DifferentialSave();
+                    if (string.IsNullOrWhiteSpace(completeFolder))
+                    {
+                        throw new ArgumentException("Complete folder path must be provided for differential save strategy");
+                    }
+                    _saveStrategy = new DifferentialSave(completeFolder);
                     break;
                 default:
                     throw new ArgumentException("Invalid save strategy type");
@@ -62,6 +66,15 @@
             {
                 return "unknown";
             }
+        }
+
+        public string getCompleteSavePath()
+        {
+            if (_saveStrategy is DifferentialSave differentialSave)
+            {
+                return differentialSave.getCompleteSavePath();
+            }
+            return string.Empty;
         }
     }
 }

@@ -36,6 +36,13 @@ namespace ProjetEasySave.Model
                 _logger.log(Logger.formatLogMessage("Complete Save Started", sourcePath, destinationPath, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
                 Directory.CreateDirectory(destinationPath);
 
+                // Clean the destination directory before copying
+                DirectoryInfo destDirInfo = new DirectoryInfo(destinationPath);
+                foreach (FileInfo file in destDirInfo.GetFiles())
+                {
+                    file.Delete();
+                }
+
                 foreach (var dir in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
                 {
                     var relative = Path.GetRelativePath(sourcePath, dir);

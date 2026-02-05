@@ -19,6 +19,12 @@ namespace ProjetEasySave.Model
             _fullBackupPath = fullBackupPath;
         }
 
+        // Methods
+        public string getCompleteSavePath()
+        {
+            return _fullBackupPath;
+        }
+
         // doSave method implementation for Differential Save
         public bool doSave(string sourcePath, string destinationPath)
         {
@@ -50,13 +56,26 @@ namespace ProjetEasySave.Model
                     "Differntial Save Started",
                     sourcePath,
                     destinationPath,
-                    0, //taille totale copiée (0 au départ)
-                    0, //nombre de fichiers copiés (0 au départ)
+                    0, // Default size (0 at the start)
+                    0, // Default transfer time (0 at the start)
                     DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                     ));
 
 
-                Directory.CreateDirectory(destinationPath);
+                // Create the destination directory if it doesn't exist
+                if (!Directory.Exists(destinationPath))
+                {
+                    Directory.CreateDirectory(destinationPath);
+                }
+                else
+                {
+                    // Clear the destination directory before copying new files
+                    foreach (var file in Directory.EnumerateFiles(destinationPath, "*", SearchOption.AllDirectories))
+                    {
+                        File.Delete(file);
+                    }
+                }
+
                 foreach (var sourceFile in Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories))
                 {
                     var relativePath = Path.GetRelativePath(sourcePath, sourceFile);

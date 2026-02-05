@@ -24,7 +24,8 @@
     "Language": "Langue",
     "SaveSpacesState": "État des espaces de sauvegarde",
     "PressEnter": "Appuyez sur Entrée pour revenir au menu...",
-    "PressEnterPause": "Appuyez sur Entrée pour continuer..."
+    "PressEnterPause": "Appuyez sur Entrée pour continuer...",
+    "CompleteSavePath": "Chemin de la sauvegarde complète"
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -51,6 +52,7 @@
     "Language": "Language",
     "SaveSpacesState": "Save spaces state",
     "PressEnter": "Press Enter to return to menu...",
-    "PressEnterPause": "Press Enter to continue..."
+    "PressEnterPause": "Press Enter to continue...",
+    "CompleteSavePath": "Complete save path"
   }
 }
