@@ -1,16 +1,26 @@
+using System.Runtime.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 namespace ProjetEasySave.Model
 {
     public class SaveModel
     {
-        // Attributes
+        // Attribute
+        [JsonInclude]
         private List<SaveSpace> _saveSpaces;
-        private readonly string _configPath;
+        private string _configPath;
 
         // Constructor
         public SaveModel()
         {
             _saveSpaces = new List<SaveSpace>();
             _configPath = Path.Combine(AppContext.BaseDirectory, "../../../config_models.json");
+            // Load existing SaveSpaces from config file if it exists
+            if (File.Exists(_configPath))
+            {
+                loadSaveSpaces(_configPath);
+            }
         }
 
         // Destructor
@@ -18,6 +28,8 @@ namespace ProjetEasySave.Model
         {
             saveToConfig();
         }
+
+        // Serialization/Deserialization constructor
 
         // Methods
         public bool addSaveSpace(string name, string sourcePath, string destinationPath, string typeSave)
@@ -42,9 +54,20 @@ namespace ProjetEasySave.Model
                     return false;
                 }
 
+                // Check that there is only 5 save spaces
+                if (_saveSpaces.Count >= 5)
+                {
+                    return false;
+                }
+
+
                 // Create and add the new SaveSpace
                 var newSaveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSave);
                 _saveSpaces.Add(newSaveSpace);
+
+                // Update Config
+                saveToConfig();
+
                 return true;
             }
             catch (Exception)
@@ -59,6 +82,10 @@ namespace ProjetEasySave.Model
             if (saveSpaceToRemove != null)
             {
                 _saveSpaces.Remove(saveSpaceToRemove);
+
+                // Update Config
+                saveToConfig();
+
                 return true;
             }
             return false;
@@ -77,14 +104,28 @@ namespace ProjetEasySave.Model
                 {
                     return false;
                 }
-                string jsonContent = File.ReadAllText(jsonConfigPath);
-                var saveSpacesFromFile = System.Text.Json.JsonSerializer.Deserialize<List<SaveSpace>>(jsonContent);
-                if (saveSpacesFromFile != null)
+
+                // Get the JSON content from the file
+                var json = File.ReadAllText(jsonConfigPath);
+
+                // Go through the JSON content and create manually SaveSpace objects
+                var jsonDoc = JsonDocument.Parse(json);
+                var spaces = new List<SaveSpace>();
+                foreach (var element in jsonDoc.RootElement.GetProperty("_saveSpaces").EnumerateArray())
                 {
-                    _saveSpaces = saveSpacesFromFile;
-                    return true;
+                    var name = element.GetProperty("_name").GetString() ?? "";
+                    var sourcePath = element.GetProperty("_sourcePath").GetString() ?? "";
+                    var destinationPath = element.GetProperty("_destinationPath").GetString() ?? "";
+                    var typeSave = element.GetProperty("_saveTaskStrategies").EnumerateArray()
+                        .Select(e => e.GetString() ?? "")
+                        .ToList();
+                    var typeSaveValue = typeSave.Count > 0 ? typeSave[0] : "";
+                    var saveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSaveValue);
+                    spaces.Add(saveSpace);
                 }
-                return false;
+                _saveSpaces = spaces;
+
+                return true;
             }
             catch (Exception)
             {
@@ -97,9 +138,14 @@ namespace ProjetEasySave.Model
             var saveSpaceToUpdate = _saveSpaces.FirstOrDefault(s => s.getName() == name);
             if (saveSpaceToUpdate != null)
             {
+                // Update Save Space
                 saveSpaceToUpdate.setSourcePath(newSourcePath);
                 saveSpaceToUpdate.setDestinationPath(newDestinationPath);
                 saveSpaceToUpdate.setTypeSave(newTypeSave);
+
+                // Update Config
+                saveToConfig();
+
                 return true;
             }
             return false;
@@ -125,8 +171,11 @@ namespace ProjetEasySave.Model
                     return;
                 }
 
-                var jsonContent = System.Text.Json.JsonSerializer.Serialize(_saveSpaces);
-                File.WriteAllText(_configPath, jsonContent);
+                var json = JsonSerializer.Serialize(this, new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                });
+                File.WriteAllText(_configPath, json);
             }
             catch (Exception)
             {
