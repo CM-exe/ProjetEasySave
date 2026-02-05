@@ -2,10 +2,10 @@ namespace ProjetEasySave;
 
 public class ViewModel
 {
-    private Model _model;
+    private SaveModel _saveModel;
 
-    public ViewModel(Model model)
+    public ViewModel(SaveModel saveModel)
     {
-        _model = model;
+        _saveModel = saveModel;
     }
 }
