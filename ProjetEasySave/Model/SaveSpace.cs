@@ -1,30 +1,125 @@
-namespace ProjetEasySave;
-
-public class SaveSpace
+﻿namespace ProjetEasySave.Model
 {
-    private readonly string _sourceFolder;
-    private readonly string _destinationFolder;
-    private readonly string _name;
-
-    public SaveSpace(string sourceFolder, string destinationFolder, string name)
+    public class SaveSpace : SaveTaskObserver
     {
-        _sourceFolder = sourceFolder;
-        _destinationFolder = destinationFolder;
-        _name = name;
-    }
+        // Attributes
+        private string _name;
+        private string _sourcePath;
+        private string _destinationPath;
+        private List<SaveTask> _saveTasks;
+        private Dictionary<SaveTask, SaveTaskState> _taskStates;
 
-    public string getSourceFolder()
-    {
-        return _sourceFolder;
-    }
+        // Constructor
+        public SaveSpace(string name, string sourcePath, string destinationPath, string typeSave)
+        {
+            _name = name;
+            _sourcePath = sourcePath;
+            _destinationPath = destinationPath;
+            _saveTasks = new List<SaveTask>();
+            switch (typeSave.ToLower())
+            {
+                case "complete":
+                    _saveTasks.Add(new SaveTask("complete", this));
+                    break;
+                case "differential":
+                    _saveTasks.Add(new SaveTask("differential", this));
+                    break;
+                default:
+                    throw new ArgumentException("Invalid save strategy type");
+            }
+            _taskStates = new Dictionary<SaveTask, SaveTaskState>();
+            foreach (var task in _saveTasks)
+            {
+                _taskStates[task] = SaveTaskState.PENDING; // Initial state
+            }
+        }
 
-    public string getDestinationFolder()
-    {
-        return _destinationFolder;
-    }
+        // Methods
+        public SaveTaskState onSaveTaskStateChanged(SaveTask task)
+        {
+            // Update the state of the task in the dictionary
+            _taskStates[task] = task.getState();
+            return task.getState();
+        }
 
-    public string getName()
-    {
-        return _name;
+        public bool executeSave()
+        {
+            foreach (var task in _saveTasks)
+            {
+                if (!task.save(_sourcePath, _destinationPath))
+                {
+                    return false; // If any save task fails, return false
+                }
+            }
+            return true; // All save tasks succeeded
+        }
+
+        // Getters
+        public string getName()
+        {
+            return _name;
+        }
+
+        public string getSourcePath()
+        {
+            return _sourcePath;
+        }
+        public string getDestinationPath()
+        {
+            return _destinationPath;
+        }
+
+        public string getTypeSave()
+        {
+            if (_saveTasks.Count > 0)
+            {
+                return _saveTasks[0].getStrategyType();
+            }
+            return string.Empty;
+        }
+
+        public List<SaveTaskState> getTaskStates()
+        {
+            return _taskStates.Values.ToList();
+        }
+
+
+        // Setters
+        public void setName(string name)
+        {
+            _name = name;
+        }
+
+        public void setSourcePath(string sourcePath)
+        {
+            _sourcePath = sourcePath;
+        }
+
+        public void setDestinationPath(string destinationPath)
+        {
+            _destinationPath = destinationPath;
+        }
+
+        public void setTypeSave(string typeSave)
+        {
+            _saveTasks.Clear();
+            switch (typeSave.ToLower())
+            {
+                case "complete":
+                    _saveTasks.Add(new SaveTask("complete", this));
+                    break;
+                case "differential":
+                    _saveTasks.Add(new SaveTask("differential", this));
+                    break;
+                default:
+                    throw new ArgumentException("Invalid save strategy type");
+            }
+            // Reset task states
+            _taskStates.Clear();
+            foreach (var task in _saveTasks)
+            {
+                _taskStates[task] = SaveTaskState.PENDING; // Initial state
+            }
+        }
     }
 }

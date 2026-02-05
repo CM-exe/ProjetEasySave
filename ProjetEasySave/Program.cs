@@ -1,13 +1,13 @@
-﻿namespace ProjetEasySave;
+﻿using System.Text.Json;
+using ProjetEasySave.Utils;
+using ProjetEasySave.View;
 
+namespace ProjetEasySave;
 class Program
 {
     static void Main(string[] args)
     {
-        SaveModel model = new SaveModel();
-        model.importSaveJobs();
-
-        ViewModel viewModel = new ViewModel(model);
-        View view = new View(viewModel);
+        var view = new View.View();
+        view.run();
     }
 }
