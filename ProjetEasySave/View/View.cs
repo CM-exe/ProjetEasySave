@@ -50,6 +50,11 @@ namespace ProjetEasySave.View
                                 {
                                     var ok = _viewModel.startSave(spaces[i].getName());
                                     renderResult(ok, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
+                                    while (spaces[i].getTaskStates().Contains(SaveTaskState.RUNNING))
+                                    {
+                                        Thread.Sleep(100);
+                                    }
+                                    renderResult(ok, _viewModel.translate("SaveCompleted"), _viewModel.translate("SaveFailed"));
                                 }
                             }
                         }
@@ -78,12 +83,25 @@ namespace ProjetEasySave.View
                                 {
                                     renderMessage(_viewModel.translate("InvalidSaveSpaceID"), ConsoleColor.Red);
                                 }
+                                // Start save for "start"
                                 var ok = _viewModel.startSave(spaces[start].getName());
                                 renderResult(ok, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
+                                while (spaces[start].getTaskStates().Contains(SaveTaskState.RUNNING))
+                                {
+                                    Thread.Sleep(100);
+                                }
+                                renderResult(ok, _viewModel.translate("SaveCompleted"), _viewModel.translate("SaveFailed"));
+
                                 if (start != to)
                                 {
+                                    // Start save for "to"
                                     var ok_ = _viewModel.startSave(spaces[to].getName());
                                     renderResult(ok_, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
+                                    while (spaces[to].getTaskStates().Contains(SaveTaskState.RUNNING))
+                                    {
+                                        Thread.Sleep(100);
+                                    }
+                                    renderResult(ok_, _viewModel.translate("SaveCompleted"), _viewModel.translate("SaveFailed"));
                                 }
                             }
                         }

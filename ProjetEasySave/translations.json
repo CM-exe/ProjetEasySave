@@ -25,7 +25,9 @@
     "SaveSpacesState": "État des espaces de sauvegarde",
     "PressEnter": "Appuyez sur Entrée pour revenir au menu...",
     "PressEnterPause": "Appuyez sur Entrée pour continuer...",
-    "CompleteSavePath": "Chemin de la sauvegarde complète"
+    "CompleteSavePath": "Chemin de la sauvegarde complète",
+    "SaveCompleted": "Sauvegarde terminée.",
+    "SaveFailed": "Échec de la sauvegarde."
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -53,6 +55,8 @@
     "SaveSpacesState": "Save spaces state",
     "PressEnter": "Press Enter to return to menu...",
     "PressEnterPause": "Press Enter to continue...",
-    "CompleteSavePath": "Complete save path"
+    "CompleteSavePath": "Complete save path",
+    "SaveCompleted": "Backup completed.",
+    "SaveFailed": "Failed to backup."
   }
 }
