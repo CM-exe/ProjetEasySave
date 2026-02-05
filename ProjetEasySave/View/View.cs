@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ProjetEasySave.Model;
+using ProjetEasySave.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Threading;
-using ProjetEasySave.Model;
-using ProjetEasySave.ViewModel;
+using System.Xml.Linq;
 
 namespace ProjetEasySave.View
 {
@@ -15,48 +16,123 @@ namespace ProjetEasySave.View
             _viewModel = new ViewModel.ViewModel();
         }
 
-        public void run()
+        public void run(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             bool running = true;
 
-            while (running)
+            // Parse arguments
+            string args_str = String.Join(" ", args);
+            if (args.Length > 0)
             {
-                renderHeader();
-                renderMenu();
-
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write("> ");
-                Console.ResetColor();
-                var choice = Console.ReadLine()?.Trim();
-
-                switch (choice)
+                foreach (string key in args)
                 {
-                    case "1":
-                        addSaveSpaceFlow();
-                        break;
-                    case "2":
-                        removeSaveSpaceFlow();
-                        break;
-                    case "3":
-                        startSaveFlow();
-                        break;
-                    case "4":
-                        listSaveSpacesFlow();
-                        break;
-                    case "5":
-                        changeLanguageFlow();
-                        break;
-                    case "6":
-                        viewSaveSpacesStateFlow();
-                        break;
-                    case "0":
-                        running = false;
-                        break;
-                    default:
-                        renderMessage(_viewModel.translate("InvalidChoice"), ConsoleColor.Yellow);
-                        pause();
-                        break;
+                    if (key.Contains("-"))
+                    {
+                        string start_str = args_str.Substring(0, args_str.IndexOf('-'));
+                        string to_str = args_str.Substring(args_str.IndexOf('-') + 1);
+                        // Check if valid integers
+                        if (int.TryParse(start_str, out int start) && int.TryParse(to_str, out int to)) {
+                            if (start > to) {
+                                //Console.WriteLine($"{View.ERROR}: Invalid SaveSpace ID. Abort.");
+                                renderMessage(_viewModel.translate("InvalidSaveSpaceID"), ConsoleColor.Red);
+                            }
+                            else
+                            {
+                                // Valid SaveSpace, from "start" to "to"
+                                List<SaveSpace> spaces = _viewModel.getSaveSpaces();
+                                start--;
+                                to--;
+                                if(spaces.Count < to) {
+                                    renderMessage(_viewModel.translate("InvalidSaveSpaceID"), ConsoleColor.Red);
+                                }
+                                for (int i = 0; i <= to; i++)
+                                {
+                                    var ok = _viewModel.startSave(spaces[i].getName());
+                                    renderResult(ok, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            renderMessage(_viewModel.translate("InvalidSaveSpaceID"), ConsoleColor.Red);
+                        }
+                    }
+                    else if (key.Contains(";"))
+                    {
+                        string start_str = args_str.Substring(0, args_str.IndexOf(';'));
+                        string to_str = args_str.Substring(args_str.IndexOf(';') + 1);
+                        // Check if valid integers
+                        if (int.TryParse(start_str, out int start) && int.TryParse(to_str, out int to))
+                        {
+                            if (start > to)
+                            {
+                                renderMessage(_viewModel.translate("InvalidSaveSpaceID"), ConsoleColor.Red);
+                            }
+                            else
+                            {
+                                List<SaveSpace> spaces = _viewModel.getSaveSpaces();
+                                start--;
+                                to--;
+                                if (spaces.Count < to)
+                                {
+                                    renderMessage(_viewModel.translate("InvalidSaveSpaceID"), ConsoleColor.Red);
+                                }
+                                var ok = _viewModel.startSave(spaces[start].getName());
+                                renderResult(ok, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
+                                if (start != to)
+                                {
+                                    var ok_ = _viewModel.startSave(spaces[to].getName());
+                                    renderResult(ok_, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            renderMessage(_viewModel.translate("InvalidSaveSpaceID"), ConsoleColor.Red);
+                        }
+                    }
+                }
+            }
+            else {
+                while (running)
+                {
+                    renderHeader();
+                    renderMenu();
+
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write("> ");
+                    Console.ResetColor();
+                    var choice = Console.ReadLine()?.Trim();
+
+                    switch (choice)
+                    {
+                        case "1":
+                            addSaveSpaceFlow();
+                            break;
+                        case "2":
+                            removeSaveSpaceFlow();
+                            break;
+                        case "3":
+                            startSaveFlow();
+                            break;
+                        case "4":
+                            listSaveSpacesFlow();
+                            break;
+                        case "5":
+                            changeLanguageFlow();
+                            break;
+                        case "6":
+                            viewSaveSpacesStateFlow();
+                            break;
+                        case "0":
+                            running = false;
+                            break;
+                        default:
+                            renderMessage(_viewModel.translate("InvalidChoice"), ConsoleColor.Yellow);
+                            pause();
+                            break;
+                    }
                 }
             }
         }

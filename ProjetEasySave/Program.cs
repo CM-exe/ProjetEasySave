@@ -8,6 +8,6 @@ class Program
     static void Main(string[] args)
     {
         var view = new View.View();
-        view.run();
+        view.run(args);
     }
 }
