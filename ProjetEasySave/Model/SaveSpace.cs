@@ -1,12 +1,22 @@
-﻿namespace ProjetEasySave.Model
+﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+
+namespace ProjetEasySave.Model
 {
     public class SaveSpace : SaveTaskObserver
     {
         // Attributes
+        [JsonInclude]
         private string _name;
+        [JsonInclude]
         private string _sourcePath;
+        [JsonInclude]
         private string _destinationPath;
+        [JsonInclude]
+        private List<string> _saveTaskStrategies; // For serialization purposes only
+        [JsonIgnore]
         private List<SaveTask> _saveTasks;
+        [JsonIgnore]
         private Dictionary<SaveTask, SaveTaskState> _taskStates;
 
         // Constructor
@@ -15,6 +25,7 @@
             _name = name;
             _sourcePath = sourcePath;
             _destinationPath = destinationPath;
+            // Initialize save tasks based on the typeSave parameter
             _saveTasks = new List<SaveTask>();
             switch (typeSave.ToLower())
             {
@@ -27,6 +38,12 @@
                 default:
                     throw new ArgumentException("Invalid save strategy type");
             }
+
+            // Store the strategy type for serialization
+            _saveTaskStrategies = new List<string>();
+            _saveTaskStrategies.Add(typeSave.ToLower());
+
+            // Initialize task states
             _taskStates = new Dictionary<SaveTask, SaveTaskState>();
             foreach (var task in _saveTasks)
             {
