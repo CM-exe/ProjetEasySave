@@ -109,6 +109,10 @@ namespace ProjetEasySave.View
                         {
                             renderMessage(_viewModel.translate("InvalidSaveSpaceID"), ConsoleColor.Red);
                         }
+                    } else
+                    {
+                        // Invalid argument
+                        renderMessage(_viewModel.translate("UsageCommandExemple"), ConsoleColor.White);
                     }
                 }
             }
