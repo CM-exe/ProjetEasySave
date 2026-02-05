@@ -9,11 +9,14 @@ namespace ProjetEasySave.Model
          */
 
         // Attributes
-        Logger _logger = Logger.getInstance();
+         private Logger _logger = Logger.getInstance();
+
+         private string _fullBackupPath;  // Chemin de la sauvegarde complète servant de référence
 
         // Constructor
-        public DifferentialSave()
+        public DifferentialSave(string fullBackupPath)
         {
+            _fullBackupPath = fullBackupPath;
         }
 
         // doSave method implementation for Differential Save
@@ -21,9 +24,12 @@ namespace ProjetEasySave.Model
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(sourcePath) || string.IsNullOrWhiteSpace(destinationPath))
+                if (string.IsNullOrWhiteSpace(sourcePath) ||
+                    string.IsNullOrWhiteSpace(destinationPath) ||
+                    string.IsNullOrWhiteSpace(_fullBackupPath)
+                    )
                 {
-                    _logger.log(Logger.formatErrMessage("Source or destination path is invalid."));
+                    _logger.log(Logger.formatErrMessage("Source or full backup is invalid."));
                     return false;
                 }
 
@@ -33,32 +39,69 @@ namespace ProjetEasySave.Model
                     return false;
                 }
 
-                Directory.CreateDirectory(destinationPath);
+                if (!Directory.Exists(_fullBackupPath))
+                {
+                    _logger.log(Logger.formatErrMessage($"Full backup '{_fullBackupPath}"));
+                    return false;
+                }
 
+
+                _logger.log(Logger.formatLogMessage(
+                    "Differntial Save Started",
+                    sourcePath,
+                    destinationPath,
+                    0, //taille totale copiée (0 au départ)
+                    0, //nombre de fichiers copiés (0 au départ)
+                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    ));
+
+
+                Directory.CreateDirectory(destinationPath);
                 foreach (var sourceFile in Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories))
                 {
                     var relativePath = Path.GetRelativePath(sourcePath, sourceFile);
-                    var destinationFile = Path.Combine(destinationPath, relativePath);
+                    var fullFile = Path.Combine(_fullBackupPath, relativePath);
+                    var diffFile = Path.Combine(destinationPath, relativePath);
 
-                    if (File.Exists(destinationFile))
+
+                    bool shouldCopy = false;
+
+                    if (!File.Exists(fullFile))
                     {
+                        shouldCopy = true;
+                    }
+
+                    else
+                    {
+                        var sourceDate = File.GetLastWriteTime(sourceFile);
+                        var fullDate = File.GetLastWriteTime(fullFile);
+
+                        if (sourceDate > fullDate)
+                        {
+                            shouldCopy = true;
+                        }
+                    }
+
+                    if (!shouldCopy)
                         continue;
-                    }
 
-                    var destinationDir = Path.GetDirectoryName(destinationFile);
-                    if (!string.IsNullOrEmpty(destinationDir))
-                    {
-                        _logger.log(Logger.formatLogMessage("Creating directory", sourcePath, destinationDir, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
-                        Directory.CreateDirectory(destinationDir);
-                    }
+                    _logger.log(Logger.formatLogMessage(
+                        "Copying File (Differential)",
+                        sourceFile,
+                        diffFile,
+                        0,
+                        (int)new FileInfo(sourceFile).Length,
+                        DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                        ));
 
-                    _logger.log(Logger.formatLogMessage("Copying file", sourceFile, destinationFile, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
-                    File.Copy(sourceFile, destinationFile, overwrite: false);
+                    File.Copy(sourceFile, diffFile, true);
+
                 }
 
-                _logger.log(Logger.formatLogMessage("Differential Save", sourcePath, destinationPath, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
                 return true;
+
             }
+
             catch
             {
                 _logger.log(Logger.formatErrMessage("An error occurred during the differential save process."));
