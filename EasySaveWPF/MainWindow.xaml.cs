@@ -13,10 +13,6 @@ namespace EasySaveWPF
     public partial class MainWindow : Window
     {
         private readonly ViewModel _viewModel;
-        private ListView? _listView;
-        private Button? _addButton;
-        private Button? _editButton;
-        private Button? _deleteButton;
         private readonly ObservableCollection<SaveSpaceRow> _rows = new();
 
         public MainWindow()
@@ -24,24 +20,41 @@ namespace EasySaveWPF
             InitializeComponent();
             _viewModel = new ViewModel();
             Loaded += OnLoaded;
+
+            render();
+        }
+
+        private void render()
+        {
+            // Text of each elements
+            btnAddSpace.Content = _viewModel.translate("AddSaveSpace");
+            btnDeleteSpace.Content = _viewModel.translate("RemoveSaveSpace");
+            btnEditSpace.Content = _viewModel.translate("EditSaveSpace");
+            btnStartSave.Content = _viewModel.translate("StartSave");
+            btnLanguage.Content = _viewModel.translate("ChangeLanguage");
+            textAppDescription.Text = _viewModel.translate("textAppDescription");
+            textList.Text = _viewModel.translate("textList");
+            textWorkspace.Text = _viewModel.translate("textWorkspace");
+            headerName.Header = _viewModel.translate("Name");
+            headerSource.Header = _viewModel.translate("Source");
+            headerDestination.Header = _viewModel.translate("Destination");
+
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _listView = FindFirstChild<ListView>(this);
-            _addButton = FindButtonByContent(this, "Ajouter");
-            _editButton = FindButtonByContent(this, "Éditer");
-            _deleteButton = FindButtonByContent(this, "Supprimer");
 
-            if (_listView != null)
+            if (listSaveSpaces != null)
             {
-                _listView.ItemsSource = _rows;
-                _listView.SelectionChanged += (_, __) => UpdateButtonsState();
+                listSaveSpaces.ItemsSource = _rows;
+                listSaveSpaces.SelectionChanged += (_, __) => UpdateButtonsState();
             }
 
-            if (_addButton != null) _addButton.Click += OnAddClick;
-            if (_editButton != null) _editButton.Click += OnEditClick;
-            if (_deleteButton != null) _deleteButton.Click += OnDeleteClick;
+            if (btnAddSpace != null) btnAddSpace.Click += OnAddClick;
+            if (btnEditSpace != null) btnEditSpace.Click += OnEditClick;
+            if (btnDeleteSpace != null) btnDeleteSpace.Click += OnDeleteClick;
+            if (btnStartSave != null) btnStartSave.Click += OnStartClick;
+            if (btnLanguage != null) btnLanguage.Click += OnLanguageClick;
 
             RefreshList();
             UpdateButtonsState();
@@ -70,9 +83,10 @@ namespace EasySaveWPF
 
         private void UpdateButtonsState()
         {
-            bool hasSelection = _listView?.SelectedItem is SaveSpaceRow;
-            if (_editButton != null) _editButton.IsEnabled = hasSelection;
-            if (_deleteButton != null) _deleteButton.IsEnabled = hasSelection;
+            bool hasSelection = listSaveSpaces?.SelectedItem is SaveSpaceRow;
+            if (btnEditSpace != null) btnEditSpace.IsEnabled = hasSelection;
+            if (btnDeleteSpace != null) btnDeleteSpace.IsEnabled = hasSelection;
+            if (btnStartSave != null) btnStartSave.IsEnabled = hasSelection;
         }
 
         private void OnAddClick(object sender, RoutedEventArgs e)
@@ -89,7 +103,7 @@ namespace EasySaveWPF
 
         private void OnEditClick(object sender, RoutedEventArgs e)
         {
-            if (_listView?.SelectedItem is not SaveSpaceRow row)
+            if (listSaveSpaces?.SelectedItem is not SaveSpaceRow row)
             {
                 return;
             }
@@ -125,7 +139,7 @@ namespace EasySaveWPF
 
         private void OnDeleteClick(object sender, RoutedEventArgs e)
         {
-            if (_listView?.SelectedItem is not SaveSpaceRow row)
+            if (listSaveSpaces?.SelectedItem is not SaveSpaceRow row)
             {
                 return;
             }
@@ -133,6 +147,36 @@ namespace EasySaveWPF
             bool ok = _viewModel.removeSaveSpace(row.Name);
             ShowResult(ok, _viewModel.translate("SaveSpaceRemoved"), _viewModel.translate("SaveSpaceRemoveFailed"));
             RefreshList();
+        }
+
+        private void OnStartClick(object sender, RoutedEventArgs e)
+        {
+            if (listSaveSpaces?.SelectedItem is not SaveSpaceRow row)
+            {
+                return;
+            }
+
+            bool ok = _viewModel.startSave(row.Name);
+            ShowResult(ok, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
+        }
+
+        private void OnLanguageClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SelectDialog(_viewModel.translate("LanguageCodePrompt"), _viewModel.translate("CurrentLanguage") + ": " + _viewModel.getLanguage(), _viewModel.translate("Language") + " :", ["en","fr"]);
+            if (dialog.ShowDialog() == true)
+            {
+                // Change the language
+                var code = dialog.Value.Trim();
+                _viewModel.setLanguage(code);
+                MessageBox.Show(
+                    _viewModel.translate("Language") + ": " + _viewModel.getLanguage(),
+                    "EasySave",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
+                );
+                RefreshList();
+                render();
+            }
         }
 
         private void ShowResult(bool ok, string success, string fail)
@@ -284,5 +328,120 @@ namespace EasySaveWPF
                 grid.Children.Add(control);
             }
         }
+
+        private sealed class InputDialog : Window
+        {
+            private readonly TextBox _inputBox = new();
+
+            public string Value { get; private set; } = string.Empty;
+
+            public InputDialog(string title, string text, string label)
+            {
+                Title = title;
+                Width = 360;
+                Height = 200;
+                WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                ResizeMode = ResizeMode.NoResize;
+
+                var grid = new Grid { Margin = new Thickness(12) };
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+                var textBlock = new TextBlock
+                {
+                    Text = text,
+                    Margin = new Thickness(0, 0, 0, 8),
+                    TextWrapping = TextWrapping.Wrap
+                };
+                Grid.SetRow(textBlock, 0);
+                grid.Children.Add(textBlock);
+
+                var labelBlock = new TextBlock
+                {
+                    Text = label,
+                    Margin = new Thickness(0, 0, 0, 4)
+                };
+                Grid.SetRow(labelBlock, 1);
+                grid.Children.Add(labelBlock);
+
+                _inputBox.Margin = new Thickness(0, 0, 0, 12);
+                Grid.SetRow(_inputBox, 2);
+                grid.Children.Add(_inputBox);
+
+                var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
+                var ok = new Button { Content = "OK", Width = 80, Margin = new Thickness(0, 0, 8, 0) };
+                var cancel = new Button { Content = "Annuler", Width = 80 };
+                ok.Click += (_, __) => { Value = _inputBox.Text; DialogResult = true; };
+                cancel.Click += (_, __) => { DialogResult = false; };
+                buttons.Children.Add(ok);
+                buttons.Children.Add(cancel);
+
+                Grid.SetRow(buttons, 3);
+                grid.Children.Add(buttons);
+
+                Content = grid;
+            }
+        }
+
+        private sealed class SelectDialog : Window
+        {
+            private readonly ComboBox _comboBox = new();
+
+            public string Value { get; private set; } = string.Empty;
+
+            public SelectDialog(string title, string text, string label, IEnumerable<string> options)
+            {
+                Title = title;
+                Width = 360;
+                Height = 200;
+                WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                ResizeMode = ResizeMode.NoResize;
+
+                var grid = new Grid { Margin = new Thickness(12) };
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+                var textBlock = new TextBlock
+                {
+                    Text = text,
+                    Margin = new Thickness(0, 0, 0, 8),
+                    TextWrapping = TextWrapping.Wrap
+                };
+                Grid.SetRow(textBlock, 0);
+                grid.Children.Add(textBlock);
+
+                var labelBlock = new TextBlock
+                {
+                    Text = label,
+                    Margin = new Thickness(0, 0, 0, 4)
+                };
+                Grid.SetRow(labelBlock, 1);
+                grid.Children.Add(labelBlock);
+
+                _comboBox.ItemsSource = options;
+                _comboBox.SelectedIndex = 0;
+                _comboBox.Margin = new Thickness(0, 0, 0, 12);
+                Grid.SetRow(_comboBox, 2);
+                grid.Children.Add(_comboBox);
+
+                var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
+                var ok = new Button { Content = "OK", Width = 80, Margin = new Thickness(0, 0, 8, 0) };
+                var cancel = new Button { Content = "Annuler", Width = 80 };
+                ok.Click += (_, __) => { Value = _comboBox.SelectedItem?.ToString() ?? string.Empty; DialogResult = true; };
+                cancel.Click += (_, __) => { DialogResult = false; };
+                buttons.Children.Add(ok);
+                buttons.Children.Add(cancel);
+
+                Grid.SetRow(buttons, 3);
+                grid.Children.Add(buttons);
+
+                Content = grid;
+            }
+        }
+
     }
 }
