@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using ProjetEasySave.Utils;
+using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -14,8 +15,10 @@ namespace ProjetEasySave.Model
         // Constructor
         public SaveModel()
         {
+            // Load config
+            Config config = Config.Instance;
             _saveSpaces = new List<SaveSpace>();
-            _configPath = Path.Combine(AppContext.BaseDirectory, "../../../config_models.json");
+            _configPath = config.getConfigModelsPath();
             // Load existing SaveSpaces from config file if it exists
             if (File.Exists(_configPath))
             {
