@@ -14,26 +14,28 @@ namespace ProjetEasySave.Utils
          */
 
         // Attributes
-        private static Logger singletonInstance; // Doit être static
+        private static Logger singletonInstance; // static
         private string logDirectoryPath;
         private string logRealTimeFile;
 
         // Constructors
         private Logger()
         {
+            // Load config
+            Config config = Config.Instance;
             // Default log directory path
-            logDirectoryPath = @"\\localhost\c$\EasyProject\Logs\";
+            logDirectoryPath = config.getLogDirectoryPath();
             // Create the log directory if it doesn't exist
             if (!System.IO.Directory.Exists(logDirectoryPath))
             {
                 System.IO.Directory.CreateDirectory(logDirectoryPath);
             }
             // Default log file for real-time logging
-            logRealTimeFile = System.IO.Path.Combine(logDirectoryPath, "real_time_log.json");
+            logRealTimeFile = config.getLogRealTimeFile();
         }
 
         // Methods
-        public static Logger getInstance() // Doit être static
+        public static Logger getInstance() // static
         {
             if (singletonInstance == null)
             {
