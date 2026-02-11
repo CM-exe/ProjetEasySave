@@ -17,7 +17,7 @@
         <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
             <TextBlock Text="EasySave" FontSize="20" FontWeight="SemiBold" Foreground="#1E293B"/>
             <TextBlock Text=" | " Margin="8,0"/>
-            <TextBlock Text="Gestion des espaces de travail" VerticalAlignment="Center" Foreground="#64748B"/>
+            <TextBlock x:Name="textAppDescription" Text="Gestion des espaces de sauvegardes" VerticalAlignment="Center" Foreground="#64748B"/>
         </StackPanel>
 
         <Border Grid.Row="1" Background="White" CornerRadius="8" BorderBrush="#E2E8F0" BorderThickness="1" Padding="12">
@@ -28,16 +28,34 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <TextBlock Text="Espaces de travail" FontWeight="SemiBold" Foreground="#0F172A"/>
-                    <TextBlock Text=" (liste)" Margin="6,0,0,0" Foreground="#94A3B8"/>
+                    <TextBlock x:Name="textWorkspace" Text="Expaces de sauvegardes" FontWeight="SemiBold" Foreground="#0F172A"/>
+                    <TextBlock x:Name="textList" Text=" (liste)" Margin="6,0,0,0" Foreground="#94A3B8"/>
                 </StackPanel>
 
-                <ListView Grid.Row="1" BorderThickness="0" Background="Transparent">
+                <ListView x:Name="listSaveSpaces" Grid.Row="1" BorderThickness="0" Background="Transparent">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Nom" Width="220" DisplayMemberBinding="{Binding Name}"/>
-                            <GridViewColumn Header="Source" Width="240" DisplayMemberBinding="{Binding SourcePath}"/>
-                            <GridViewColumn Header="Destination" Width="240" DisplayMemberBinding="{Binding TargetPath}"/>
+                            <GridViewColumn x:Name="headerName" Header="Nom" Width="220" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn x:Name="headerSource" Header="Source" Width="240">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DockPanel LastChildFill="True">
+                                            <Button Content="..." Width="28" Margin="0,0,6,0" DockPanel.Dock="Right"/>
+                                            <TextBox Text="{Binding SourcePath}" BorderThickness="1" BorderBrush="#E2E8F0" Padding="4,2"/>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="headerDestination" Header="Destination" Width="240">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DockPanel LastChildFill="True">
+                                            <Button Content="..." Width="28" Margin="0,0,6,0" DockPanel.Dock="Right"/>
+                                            <TextBox Text="{Binding TargetPath}" BorderThickness="1" BorderBrush="#E2E8F0" Padding="4,2"/>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -45,9 +63,11 @@
         </Border>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
-            <Button Content="Ajouter" Width="100" Margin="0,0,8,0"/>
-            <Button Content="Éditer" Width="100" Margin="0,0,8,0"/>
-            <Button Content="Supprimer" Width="100"/>
+            <Button x:Name="btnAddSpace" Content="Ajouter" Width="auto" Margin="0,0,8,0"/>
+            <Button x:Name="btnEditSpace" Content="Éditer" Width="auto" Margin="0,0,8,0"/>
+            <Button x:Name="btnDeleteSpace" Content="Supprimer" Width="auto" Margin="0,0,8,0"/>
+            <Button x:Name="btnStartSave" Content="Démarrer" Width="auto" Margin="0,0,8,0"/>
+            <Button x:Name="btnLanguage" Content="Langue" Width="auto"/>
         </StackPanel>
     </Grid>
 </Window>
