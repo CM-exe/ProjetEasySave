@@ -67,8 +67,7 @@ namespace ProjetEasySave.Utils
         {
             try
             {
-                string extension = CurrentFormat == LogFormat.Json ? ".json" : ".xml";
-                string fullPath = logRealTimeFile + extension;
+                string fullPath = logRealTimeFile + (CurrentFormat == LogFormat.Json ? ".json" : ".xml");
 
                 string content = CurrentFormat == LogFormat.Json 
                     ? FormatToJson(message) 
@@ -146,7 +145,7 @@ namespace ProjetEasySave.Utils
         public static Dictionary<string, string> formatInfoRealTimeMessage(string name, string source, string target, string time, SaveTaskState saveTaskState)
         {
             // Format the log message as a dictionary
-            Dictionary<string, string> logMessage = new Dictionary<string, string>
+            return new Dictionary<string, string>
             {
                 { "name", name },
                 { "sourceFile", source },
@@ -154,13 +153,12 @@ namespace ProjetEasySave.Utils
                 { "time", time },
                 { "saveTaskState", saveTaskState.ToString() }
             };
-            return logMessage;
         }
 
         public static Dictionary<string, string> formatLogMessage(string name, string source, string target, int size, double transferTime, string time)
         {
             // Format the log message as a dictionary
-            Dictionary<string, string> logMessage = new Dictionary<string, string>
+            return new Dictionary<string, string>
             {
                 { "name", name },
                 { "sourceFile", source },
@@ -169,19 +167,16 @@ namespace ProjetEasySave.Utils
                 { "transferTime", transferTime.ToString() },
                 { "time", time }
             };
-
-            return logMessage;
         }
 
         public static Dictionary<string, string> formatErrMessage(string errorMessage)
         {
             // Format the log message as a dictionary
-            Dictionary<string, string> logMessage = new Dictionary<string, string>
+            return new Dictionary<string, string>
             {
                 { "error", errorMessage },
                 { "time", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") }
             };
-            return logMessage;
         }
     }
 }
