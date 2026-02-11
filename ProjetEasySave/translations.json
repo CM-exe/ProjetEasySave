@@ -28,7 +28,11 @@
     "CompleteSavePath": "Chemin de la sauvegarde complète",
     "SaveCompleted": "Sauvegarde terminée.",
     "SaveFailed": "Échec de la sauvegarde.",
-    "UsageCommandExemple": "EasySave\nusage: <exe_file> {save_space_id_start|type_of_slide|save_space_id_to}\n  options :\n    save_space_id_start: Index of the first save space to save\n    type_of_slide: Either \";\" to save only save_space_id_start and save_space_id_to ; or \"-\" to save the save spaces ranged between them\n    save_space_id_to: Index of the last save space to save\n\nexemples :\n  EasySave.exe 1-3        # Save save spaces 1, 2, 3\n  EasySave.exe 1;3        # Save save spaces 1, 3\n  EasySave.exe 1          # Error (use 1-1 or 1;1)"
+    "UsageCommandExemple": "EasySave\nusage: <exe_file> {save_space_id_start|type_of_slide|save_space_id_to}\n  options :\n    save_space_id_start: Index of the first save space to save\n    type_of_slide: Either \";\" to save only save_space_id_start and save_space_id_to ; or \"-\" to save the save spaces ranged between them\n    save_space_id_to: Index of the last save space to save\n\nexemples :\n  EasySave.exe 1-3        # Save save spaces 1, 2, 3\n  EasySave.exe 1;3        # Save save spaces 1, 3\n  EasySave.exe 1          # Error (use 1-1 or 1;1)",
+    "ChangeLogFormat": "Changer le format de log",
+    "LogFormatPrompt": "Format de log (XML/JSON) : ",
+    "LogFormatUpdated": "Format de log mis à jour avec succès.",
+    "InvalidLogFormat": "Choix de format invalide."
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -59,6 +63,10 @@
     "CompleteSavePath": "Complete save path",
     "SaveCompleted": "Backup completed.",
     "SaveFailed": "Failed to backup.",
-    "UsageCommandExemple": "EasySave\nusage: <exe_file> {save_space_id_start|type_of_slide|save_space_id_to}\n  options :\n    save_space_id_start: Index of the first save space to save\n    type_of_slide: Either \";\" to save only save_space_id_start and save_space_id_to ; or \"-\" to save the save spaces ranged between them\n    save_space_id_to: Index of the last save space to save\n\nexemples :\n  EasySave.exe 1-3        # Save save spaces 1, 2, 3\n  EasySave.exe 1;3        # Save save spaces 1, 3\n  EasySave.exe 1          # Error (use 1-1 or 1;1)"
+    "UsageCommandExemple": "EasySave\nusage: <exe_file> {save_space_id_start|type_of_slide|save_space_id_to}\n  options :\n    save_space_id_start: Index of the first save space to save\n    type_of_slide: Either \";\" to save only save_space_id_start and save_space_id_to ; or \"-\" to save the save spaces ranged between them\n    save_space_id_to: Index of the last save space to save\n\nexemples :\n  EasySave.exe 1-3        # Save save spaces 1, 2, 3\n  EasySave.exe 1;3        # Save save spaces 1, 3\n  EasySave.exe 1          # Error (use 1-1 or 1;1)",
+    "ChangeLogFormat": "Change log format",
+    "LogFormatPrompt": "Log format (XML/JSON): ",
+    "LogFormatUpdated": "Log format updated successfully.",
+    "InvalidLogFormat": "Invalid format choice."
   }
 }
