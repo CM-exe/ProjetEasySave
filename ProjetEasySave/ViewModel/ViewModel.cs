@@ -1,4 +1,5 @@
 ﻿using ProjetEasySave.Model;
+using ProjetEasySave.Utils;
 
 namespace ProjetEasySave.ViewModel
 {
@@ -49,6 +50,24 @@ namespace ProjetEasySave.ViewModel
         public string translate(string key)
         {
             return _languageService.translate(key);
+        }
+
+        public bool setLogFormat(string format)
+        {
+            // Try to parse or match the string to the LogFormat enum
+            if (format == "JSON")
+            {
+                Logger.getInstance().CurrentFormat = LogFormat.Json;
+                return true;
+            }
+            else if (format == "XML")
+            {
+                Logger.getInstance().CurrentFormat = LogFormat.Xml;
+                return true;
+            }
+
+            // Return false if the input was invalid
+            return false;
         }
     }
 }

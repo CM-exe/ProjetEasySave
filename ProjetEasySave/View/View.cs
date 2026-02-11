@@ -147,6 +147,9 @@ namespace ProjetEasySave.View
                         case "6":
                             viewSaveSpacesStateFlow();
                             break;
+                        case "7":
+                            changeLogFormatFlow();
+                            break;
                         case "0":
                             running = false;
                             break;
@@ -177,9 +180,11 @@ namespace ProjetEasySave.View
             Console.WriteLine("4) " + _viewModel.translate("ListSaveSpaces"));
             Console.WriteLine("5) " + _viewModel.translate("ChangeLanguage"));
             Console.WriteLine("6) " + _viewModel.translate("SaveSpacesState"));
+            Console.WriteLine("7) " + _viewModel.translate("ChangeLogFormat"));
             Console.WriteLine("0) " + _viewModel.translate("Exit"));
             Console.ResetColor();
             Console.WriteLine();
+
         }
 
         private void addSaveSpaceFlow()
@@ -312,6 +317,26 @@ namespace ProjetEasySave.View
 
             _viewModel.setLanguage(code);
             renderMessage(_viewModel.translate("Language") + ": " + _viewModel.getLanguage(), ConsoleColor.Green);
+            pause();
+        }
+
+        private void changeLogFormatFlow()
+        {
+            renderHeader();
+
+            // Use the translated prompt from translations.json
+            Console.Write(_viewModel.translate("LogFormatPrompt"));
+            string choice = Console.ReadLine()?.Trim().ToUpper();
+
+            bool success = _viewModel.setLogFormat(choice);
+
+            // Results are now also translated
+            renderResult(
+                success,
+                _viewModel.translate("LogFormatUpdated"),
+                _viewModel.translate("InvalidLogFormat")
+            );
+
             pause();
         }
 
