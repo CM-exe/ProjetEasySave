@@ -16,7 +16,7 @@ namespace ProjetEasySave.Utils
         // Attributes
         private static Logger singletonInstance; // Has to be static
         // Load config
-        Config config = Config.Instance;
+        private Config config = Config.Instance;
         private string logDirectoryPath;
         private string logRealTimeFile;
 

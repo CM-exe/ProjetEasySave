@@ -7,7 +7,7 @@ namespace ProjetEasySave.ViewModel
     public class LanguageService
     {
         // Attributes
-        Config config = Config.Instance; // Load config
+        private Config config = Config.Instance; // Load config
         private string _currentLanguage;
         private Dictionary<string, Dictionary<string, string>> _translations;
 
@@ -37,6 +37,7 @@ namespace ProjetEasySave.ViewModel
             if (_translations.ContainsKey(languageCode))
             {
                 _currentLanguage = languageCode;
+                config.setLanguage(languageCode); // Save the new language in the config file
             }
         }
 

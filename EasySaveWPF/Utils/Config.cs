@@ -109,6 +109,24 @@ namespace ProjetEasySave.Utils
 
         }
 
+        public void saveConfigFile()
+        {
+            var Data = new Dictionary<string, string>
+            {
+                // Language
+                {"language", new string(language) },
+                {"logDirectoryPath", new string(logDirectoryPath)},
+                {"logRealTimeFile", new string(logRealTimeFile)},
+                {"configModelsPath", new string(configModelsPath)},
+                {"logsFormat", new string(logsFormat) }
+            };
+            // Save as JSON object
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string jsonToSave = JsonSerializer.Serialize(Data, options);
+            // Write file
+            File.WriteAllText(configFile, jsonToSave);
+        }
+
         // Getters
 
         public string getLanguage() { return language; }
@@ -117,6 +135,9 @@ namespace ProjetEasySave.Utils
         public string getLogsFormat() { return logsFormat; }
         public string getConfigModelsPath() { return configModelsPath; }
 
+
+        // Setters
+        public void setLanguage(string newLanguage) { language = newLanguage; saveConfigFile(); }
 
     }
 }
