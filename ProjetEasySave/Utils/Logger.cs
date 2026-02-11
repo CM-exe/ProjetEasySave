@@ -23,7 +23,7 @@ namespace ProjetEasySave.Utils
         private Logger()
         {
             // Default log directory path
-            logDirectoryPath = @"C:\EasyProject\Logs\"; 
+            logDirectoryPath = @"\\localhost\c$\EasyProject\Logs\"; 
             if (!Directory.Exists(logDirectoryPath))
             {
                 Directory.CreateDirectory(logDirectoryPath);
