@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using ProjetEasySave.Utils;
+using System.IO;
 using System.Text.Json;
 
 namespace ProjetEasySave.ViewModel
@@ -6,13 +7,14 @@ namespace ProjetEasySave.ViewModel
     public class LanguageService
     {
         // Attributes
+        Config config = Config.Instance; // Load config
         private string _currentLanguage;
         private Dictionary<string, Dictionary<string, string>> _translations;
 
         // Constructor
         public LanguageService()
         {
-            _currentLanguage = "en";
+            _currentLanguage = config.getLanguage();
             _translations = new Dictionary<string, Dictionary<string, string>>();
 
             var filePath = Path.Combine(AppContext.BaseDirectory, "../../../translations.json");

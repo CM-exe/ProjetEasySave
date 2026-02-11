@@ -14,7 +14,9 @@ namespace ProjetEasySave.Utils
          */
 
         // Attributes
-        private static Logger singletonInstance; // Doit être static
+        private static Logger singletonInstance; // Has to be static
+        // Load config
+        Config config = Config.Instance;
         private string logDirectoryPath;
         private string logRealTimeFile;
 
@@ -22,7 +24,7 @@ namespace ProjetEasySave.Utils
         private Logger()
         {
             // Default log directory path
-            logDirectoryPath = @"\\localhost\c$\EasyProject\Logs\";
+            logDirectoryPath = config.getLogDirectoryPath();
             // Create the log directory if it doesn't exist
             if (!System.IO.Directory.Exists(logDirectoryPath))
             {
