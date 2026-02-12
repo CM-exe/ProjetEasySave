@@ -1,0 +1,7 @@
+{
+  "language": "en",
+  "logDirectoryPath": "\\\\localhost\\c$\\EasyProject\\Logs\\",
+  "logRealTimeFile": "\\\\localhost\\c$\\EasyProject\\Logs\\real_time_log.json",
+  "configModelsPath": "C:\\Users\\noapi\\ProjetGenieLogiciel\\ProjetEasySave\\ProjetEasySave\\bin\\Debug\\net10.0\\../../../config_models.json",
+  "logsFormat": "json"
+}

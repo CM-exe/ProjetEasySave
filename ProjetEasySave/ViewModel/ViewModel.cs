@@ -1,4 +1,5 @@
 ﻿using ProjetEasySave.Model;
+using System.Diagnostics;
 
 namespace ProjetEasySave.ViewModel
 {
@@ -49,6 +50,19 @@ namespace ProjetEasySave.ViewModel
         public string translate(string key)
         {
             return _languageService.translate(key);
+        }
+
+        public bool IsBusinessSoftwareRunning()
+        {
+            // Name of the process to look for. 
+            // Note: For testing, "CalculatorApp" or "win32calc" depends on the Windows version.
+            string businessSoftwareName = "CalculatorApp";
+
+            // Fetch all processes matching the specified name
+            Process[] processes = Process.GetProcessesByName(businessSoftwareName);
+
+            // Return true if at least one instance is actively running
+            return processes.Length > 0;
         }
     }
 }

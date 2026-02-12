@@ -71,11 +71,11 @@ namespace ProjetEasySave.Model
             return task.getState();
         }
 
-        public bool executeSave()
+        public bool executeSave(Func<bool> businessSoftwareChecker = null)
         {
             foreach (var task in _saveTasks)
             {
-                if (!task.save(_sourcePath, _destinationPath))
+                if (!task.save(_sourcePath, _destinationPath, businessSoftwareChecker))
                 {
                     return false; // If any save task fails, return false
                 }
