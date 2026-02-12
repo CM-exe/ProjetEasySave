@@ -1,4 +1,5 @@
-﻿using ProjetEasySave.Model;
+﻿using Microsoft.Win32;
+using ProjetEasySave.Model;
 using ProjetEasySave.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace EasySaveWPF
@@ -32,13 +35,15 @@ namespace EasySaveWPF
             btnEditSpace.Content = _viewModel.translate("EditSaveSpace");
             btnStartSave.Content = _viewModel.translate("StartSave");
             btnLanguage.Content = _viewModel.translate("ChangeLanguage");
+            btnLogsFormat.Content = _viewModel.translate("ChangeLogsFormat");
             textAppDescription.Text = _viewModel.translate("textAppDescription");
             textList.Text = _viewModel.translate("textList");
             textWorkspace.Text = _viewModel.translate("textWorkspace");
             headerName.Header = _viewModel.translate("Name");
             headerSource.Header = _viewModel.translate("Source");
             headerDestination.Header = _viewModel.translate("Destination");
-
+            headerCompleteSavePath.Header = _viewModel.translate("CompleteSavePath");
+            headerType.Header = _viewModel.translate("Type");
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -55,6 +60,7 @@ namespace EasySaveWPF
             if (btnDeleteSpace != null) btnDeleteSpace.Click += OnDeleteClick;
             if (btnStartSave != null) btnStartSave.Click += OnStartClick;
             if (btnLanguage != null) btnLanguage.Click += OnLanguageClick;
+            if (btnLogsFormat != null) btnLogsFormat.Click += OnLogsFormatClick;
 
             RefreshList();
             UpdateButtonsState();
@@ -76,7 +82,9 @@ namespace EasySaveWPF
                 {
                     Name = space.getName(),
                     SourcePath = space.getSourcePath(),
-                    TargetPath = space.getDestinationPath()
+                    TargetPath = space.getDestinationPath(),
+                    BackupType = space.getTypeSave(),
+                    CompleteSavePath = space.getCompleteSavePath()
                 });
             }
         }
@@ -179,6 +187,23 @@ namespace EasySaveWPF
             }
         }
 
+        private void OnLogsFormatClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SelectDialog(_viewModel.translate("LogsFormatPrompt"), _viewModel.translate("CurrentLogsFormat") + ": " + _viewModel.getLogsFormat(), _viewModel.translate("LogsFormat") + " :", ["json", "xml"]);
+            if (dialog.ShowDialog() == true)
+            {
+                // Change the logs format
+                var format = dialog.Value.Trim();
+                _viewModel.setLogsFormat(format);
+                MessageBox.Show(
+                    _viewModel.translate("CurrentLogsFormat") + ": " + _viewModel.getLogsFormat(),
+                    "EasySave",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
+                );
+            }
+        }
+
         private void ShowResult(bool ok, string success, string fail)
         {
             MessageBox.Show(ok ? success : fail, "EasySave", MessageBoxButton.OK, ok ? MessageBoxImage.Information : MessageBoxImage.Error);
@@ -231,6 +256,10 @@ namespace EasySaveWPF
             public string Name { get; init; } = string.Empty;
             public string SourcePath { get; init; } = string.Empty;
             public string TargetPath { get; init; } = string.Empty;
+
+            public string BackupType { get; init; } = string.Empty;
+
+            public string CompleteSavePath { get; init; } = string.Empty;
         }
 
         private sealed class SaveSpaceInput
@@ -246,9 +275,13 @@ namespace EasySaveWPF
         {
             private readonly TextBox _nameBox = new();
             private readonly TextBox _sourceBox = new();
+            private readonly Button _sourceBrowserButton = new();
             private readonly TextBox _targetBox = new();
+            private readonly Button _targetBrowserButton = new();
             private readonly ComboBox _typeBox = new();
             private readonly TextBox _completeBox = new();
+            private readonly Button _completeBrowserButton = new();
+            private readonly LanguageService _language = new LanguageService();
 
             public SaveSpaceInput Result { get; set; } = new();
 
@@ -267,16 +300,39 @@ namespace EasySaveWPF
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-                AddRow(grid, 0, "Nom", _nameBox);
-                AddRow(grid, 1, "Source", _sourceBox);
-                AddRow(grid, 2, "Destination", _targetBox);
+                AddRow(grid, 0, _language.translate("Name"), _nameBox);
+
+                ConfigureBrowseButton(_sourceBrowserButton, _sourceBox);
+                AddRow(grid, 1, _language.translate("Source"), CreateBrowseRow(_sourceBox, _sourceBrowserButton));
+
+                ConfigureBrowseButton(_targetBrowserButton, _targetBox);
+                AddRow(grid, 2, _language.translate("Destination"), CreateBrowseRow(_targetBox, _targetBrowserButton));
 
                 _typeBox.ItemsSource = new[] { "complete", "differential" };
                 _typeBox.SelectedIndex = 0;
-                _typeBox.SelectionChanged += (_, __) => _completeBox.IsEnabled = (_typeBox.SelectedItem?.ToString() == "differential");
+                _typeBox.SelectionChanged += (_, __) =>
+                {
+                    bool enabled = _typeBox.SelectedItem?.ToString() == "differential";
+                    if (enabled)
+                    { 
+                        // Enable the row 4
+                        _completeBox.IsEnabled = true;
+                        _completeBrowserButton.IsEnabled = true;
+                    }
+                    else
+                    {
+                        // Disable the row 4 and clear its value
+                        _completeBox.Text = string.Empty;
+                        _completeBox.IsEnabled = false;
+                        _completeBrowserButton.IsEnabled = false;
+                    }
+                };
                 AddRow(grid, 3, "Type", _typeBox);
 
-                AddRow(grid, 4, "Chemin complet", _completeBox);
+                // Default _completeBrowserButton is disabled because the default type is "complete"
+                _completeBrowserButton.IsEnabled = false;
+                ConfigureBrowseButton(_completeBrowserButton, _completeBox);
+                AddRow(grid, 4, _language.translate("CompleteSavePath"), CreateBrowseRow(_completeBox, _completeBrowserButton));
 
                 var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 12, 0, 0) };
                 var ok = new Button { Content = "OK", Width = 80, Margin = new Thickness(0, 0, 8, 0) };
@@ -293,6 +349,38 @@ namespace EasySaveWPF
                 Content = grid;
 
                 Loaded += (_, __) => LoadResult();
+            }
+
+            private static Grid CreateBrowseRow(TextBox textBox, Button button)
+            {
+                var innerGrid = new Grid();
+                innerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                innerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+                textBox.Margin = new Thickness(0, 0, 8, 8);
+                Grid.SetColumn(textBox, 0);
+                innerGrid.Children.Add(textBox);
+
+                button.Margin = new Thickness(0, 0, 0, 8);
+                Grid.SetColumn(button, 1);
+                innerGrid.Children.Add(button);
+
+                return innerGrid;
+            }
+
+            private static void ConfigureBrowseButton(Button button, TextBox targetBox)
+            {
+                button.Content = "...";
+                button.Width = 28;
+                button.Click += (_, __) =>
+                {
+                    OpenFolderDialog dialog = new OpenFolderDialog();
+                    bool? success = dialog.ShowDialog();
+                    if (success == true)
+                    {
+                        targetBox.Text = dialog.FolderName;
+                    }
+                };
             }
 
             private void LoadResult()
@@ -314,7 +402,7 @@ namespace EasySaveWPF
                 Result.CompleteSavePath = _completeBox.Text.Trim();
             }
 
-            private static void AddRow(Grid grid, int row, string label, Control control)
+            private static void AddRow(Grid grid, int row, string label, FrameworkElement control)
             {
                 var text = new TextBlock { Text = label, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 8) };
                 control.Margin = new Thickness(0, 0, 0, 8);

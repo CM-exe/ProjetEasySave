@@ -1,134 +1,154 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Linq;
 
 namespace ProjetEasySave.Utils
 {
+    // Enumeration to define the supported log formats
+    public enum LogFormat { Json, Xml }
+
     public class Logger
     {
-        /*
-         * Logger class implementing the Singleton design pattern.
-         * This class is responsible for logging application events to a specified log file in JSON format.
-         * Usage exemple:
-         * Logger logger = Logger.getInstance()
-         */
-
         // Attributes
-        private static Logger singletonInstance; // Has to be static
-        // Load config
-        private Config config = Config.Instance;
+        private static Logger singletonInstance;
         private string logDirectoryPath;
         private string logRealTimeFile;
+        private Config config = Config.Instance; // Load config
 
-        // Constructors
+        // Property to define the current format (adjustable by the user)
+        private LogFormat currentFormat = LogFormat.Json;
+
+        // Private constructor for Singleton pattern
         private Logger()
         {
             // Default log directory path
             logDirectoryPath = config.getLogDirectoryPath();
-            // Create the log directory if it doesn't exist
-            if (!System.IO.Directory.Exists(logDirectoryPath))
+            if (!Directory.Exists(logDirectoryPath))
             {
-                System.IO.Directory.CreateDirectory(logDirectoryPath);
+                Directory.CreateDirectory(logDirectoryPath);
             }
-            // Default log file for real-time logging
-            logRealTimeFile = System.IO.Path.Combine(logDirectoryPath, "real_time_log.json");
+
+            currentFormat = config.getLogsFormat().ToLower() == "xml" ? LogFormat.Xml : LogFormat.Json;
+
+            // Initialize the base path for real-time logging
+            logRealTimeFile = Path.Combine(logDirectoryPath, "real_time_log");
         }
 
-        // Methods
-        public static Logger getInstance() // Doit être static
+        // Method to get the unique instance of the Logger
+        public static Logger getInstance()
         {
             if (singletonInstance == null)
-            {
                 singletonInstance = new Logger();
-            }
             return singletonInstance;
-
         }
 
-        // Logging methods
+        // --- Historical Logging Method (Append mode) ---
         public bool log(Dictionary<string, string> message)
         {
-            // Check if logFile is set
             if (logDirectoryPath == null)
             {
+                Console.WriteLine("Log directory path is not set.");
                 return false;
             }
 
-            // Define log file path
+            string extension = currentFormat == LogFormat.Json ? ".json" : ".xml";
             string todaysDate = DateTime.Today.ToString("yyyy-MM-dd");
-            string logFilePath = System.IO.Path.Combine(logDirectoryPath, todaysDate + "_log.json");
+            string logFilePath = Path.Combine(logDirectoryPath, todaysDate + "_log" + extension);
 
-            // Build the message at the good format
-            StringBuilder jsonMessage = new StringBuilder();
-            jsonMessage.Append("{");
-            foreach (var kvp in message)
-            {
-                jsonMessage.AppendFormat("\"{0}\": \"{1}\",", kvp.Key, kvp.Value);
-            }
-            if (message.Count > 0)
-            {
-                jsonMessage.Length--;
-            }
-            jsonMessage.Append("}");
-            string jsonString = jsonMessage.ToString();
+            // Format content based on the selected format
+            string formattedContent = currentFormat == LogFormat.Json
+                ? FormatToJson(message)
+                : FormatToXml(message);
 
-            // If file not existing, create it and add the message
-            if (!System.IO.File.Exists(logFilePath) || new System.IO.FileInfo(logFilePath).Length == 0)
+            return WriteToFile(logFilePath, formattedContent, currentFormat);
+        }
+
+        // --- Real-Time Logging Method (Overwrite mode) ---
+        public bool logRealTime(Dictionary<string, string> message)
+        {
+            try
             {
-                System.IO.File.WriteAllText(logFilePath, "[" + jsonString + "]");
+                string fullPath = logRealTimeFile + (currentFormat == LogFormat.Json ? ".json" : ".xml");
+
+                string content = currentFormat == LogFormat.Json
+                    ? FormatToJson(message)
+                    : FormatToXml(message);
+
+                // Overwrites the file to keep only the most recent state
+                File.WriteAllText(fullPath, content);
                 return true;
             }
+            catch { return false; }
+        }
 
-            // Else, add the message
-            string existing = System.IO.File.ReadAllText(logFilePath).TrimEnd();
-            if (existing.EndsWith("]"))
+        // --- Private Formatting Methods ---
+
+        private string FormatToJson(Dictionary<string, string> message)
+        {
+            var entries = message.Select(kvp => $"\"{kvp.Key}\": \"{kvp.Value}\"");
+            return "{" + string.Join(",", entries) + "}";
+        }
+
+        private string FormatToXml(Dictionary<string, string> message)
+        {
+            StringBuilder xml = new StringBuilder();
+            xml.Append("<logEntry>");
+            foreach (var kvp in message)
             {
-                existing = existing.Substring(0, existing.Length - 1);
-                if (existing.EndsWith("["))
+                xml.AppendFormat("<{0}>{1}</{0}>", kvp.Key, kvp.Value);
+            }
+            xml.Append("</logEntry>");
+            return xml.ToString();
+        }
+
+        // Logic to handle JSON arrays and XML root tags during file writing
+        private bool WriteToFile(string path, string content, LogFormat format)
+        {
+            try
+            {
+                // If file doesn't exist, initialize it with correct structure
+                if (!File.Exists(path) || new FileInfo(path).Length == 0)
                 {
-                    existing += jsonString + "]";
+                    string initial = format == LogFormat.Json
+                        ? "[" + content + "]"
+                        : "<root>\n" + content + "\n</root>";
+                    File.WriteAllText(path, initial);
                 }
                 else
                 {
-                    existing += "," + jsonString + "]";
+                    if (format == LogFormat.Json)
+                    {
+                        string existing = File.ReadAllText(path).Trim();
+                        if (existing.EndsWith("]"))
+                        {
+                            existing = existing.Substring(0, existing.Length - 1);
+                            string separator = (existing.EndsWith("[")) ? "" : ",";
+                            File.WriteAllText(path, existing + separator + content + "]");
+                        }
+                    }
+                    else // XML Handling
+                    {
+                        string existing = File.ReadAllText(path).Trim();
+                        if (existing.EndsWith("</root>"))
+                        {
+                            existing = existing.Substring(0, existing.Length - 7);
+                            File.WriteAllText(path, existing + content + "\n</root>");
+                        }
+                    }
                 }
-                System.IO.File.WriteAllText(logFilePath, existing);
                 return true;
             }
-
-            System.IO.File.WriteAllText(logFilePath, "[" + jsonString + "]");
-            return true;
+            catch { return false; }
         }
 
-        public bool logRealTime(Dictionary<string, string> message)
-        {
-            // Check if logFile is set
-            if (logDirectoryPath == null)
-            {
-                return false;
-            }
-            // Build the message at the good format
-            StringBuilder jsonMessage = new StringBuilder();
-            jsonMessage.Append("{");
-            foreach (var kvp in message)
-            {
-                jsonMessage.AppendFormat("\"{0}\": \"{1}\",", kvp.Key, kvp.Value);
-            }
-            if (message.Count > 0)
-            {
-                jsonMessage.Length--;
-            }
-            jsonMessage.Append("}");
-            string jsonString = jsonMessage.ToString();
-            // Write the message to the real-time log file
-            System.IO.File.WriteAllText(logRealTimeFile, jsonString);
-            return true;
-        }
+        // --- Data Formatting Methods (Static) ---
 
         public static Dictionary<string, string> formatInfoRealTimeMessage(string name, string source, string target, string time, SaveTaskState saveTaskState)
         {
             // Format the log message as a dictionary
-            Dictionary<string, string> logMessage = new Dictionary<string, string>
+            return new Dictionary<string, string>
             {
                 { "name", name },
                 { "sourceFile", source },
@@ -136,13 +156,12 @@ namespace ProjetEasySave.Utils
                 { "time", time },
                 { "saveTaskState", saveTaskState.ToString() }
             };
-            return logMessage;
         }
 
         public static Dictionary<string, string> formatLogMessage(string name, string source, string target, int size, double transferTime, string time)
         {
             // Format the log message as a dictionary
-            Dictionary<string, string> logMessage = new Dictionary<string, string>
+            return new Dictionary<string, string>
             {
                 { "name", name },
                 { "sourceFile", source },
@@ -151,19 +170,46 @@ namespace ProjetEasySave.Utils
                 { "transferTime", transferTime.ToString() },
                 { "time", time }
             };
-
-            return logMessage;
         }
 
         public static Dictionary<string, string> formatErrMessage(string errorMessage)
         {
             // Format the log message as a dictionary
-            Dictionary<string, string> logMessage = new Dictionary<string, string>
+            return new Dictionary<string, string>
             {
                 { "error", errorMessage },
                 { "time", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") }
             };
-            return logMessage;
+        }
+
+        // Getters and Setters
+        public LogFormat getCurrentFormat()
+        {
+            return currentFormat;
+        }
+
+        public void setCurrentFormat(LogFormat format)
+        {
+            currentFormat = format;
+            config.setLogsFormat(format == LogFormat.Json ? "json" : "xml"); // Save the new format in the config file
+        }
+
+        // Using string for easier interaction with the UI
+        public string getLogsFormat()
+        {
+            return currentFormat.ToString();
+        }
+
+        public void setLogsFormat(string format)
+        {
+            if (format.ToLower() == "json")
+            {
+                setCurrentFormat(LogFormat.Json);
+            }
+            else if (format.ToLower() == "xml")
+            {
+                setCurrentFormat(LogFormat.Xml);
+            }
         }
     }
 }

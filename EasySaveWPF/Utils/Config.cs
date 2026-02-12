@@ -29,7 +29,7 @@ namespace ProjetEasySave.Utils
         private string configModelsPath;
         private string logsFormat;
 
-        private Config() 
+        private Config()
         {
             configFile = Path.Combine(AppContext.BaseDirectory, "../../../config.json");
             defaultLanguage = "en";
@@ -60,7 +60,7 @@ namespace ProjetEasySave.Utils
         public void loadConfigFile()
         {
             // Check if file exists
-            if (!File.Exists(configFile)) 
+            if (!File.Exists(configFile))
             {
                 var Data = new Dictionary<string, string>
                 {
@@ -78,7 +78,7 @@ namespace ProjetEasySave.Utils
 
                 // Write file
                 File.WriteAllText(configFile, jsonToSave);
-                
+
                 // Load var
                 language = defaultLanguage;
                 logDirectoryPath = defaultLogDirectoryPath;
@@ -86,12 +86,13 @@ namespace ProjetEasySave.Utils
                 configModelsPath = defaultConfigModelsPath;
                 logsFormat = defaultLogsFormat;
 
-            } else
+            }
+            else
             {
                 var json = File.ReadAllText(configFile);
                 var dict = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
                 // Assign variables
-                if (dict.ContainsKey("language")) language = dict["language"] ;
+                if (dict.ContainsKey("language")) language = dict["language"];
                 else language = defaultLanguage;
 
                 if (dict.ContainsKey("logDirectoryPath")) logDirectoryPath = dict["logDirectoryPath"];
@@ -139,5 +140,6 @@ namespace ProjetEasySave.Utils
         // Setters
         public void setLanguage(string newLanguage) { language = newLanguage; saveConfigFile(); }
 
+        public void setLogsFormat(string newLogsFormat) { logsFormat = newLogsFormat; saveConfigFile(); }
     }
 }

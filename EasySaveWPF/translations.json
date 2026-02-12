@@ -35,7 +35,8 @@
     "textWorkspace": "Espaces de sauvegardes",
     "textList": "(Liste)",
     "Source": "Source",
-    "Destination": "Destination"
+    "Destination": "Destination",
+    "ChangeLogsFormat": "Changer le format des logs"
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -73,6 +74,7 @@
     "textWorkspace": "Save spaces",
     "textList": "(List)",
     "Source": "Source",
-    "Destination": "Destination"
+    "Destination": "Destination",
+    "ChangeLogsFormat": "Change logs format"
   }
 }

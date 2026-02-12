@@ -1,4 +1,5 @@
 ﻿using ProjetEasySave.Model;
+using ProjetEasySave.Utils;
 
 namespace ProjetEasySave.ViewModel
 {
@@ -7,6 +8,7 @@ namespace ProjetEasySave.ViewModel
         // Attributes
         private SaveModel _model;
         private LanguageService _languageService;
+        private readonly Logger logger = Logger.getInstance(); // Load logger
 
         // Constructor
         public ViewModel()
@@ -44,6 +46,16 @@ namespace ProjetEasySave.ViewModel
         public string getLanguage()
         {
             return _languageService.getLanguage();
+        }
+
+        public void setLogsFormat(string format)
+        {
+            logger.setLogsFormat(format);
+        }
+
+        public string getLogsFormat()
+        {
+            return logger.getLogsFormat();
         }
 
         public string translate(string key)
