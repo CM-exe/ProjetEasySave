@@ -52,7 +52,7 @@ namespace ProjetEasySave.ViewModel
             return _languageService.translate(key);
         }
 
-        public bool IsBusinessSoftwareRunning()
+        public bool isBusinessSoftwareRunning()
         {
             // Name of the process to look for. 
             // Note: For testing, "CalculatorApp" or "win32calc" depends on the Windows version.

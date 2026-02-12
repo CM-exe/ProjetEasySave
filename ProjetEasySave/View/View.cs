@@ -223,7 +223,7 @@ namespace ProjetEasySave.View
 
         private void startSaveFlow()
         {
-            if (_viewModel.IsBusinessSoftwareRunning())
+            if (_viewModel.isBusinessSoftwareRunning())
             {
                 // Display an error message and abort the flow
                 renderMessage(_viewModel.translate("ErrorBusinessSoftwareRunning"), ConsoleColor.Red);
