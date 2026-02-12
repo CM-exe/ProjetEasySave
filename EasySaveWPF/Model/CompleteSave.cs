@@ -18,10 +18,20 @@ namespace ProjetEasySave.Model
         }
 
         // doSave method implementation for Differential Save
-        public bool doSave(string sourcePath, string destinationPath)
+        public bool doSave(string sourcePath, string destinationPath, Func<bool> businessSoftwareChecker = null)
         {
             try
             {
+                if (businessSoftwareChecker != null && businessSoftwareChecker())
+                {
+                    // Log the specific error
+                    Logger.getInstance().log(Logger.formatErrMessage("Backup suspended: Business software detected."));
+
+                    // Stop the backup immediately (after the previous file is done)
+                    return false;
+                }
+
+
                 if (string.IsNullOrWhiteSpace(sourcePath) || string.IsNullOrWhiteSpace(destinationPath))
                 {
                     _logger.log(Logger.formatErrMessage("Source or destination path is invalid."));

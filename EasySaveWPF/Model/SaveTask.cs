@@ -29,10 +29,10 @@
         }
 
         // Methods
-        public bool save(string sourceFolder, string destinationFolder)
+        public bool save(string sourceFolder, string destinationFolder, Func<bool> businessSoftwareChecker = null)
         {
             this.setState(SaveTaskState.RUNNING);
-            bool well_executed = _saveStrategy.doSave(sourceFolder, destinationFolder);
+            bool well_executed = _saveStrategy.doSave(sourceFolder, destinationFolder, businessSoftwareChecker);
             this.setState(well_executed ? SaveTaskState.COMPLETED : SaveTaskState.FAILED);
             return well_executed;
         }

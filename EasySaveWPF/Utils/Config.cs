@@ -21,6 +21,7 @@ namespace ProjetEasySave.Utils
         private string defaultLogRealTimeFile;
         private string defaultConfigModelsPath;
         private string defaultLogsFormat;
+        private string defaultBusinessSoftwareName;
 
         // Loaded variables
         private string language;
@@ -28,6 +29,7 @@ namespace ProjetEasySave.Utils
         private string logRealTimeFile;
         private string configModelsPath;
         private string logsFormat;
+        private string businessSoftwareName;
 
         private Config()
         {
@@ -35,9 +37,10 @@ namespace ProjetEasySave.Utils
             defaultLanguage = "en";
             defaultLogDirectoryPath = @"\\localhost\c$\EasyProject\Logs\";
             // Create the log directory if it doesn't exist
-            defaultLogRealTimeFile = System.IO.Path.Combine(defaultLogDirectoryPath, "real_time_log.json");
+            defaultLogRealTimeFile = Path.Combine(defaultLogDirectoryPath, "real_time_log");
             defaultConfigModelsPath = Path.Combine(AppContext.BaseDirectory, "../../../config_models.json");
             defaultLogsFormat = "json";
+            defaultBusinessSoftwareName = "CalculatorApp";
         }
 
         public static Config Instance
@@ -69,8 +72,8 @@ namespace ProjetEasySave.Utils
                     {"logDirectoryPath", new string(defaultLogDirectoryPath)},
                     {"logRealTimeFile", new string(defaultLogRealTimeFile)},
                     {"configModelsPath", new string(defaultConfigModelsPath)},
-                    {"logsFormat", new string(defaultLogsFormat) }
-                    //{"logDirectoryPath", new string()},
+                    {"logsFormat", new string(defaultLogsFormat) },
+                    {"businessSoftwareName", new string(defaultBusinessSoftwareName) }
                 };
                 // Save as JSON object
                 var options = new JsonSerializerOptions { WriteIndented = true };
@@ -85,6 +88,7 @@ namespace ProjetEasySave.Utils
                 logRealTimeFile = defaultLogRealTimeFile;
                 configModelsPath = defaultConfigModelsPath;
                 logsFormat = defaultLogsFormat;
+                businessSoftwareName = defaultBusinessSoftwareName;
 
             }
             else
@@ -106,6 +110,9 @@ namespace ProjetEasySave.Utils
 
                 if (dict.ContainsKey("logsFormat")) logsFormat = dict["logsFormat"];
                 else logsFormat = defaultLogsFormat;
+
+                if (dict.ContainsKey("businessSoftwareName")) businessSoftwareName = dict["businessSoftwareName"];
+                else businessSoftwareName = defaultBusinessSoftwareName;
             }
 
         }
@@ -119,7 +126,8 @@ namespace ProjetEasySave.Utils
                 {"logDirectoryPath", new string(logDirectoryPath)},
                 {"logRealTimeFile", new string(logRealTimeFile)},
                 {"configModelsPath", new string(configModelsPath)},
-                {"logsFormat", new string(logsFormat) }
+                {"logsFormat", new string(logsFormat) },
+                {"businessSoftwareName", new string(businessSoftwareName) }
             };
             // Save as JSON object
             var options = new JsonSerializerOptions { WriteIndented = true };
@@ -135,6 +143,7 @@ namespace ProjetEasySave.Utils
         public string getLogRealTimeFile() { return logRealTimeFile; }
         public string getLogsFormat() { return logsFormat; }
         public string getConfigModelsPath() { return configModelsPath; }
+        public string getBusinessSoftwareName() { return businessSoftwareName; }
 
 
         // Setters

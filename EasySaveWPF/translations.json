@@ -36,7 +36,8 @@
     "textList": "(Liste)",
     "Source": "Source",
     "Destination": "Destination",
-    "ChangeLogsFormat": "Changer le format des logs"
+    "ChangeLogsFormat": "Changer le format des logs",
+    "ErrorBusinessSoftwareRunning": "Sauvegarde annulée : Le logiciel métier est en cours d'exécution."
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -75,6 +76,7 @@
     "textList": "(List)",
     "Source": "Source",
     "Destination": "Destination",
-    "ChangeLogsFormat": "Change logs format"
+    "ChangeLogsFormat": "Change logs format",
+    "ErrorBusinessSoftwareRunning": "Backup cancelled: Business software is running."
   }
 }

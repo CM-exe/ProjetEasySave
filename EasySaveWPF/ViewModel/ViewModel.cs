@@ -1,5 +1,6 @@
 ﻿using ProjetEasySave.Model;
 using ProjetEasySave.Utils;
+using System.Diagnostics;
 
 namespace ProjetEasySave.ViewModel
 {
@@ -9,6 +10,7 @@ namespace ProjetEasySave.ViewModel
         private SaveModel _model;
         private LanguageService _languageService;
         private readonly Logger logger = Logger.getInstance(); // Load logger
+        private readonly Config config = Config.Instance; // Load config
 
         // Constructor
         public ViewModel()
@@ -61,6 +63,19 @@ namespace ProjetEasySave.ViewModel
         public string translate(string key)
         {
             return _languageService.translate(key);
+        }
+
+        public bool isBusinessSoftwareRunning()
+        {
+            // Name of the process to look for. 
+            // Note: For testing, "CalculatorApp" or "win32calc" depends on the Windows version.
+            string businessSoftwareName = config.getBusinessSoftwareName();
+
+            // Fetch all processes matching the specified name
+            Process[] processes = Process.GetProcessesByName(businessSoftwareName);
+
+            // Return true if at least one instance is actively running
+            return processes.Length > 0;
         }
     }
 }

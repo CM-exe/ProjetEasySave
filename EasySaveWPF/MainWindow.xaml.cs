@@ -164,6 +164,13 @@ namespace EasySaveWPF
                 return;
             }
 
+            if (_viewModel.isBusinessSoftwareRunning())
+            {
+                // Display an error message and abort the flow
+                MessageBox.Show(_viewModel.translate("ErrorBusinessSoftwareRunning"), "EasySave", MessageBoxButton.OK, MessageBoxImage.Error); return;
+            }
+
+
             bool ok = _viewModel.startSave(row.Name);
             ShowResult(ok, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
         }

@@ -7,6 +7,6 @@
          */
 
         // Interface methods
-        bool doSave(string sourcePath, string destinationPath);
+        bool doSave(string sourcePath, string destinationPath, Func<bool> businessSoftwareChecker = null);
     }
 }

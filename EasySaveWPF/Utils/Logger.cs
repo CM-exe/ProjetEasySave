@@ -33,7 +33,7 @@ namespace ProjetEasySave.Utils
             currentFormat = config.getLogsFormat().ToLower() == "xml" ? LogFormat.Xml : LogFormat.Json;
 
             // Initialize the base path for real-time logging
-            logRealTimeFile = Path.Combine(logDirectoryPath, "real_time_log");
+            logRealTimeFile = config.getLogRealTimeFile();
         }
 
         // Method to get the unique instance of the Logger
