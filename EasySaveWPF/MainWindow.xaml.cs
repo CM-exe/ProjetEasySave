@@ -44,6 +44,7 @@ namespace EasySaveWPF
             headerDestination.Header = _viewModel.translate("Destination");
             headerCompleteSavePath.Header = _viewModel.translate("CompleteSavePath");
             headerType.Header = _viewModel.translate("Type");
+            headerState.Header = _viewModel.translate("State");
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -62,8 +63,34 @@ namespace EasySaveWPF
             if (btnLanguage != null) btnLanguage.Click += OnLanguageClick;
             if (btnLogsFormat != null) btnLogsFormat.Click += OnLogsFormatClick;
 
+            // Abonnement à l'événement onSaveTaskStateChanged pour chaque SaveSpace existant
+            SubscribeToSaveSpaceEvents();
+
             RefreshList();
             UpdateButtonsState();
+        }
+
+
+
+        // Méthode pour s'abonner à l'événement onSaveTaskStateChanged de chaque SaveSpace
+        private void SubscribeToSaveSpaceEvents()
+        {
+            var spaces = _viewModel.getSaveSpaces();
+            if (spaces == null) return;
+
+            foreach (var space in spaces)
+            {
+                // Désabonnement préalable pour éviter les doublons
+                space.SaveTaskStateChanged -= SaveSpace_onSaveTaskStateChanged;
+                space.SaveTaskStateChanged += SaveSpace_onSaveTaskStateChanged;
+            }
+        }
+
+        // Gestionnaire d'événement appelé lors d'un changement d'état d'une tâche de sauvegarde
+        private void SaveSpace_onSaveTaskStateChanged(object? sender, EventArgs e)
+        {
+            // Rafraîchir la liste sur le thread UI
+            Dispatcher.Invoke(RefreshList);
         }
 
         private void RefreshList()
@@ -84,9 +111,13 @@ namespace EasySaveWPF
                     SourcePath = space.getSourcePath(),
                     TargetPath = space.getDestinationPath(),
                     BackupType = space.getTypeSave(),
-                    CompleteSavePath = space.getCompleteSavePath()
+                    CompleteSavePath = space.getCompleteSavePath(),
+                    State = space.getTaskStates().First().ToString() // <-- Récupération de l'état
                 });
             }
+
+            // Réabonnement aux événements pour les nouveaux SaveSpace
+            SubscribeToSaveSpaceEvents();
         }
 
         private void UpdateButtonsState()
@@ -267,6 +298,8 @@ namespace EasySaveWPF
             public string BackupType { get; init; } = string.Empty;
 
             public string CompleteSavePath { get; init; } = string.Empty;
+
+            public string State { get; init; } = string.Empty; // <-- Add State property
         }
 
         private sealed class SaveSpaceInput

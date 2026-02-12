@@ -49,6 +49,7 @@
                         <DataGridTextColumn x:Name="headerDestination" Header="Destination" Width="*" Binding="{Binding TargetPath}"/>
                         <DataGridTextColumn x:Name="headerType" Header="Type de sauvegarde" Width="*" Binding="{Binding BackupType}"/>
                         <DataGridTextColumn x:Name="headerCompleteSavePath" Header="Chemin de sauvegarde complet" Width="*" Binding="{Binding CompleteSavePath}"/>
+                        <DataGridTextColumn x:Name="headerState" Header="Statut" Width="*" Binding="{Binding State}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

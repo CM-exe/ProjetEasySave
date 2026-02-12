@@ -37,7 +37,8 @@
     "Source": "Source",
     "Destination": "Destination",
     "ChangeLogsFormat": "Changer le format des logs",
-    "ErrorBusinessSoftwareRunning": "Sauvegarde annulée : Le logiciel métier est en cours d'exécution."
+    "ErrorBusinessSoftwareRunning": "Sauvegarde annulée : Le logiciel métier est en cours d'exécution.",
+    "State": "État" 
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -77,6 +78,7 @@
     "Source": "Source",
     "Destination": "Destination",
     "ChangeLogsFormat": "Change logs format",
-    "ErrorBusinessSoftwareRunning": "Backup cancelled: Business software is running."
+    "ErrorBusinessSoftwareRunning": "Backup cancelled: Business software is running.",
+    "State": "State"
   }
 }

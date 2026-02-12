@@ -36,7 +36,6 @@ namespace ProjetEasySave.Utils
             configFile = Path.Combine(AppContext.BaseDirectory, "../../../config.json");
             defaultLanguage = "en";
             defaultLogDirectoryPath = @"\\localhost\c$\EasyProject\Logs\";
-            // Create the log directory if it doesn't exist
             defaultLogRealTimeFile = Path.Combine(defaultLogDirectoryPath, "real_time_log");
             defaultConfigModelsPath = Path.Combine(AppContext.BaseDirectory, "../../../config_models.json");
             defaultLogsFormat = "json";

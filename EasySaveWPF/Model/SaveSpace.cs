@@ -68,8 +68,15 @@ namespace ProjetEasySave.Model
             // Log the state change
             logger.logRealTime(Logger.formatInfoRealTimeMessage(_name, _sourcePath, _destinationPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), task.getState()));
             
+            // Trigger the event to notify the view of the state change
+            SaveTaskStateChanged?.Invoke(this, EventArgs.Empty);
+
             return task.getState();
         }
+
+        // EventHandler SaveTaskStateChanged for the view to update the UI in real-time
+        public event EventHandler? SaveTaskStateChanged;
+
 
         public bool executeSave(Func<bool> businessSoftwareChecker = null)
         {
