@@ -30,12 +30,12 @@ namespace EasySaveWPF
         private void render()
         {
             // Text of each elements
-            btnAddSpace.Content = _viewModel.translate("AddSaveSpace");
-            btnDeleteSpace.Content = _viewModel.translate("RemoveSaveSpace");
-            btnEditSpace.Content = _viewModel.translate("EditSaveSpace");
-            btnStartSave.Content = _viewModel.translate("StartSave");
-            btnLanguage.Content = _viewModel.translate("ChangeLanguage");
-            btnLogsFormat.Content = _viewModel.translate("ChangeLogsFormat");
+            btnAddSpace.Content = "➕ " + _viewModel.translate("AddSaveSpace");
+            btnDeleteSpace.Content = "✏️ " + _viewModel.translate("RemoveSaveSpace");
+            btnEditSpace.Content = "🗑 " + _viewModel.translate("EditSaveSpace");
+            btnStartSave.Content = "▶ " + _viewModel.translate("StartSave");
+            btnLanguage.Content = "🌐 " + _viewModel.translate("ChangeLanguage");
+            btnLogsFormat.Content = "📝 " + _viewModel.translate("ChangeLogsFormat");
             textAppDescription.Text = _viewModel.translate("textAppDescription");
             textList.Text = _viewModel.translate("textList");
             textWorkspace.Text = _viewModel.translate("textWorkspace");

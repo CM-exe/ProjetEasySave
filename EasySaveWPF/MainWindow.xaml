@@ -56,12 +56,12 @@
         </Border>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
-            <Button x:Name="btnAddSpace" Content="Ajouter" Width="auto" Margin="0,0,8,0" Padding="2,1,2,1"/>
-            <Button x:Name="btnEditSpace" Content="Éditer" Width="auto" Margin="0,0,8,0" Padding="2,1,2,1"/>
-            <Button x:Name="btnDeleteSpace" Content="Supprimer" Width="auto" Margin="0,0,8,0" Padding="2,1,2,1"/>
-            <Button x:Name="btnStartSave" Content="Démarrer" Width="auto" Margin="0,0,8,0" Padding="2,1,2,1"/>
-            <Button x:Name="btnLanguage" Content="Langue" Width="auto" Margin="0,0,8,0" Padding="2,1,2,1"/>
-            <Button x:Name="btnLogsFormat" Content="Format des logs" Width="auto" Padding="2,1,2,1"/>
+            <Button x:Name="btnAddSpace" Content="Ajouter" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
+            <Button x:Name="btnEditSpace" Content="Éditer" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
+            <Button x:Name="btnDeleteSpace" Content="Supprimer" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
+            <Button x:Name="btnStartSave" Content="Démarrer" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
+            <Button x:Name="btnLanguage" Content="Langue" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
+            <Button x:Name="btnLogsFormat" Content="Format des logs" Width="auto" Padding="2,2,2,2"/>
         </StackPanel>
     </Grid>
 </Window>
