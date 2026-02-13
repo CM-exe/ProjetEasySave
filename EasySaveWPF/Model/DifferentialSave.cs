@@ -153,6 +153,14 @@ namespace ProjetEasySave.Model
                     }
                 }
 
+                // "Save completed" log
+                _logger.log(Logger.formatCompleteSaveMessage(
+                    "Differential Save Finished",
+                    sourcePath,
+                    destinationPath,
+                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                ));
+
                 return true;
             }
             catch (Exception ex)

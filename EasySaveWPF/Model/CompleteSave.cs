@@ -100,6 +100,14 @@ namespace ProjetEasySave.Model
                     if (encryptionDuration < 0) return false;
                 }
 
+                // "Save completed" Log
+                _logger.log(Logger.formatCompleteSaveMessage(
+                    "Complete Save Finished",
+                    sourcePath,
+                    destinationPath,
+                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                ));
+
                 return true;
             }
             catch (Exception ex)

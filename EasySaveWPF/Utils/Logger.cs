@@ -175,6 +175,17 @@ namespace ProjetEasySave.Utils
             };
         }
 
+        public static Dictionary<string, string> formatCompleteSaveMessage(string name, string source, string target, string time)
+        {
+            return new Dictionary<string, string>
+            {
+                { "name", name },
+                { "sourceFile", source },
+                { "targetFile", target },
+                { "time", time }
+            };
+        }
+
         public static Dictionary<string, string> formatErrMessage(string errorMessage)
         {
             // Format the log message as a dictionary
