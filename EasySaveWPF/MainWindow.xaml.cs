@@ -31,8 +31,8 @@ namespace EasySaveWPF
         {
             // Text of each elements
             btnAddSpace.Content = "➕ " + _viewModel.translate("AddSaveSpace");
-            btnDeleteSpace.Content = "✏️ " + _viewModel.translate("RemoveSaveSpace");
-            btnEditSpace.Content = "🗑 " + _viewModel.translate("EditSaveSpace");
+            btnDeleteSpace.Content = "🗑 " + _viewModel.translate("RemoveSaveSpace");
+            btnEditSpace.Content = "✏️ " + _viewModel.translate("EditSaveSpace");
             btnStartSave.Content = "▶ " + _viewModel.translate("StartSave");
             btnLanguage.Content = "🌐 " + _viewModel.translate("ChangeLanguage");
             btnLogsFormat.Content = "📝 " + _viewModel.translate("ChangeLogsFormat");

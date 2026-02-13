@@ -5,3 +5,5 @@ riderModule.iml
 /_ReSharper.Caches/
 .vs/
 .idea/
+config.json
+config_models.json
