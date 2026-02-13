@@ -72,7 +72,9 @@ namespace ProjetEasySave.Model
 
                     bool shouldEncrypt = !string.IsNullOrEmpty(cryptoKey)
                                          && cryptoExtensions != null
-                                         && cryptoExtensions.Contains(extension);
+                                         // Utilise LINQ pour vérifier si l'extension existe, en ignorant la casse
+                                         && cryptoExtensions.Any(e =>
+                                             e.Equals(extension, StringComparison.OrdinalIgnoreCase));
 
                     if (shouldEncrypt)
                     {

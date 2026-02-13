@@ -92,50 +92,64 @@ namespace ProjetEasySave.Utils
                 configModelsPath = defaultConfigModelsPath;
                 logsFormat = defaultLogsFormat;
                 businessSoftwareName = defaultBusinessSoftwareName;
+                saveConfigFile();
 
             }
             else
             {
                 var json = File.ReadAllText(configFile);
-                var dict = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
-                // Assign variables
-                if (dict.ContainsKey("language")) language = dict["language"];
+
+                var dict = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json);
+
+                // Assignation des variables simples (on utilise .ToString())
+                if (dict.ContainsKey("language")) language = dict["language"].ToString();
                 else language = defaultLanguage;
 
-                if (dict.ContainsKey("logDirectoryPath")) logDirectoryPath = dict["logDirectoryPath"];
+                if (dict.ContainsKey("logDirectoryPath")) logDirectoryPath = dict["logDirectoryPath"].ToString();
                 else logDirectoryPath = defaultLogDirectoryPath;
 
-                if (dict.ContainsKey("logRealTimeFile")) logRealTimeFile = dict["logRealTimeFile"];
+                if (dict.ContainsKey("logRealTimeFile")) logRealTimeFile = dict["logRealTimeFile"].ToString();
                 else logRealTimeFile = defaultLogRealTimeFile;
 
-                if (dict.ContainsKey("configModelsPath")) configModelsPath = dict["configModelsPath"];
+                if (dict.ContainsKey("configModelsPath")) configModelsPath = dict["configModelsPath"].ToString();
                 else configModelsPath = defaultConfigModelsPath;
 
-                if (dict.ContainsKey("logsFormat")) logsFormat = dict["logsFormat"];
+                if (dict.ContainsKey("logsFormat")) logsFormat = dict["logsFormat"].ToString();
                 else logsFormat = defaultLogsFormat;
 
-                if (dict.ContainsKey("businessSoftwareName")) businessSoftwareName = dict["businessSoftwareName"];
+                if (dict.ContainsKey("businessSoftwareName")) businessSoftwareName = dict["businessSoftwareName"].ToString();
                 else businessSoftwareName = defaultBusinessSoftwareName;
+
+                // GESTION DU CHIFFREMENT (Clé)
+                if (dict.ContainsKey("encryptionKey")) EncryptionKey = dict["encryptionKey"].ToString();
+
+                // GESTION DU CHIFFREMENT (Liste)
+                if (dict.ContainsKey("encryptionExtensions"))
+                {
+                    // On désérialise le contenu brut de l'élément tableau vers une List<string>
+                    EncryptionExtensions = JsonSerializer.Deserialize<List<string>>(dict["encryptionExtensions"].GetRawText());
+                }
             }
 
         }
 
         public void saveConfigFile()
         {
-            var Data = new Dictionary<string, string>
+            var Data = new
             {
-                // Language
-                {"language", new string(language) },
-                {"logDirectoryPath", new string(logDirectoryPath)},
-                {"logRealTimeFile", new string(logRealTimeFile)},
-                {"configModelsPath", new string(configModelsPath)},
-                {"logsFormat", new string(logsFormat) },
-                {"businessSoftwareName", new string(businessSoftwareName) }
+                language = language,
+                logDirectoryPath = logDirectoryPath,
+                logRealTimeFile = logRealTimeFile,
+                configModelsPath = configModelsPath,
+                logsFormat = logsFormat,
+                businessSoftwareName = businessSoftwareName,
+                encryptionKey = EncryptionKey,       // Ajout de la clé
+                encryptionExtensions = EncryptionExtensions // Ajout de la liste (sera sauvegardée comme tableau [])
             };
-            // Save as JSON object
+
             var options = new JsonSerializerOptions { WriteIndented = true };
             string jsonToSave = JsonSerializer.Serialize(Data, options);
-            // Write file
+
             File.WriteAllText(configFile, jsonToSave);
         }
 

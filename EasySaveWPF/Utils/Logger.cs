@@ -87,9 +87,15 @@ namespace ProjetEasySave.Utils
 
         private string FormatToJson(Dictionary<string, string> message)
         {
-            // Escaping backslashes and quotes in values to ensure valid JSON output
+            // We create a collection of formatted strings for each key-value pair
             var entries = message.Select(kvp =>
-                $"\"{kvp.Key}\": \"{kvp.Value.Replace("\\", "\\\\").Replace("\"", "\\\"")}\"");
+            {
+                string escapedValue = kvp.Value
+                    .Replace("\\", "\\\\")
+                    .Replace("\"", "\\\"");
+
+                return $"\"{kvp.Key}\": \"{escapedValue}\"";
+            });
 
             return "{" + string.Join(",", entries) + "}";
         }
