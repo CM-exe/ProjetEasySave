@@ -54,8 +54,8 @@ namespace ProjetEasySave.Model
                 }
 
                 // Get global encryption settings from Config Singleton
-                string cryptoKey = Config.Instance.EncryptionKey;
-                List<string> cryptoExtensions = Config.Instance.EncryptionExtensions;
+                string cryptoKey = Config.Instance.getEncryptionKey();
+                List<string> cryptoExtensions = Config.Instance.getEncryptionExtensions();
 
                 _logger.log(Logger.formatLogMessage(
                     "Differential Save Started",

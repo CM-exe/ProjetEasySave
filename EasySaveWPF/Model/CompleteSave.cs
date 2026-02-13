@@ -39,8 +39,8 @@ namespace ProjetEasySave.Model
                 Directory.CreateDirectory(destinationPath);
 
                 // Fetching keys and extensions from your Config singleton
-                string cryptoKey = Config.Instance.EncryptionKey;
-                List<string> cryptoExtensions = Config.Instance.EncryptionExtensions;
+                string cryptoKey = Config.Instance.getEncryptionKey();
+                List<string> cryptoExtensions = Config.Instance.getEncryptionExtensions();
 
                 // Create directory structure
                 foreach (var dir in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))

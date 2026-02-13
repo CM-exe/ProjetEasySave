@@ -22,6 +22,8 @@ namespace ProjetEasySave.Utils
         private string defaultConfigModelsPath;
         private string defaultLogsFormat;
         private string defaultBusinessSoftwareName;
+        private List<string> defaultEncryptionExtensions;
+        private string defaultEncryptionKey;
 
         // Loaded variables
         private string language;
@@ -30,10 +32,8 @@ namespace ProjetEasySave.Utils
         private string configModelsPath;
         private string logsFormat;
         private string businessSoftwareName;
-
-        // Encrypt variables
-        public string EncryptionKey { get; set; } = "SecretKey"; // Default value : to change
-        public List<string> EncryptionExtensions { get; set; } = new List<string> { ".txt", ".json" };
+        private List<string> encryptionExtensions;
+        private string encryptionKey;
 
         private Config()
         {
@@ -44,6 +44,8 @@ namespace ProjetEasySave.Utils
             defaultConfigModelsPath = Path.Combine(AppContext.BaseDirectory, "../../../config_models.json");
             defaultLogsFormat = "json";
             defaultBusinessSoftwareName = "CalculatorApp";
+            defaultEncryptionExtensions = new List<string> { ".txt", ".docx", ".jpg", ".png", ".pdf" };
+            defaultEncryptionKey = "maCleDeSecurite1234";
         }
 
         public static Config Instance
@@ -76,7 +78,9 @@ namespace ProjetEasySave.Utils
                     {"logRealTimeFile", new string(defaultLogRealTimeFile)},
                     {"configModelsPath", new string(defaultConfigModelsPath)},
                     {"logsFormat", new string(defaultLogsFormat) },
-                    {"businessSoftwareName", new string(defaultBusinessSoftwareName) }
+                    {"businessSoftwareName", new string(defaultBusinessSoftwareName) },
+                    {"encryptionExtensions", JsonSerializer.Serialize(defaultEncryptionExtensions)  }, // Ajout de la liste des extensions à chiffrer
+                    {"encryptionKey", new string(defaultEncryptionKey) }, // Ajout de la clé de chiffrement
                 };
                 // Save as JSON object
                 var options = new JsonSerializerOptions { WriteIndented = true };
@@ -92,6 +96,8 @@ namespace ProjetEasySave.Utils
                 configModelsPath = defaultConfigModelsPath;
                 logsFormat = defaultLogsFormat;
                 businessSoftwareName = defaultBusinessSoftwareName;
+                encryptionExtensions = defaultEncryptionExtensions;
+                encryptionKey = defaultEncryptionKey;
                 saveConfigFile();
 
             }
@@ -121,13 +127,24 @@ namespace ProjetEasySave.Utils
                 else businessSoftwareName = defaultBusinessSoftwareName;
 
                 // GESTION DU CHIFFREMENT (Clé)
-                if (dict.ContainsKey("encryptionKey")) EncryptionKey = dict["encryptionKey"].ToString();
+                if (dict.ContainsKey("encryptionKey")) encryptionKey = dict["encryptionKey"].ToString();
+                else encryptionKey = defaultEncryptionKey;
 
                 // GESTION DU CHIFFREMENT (Liste)
                 if (dict.ContainsKey("encryptionExtensions"))
                 {
-                    // On désérialise le contenu brut de l'élément tableau vers une List<string>
-                    EncryptionExtensions = JsonSerializer.Deserialize<List<string>>(dict["encryptionExtensions"].GetRawText());
+                    try
+                    {
+                        encryptionExtensions = JsonSerializer.Deserialize<List<string>>(dict["encryptionExtensions"].GetRawText());
+                    }
+                    catch
+                    {
+                        encryptionExtensions = defaultEncryptionExtensions;
+                    }
+                }
+                else
+                {
+                    encryptionExtensions = defaultEncryptionExtensions;
                 }
             }
 
@@ -143,8 +160,8 @@ namespace ProjetEasySave.Utils
                 configModelsPath = configModelsPath,
                 logsFormat = logsFormat,
                 businessSoftwareName = businessSoftwareName,
-                encryptionKey = EncryptionKey,       // Ajout de la clé
-                encryptionExtensions = EncryptionExtensions // Ajout de la liste (sera sauvegardée comme tableau [])
+                encryptionKey = encryptionKey, // Ajout de la clé
+                encryptionExtensions = encryptionExtensions // Ajout de la liste (sera sauvegardée comme tableau [])
             };
 
             var options = new JsonSerializerOptions { WriteIndented = true };
@@ -161,6 +178,8 @@ namespace ProjetEasySave.Utils
         public string getLogsFormat() { return logsFormat; }
         public string getConfigModelsPath() { return configModelsPath; }
         public string getBusinessSoftwareName() { return businessSoftwareName; }
+        public List<string> getEncryptionExtensions() { return encryptionExtensions; }
+        public string getEncryptionKey() { return encryptionKey; }
 
 
         // Setters
