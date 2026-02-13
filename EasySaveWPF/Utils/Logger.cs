@@ -87,7 +87,16 @@ namespace ProjetEasySave.Utils
 
         private string FormatToJson(Dictionary<string, string> message)
         {
-            var entries = message.Select(kvp => $"\"{kvp.Key}\": \"{kvp.Value}\"");
+            // We create a collection of formatted strings for each key-value pair
+            var entries = message.Select(kvp =>
+            {
+                string escapedValue = kvp.Value
+                    .Replace("\\", "\\\\")
+                    .Replace("\"", "\\\"");
+
+                return $"\"{kvp.Key}\": \"{escapedValue}\"";
+            });
+
             return "{" + string.Join(",", entries) + "}";
         }
 
@@ -168,6 +177,17 @@ namespace ProjetEasySave.Utils
                 { "targetFile", target },
                 { "size", size.ToString() },
                 { "transferTime", transferTime.ToString() },
+                { "time", time }
+            };
+        }
+
+        public static Dictionary<string, string> formatCompleteSaveMessage(string name, string source, string target, string time)
+        {
+            return new Dictionary<string, string>
+            {
+                { "name", name },
+                { "sourceFile", source },
+                { "targetFile", target },
                 { "time", time }
             };
         }

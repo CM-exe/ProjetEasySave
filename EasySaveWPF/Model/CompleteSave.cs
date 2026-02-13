@@ -1,5 +1,6 @@
 ﻿using ProjetEasySave.Utils;
 using System.IO;
+using CryptoSoft;
 
 namespace ProjetEasySave.Model
 {
@@ -8,30 +9,18 @@ namespace ProjetEasySave.Model
         /*
          * Complete Save implementation of the ISaveStrategy interface.
          */
-        
+
         // Attributes
         private Logger _logger = Logger.getInstance();
 
         // Constructor
-        public CompleteSave()
-        {
-        }
+        public CompleteSave() { }
 
-        // doSave method implementation for Differential Save
         public bool doSave(string sourcePath, string destinationPath, Func<bool> businessSoftwareChecker = null)
         {
             try
             {
-                if (businessSoftwareChecker != null && businessSoftwareChecker())
-                {
-                    // Log the specific error
-                    Logger.getInstance().log(Logger.formatErrMessage("Backup suspended: Business software detected."));
-
-                    // Stop the backup immediately (after the previous file is done)
-                    return false;
-                }
-
-
+                // Validate paths
                 if (string.IsNullOrWhiteSpace(sourcePath) || string.IsNullOrWhiteSpace(destinationPath))
                 {
                     _logger.log(Logger.formatErrMessage("Source or destination path is invalid."));
@@ -44,32 +33,82 @@ namespace ProjetEasySave.Model
                     return false;
                 }
 
+                // Initial Log
                 _logger.log(Logger.formatLogMessage("Complete Save Started", sourcePath, destinationPath, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+
                 Directory.CreateDirectory(destinationPath);
 
-                // Clean the destination directory before copying
-                DirectoryInfo destDirInfo = new DirectoryInfo(destinationPath);
-                foreach (FileInfo file in destDirInfo.GetFiles())
-                {
-                    file.Delete();
-                }
+                // Fetching keys and extensions from your Config singleton
+                string cryptoKey = Config.Instance.EncryptionKey;
+                List<string> cryptoExtensions = Config.Instance.EncryptionExtensions;
 
+                // Create directory structure
                 foreach (var dir in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
                 {
                     var relative = Path.GetRelativePath(sourcePath, dir);
                     var targetDir = Path.Combine(destinationPath, relative);
-                    _logger.log(Logger.formatLogMessage("Creating Directory", dir, targetDir, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
                     Directory.CreateDirectory(targetDir);
                 }
 
+                // Main File Loop
                 foreach (var file in Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories))
                 {
+                    if (businessSoftwareChecker != null && businessSoftwareChecker())
+                    {
+                        _logger.log(Logger.formatErrMessage("Backup suspended: Business software detected."));
+                        return false;
+                    }
+
                     var relative = Path.GetRelativePath(sourcePath, file);
                     var targetFile = Path.Combine(destinationPath, relative);
                     Directory.CreateDirectory(Path.GetDirectoryName(targetFile)!);
-                    _logger.log(Logger.formatLogMessage("Copying File", file, targetFile, (int)new FileInfo(file).Length, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
-                    File.Copy(file, targetFile, true);
+
+                    FileInfo fileInfo = new FileInfo(file);
+                    string extension = Path.GetExtension(file);
+
+                    // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
+                    double encryptionDuration = 0;
+                    DateTime startTime = DateTime.Now;
+
+                    bool shouldEncrypt = !string.IsNullOrEmpty(cryptoKey)
+                                         && cryptoExtensions != null
+                                         // Utilise LINQ pour vérifier si l'extension existe, en ignorant la casse
+                                         && cryptoExtensions.Any(e =>
+                                             e.Equals(extension, StringComparison.OrdinalIgnoreCase));
+
+                    if (shouldEncrypt)
+                    {
+                        // Call CryptoSoft DLL
+                        // Returns time in ms or -1 on error
+                        encryptionDuration = FileManager.CryptFile(file, targetFile, cryptoKey);
+                    }
+                    else
+                    {
+                        // Standard copy (encryptionDuration remains 0)
+                        File.Copy(file, targetFile, true);
+                    }
+
+                    // Passing encryptionDuration: 0 if standard copy, result of DLL if encrypted
+                    _logger.log(Logger.formatLogMessage(
+                        shouldEncrypt ? "Copying File (Encrypted)" : "Copying File",
+                        file,
+                        targetFile,
+                        (int)fileInfo.Length,
+                        encryptionDuration,
+                        startTime.ToString("yyyy-MM-dd HH:mm:ss")
+                    ));
+
+                    // Abort if the encryption/copy process failed (duration < 0)
+                    if (encryptionDuration < 0) return false;
                 }
+
+                // "Save completed" Log
+                _logger.log(Logger.formatCompleteSaveMessage(
+                    "Complete Save Finished",
+                    sourcePath,
+                    destinationPath,
+                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                ));
 
                 return true;
             }

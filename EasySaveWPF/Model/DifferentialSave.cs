@@ -1,5 +1,6 @@
 ﻿using ProjetEasySave.Utils;
 using System.IO;
+using CryptoSoft;
 
 namespace ProjetEasySave.Model
 {
@@ -7,12 +8,12 @@ namespace ProjetEasySave.Model
     {
         /*
          * Differential Save implementation of the ISaveStrategy interface.
+         * This strategy only saves files that have changed since the last full backup.
          */
 
         // Attributes
-         private Logger _logger = Logger.getInstance();
-
-         private string _fullBackupPath;  // Chemin de la sauvegarde complète servant de référence
+        private Logger _logger = Logger.getInstance();
+        private string _fullBackupPath; // Reference path of the full backup
 
         // Constructor
         public DifferentialSave(string fullBackupPath)
@@ -31,21 +32,12 @@ namespace ProjetEasySave.Model
         {
             try
             {
-                if (businessSoftwareChecker != null && businessSoftwareChecker())
-                {
-                    // Log the specific error
-                    Logger.getInstance().log(Logger.formatErrMessage("Backup suspended: Business software detected."));
-
-                    // Stop the backup immediately (after the previous file is done)
-                    return false;
-                }
-
+                // Validate paths
                 if (string.IsNullOrWhiteSpace(sourcePath) ||
                     string.IsNullOrWhiteSpace(destinationPath) ||
-                    string.IsNullOrWhiteSpace(_fullBackupPath)
-                    )
+                    string.IsNullOrWhiteSpace(_fullBackupPath))
                 {
-                    _logger.log(Logger.formatErrMessage("Source or full backup is invalid."));
+                    _logger.log(Logger.formatErrMessage("Source, destination, or full backup path is invalid."));
                     return false;
                 }
 
@@ -57,29 +49,31 @@ namespace ProjetEasySave.Model
 
                 if (!Directory.Exists(_fullBackupPath))
                 {
-                    _logger.log(Logger.formatErrMessage($"Full backup '{_fullBackupPath}"));
+                    _logger.log(Logger.formatErrMessage($"Full backup path '{_fullBackupPath}' does not exist."));
                     return false;
                 }
 
+                // Get global encryption settings from Config Singleton
+                string cryptoKey = Config.Instance.EncryptionKey;
+                List<string> cryptoExtensions = Config.Instance.EncryptionExtensions;
 
                 _logger.log(Logger.formatLogMessage(
-                    "Differntial Save Started",
+                    "Differential Save Started",
                     sourcePath,
                     destinationPath,
-                    0, // Default size (0 at the start)
-                    0, // Default transfer time (0 at the start)
+                    0,
+                    0,
                     DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                    ));
+                ));
 
-
-                // Create the destination directory if it doesn't exist
+                // Initialize destination directory
                 if (!Directory.Exists(destinationPath))
                 {
                     Directory.CreateDirectory(destinationPath);
                 }
                 else
                 {
-                    // Clear the destination directory before copying new files
+                    // Clean the destination directory before starting
                     foreach (var file in Directory.EnumerateFiles(destinationPath, "*", SearchOption.AllDirectories))
                     {
                         File.Delete(file);
@@ -88,18 +82,23 @@ namespace ProjetEasySave.Model
 
                 foreach (var sourceFile in Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories))
                 {
+                    if (businessSoftwareChecker != null && businessSoftwareChecker())
+                    {
+                        _logger.log(Logger.formatErrMessage("Backup suspended: Business software detected."));
+                        return false;
+                    }
+
                     var relativePath = Path.GetRelativePath(sourcePath, sourceFile);
                     var fullFile = Path.Combine(_fullBackupPath, relativePath);
                     var diffFile = Path.Combine(destinationPath, relativePath);
 
-
                     bool shouldCopy = false;
 
+                    // Differential logic: check if file is new or modified
                     if (!File.Exists(fullFile))
                     {
                         shouldCopy = true;
                     }
-
                     else
                     {
                         var sourceDate = File.GetLastWriteTime(sourceFile);
@@ -111,29 +110,62 @@ namespace ProjetEasySave.Model
                         }
                     }
 
-                    if (!shouldCopy)
-                        continue;
+                    if (shouldCopy)
+                    {
+                        // Ensure the subdirectory exists in the destination
+                        Directory.CreateDirectory(Path.GetDirectoryName(diffFile)!);
 
-                    _logger.log(Logger.formatLogMessage(
-                        "Copying File (Differential)",
-                        sourceFile,
-                        diffFile,
-                        0,
-                        (int)new FileInfo(sourceFile).Length,
-                        DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                        FileInfo fileInfo = new FileInfo(sourceFile);
+                        string extension = Path.GetExtension(sourceFile);
+
+                        // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
+                        double encryptionDuration = 0;
+                        DateTime startTime = DateTime.Now;
+
+                        // Encryption Decision 
+                        bool needEncryption = !string.IsNullOrEmpty(cryptoKey)
+                                              && cryptoExtensions != null
+                                              && cryptoExtensions.Contains(extension);
+
+                        if (needEncryption)
+                        {
+                            // Call the CryptoSoft DLL method
+                            encryptionDuration = FileManager.CryptFile(sourceFile, diffFile, cryptoKey);
+                        }
+                        else
+                        {
+                            // Standard file copy
+                            File.Copy(sourceFile, diffFile, true);
+                        }
+
+                        // Logging 
+                        _logger.log(Logger.formatLogMessage(
+                            needEncryption ? "Copying File (Differential + Encrypted)" : "Copying File (Differential)",
+                            sourceFile,
+                            diffFile,
+                            (int)fileInfo.Length,
+                            encryptionDuration, // 0 if copy, ms if encrypted
+                            startTime.ToString("yyyy-MM-dd HH:mm:ss")
                         ));
 
-                    File.Copy(sourceFile, diffFile, true);
-
+                        // Abort if the encryption/copy process failed (duration < 0)
+                        if (encryptionDuration < 0) return false;
+                    }
                 }
 
+                // "Save completed" log
+                _logger.log(Logger.formatCompleteSaveMessage(
+                    "Differential Save Finished",
+                    sourcePath,
+                    destinationPath,
+                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                ));
+
                 return true;
-
             }
-
-            catch
+            catch (Exception ex)
             {
-                _logger.log(Logger.formatErrMessage("An error occurred during the differential save process."));
+                _logger.log(Logger.formatErrMessage($"An error occurred during differential save: {ex.Message}"));
                 return false;
             }
         }
