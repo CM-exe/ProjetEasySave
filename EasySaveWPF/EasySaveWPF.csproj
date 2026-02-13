@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Downloads\CESI_A3_Projet_GenieLogiciel-release-v3.0-remote-ui\CESI_A3_Projet_GenieLogiciel-release-v3.0-remote-ui\CryptoSoft\CryptoSoft.csproj" />
+    <ProjectReference Include="..\CryptoSoft\CryptoSoft\CryptoSoft.csproj" />
   </ItemGroup>
 
 </Project>
