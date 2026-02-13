@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="../CryptoSoft/CryptoSoft.csproj" />
+  <Project Path="../EasyLog/EasyLog.csproj" Id="fa8b56c6-50e8-4188-9579-68723aa2495b" />
+  <Project Path="EasySaveWPF.csproj" />
+</Solution>
