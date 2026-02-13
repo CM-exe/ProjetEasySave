@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="../CryptoSoft/CryptoSoft/CryptoSoft.csproj" />
+  <Project Path="../CryptoSoft/CryptoSoft.csproj" />
   <Project Path="EasySaveWPF.csproj" />
 </Solution>

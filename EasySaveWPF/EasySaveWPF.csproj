@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CryptoSoft\CryptoSoft\CryptoSoft.csproj" />
+    <ProjectReference Include="..\CryptoSoft\CryptoSoft.csproj" />
   </ItemGroup>
 
 </Project>
