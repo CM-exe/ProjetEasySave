@@ -1,6 +1,7 @@
 ﻿using ProjetEasySave.Utils;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
+using EasyLog;
 
 namespace ProjetEasySave.Model
 {
@@ -22,7 +23,7 @@ namespace ProjetEasySave.Model
         [JsonIgnore]
         private Dictionary<SaveTask, SaveTaskState> _taskStates;
         [JsonIgnore]
-        private Logger logger = Logger.getInstance();
+        private Logger logger = Logger.getInstance(Config.Instance);
 
         // Constructor
         public SaveSpace(string name, string sourcePath, string destinationPath, string typeSave, string completeSavePath = "")

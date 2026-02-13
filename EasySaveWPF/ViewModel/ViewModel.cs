@@ -1,6 +1,7 @@
 ﻿using ProjetEasySave.Model;
 using ProjetEasySave.Utils;
 using System.Diagnostics;
+using EasyLog;
 
 namespace ProjetEasySave.ViewModel
 {
@@ -9,8 +10,8 @@ namespace ProjetEasySave.ViewModel
         // Attributes
         private SaveModel _model;
         private LanguageService _languageService;
-        private readonly Logger logger = Logger.getInstance(); // Load logger
         private readonly Config config = Config.Instance; // Load config
+        private readonly Logger logger = Logger.getInstance(Config.Instance); // Load logger
 
         // Constructor
         public ViewModel()

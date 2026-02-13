@@ -1,5 +1,6 @@
 ﻿using ProjetEasySave.Utils;
 using System.IO;
+using EasyLog;
 
 namespace ProjetEasySave.Model
 {
@@ -10,7 +11,7 @@ namespace ProjetEasySave.Model
          */
         
         // Attributes
-        private Logger _logger = Logger.getInstance();
+        private Logger _logger = Logger.getInstance(Config.Instance);
 
         // Constructor
         public CompleteSave()
@@ -25,7 +26,7 @@ namespace ProjetEasySave.Model
                 if (businessSoftwareChecker != null && businessSoftwareChecker())
                 {
                     // Log the specific error
-                    Logger.getInstance().log(Logger.formatErrMessage("Backup suspended: Business software detected."));
+                    Logger.getInstance(Config.Instance).log(Logger.formatErrMessage("Backup suspended: Business software detected."));
 
                     // Stop the backup immediately (after the previous file is done)
                     return false;
