@@ -375,8 +375,8 @@ namespace EasySaveWPF
                 AddRow(grid, 4, _language.translate("CompleteSavePath"), CreateBrowseRow(_completeBox, _completeBrowserButton));
 
                 var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 12, 0, 0) };
-                var ok = new Button { Content = "OK", Width = 80, Margin = new Thickness(0, 0, 8, 0) };
-                var cancel = new Button { Content = "Annuler", Width = 80 };
+                var ok = new Button { Content = _language.translate("Ok"), Width = 80, Margin = new Thickness(0, 0, 8, 0) };
+                var cancel = new Button { Content = _language.translate("Cancel"), Width = 80 };
                 ok.Click += (_, __) => { ApplyResult(); DialogResult = true; };
                 cancel.Click += (_, __) => { DialogResult = false; };
                 buttons.Children.Add(ok);
@@ -460,6 +460,7 @@ namespace EasySaveWPF
         private sealed class InputDialog : Window
         {
             private readonly TextBox _inputBox = new();
+            private readonly LanguageService _language = new LanguageService();
 
             public string Value { get; private set; } = string.Empty;
 
@@ -499,8 +500,8 @@ namespace EasySaveWPF
                 grid.Children.Add(_inputBox);
 
                 var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
-                var ok = new Button { Content = "OK", Width = 80, Margin = new Thickness(0, 0, 8, 0) };
-                var cancel = new Button { Content = "Annuler", Width = 80 };
+                var ok = new Button { Content = _language.translate("Ok"), Width = 80, Margin = new Thickness(0, 0, 8, 0) };
+                var cancel = new Button { Content = _language.translate("Cancel"), Width = 80 };
                 ok.Click += (_, __) => { Value = _inputBox.Text; DialogResult = true; };
                 cancel.Click += (_, __) => { DialogResult = false; };
                 buttons.Children.Add(ok);
@@ -516,6 +517,7 @@ namespace EasySaveWPF
         private sealed class SelectDialog : Window
         {
             private readonly ComboBox _comboBox = new();
+            private readonly LanguageService _language = new LanguageService();
 
             public string Value { get; private set; } = string.Empty;
 
@@ -557,8 +559,8 @@ namespace EasySaveWPF
                 grid.Children.Add(_comboBox);
 
                 var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
-                var ok = new Button { Content = "OK", Width = 80, Margin = new Thickness(0, 0, 8, 0) };
-                var cancel = new Button { Content = "Annuler", Width = 80 };
+                var ok = new Button { Content = _language.translate("Ok"), Width = 80, Margin = new Thickness(0, 0, 8, 0) };
+                var cancel = new Button { Content = _language.translate("Cancel"), Width = 80 };
                 ok.Click += (_, __) => { Value = _comboBox.SelectedItem?.ToString() ?? string.Empty; DialogResult = true; };
                 cancel.Click += (_, __) => { DialogResult = false; };
                 buttons.Children.Add(ok);

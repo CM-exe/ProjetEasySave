@@ -38,7 +38,12 @@
     "Destination": "Destination",
     "ChangeLogsFormat": "Changer le format des logs",
     "ErrorBusinessSoftwareRunning": "Sauvegarde annulée : Le logiciel métier est en cours d'exécution.",
-    "State": "État" 
+    "State": "État",
+    "LogsFormatPrompt": "Format des logs (xml/json)",
+    "LogsFormat": "Format des logs",
+    "CurrentLogsFormat": "Format des logs actuel",
+    "Ok": "OK",
+    "Cancel": "Annuler"
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -79,6 +84,11 @@
     "Destination": "Destination",
     "ChangeLogsFormat": "Change logs format",
     "ErrorBusinessSoftwareRunning": "Backup cancelled: Business software is running.",
-    "State": "State"
+    "State": "State",
+    "LogsFormatPrompt": "Logs format (xml/json)",
+    "LogsFormat": "Logs format",
+    "CurrentLogsFormat": "Current logs format",
+    "Ok": "OK",
+    "Cancel": "Cancel"
   }
 }
