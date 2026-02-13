@@ -1,0 +1,67 @@
+﻿<Window x:Class="EasySaveWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EasySaveWPF"
+        mc:Ignorable="d"
+        Title="EasySave - Outil de sauvegarde" Height="450" Width="800"
+        Background="#F5F7FA"
+        ResizeMode="NoResize">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+            <TextBlock Text="EasySave" FontSize="20" FontWeight="SemiBold" Foreground="#1E293B"/>
+            <TextBlock Text=" | " Margin="8,0"/>
+            <TextBlock x:Name="textAppDescription" Text="Gestion des espaces de sauvegardes" VerticalAlignment="Center" Foreground="#64748B"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Background="White" CornerRadius="8" BorderBrush="#E2E8F0" BorderThickness="1" Padding="12">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <TextBlock x:Name="textWorkspace" Text="Expaces de sauvegardes" FontWeight="SemiBold" Foreground="#0F172A"/>
+                    <TextBlock x:Name="textList" Text=" (liste)" Margin="6,0,0,0" Foreground="#94A3B8"/>
+                </StackPanel>
+
+                <DataGrid x:Name="listSaveSpaces"
+                          Grid.Row="1"
+                          AutoGenerateColumns="False"
+                          HeadersVisibility="Column"
+                          CanUserResizeColumns="False"
+                          CanUserReorderColumns="False"
+                          IsReadOnly="True"
+                          GridLinesVisibility="None"
+                          BorderThickness="0"
+                          Background="Transparent">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="headerName" Header="Nom" Width="*" Binding="{Binding Name}"/>
+                        <DataGridTextColumn x:Name="headerSource" Header="Source" Width="*" Binding="{Binding SourcePath}"/>
+                        <DataGridTextColumn x:Name="headerDestination" Header="Destination" Width="*" Binding="{Binding TargetPath}"/>
+                        <DataGridTextColumn x:Name="headerType" Header="Type de sauvegarde" Width="*" Binding="{Binding BackupType}"/>
+                        <DataGridTextColumn x:Name="headerCompleteSavePath" Header="Chemin de sauvegarde complet" Width="*" Binding="{Binding CompleteSavePath}"/>
+                        <DataGridTextColumn x:Name="headerState" Header="Statut" Width="*" Binding="{Binding State}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button x:Name="btnAddSpace" Content="Ajouter" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
+            <Button x:Name="btnEditSpace" Content="Éditer" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
+            <Button x:Name="btnDeleteSpace" Content="Supprimer" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
+            <Button x:Name="btnStartSave" Content="Démarrer" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
+            <Button x:Name="btnLanguage" Content="Langue" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
+            <Button x:Name="btnLogsFormat" Content="Format des logs" Width="auto" Padding="2,2,2,2"/>
+        </StackPanel>
+    </Grid>
+</Window>
