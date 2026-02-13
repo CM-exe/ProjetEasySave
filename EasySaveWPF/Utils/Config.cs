@@ -31,6 +31,10 @@ namespace ProjetEasySave.Utils
         private string logsFormat;
         private string businessSoftwareName;
 
+        // Encrypt variables
+        public string EncryptionKey { get; set; } = "SecretKey"; // Default value : to change
+        public List<string> EncryptionExtensions { get; set; } = new List<string> { ".txt", ".json" };
+
         private Config()
         {
             configFile = Path.Combine(AppContext.BaseDirectory, "../../../config.json");

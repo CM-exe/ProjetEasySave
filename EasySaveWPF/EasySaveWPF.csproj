@@ -8,4 +8,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Downloads\CESI_A3_Projet_GenieLogiciel-release-v3.0-remote-ui\CESI_A3_Projet_GenieLogiciel-release-v3.0-remote-ui\CryptoSoft\CryptoSoft.csproj" />
+  </ItemGroup>
+
 </Project>

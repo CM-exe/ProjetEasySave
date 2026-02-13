@@ -1,3 +1,26 @@
 {
-  "_saveSpaces": []
+  "_saveSpaces": [
+    {
+      "_name": "NiqueTaMere",
+      "_sourcePath": "C:\\Users\\noapi\\OneDrive\\Bureau\\RAPPORT_DE_PROJET",
+      "_destinationPath": "C:\\Users\\noapi\\OneDrive\\Bureau\\RAPPORT_DE_PROJET-test",
+      "_saveTaskStrategies": [
+        "complete"
+      ],
+      "_saveTaskCompleteSavePaths": [
+        ""
+      ]
+    },
+    {
+      "_name": "Test",
+      "_sourcePath": "C:\\Users\\noapi\\OneDrive\\Bureau\\TEST",
+      "_destinationPath": "C:\\Users\\noapi\\OneDrive\\Bureau\\TEST-copie",
+      "_saveTaskStrategies": [
+        "complete"
+      ],
+      "_saveTaskCompleteSavePaths": [
+        ""
+      ]
+    }
+  ]
 }

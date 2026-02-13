@@ -1,0 +1,8 @@
+{
+  "language": "fr",
+  "logDirectoryPath": "\\\\localhost\\c$\\EasyProject\\Logs\\",
+  "logRealTimeFile": "\\\\localhost\\c$\\EasyProject\\Logs\\real_time_log",
+  "configModelsPath": "C:\\Users\\noapi\\ProjetGenieLogiciel\\ProjetEasySave\\EasySaveWPF\\bin\\Debug\\net10.0-windows\\../../../config_models.json",
+  "logsFormat": "json",
+  "businessSoftwareName": "CalculatorApp"
+}
