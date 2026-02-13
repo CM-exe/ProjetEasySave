@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 using System.Linq;
 
-namespace ProjetEasySave.Utils
+namespace EasyLog
 {
     // Enumeration to define the supported log formats
     public enum LogFormat { Json, Xml }
@@ -15,14 +15,16 @@ namespace ProjetEasySave.Utils
         private static Logger singletonInstance;
         private string logDirectoryPath;
         private string logRealTimeFile;
-        private Config config = Config.Instance; // Load config
+        //private Config config = Config.Instance; // Load config
+        private IConfig config;
 
         // Property to define the current format (adjustable by the user)
         private LogFormat currentFormat = LogFormat.Json;
 
         // Private constructor for Singleton pattern
-        private Logger()
+        private Logger(IConfig config)
         {
+            this.config = config;
             // Default log directory path
             logDirectoryPath = config.getLogDirectoryPath();
             if (!Directory.Exists(logDirectoryPath))
@@ -37,10 +39,10 @@ namespace ProjetEasySave.Utils
         }
 
         // Method to get the unique instance of the Logger
-        public static Logger getInstance()
+        public static Logger getInstance(IConfig config)
         {
             if (singletonInstance == null)
-                singletonInstance = new Logger();
+                singletonInstance = new Logger(config);
             return singletonInstance;
         }
 
@@ -154,7 +156,7 @@ namespace ProjetEasySave.Utils
 
         // --- Data Formatting Methods (Static) ---
 
-        public static Dictionary<string, string> formatInfoRealTimeMessage(string name, string source, string target, string time, SaveTaskState saveTaskState)
+        public static Dictionary<string, string> formatInfoRealTimeMessage(string name, string source, string target, string time, dynamic saveTaskState)
         {
             // Format the log message as a dictionary
             return new Dictionary<string, string>

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.IO;
+using EasyLog;
 
 
 namespace ProjetEasySave.Utils
 {
-    internal class Config
+    internal class Config: IConfig
     {
         private static Config instance = null;
         private static readonly object padlock = new object();

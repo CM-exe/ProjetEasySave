@@ -1,6 +1,7 @@
 ﻿using ProjetEasySave.Utils;
 using System.IO;
 using CryptoSoft;
+using EasyLog;
 
 namespace ProjetEasySave.Model
 {
@@ -12,7 +13,7 @@ namespace ProjetEasySave.Model
          */
 
         // Attributes
-        private Logger _logger = Logger.getInstance();
+        private Logger _logger = Logger.getInstance(Config.Instance);
         private string _fullBackupPath; // Reference path of the full backup
 
         // Constructor
