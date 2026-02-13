@@ -1,0 +1,32 @@
+sequenceDiagram
+  actor a as Actor 
+  participant v as View
+  participant vm as ViewModel
+  participant l as Language
+  participant c as Configuration
+  participant cm as ConfigurationManager
+  participant cf as ConfigurationFile
+
+  activate v
+  activate l
+  activate c
+  activate cm
+  activate cf
+
+  a ->> v: Change Language
+  v ->>+vm: Instantiate
+  vm ->> vm: ParseCommand()
+  vm ->> l: SetLanguage()
+  l ->> c: Set Language Field
+  c -) cm: event ConfigurationChanged
+  cm ->> cf: Save()
+  l -) vm: event LanguageChanged
+  vm -) v: event LanguageChanged
+  v ->> a: Show Message     
+ 
+  deactivate v
+  deactivate l
+  deactivate c
+  deactivate cm
+  deactivate cf    
+  deactivate vm

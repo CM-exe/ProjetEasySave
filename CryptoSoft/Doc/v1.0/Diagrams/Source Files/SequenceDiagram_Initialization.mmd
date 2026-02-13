@@ -1,0 +1,27 @@
+sequenceDiagram
+  actor a as Actor
+  participant v as View
+  participant vm as ViewModel
+
+  a ->>+v: Run EasySave
+  v ->>+vm: Instantiate
+  vm ->> vm: Parse command
+  alt No arguments
+                    
+  else Command Run
+    note right of vm: Run run command
+  else Command List 
+    note right of vm: Run list command
+  else Command Add
+    note right of vm: Run add command
+  else Command Remove
+    note right of vm: Run remove command
+  else Command Language
+    note right of vm: Run language command
+  else Invalid command 
+    vm -->> v: Throw Exception
+    v -->> a: Show Error               
+  end
+
+  deactivate v
+  deactivate vm

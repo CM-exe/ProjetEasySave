@@ -1,0 +1,52 @@
+sequenceDiagram
+  actor a as Actor 
+  participant v as View
+  participant vm as ViewModel
+  participant bjf as BackupJobFactory
+  participant bj as BackupJob
+  participant bs as BackupState
+  participant bjs as BackupJobState
+  participant bt as BackupTask
+  participant sf as StateFile 
+
+  activate v
+  activate bjf 
+ 
+  a ->> v: Run Job
+  v ->> vm: Instantiate
+  activate vm 
+  vm ->> vm: ParseCommand()
+  vm ->> bjf: Create(List<IBackupJobConfiguration> jobList)
+  loop For all jobs
+    bjf ->>+bj: Instantiate
+  end
+  bjf -->> vm: return List<IBackupJob>
+  vm ->>+bs: Instantiate
+  bs ->>+sf: Instantiate
+  loop For all jobs
+    bs ->>+bjs: Instantiate
+  end
+  vm ->> bj: Analyse()
+  bj ->>+bt: Instantiate
+  vm ->> bj: Run()
+  loop For all tasks
+    bj ->> bt: Run()
+    bj -) bjs: event JobStarted
+    bj -) bjs: event JobProgress
+    bj -) bjs: event JobFinished
+    bj -) bjs: event JobCancelled
+  end
+  bjs -) sf: event JobStateChanged
+  sf ->> sf: Save()
+  bjs -) vm: event JobStateChanged
+  vm -) v: event JobStateChanged
+  v ->> a: Show message
+
+  deactivate v
+  deactivate vm 
+  deactivate bjf
+  deactivate bj
+  deactivate bs
+  deactivate bjs
+  deactivate bt
+  deactivate sf

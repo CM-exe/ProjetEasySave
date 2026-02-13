@@ -1,0 +1,39 @@
+sequenceDiagram
+    participant ViewModel as ViewModel (EasySave)
+    participant BackupState as BackupState (EasySave)
+    participant SocketServer as SocketServer (EasySave)
+    participant SocketClient as SocketClient (Remote UI)
+    participant User as User (Remote UI)
+
+    note over SocketClient,SocketServer: Socket
+
+    SocketClient->>User: Ask for connection details
+    User-->>SocketClient: 
+
+    SocketClient->>SocketServer: Connect to server
+    SocketServer-->>SocketClient: Greet client
+
+    SocketClient->>SocketServer: Send command : list
+    SocketServer->>ViewModel: Raise event CommandReceived
+    ViewModel-->>SocketServer: Return list of backups
+    SocketServer->>SocketClient: Send list of backups
+    SocketClient->>SocketClient: Update UI
+
+    SocketClient->>SocketServer: Send command : state
+    SocketServer->>ViewModel: Raise event CommandReceived
+    ViewModel-->>SocketServer: Return state of backups
+    SocketServer->>SocketClient: Send state of backups
+    SocketClient->>SocketClient: Update UI
+
+    par State
+        BackupState->>SocketServer: State changed
+        SocketServer->>SocketClient: Send state change
+        SocketClient->>SocketClient: Update UI
+    and Command
+        User->>SocketClient: Click on command button
+        SocketClient->>SocketServer: Send command
+        SocketServer->>ViewModel: Raise event CommandReceived
+        ViewModel->>ViewModel: Process command
+        ViewModel-->>SocketServer: Return command result
+        SocketServer->>SocketClient: Send command result
+    end

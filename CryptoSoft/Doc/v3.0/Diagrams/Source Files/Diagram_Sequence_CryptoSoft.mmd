@@ -1,0 +1,41 @@
+sequenceDiagram
+  participant U as Crypto(EasySave)
+  participant P as CryptoSocketClient(EasySave)
+  participant FS as SocketServer(CryptoSoft)
+  participant SW as Program(CryptoSoft)
+  participant FM as FileManager(CryptoSoft)
+
+  U ->>+ P: EncryptFileRequest(filePath, key)
+  Note over P: Préparation requête socket
+  P ->>+ FS: Connection()
+  Note over FS: Serveur écoute sur port configuré
+  P -) FS: Send filePath, key
+  FS ->>+ SW: ProcessRequest(requestData)
+  Note over SW: Parsing de la requête
+  SW ->>+ FM: new FileManager(filePath, key)
+  Note over FM: Initialisation avec paramètres reçus
+  SW ->> FM: TransformFile()
+  FM ->> FM: CheckFile()
+  alt Fichier existe
+    Note over FM: Fichier trouvé, début chiffrement
+    FM ->> FM: File.ReadAllBytes()
+    FM ->> FM: ConvertToByte(key)
+    FM ->> FM: XorMethod(fileBytes, keyBytes)
+    Note over FM: Chiffrement XOR
+    FM ->> FM: File.WriteAllBytes()
+    FM -->> SW: OperationResult(Success, ElapsedTime)
+    SW ->> FS: SendResponse(Success, ElapsedTime)
+    FS -) P: Send FilePath, ElapsedTime
+    P ->> U: OperationComplete(Success, ElapsedTime)
+    Note over U: Sauvegarde terminée<br/>Fichier chiffré avec succès
+  else Fichier introuvable
+    FM -->> SW: OperationResult(FileNotFound)
+    SW ->> FS: SendResponse(Error, "File not found")
+    FS ->> P: Response(Error, "File not found")
+    P ->> U: OperationError("File not found")
+    Note over U: Gestion d'erreur<br/>Sauvegarde interrompue
+  end
+  FS ->>- P: CloseConnection()
+  P -->>- U: ConnectionClosed
+
+

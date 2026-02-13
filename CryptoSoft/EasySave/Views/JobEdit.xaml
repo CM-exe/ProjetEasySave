@@ -1,0 +1,75 @@
+<Window x:Class="EasySave.Views.JobEdit"
+     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+     xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
+     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+     xmlns:views="clr-namespace:EasySave.Views"
+     Title="{Binding Job.Name}" MinHeight="220" MinWidth="350"
+     Height="Auto" Width="Auto"
+     SizeToContent="WidthAndHeight"
+     ResizeMode="CanResize" WindowStartupLocation="CenterScreen"
+     mc:Ignorable="av"
+     av:DataContext="{av:DesignInstance Type=views:JobEdit}"
+>
+    <Grid Margin="10" x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" MinHeight="20"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*" MinWidth="250"/>
+        </Grid.ColumnDefinitions>
+
+
+        <!-- Job Name -->
+        <TextBox Grid.Row="0" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="14" Margin="0 0 0 10" Text="{Binding Job.Name}"/>
+
+        <!-- Source -->
+        <Image x:Name="folder" Source="/Resources/Images/dossier.png" Width="20" Height="20" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0"/>
+        <Grid Grid.Row="1" Grid.Column="1" Margin="0,2,0,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Name="PathSource" Grid.Column="0" Margin="0,0,5,0" VerticalContentAlignment="Center" Text="{Binding Job.Source}"/>
+            <Button Content="{Binding ViewModel.Language.Translations[JOB_EDIT_BROWSE]}" Grid.Column="1" Width="60" Click="BrowseSource_Click" Padding="5,2"/>
+        </Grid>
+
+        <!-- Destination -->
+        <Image x:Name="folder1" Source="/Resources/Images/dossier.png" Width="20" Height="20" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0"/>
+        <Grid Grid.Row="2" Grid.Column="1" Margin="0,2,0,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Name="PathDestination" Grid.Column="0" Margin="0,0,5,0" VerticalContentAlignment="Center" Text="{Binding Job.Destination}"/>
+            <Button Content="{Binding ViewModel.Language.Translations[JOB_EDIT_BROWSE]}" Grid.Column="1" Width="60" Click="BrowseDestination_Click" Padding="5,2"/>
+        </Grid>
+
+        <!-- Mode (Differential/Other) -->
+        <Image Source="/Resources/Images/scanner.png" Width="20" Height="20" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0"/>
+        <ComboBox Name="BackupTypeComboBox" Grid.Row="3" Grid.Column="1" Margin="0,2,0,2" HorizontalAlignment="Stretch" SelectedValue ="{Binding Job.Type}" SelectedValuePath="Content">
+            <ComboBoxItem Content="Differential" IsSelected="True"/>
+            <ComboBoxItem Content="Complete"/>
+        </ComboBox>
+
+        <!-- Bottom Buttons -->
+        <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="{Binding ViewModel.Language.Translations[JOB_EDIT_REMOVE]}" Width="75" Click="DeleteJob" Margin="0,0,5,0" Padding="5,2"/>
+            <Button Grid.Column="2" Content="{Binding ViewModel.Language.Translations[JOB_EDIT_CANCEL]}" Width="75" Click="Cancel_Click" Margin="0,0,5,0" Padding="5,2"/>
+            <Button Grid.Column="3" Content="{Binding ViewModel.Language.Translations[JOB_EDIT_SAVE]}" Width="75" Click="Save_Click" Padding="5,2"/>
+        </Grid>
+    </Grid>
+</Window>

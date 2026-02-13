@@ -1,0 +1,45 @@
+﻿<Window x:Class="EasySave.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:easysave="clr-namespace:EasySave"
+        xmlns:converters="clr-namespace:EasySave.Converters"
+        mc:Ignorable="av" 
+        Title="EasySave" Height="500" MinHeight="700" Width="900" MinWidth="700" 
+>
+    <Grid x:Name="MainGrid" av:DataContext="{av:DesignInstance Type=easysave:MainWindow}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- MENU À GAUCHE -->
+        <Grid Background="#f5f5f5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+
+            </Grid.RowDefinitions>
+
+            <Image  x:Name="Logo" Source="pack://application:,,,/Resources/Images/logo.png" 
+                Height="60" IsEnabled="true" Margin="0,20,0,10" 
+                Grid.Row="0" />
+            <Button Content="{Binding ViewModel.Language.Translations[VIEW_MENU_JOB_LIST]}" Height="40" Margin="10,5" Click="JobsList_Click" Grid.Row="1"/>
+            <Button Content="{Binding ViewModel.Language.Translations[VIEW_MENU_RUNNING_JOBS]}" Height="40" Margin="10,5" Click="RunningJobs_Click" Grid.Row="2"/>
+            <Button Content="{Binding ViewModel.Language.Translations[VIEW_MENU_LOGS]}" Height="40" Margin="10,5" Click="Logs_Click" Grid.Row="4"/>
+            <Button Content="{Binding ViewModel.Language.Translations[VIEW_MENU_CONFIGURATION]}" Height="40" Margin="10,5,10,10" Click="Configuration_Click" Grid.Row="5"/>
+        </Grid>
+
+        <!-- Zone de contenu -->
+        <Grid Grid.Column="1" Margin="10">
+            <!-- CONTENU PRINCIPAL -->
+            <ContentControl x:Name="MainContent"/>
+        </Grid>
+
+    </Grid>
+</Window>

@@ -1,0 +1,206 @@
+<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:av="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:easysave="clr-namespace:EasySave"
+    xmlns:converters="clr-namespace:EasySave.Converters"
+    xmlns:views="clr-namespace:EasySave.Views"
+    mc:Ignorable="av" 
+    x:Class="EasySave.Views.RunningJobs"
+    Height="Auto" 
+    Width="Auto" 
+    av:DesignHeight="496.81" 
+    av:DesignWidth="684"
+    av:DataContext="{av:DesignInstance Type=views:RunningJobs}"
+>
+    <Control.Resources>
+        <converters:DateTimeToStringConverter x:Key="DtToStrConverter"/>
+        <converters:EntryHandlerToStringConverter x:Key="EntryToStrConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Control.Resources>
+
+    <!-- CONTENU PRINCIPAL -->
+    <Grid Margin="10" x:Name="MainGrid"> <!-- CLASS : RunningJobs -->
+        <Grid.RowDefinitions>
+            <!-- Jobs List -->
+            <RowDefinition Height="*"/>
+            <!-- Footer -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0" Padding="0,0,10,0" Margin="0,0,0,10" VerticalScrollBarVisibility="Visible">
+            <ItemsControl x:Name="RunningJobsList" ItemsSource="{Binding RunningJobList}"> <!-- ObservableCollection : RunningJobList -->
+                <ItemsControl.ItemTemplate> <!-- IBackupState -->
+                    <DataTemplate>
+                        <GroupBox Header="{Binding BackupJob.Name}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Content="{Binding BackupJob.Source}" Grid.Column="0"/>
+                                        <Image Source="pack://application:,,,/Resources/Images/arrow-right.png" Grid.Column="1" Width="24" Height="24"/>
+                                        <Label Content="{Binding BackupJob.Destination}" Grid.Column="2"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Content="{Binding BackupJob.CurrentTask.Source, Converter={StaticResource EntryToStrConverter}}" Grid.Column="0"/>
+                                        <Image 
+                                        Grid.Column="1" Width="24" Height="24"
+                                    >
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Source" Value="pack://application:,,,/Resources/Images/arrow-right.png"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding BackupJob.CurrentTask.IsRemoveTask}" Value="True">
+                                                            <Setter Property="Source" Value="pack://application:,,,/Resources/Images/trash.png"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                        <Label Content="{Binding BackupJob.CurrentTask.Destination, Converter={StaticResource EntryToStrConverter}}" Grid.Column="2"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Content="{Binding DataContext.ViewModel.Language.Translations[VIEW_RUNNING_STARTED_AT], ElementName=MainGrid}" Grid.Column="0"/>
+                                        <Label Content="{Binding BackupJob.StartedAt, Converter={StaticResource DtToStrConverter}}" Grid.Column="1"/>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Conteneur pour la barre de progression et le pourcentage -->
+                                    <Grid Grid.Column="0">
+                                        <ProgressBar Value="{Binding Progression, Mode=OneWay}" Height="24" Foreground="LightGray" Maximum="100"/>
+                                        <TextBlock Text="{Binding Progression, StringFormat={}{0:F0}%}" 
+                                                   HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Center"
+                                                   FontWeight="Bold"
+                                                   Foreground="Black"/>
+                                    </Grid>
+
+                                    <Button Width="100" Height="30" Grid.Column="2"
+                                            Click="PauseOrResumeButton_Click">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Content" Value="{Binding DataContext.ViewModel.Language.Translations[VIEW_RUNNING_PAUSE], ElementName=MainGrid}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding BackupJob.IsPaused}" Value="True">
+                                                        <Setter Property="Content" Value="{Binding DataContext.ViewModel.Language.Translations[VIEW_RUNNING_RESUME], ElementName=MainGrid}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+
+                                    <Button Content="{Binding DataContext.ViewModel.Language.Translations[VIEW_RUNNING_CANCEL], ElementName=MainGrid}"
+                                            Width="100" Height="30" Grid.Column="4"
+                                            Click="CancelButton_Click" DataContext="{Binding Path=.}"/>
+                                </Grid>
+                            </Grid>
+                        </GroupBox>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="0,0,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- First row: Started At and Buttons -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="{Binding ViewModel.Language.Translations[VIEW_RUNNING_STARTED_AT]}" Grid.Column="0" VerticalAlignment="Center"/>
+                    <Label Content="{Binding StartedAt, Converter={StaticResource DtToStrConverter}}" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <!-- Spacer in Grid.Column="2" -->
+                    <Button x:Name="PauseAllButton" Content="{Binding ViewModel.Language.Translations[VIEW_RUNNING_PAUSE_ALL]}" Width="140" Height="30" Grid.Column="3"/>
+                    <!-- Spacer in Grid.Column="4" -->
+                    <Button x:Name="ResumeAllButton" Content="{Binding ViewModel.Language.Translations[VIEW_RUNNING_RESUME_ALL]}" Width="100" Height="30" Grid.Column="5"/>
+                    <!-- Spacer in Grid.Column="6" -->
+                    <Button x:Name="CancelAllButton" Content="{Binding ViewModel.Language.Translations[VIEW_RUNNING_CANCEL_ALL]}" Width="100" Height="30" Grid.Column="7" Click="CancelAllButton_Click"/>
+                </Grid>
+
+                <!-- Second row: File copy info -->
+                <Grid Grid.Row="1" Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="{Binding ViewModel.Language.Translations[VIEW_RUNNING_FILE_COPY]}" Grid.Column="0"/>
+                    <Label Content="{Binding TotalFilesLeft}" Grid.Column="1" Margin="5,0,0,0"/>
+                    <Label Content="/" Grid.Column="2" Margin="5,0,0,0"/>
+                    <Label Content="{Binding TotalFilesToCopy}" Grid.Column="3" Margin="5,0,0,0"/>
+                </Grid>
+
+                <!-- Third row: Progress bar -->
+                <Grid Grid.Row="2">
+                    <ProgressBar Grid.Row="2" Value="{Binding Progression, Mode=OneWay}" Height="24" Foreground="LightGray" Margin="0,5,0,0"/>
+                    <TextBlock Text="{Binding Progression, StringFormat={}{0:F0}%}" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                       FontWeight="Bold"
+                       Foreground="Black"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

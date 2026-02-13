@@ -1,0 +1,67 @@
+﻿<Window x:Class="EasySave.Views.LogDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:logger="clr-namespace:EasySave.Logger;assembly=Logger"
+        xmlns:views="clr-namespace:EasySave.Views"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="Log Details"
+        MinHeight="300" MinWidth="350"
+        SizeToContent="WidthAndHeight"
+        mc:Ignorable="av"
+        av:DataContext="{av:DesignInstance Type=views:LogDetailsWindow}"
+>
+    <StackPanel Orientation="Vertical" Margin="10">
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+            <TextBlock Text="{Binding ViewModel.Language.Translations[LOGS_DATE]}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding SelectedLog.Datetime}" FontWeight="Bold" Margin="10,0,0,0" TextWrapping="Wrap" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+            <TextBlock Text="{Binding ViewModel.Language.Translations[LOGS_NAME]}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding SelectedLog.JobName}" Margin="10,0,0,0" TextWrapping="Wrap" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+            <TextBlock Text="{Binding ViewModel.Language.Translations[LOGS_SOURCE]}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding SelectedLog.Source}" Margin="10,0,0,0" TextWrapping="Wrap" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+            <TextBlock Text="{Binding ViewModel.Language.Translations[LOGS_DESTINATION]}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding SelectedLog.Destination}" Margin="10,0,0,0" TextWrapping="Wrap" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+            <TextBlock Text="{Binding ViewModel.Language.Translations[LOGS_TASK_TYPE]}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding SelectedLog.TaskType}" Margin="10,0,0,0" TextWrapping="Wrap" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+            <TextBlock Text="{Binding ViewModel.Language.Translations[LOGS_FILE_SIZE]}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding SelectedLog.Filesize}" Margin="10,0,0,0" TextWrapping="Wrap" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+            <TextBlock Text="{Binding ViewModel.Language.Translations[LOGS_DURATION]}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding SelectedLog.TransfertDuration}" Margin="10,0,0,0" TextWrapping="Wrap" />
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+            <TextBlock Text="{Binding ViewModel.Language.Translations[LOGS_LOG_LEVEL]}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding SelectedLog.Level}" Margin="10,0,0,0" TextWrapping="Wrap" />
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+            <TextBlock Text="{Binding ViewModel.Language.Translations[LOGS_MESSAGE]}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding SelectedLog.Message}" Margin="10,0,0,0" TextWrapping="Wrap" />
+        </StackPanel>
+
+        <Button Content="OK"
+                HorizontalAlignment="Right"
+                Width="70"
+                Margin="0,10,0,0"
+                Click="Ok_Click"/>
+
+    </StackPanel>
+</Window>
