@@ -82,11 +82,10 @@ namespace ProjetEasySave.Model
 
                 foreach (var sourceFile in Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories))
                 {
-                    // --- 1. Business Software Check (Before processing each file) ---
                     if (businessSoftwareChecker != null && businessSoftwareChecker())
                     {
                         _logger.log(Logger.formatErrMessage("Backup suspended: Business software detected."));
-                        return false; // Stop the sequence immediately
+                        return false;
                     }
 
                     var relativePath = Path.GetRelativePath(sourcePath, sourceFile);
@@ -123,7 +122,7 @@ namespace ProjetEasySave.Model
                         double encryptionDuration = 0;
                         DateTime startTime = DateTime.Now;
 
-                        // --- 2. Encryption Decision ---
+                        // Encryption Decision 
                         bool needEncryption = !string.IsNullOrEmpty(cryptoKey)
                                               && cryptoExtensions != null
                                               && cryptoExtensions.Contains(extension);
@@ -139,7 +138,7 @@ namespace ProjetEasySave.Model
                             File.Copy(sourceFile, diffFile, true);
                         }
 
-                        // --- 3. Logging ---
+                        // Logging 
                         _logger.log(Logger.formatLogMessage(
                             needEncryption ? "Copying File (Differential + Encrypted)" : "Copying File (Differential)",
                             sourceFile,

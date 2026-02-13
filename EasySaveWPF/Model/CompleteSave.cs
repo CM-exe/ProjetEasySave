@@ -38,7 +38,6 @@ namespace ProjetEasySave.Model
 
                 Directory.CreateDirectory(destinationPath);
 
-                // --- 1. Global Config for Encryption ---
                 // Fetching keys and extensions from your Config singleton
                 string cryptoKey = Config.Instance.EncryptionKey;
                 List<string> cryptoExtensions = Config.Instance.EncryptionExtensions;
@@ -54,7 +53,6 @@ namespace ProjetEasySave.Model
                 // Main File Loop
                 foreach (var file in Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories))
                 {
-                    // --- 2. Business Software Check (Before each file) ---
                     if (businessSoftwareChecker != null && businessSoftwareChecker())
                     {
                         _logger.log(Logger.formatErrMessage("Backup suspended: Business software detected."));
@@ -68,7 +66,6 @@ namespace ProjetEasySave.Model
                     FileInfo fileInfo = new FileInfo(file);
                     string extension = Path.GetExtension(file);
 
-                    // --- 3. Encryption Logic ---
                     // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
                     double encryptionDuration = 0;
                     DateTime startTime = DateTime.Now;
@@ -89,7 +86,6 @@ namespace ProjetEasySave.Model
                         File.Copy(file, targetFile, true);
                     }
 
-                    // --- 4. Logging ---
                     // Passing encryptionDuration: 0 if standard copy, result of DLL if encrypted
                     _logger.log(Logger.formatLogMessage(
                         shouldEncrypt ? "Copying File (Encrypted)" : "Copying File",
@@ -100,8 +96,7 @@ namespace ProjetEasySave.Model
                         startTime.ToString("yyyy-MM-dd HH:mm:ss")
                     ));
 
-                    // If encryption failed, we might want to stop or continue? 
-                    // Usually, if duration < 0, it means the file wasn't copied/encrypted correctly.
+                    // Abort if the encryption/copy process failed (duration < 0)
                     if (encryptionDuration < 0) return false;
                 }
 
