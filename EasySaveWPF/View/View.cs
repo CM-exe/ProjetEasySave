@@ -328,7 +328,7 @@ namespace ProjetEasySave.View
             Console.Write(_viewModel.translate("LogFormatPrompt"));
             string choice = Console.ReadLine()?.Trim().ToUpper();
 
-            bool success = _viewModel.setLogFormat(choice);
+            bool success = _viewModel.setLogsFormat(choice);
 
             // Results are now also translated
             renderResult(

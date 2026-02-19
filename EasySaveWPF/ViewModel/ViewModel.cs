@@ -51,9 +51,16 @@ namespace ProjetEasySave.ViewModel
             return _languageService.getLanguage();
         }
 
-        public void setLogsFormat(string format)
+        public bool setLogsFormat(string format)
         {
-            logger.setLogsFormat(format);
+            try
+            {
+                logger.setLogsFormat(format);
+            }
+            catch (Exception e) {
+                return false;
+            }
+            return true;
         }
 
         public string getLogsFormat()
