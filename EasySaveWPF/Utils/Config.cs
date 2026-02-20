@@ -25,6 +25,8 @@ namespace ProjetEasySave.Utils
         private string defaultBusinessSoftwareName;
         private List<string> defaultEncryptionExtensions;
         private string defaultEncryptionKey;
+        private long defaultMaxFileSize = 5000;
+
 
         // Loaded variables
         private string language;
@@ -35,6 +37,7 @@ namespace ProjetEasySave.Utils
         private string businessSoftwareName;
         private List<string> encryptionExtensions;
         private string encryptionKey;
+        private long maxFileSize;
 
         private Config()
         {
@@ -47,6 +50,7 @@ namespace ProjetEasySave.Utils
             defaultBusinessSoftwareName = "CalculatorApp";
             defaultEncryptionExtensions = new List<string> { ".txt", ".docx", ".jpg", ".png", ".pdf" };
             defaultEncryptionKey = "maCleDeSecurite1234";
+            defaultMaxFileSize = 5000;
         }
 
         public static Config Instance
@@ -82,6 +86,7 @@ namespace ProjetEasySave.Utils
                     {"businessSoftwareName", new string(defaultBusinessSoftwareName) },
                     {"encryptionExtensions", JsonSerializer.Serialize(defaultEncryptionExtensions)  }, // Ajout de la liste des extensions à chiffrer
                     {"encryptionKey", new string(defaultEncryptionKey) }, // Ajout de la clé de chiffrement
+                    {"maxFileSize", defaultMaxFileSize.ToString()} // Ajout du seuil en Ko
                 };
                 // Save as JSON object
                 var options = new JsonSerializerOptions { WriteIndented = true };
@@ -147,6 +152,13 @@ namespace ProjetEasySave.Utils
                 {
                     encryptionExtensions = defaultEncryptionExtensions;
                 }
+
+                // GESTION DU SEUIL DE TAILLE (Ko)
+                if (dict.ContainsKey("maxFileSize"))
+                    maxFileSize = long.Parse(dict["maxFileSize"].ToString());
+                else
+                    maxFileSize = defaultMaxFileSize;
+
             }
 
         }
@@ -162,7 +174,8 @@ namespace ProjetEasySave.Utils
                 logsFormat = logsFormat,
                 businessSoftwareName = businessSoftwareName,
                 encryptionKey = encryptionKey, // Ajout de la clé
-                encryptionExtensions = encryptionExtensions // Ajout de la liste (sera sauvegardée comme tableau [])
+                encryptionExtensions = encryptionExtensions, // Ajout de la liste (sera sauvegardée comme tableau [])
+                maxFileSize = maxFileSize
             };
 
             var options = new JsonSerializerOptions { WriteIndented = true };
@@ -182,10 +195,17 @@ namespace ProjetEasySave.Utils
         public List<string> getEncryptionExtensions() { return encryptionExtensions; }
         public string getEncryptionKey() { return encryptionKey; }
 
+        public long getMaxFileSize() { return maxFileSize; }
 
         // Setters
         public void setLanguage(string newLanguage) { language = newLanguage; saveConfigFile(); }
 
         public void setLogsFormat(string newLogsFormat) { logsFormat = newLogsFormat; saveConfigFile(); }
+
+        public void setMaxFileSize(long newSize)
+        {
+            maxFileSize = newSize;
+            saveConfigFile();
+        }
     }
 }

@@ -45,6 +45,8 @@ namespace EasySaveWPF
             headerCompleteSavePath.Header = _viewModel.translate("CompleteSavePath");
             headerType.Header = _viewModel.translate("Type");
             headerState.Header = _viewModel.translate("State");
+            txtMaxSize.Text = _viewModel.translate("MaxSize") + " (Ko)";
+            btnSaveMaxSize.Content = _viewModel.translate("Save");
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -62,6 +64,8 @@ namespace EasySaveWPF
             if (btnStartSave != null) btnStartSave.Click += OnStartClick;
             if (btnLanguage != null) btnLanguage.Click += OnLanguageClick;
             if (btnLogsFormat != null) btnLogsFormat.Click += OnLogsFormatClick;
+            if (txtMaxFileSize != null) txtMaxFileSize.Text = _viewModel.GetMaxFileSize().ToString();
+            if (btnSaveMaxSize != null) btnSaveMaxSize.Click += btnSaveMaxSize_click;
 
             // Abonnement à l'événement onSaveTaskStateChanged pour chaque SaveSpace existant
             SubscribeToSaveSpaceEvents();
@@ -574,5 +578,17 @@ namespace EasySaveWPF
             }
         }
 
-    }
-}
+        // Remplace "RoutedEvent" par "RoutedEventArgs"
+        private void btnSaveMaxSize_click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.SaveMaxFileSize(txtMaxFileSize.Text);
+
+            // Utilisation d'une clé de traduction ou d'un message fixe
+            MessageBox.Show("Configuration mise à jour !", "EasySave", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+    } 
+} 
+
+        
+
+    

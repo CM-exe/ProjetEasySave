@@ -43,7 +43,9 @@
     "LogsFormat": "Format des logs",
     "CurrentLogsFormat": "Format des logs actuel",
     "Ok": "OK",
-    "Cancel": "Annuler"
+    "Cancel": "Annuler",
+    "Save": "Enregistrer",
+    "MaxSize" : "Taille Max"
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -89,6 +91,8 @@
     "LogsFormat": "Logs format",
     "CurrentLogsFormat": "Current logs format",
     "Ok": "OK",
-    "Cancel": "Cancel"
+    "Cancel": "Cancel",
+    "Save": "Save",
+    "MaxSize" :  "Max Size"
   }
 }

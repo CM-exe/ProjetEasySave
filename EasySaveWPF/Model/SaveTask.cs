@@ -90,5 +90,12 @@
             });
         }
 
+        // À ajouter dans SaveTask.cs
+        public string getName()
+        {
+            // On appelle la méthode getName() que l'on a vue dans ton SaveSpace.cs
+            return _saveSpace.getName();
+        }
+
     }
 }

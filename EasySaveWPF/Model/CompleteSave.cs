@@ -5,6 +5,7 @@ using ProjetEasySave.ViewModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Threading;
 
 namespace ProjetEasySave.Model
 {
@@ -17,6 +18,11 @@ namespace ProjetEasySave.Model
         // Interface attributes
         private static Config config = Config.Instance; // Load config for business software checking
         private static SaveTaskState _state = SaveTaskState.PENDING; // State for task
+
+        // --- AJOUT DU SÉMAPHORE STATIQUE ---
+        // Partagé entre toutes les instances de CompleteSave (interdit le transfert parallèle de gros fichiers)
+        private static readonly SemaphoreSlim _largeFileSemaphore = new SemaphoreSlim(1, 1);
+
 
         // Attributes
         private Logger _logger = Logger.getInstance(Config.Instance);
@@ -140,44 +146,91 @@ namespace ProjetEasySave.Model
                     var targetFile = Path.Combine(destinationPath, relative);
                     Directory.CreateDirectory(Path.GetDirectoryName(targetFile)!);
 
+
+
+
                     FileInfo fileInfo = new FileInfo(file);
-                    string extension = Path.GetExtension(file);
 
-                    // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
-                    double encryptionDuration = 0;
-                    DateTime startTime = DateTime.Now;
+                    long thresholdKo = Config.Instance.getMaxFileSize();
+                    long thresholdBytes = thresholdKo * 1024;
+                    bool isLargeFile = fileInfo.Length > thresholdBytes;
 
-                    bool shouldEncrypt = !string.IsNullOrEmpty(cryptoKey)
-                                         && cryptoExtensions != null
-                                         // Utilise LINQ pour vérifier si l'extension existe, en ignorant la casse
-                                         && cryptoExtensions.Any(e =>
-                                             e.Equals(extension, StringComparison.OrdinalIgnoreCase));
-
-                    if (shouldEncrypt)
+                    if (isLargeFile)
                     {
-                        // Call CryptoSoft DLL
-                        // Returns time in ms or -1 on error
-                        encryptionDuration = FileManager.CryptFile(file, targetFile, cryptoKey);
-                    }
-                    else
-                    {
-                        // Standard copy (encryptionDuration remains 0)
-                        File.Copy(file, targetFile, true);
+                        
+                        Debug.WriteLine(">>> Tâche [" + _saveTask.getName() + "] : J'attends le verrou...");
+                        _largeFileSemaphore.Wait();
+                        Debug.WriteLine(">>> Tâche [" + _saveTask.getName() + "] : Verrou REÇU !");
+
+                        // Pause de test pour voir le blocage de l'autre sauvegarde
+                        Thread.Sleep(5000);
                     }
 
-                    // Passing encryptionDuration: 0 if standard copy, result of DLL if encrypted
-                    _logger.log(Logger.formatLogMessage(
-                        shouldEncrypt ? "Copying File (Encrypted)" : "Copying File",
-                        file,
-                        targetFile,
-                        (int)fileInfo.Length,
-                        encryptionDuration,
-                        startTime.ToString("yyyy-MM-dd HH:mm:ss")
-                    ));
+                    try
+                    {
+                        string extension = Path.GetExtension(file);
 
-                    // Abort if the encryption/copy process failed (duration < 0)
-                    if (encryptionDuration < 0) return false;
+                        // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
+                        double encryptionDuration = 0;
+                        DateTime startTime = DateTime.Now;
+
+                        bool shouldEncrypt = !string.IsNullOrEmpty(cryptoKey)
+                                             && cryptoExtensions != null
+                                             // Utilise LINQ pour vérifier si l'extension existe, en ignorant la casse
+                                             && cryptoExtensions.Any(e =>
+                                                 e.Equals(extension, StringComparison.OrdinalIgnoreCase));
+
+                        if (shouldEncrypt)
+                        {
+                            // Call CryptoSoft DLL
+                            // Returns time in ms or -1 on error
+                            encryptionDuration = FileManager.CryptFile(file, targetFile, cryptoKey);
+                        }
+                        else
+                        {
+                            // Standard copy (encryptionDuration remains 0)
+                            File.Copy(file, targetFile, true);
+                        }
+
+                        // Passing encryptionDuration: 0 if standard copy, result of DLL if encrypted
+                        _logger.log(Logger.formatLogMessage(
+                            shouldEncrypt ? "Copying File (Encrypted)" : "Copying File",
+                            file,
+                            targetFile,
+                            (int)fileInfo.Length,
+                            encryptionDuration,
+                            startTime.ToString("yyyy-MM-dd HH:mm:ss")
+                        ));
+
+                        // Abort if the encryption/copy process failed (duration < 0)
+                        if (encryptionDuration < 0) return false;
+                    }
+
+                    finally
+                    {
+                        if(isLargeFile)
+                        {
+                            _largeFileSemaphore.Release();
+                            System.Threading.Thread.Sleep(5000);
+                        }
+                    }
+
                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
 
                 // "Save completed" Log
                 _logger.log(Logger.formatCompleteSaveMessage(

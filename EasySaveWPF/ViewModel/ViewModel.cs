@@ -12,6 +12,8 @@ namespace ProjetEasySave.ViewModel
         private LanguageService _languageService;
         private readonly Logger logger = Logger.getInstance(Config.Instance); // Load logger
 
+
+
         // Constructor
         public ViewModel()
         {
@@ -56,7 +58,8 @@ namespace ProjetEasySave.ViewModel
             {
                 logger.setLogsFormat(format);
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 return false;
             }
             return true;
@@ -71,5 +74,23 @@ namespace ProjetEasySave.ViewModel
         {
             return _languageService.translate(key);
         }
+
+
+        public long GetMaxFileSize()
+        {
+            return Config.Instance.getMaxFileSize();
+        }
+
+        public void SaveMaxFileSize(string sizeText)
+        {
+            // On convertit le string en long ici
+            if (long.TryParse(sizeText, out long newSize))
+            {
+                Config.Instance.setMaxFileSize(newSize);
+            }
+        }
+
     }
 }
+
+

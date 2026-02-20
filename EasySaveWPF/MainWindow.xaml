@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasySaveWPF"
         mc:Ignorable="d"
-        Title="EasySave - Outil de sauvegarde" Height="450" Width="800"
+        Title="EasySave - Outil de sauvegarde" Height="450" Width="1100"
         Background="#F5F7FA"
         ResizeMode="NoResize">
     <Grid Margin="16">
@@ -56,6 +56,12 @@
         </Border>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
+                <TextBlock x:Name="txtMaxSize" Text="Taille Max (Ko) :" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox x:Name="txtMaxFileSize" Width="80" VerticalContentAlignment="Center" Margin="0,0,5,0"/>
+                <Button x:Name="btnSaveMaxSize" Content="Enregistrer" Padding="5,2"/>
+            </StackPanel>
+
             <Button x:Name="btnAddSpace" Content="Ajouter" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
             <Button x:Name="btnEditSpace" Content="Éditer" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
             <Button x:Name="btnDeleteSpace" Content="Supprimer" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
