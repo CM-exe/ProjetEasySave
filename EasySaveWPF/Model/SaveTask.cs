@@ -7,6 +7,11 @@
         private SaveSpace _saveSpace;
         private SaveTaskState _state;
 
+        private CancellationTokenSource _cts;
+        private ManualResetEventSlim _pauseEvent = new(true);
+
+        public event Action<int, string>? ProgressUpdated; // Event for progress updates
+
         // Constructor
         public SaveTask(string strategy, SaveSpace space, string completeFolder = "")
         {
@@ -26,13 +31,105 @@
                     throw new ArgumentException("Invalid save strategy type");
             }
             _saveSpace = space;
+            _state = SaveTaskState.PENDING;
+        }
+
+        public async Task<bool> StartAsync(string sourceFolder, string destinationFolder)
+        {
+            _cts = new CancellationTokenSource();
+            setState(SaveTaskState.RUNNING);
+
+            try
+            {
+                bool result = await Task.Run(() =>
+                    _saveStrategy.doSave(
+                        sourceFolder,
+                        destinationFolder,
+                        _cts.Token,
+                        _pauseEvent,
+                        reportProgress
+                    )
+                );
+
+                setState(result ? SaveTaskState.COMPLETED : SaveTaskState.FAILED);
+                return result;
+            }
+            catch (OperationCanceledException)
+            {
+                setState(SaveTaskState.STOPPED);
+                return false;
+            }
+        }
+
+        public void Pause()
+        {
+            if (_state == SaveTaskState.RUNNING)
+                _pauseEvent.Reset();
+        }
+
+        public void Resume()
+        {
+            if (_state == SaveTaskState.RUNNING)
+                _pauseEvent.Set();
+        }
+
+        public void Stop()
+        {
+            _cts?.Cancel();
         }
 
         // Methods
-        public bool save(string sourceFolder, string destinationFolder)
+        //public bool save(string sourceFolder, string destinationFolder)
+        //{
+        //    return _saveStrategy.doSave(sourceFolder, destinationFolder);
+        //}
+
+        public bool save(
+    string sourceFolder,
+    string destinationFolder,
+    CancellationToken token,
+    ManualResetEventSlim pauseEvent,
+    Action<int, string>? progress)
         {
-            bool well_executed = _saveStrategy.doSave(sourceFolder, destinationFolder);
-            return well_executed;
+            _state = SaveTaskState.RUNNING;
+
+            bool ok = _saveStrategy.doSave(
+                sourceFolder,
+                destinationFolder,
+                token,
+                pauseEvent,
+                progress
+            );
+
+            _state = ok ? SaveTaskState.COMPLETED : SaveTaskState.FAILED;
+            return ok;
+        }
+
+        //public Task<bool> saveAsync(string sourceFolder, string destinationFolder)
+        //{
+        //    return Task.Run(() =>
+        //    {
+        //        return save(sourceFolder, destinationFolder);
+        //    });
+        //}
+
+        public Task<bool> saveAsync(
+    string sourceFolder,
+    string destinationFolder,
+    CancellationToken token,
+    ManualResetEventSlim pauseEvent,
+    Action<int, string>? progress = null)
+        {
+            return Task.Run(() =>
+            {
+                return save(
+                    sourceFolder,
+                    destinationFolder,
+                    token,
+                    pauseEvent,
+                    progress
+                );
+            }, token);
         }
 
         public SaveTaskState onSaveTaskStateUpdated(ISaveStrategy strategy)
@@ -49,6 +146,13 @@
             _saveSpace.onSaveTaskStateChanged(this);
             return _state;
 
+        }
+
+        // Progress
+
+        private void reportProgress(int progress, string message)
+        {
+            ProgressUpdated?.Invoke(progress, message);
         }
 
         // Getters
@@ -81,14 +185,5 @@
             }
             return string.Empty;
         }
-
-        public Task<bool> saveAsync(string sourceFolder, string destinationFolder)
-        {
-            return Task.Run(() =>
-            {
-                return save(sourceFolder, destinationFolder);
-            });
-        }
-
     }
 }

@@ -6,4 +6,5 @@
     PAUSED,
     COMPLETED,
     FAILED,
+    STOPPED,
 }

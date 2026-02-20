@@ -202,9 +202,15 @@ namespace EasySaveWPF
             }
 
 
-            ShowResult(true, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
-            bool ok = await _viewModel.startSave(row.Name);
-            ShowResult(ok, _viewModel.translate("SaveCompleted"), _viewModel.translate("SaveStartFailed"));
+            //ShowResult(true, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
+            //bool ok = await _viewModel.startSave(row.Name);
+            //ShowResult(ok, _viewModel.translate("SaveCompleted"), _viewModel.translate("SaveStartFailed"));
+
+            var progressWindow = new SaveProgressWindow(_viewModel, row.Name)
+            {
+                Owner = this
+            };
+            progressWindow.ShowDialog();
         }
 
         private void OnLanguageClick(object sender, RoutedEventArgs e)

@@ -10,9 +10,10 @@ namespace ProjetEasySave.Model
          */
         private static Config _config = Config.Instance; // Load config for business software checking
         private static SaveTaskState _state; // The state for the task
-        
+
         // Interface methods
-        bool doSave(string sourcePath, string destinationPath);
+        bool doSave(string source, string destination);
+        bool doSave(string source, string destination, CancellationToken token, ManualResetEventSlim pauseEvent, Action<int, string> progressCallback);
 
         bool isBusinessSoftwareRunning();
 

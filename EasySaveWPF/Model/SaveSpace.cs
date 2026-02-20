@@ -1,6 +1,7 @@
 ﻿using ProjetEasySave.Utils;
 using System.Text.Json.Serialization;
 using EasyLog;
+using System.Threading.Tasks.Sources;
 
 namespace ProjetEasySave.Model
 {
@@ -23,6 +24,12 @@ namespace ProjetEasySave.Model
         private Dictionary<SaveTask, SaveTaskState> _taskStates;
         [JsonIgnore]
         private Logger logger = Logger.getInstance(Config.Instance);
+        [JsonIgnore]
+        private CancellationTokenSource _cts;
+        [JsonIgnore]
+        private ManualResetEventSlim _pauseEvent;
+
+        public event Action<int, string>? ProgressChanged;
 
         // Constructor
         public SaveSpace(string name, string sourcePath, string destinationPath, string typeSave, string completeSavePath = "")
@@ -58,6 +65,9 @@ namespace ProjetEasySave.Model
             {
                 _taskStates[task] = SaveTaskState.PENDING; // Initial state
             }
+
+            _cts = new CancellationTokenSource();
+            _pauseEvent = new ManualResetEventSlim(true);
         }
 
         // Methods
@@ -78,20 +88,61 @@ namespace ProjetEasySave.Model
         public event EventHandler? SaveTaskStateChanged;
 
 
-        public async Task<bool> executeSaveAsync()
+        //public async Task<bool> executeSaveAsync()
+        //{
+        //    var tasks = new List<Task<bool>>();
+
+        //    foreach (var saveTask in _saveTasks)
+        //    {
+        //        tasks.Add(
+        //            saveTask.saveAsync(_sourcePath, _destinationPath)
+        //        );
+        //    }
+
+        //    bool[] results = await Task.WhenAll(tasks);
+
+        //    return results.All(r => r);
+        //}
+
+        public async Task<bool> ExecuteAsync()
         {
-            var tasks = new List<Task<bool>>();
-
-            foreach (var saveTask in _saveTasks)
+            try
             {
-                tasks.Add(
-                    saveTask.saveAsync(_sourcePath, _destinationPath)
+                var tasks = _saveTasks.Select(task =>
+                    task.saveAsync(
+                        _sourcePath,
+                        _destinationPath,
+                        _cts.Token,
+                        _pauseEvent,
+                        (percent, file) =>
+                        {
+                            ProgressChanged?.Invoke(percent, file);
+                        }
+                    )
                 );
+
+                await Task.WhenAll(tasks);
+                return true;
             }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
+        }
 
-            bool[] results = await Task.WhenAll(tasks);
+        public void Play()
+        {
+            _pauseEvent.Set();
+        }
 
-            return results.All(r => r);
+        public void Pause()
+        {
+            _pauseEvent.Reset();
+        }
+
+        public void Stop()
+        {
+            _cts.Cancel();
         }
 
 
