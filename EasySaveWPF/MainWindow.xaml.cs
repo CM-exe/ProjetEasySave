@@ -195,7 +195,7 @@ namespace EasySaveWPF
                 return;
             }
 
-            if (_viewModel.isBusinessSoftwareRunning())
+            if (false) // TODO: Check if the business software is running for this SaveSpace
             {
                 // Display an error message and abort the flow
                 MessageBox.Show(_viewModel.translate("ErrorBusinessSoftwareRunning"), "EasySave", MessageBoxButton.OK, MessageBoxImage.Error); return;

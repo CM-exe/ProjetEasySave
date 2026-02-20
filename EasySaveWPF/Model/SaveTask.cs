@@ -13,14 +13,14 @@
             switch (strategy.ToLower())
             {
                 case "complete":
-                    _saveStrategy = new CompleteSave();
+                    _saveStrategy = new CompleteSave(this);
                     break;
                 case "differential":
                     if (string.IsNullOrWhiteSpace(completeFolder))
                     {
                         throw new ArgumentException("Complete folder path must be provided for differential save strategy");
                     }
-                    _saveStrategy = new DifferentialSave(completeFolder);
+                    _saveStrategy = new DifferentialSave(this,completeFolder);
                     break;
                 default:
                     throw new ArgumentException("Invalid save strategy type");
@@ -29,12 +29,17 @@
         }
 
         // Methods
-        public bool save(string sourceFolder, string destinationFolder, Func<bool> businessSoftwareChecker = null)
+        public bool save(string sourceFolder, string destinationFolder)
         {
-            this.setState(SaveTaskState.RUNNING);
-            bool well_executed = _saveStrategy.doSave(sourceFolder, destinationFolder, businessSoftwareChecker);
-            this.setState(well_executed ? SaveTaskState.COMPLETED : SaveTaskState.FAILED);
+            bool well_executed = _saveStrategy.doSave(sourceFolder, destinationFolder);
             return well_executed;
+        }
+
+        public SaveTaskState onSaveTaskStateUpdated(ISaveStrategy strategy)
+        {
+            SaveTaskState newState = strategy.getState();
+            setState(newState);
+            return newState;
         }
 
         private SaveTaskState setState(SaveTaskState state)

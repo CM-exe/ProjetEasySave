@@ -2,6 +2,8 @@
 {
     PENDING,
     RUNNING,
+    WAITING,
+    PAUSED,
     COMPLETED,
     FAILED,
 }
