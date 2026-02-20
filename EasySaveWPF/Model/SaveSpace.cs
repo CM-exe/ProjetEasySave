@@ -79,11 +79,11 @@ namespace ProjetEasySave.Model
         public event EventHandler? SaveTaskStateChanged;
 
 
-        public bool executeSave(Func<bool> businessSoftwareChecker = null)
+        public bool executeSave()
         {
             foreach (var task in _saveTasks)
             {
-                if (!task.save(_sourcePath, _destinationPath, businessSoftwareChecker))
+                if (!task.save(_sourcePath, _destinationPath))
                 {
                     return false; // If any save task fails, return false
                 }
