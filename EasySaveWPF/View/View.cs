@@ -16,7 +16,7 @@ namespace ProjetEasySave.View
             _viewModel = new ViewModel.ViewModel();
         }
 
-        public void run(string[] args)
+        public async void run(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             bool running = true;
@@ -48,11 +48,11 @@ namespace ProjetEasySave.View
                                 }
                                 for (int i = 0; i <= to; i++)
                                 {
-                                    var ok = _viewModel.startSave(spaces[i].getName());
+                                    var ok = await _viewModel.startSave(spaces[i].getName());
                                     renderResult(ok, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
                                     while (spaces[i].getTaskStates().Contains(SaveTaskState.RUNNING))
                                     {
-                                        Thread.Sleep(100);
+                                        await Task.Delay(100);
                                     }
                                     renderResult(ok, _viewModel.translate("SaveCompleted"), _viewModel.translate("SaveFailed"));
                                 }
@@ -84,7 +84,7 @@ namespace ProjetEasySave.View
                                     renderMessage(_viewModel.translate("InvalidSaveSpaceID"), ConsoleColor.Red);
                                 }
                                 // Start save for "start"
-                                var ok = _viewModel.startSave(spaces[start].getName());
+                                var ok = await _viewModel.startSave(spaces[start].getName());
                                 renderResult(ok, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
                                 while (spaces[start].getTaskStates().Contains(SaveTaskState.RUNNING))
                                 {
@@ -95,7 +95,7 @@ namespace ProjetEasySave.View
                                 if (start != to)
                                 {
                                     // Start save for "to"
-                                    var ok_ = _viewModel.startSave(spaces[to].getName());
+                                    var ok_ = await _viewModel.startSave(spaces[to].getName());
                                     renderResult(ok_, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
                                     while (spaces[to].getTaskStates().Contains(SaveTaskState.RUNNING))
                                     {
@@ -226,12 +226,12 @@ namespace ProjetEasySave.View
             pause();
         }
 
-        private void startSaveFlow()
+        private async void startSaveFlow()
         {
             Console.Write(_viewModel.translate("Name") + ": ");
             var name = Console.ReadLine() ?? string.Empty;
 
-            var ok = _viewModel.startSave(name);
+            var ok = await _viewModel.startSave(name);
             renderResult(ok, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
             pause();
         }
