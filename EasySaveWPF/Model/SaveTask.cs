@@ -82,11 +82,11 @@
             return string.Empty;
         }
 
-        public Task<bool> saveAsync(string sourceFolder, string destinationFolder, Func<bool> businessSoftwareChecker = null)
+        public Task<bool> saveAsync(string sourceFolder, string destinationFolder)
         {
             return Task.Run(() =>
             {
-                return save(sourceFolder, destinationFolder, businessSoftwareChecker);
+                return save(sourceFolder, destinationFolder);
             });
         }
 

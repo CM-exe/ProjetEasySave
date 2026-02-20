@@ -78,14 +78,14 @@ namespace ProjetEasySave.Model
         public event EventHandler? SaveTaskStateChanged;
 
 
-        public async Task<bool> executeSaveAsync(Func<bool> businessSoftwareChecker = null)
+        public async Task<bool> executeSaveAsync()
         {
             var tasks = new List<Task<bool>>();
 
             foreach (var saveTask in _saveTasks)
             {
                 tasks.Add(
-                    saveTask.saveAsync(_sourcePath, _destinationPath, businessSoftwareChecker)
+                    saveTask.saveAsync(_sourcePath, _destinationPath)
                 );
             }
 
