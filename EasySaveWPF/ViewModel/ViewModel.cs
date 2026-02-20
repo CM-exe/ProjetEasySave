@@ -30,9 +30,9 @@ namespace ProjetEasySave.ViewModel
             return _model.removeSaveSpace(name);
         }
 
-        public bool startSave(string name)
+        public async Task<bool> startSave(string name)
         {
-            return _model.startSave(name);
+            return await _model.startSave(name);
         }
 
         public List<SaveSpace> getSaveSpaces()

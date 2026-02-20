@@ -81,5 +81,14 @@
             }
             return string.Empty;
         }
+
+        public Task<bool> saveAsync(string sourceFolder, string destinationFolder, Func<bool> businessSoftwareChecker = null)
+        {
+            return Task.Run(() =>
+            {
+                return save(sourceFolder, destinationFolder, businessSoftwareChecker);
+            });
+        }
+
     }
 }

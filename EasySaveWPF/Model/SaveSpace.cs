@@ -1,5 +1,4 @@
 ﻿using ProjetEasySave.Utils;
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using EasyLog;
 
@@ -79,17 +78,22 @@ namespace ProjetEasySave.Model
         public event EventHandler? SaveTaskStateChanged;
 
 
-        public bool executeSave()
+        public async Task<bool> executeSaveAsync(Func<bool> businessSoftwareChecker = null)
         {
-            foreach (var task in _saveTasks)
+            var tasks = new List<Task<bool>>();
+
+            foreach (var saveTask in _saveTasks)
             {
-                if (!task.save(_sourcePath, _destinationPath))
-                {
-                    return false; // If any save task fails, return false
-                }
+                tasks.Add(
+                    saveTask.saveAsync(_sourcePath, _destinationPath, businessSoftwareChecker)
+                );
             }
-            return true; // All save tasks succeeded
+
+            bool[] results = await Task.WhenAll(tasks);
+
+            return results.All(r => r);
         }
+
 
         // Getters
         public string getName()

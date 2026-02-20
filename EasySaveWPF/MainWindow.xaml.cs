@@ -188,7 +188,7 @@ namespace EasySaveWPF
             RefreshList();
         }
 
-        private void OnStartClick(object sender, RoutedEventArgs e)
+        private async void OnStartClick(object sender, RoutedEventArgs e)
         {
             if (listSaveSpaces?.SelectedItem is not SaveSpaceRow row)
             {
@@ -202,7 +202,7 @@ namespace EasySaveWPF
             }
 
 
-            bool ok = _viewModel.startSave(row.Name);
+            bool ok = await _viewModel.startSave(row.Name);
             ShowResult(ok, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
         }
 
