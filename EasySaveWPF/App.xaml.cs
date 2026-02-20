@@ -160,9 +160,9 @@ namespace EasySaveWPF
             Console.ResetColor();
         }
 
-        private static void renderResult(bool ok, string success, string fail)
+        private static void renderResult(Task<bool> ok, string success, string fail)
         {
-            renderMessage(ok ? success : fail, ok ? ConsoleColor.Green : ConsoleColor.Red);
+            renderMessage(ok.Result ? success : fail, ok.Result ? ConsoleColor.Green : ConsoleColor.Red);
         }
     }
 
