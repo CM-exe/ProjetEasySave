@@ -152,17 +152,19 @@ namespace ProjetEasySave.Model
                     FileInfo fileInfo = new FileInfo(file);
 
                     long thresholdKo = Config.Instance.getMaxFileSize();
+
+                    // Convert threshold from KB to Bytes for comparison
                     long thresholdBytes = thresholdKo * 1024;
                     bool isLargeFile = fileInfo.Length > thresholdBytes;
 
                     if (isLargeFile)
                     {
-                        
-                        Debug.WriteLine(">>> Tâche [" + _saveTask.getName() + "] : J'attends le verrou...");
-                        _largeFileSemaphore.Wait();
-                        Debug.WriteLine(">>> Tâche [" + _saveTask.getName() + "] : Verrou REÇU !");
+                        // Request access to the global semaphore to prevent multiple heavy transfers
+                        Debug.WriteLine(">>> [COMP] Tâche [" + _saveTask.getName() + "] : J'attends le verrou...");
+                        Config.LargeFileSemaphore.Wait();
+                        Debug.WriteLine(">>> [COMP] Tâche [" + _saveTask.getName() + "] : Verrou REÇU !");
 
-                        // Pause de test pour voir le blocage de l'autre sauvegarde
+                        // test
                         Thread.Sleep(5000);
                     }
 
@@ -210,27 +212,12 @@ namespace ProjetEasySave.Model
                     {
                         if(isLargeFile)
                         {
-                            _largeFileSemaphore.Release();
+                            Config.LargeFileSemaphore.Release();
                             System.Threading.Thread.Sleep(5000);
                         }
                     }
 
-                }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    
+                }      
 
                 // "Save completed" Log
                 _logger.log(Logger.formatCompleteSaveMessage(

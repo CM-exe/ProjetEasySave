@@ -3,6 +3,7 @@ using EasyLog;
 using ProjetEasySave.Utils;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 
 namespace ProjetEasySave.Model
 {
@@ -16,6 +17,8 @@ namespace ProjetEasySave.Model
         // Interface attributes
         private static Config _config = Config.Instance; // Load config for business software checking
         private static SaveTaskState _state = SaveTaskState.PENDING; // State for the task
+
+
 
         // Attributes
         private Logger _logger = Logger.getInstance(Config.Instance);
@@ -183,41 +186,73 @@ namespace ProjetEasySave.Model
                         Directory.CreateDirectory(Path.GetDirectoryName(diffFile)!);
 
                         FileInfo fileInfo = new FileInfo(sourceFile);
-                        string extension = Path.GetExtension(sourceFile);
 
-                        // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
-                        double encryptionDuration = 0;
-                        DateTime startTime = DateTime.Now;
+                        // Check if the file size exceeds the threshold defined in the configuration
+                        long thresholdBytes = Config.Instance.getMaxFileSize() * 1024;
+                        bool isLargeFile = fileInfo.Length > thresholdBytes;
 
-                        // Encryption Decision 
-                        bool needEncryption = !string.IsNullOrEmpty(cryptoKey)
-                                              && cryptoExtensions != null
-                                              && cryptoExtensions.Contains(extension);
-
-                        if (needEncryption)
+                        if (isLargeFile)
                         {
-                            // Call the CryptoSoft DLL method
-                            encryptionDuration = FileManager.CryptFile(sourceFile, diffFile, cryptoKey);
-                        }
-                        else
-                        {
-                            // Standard file copy
-                            File.Copy(sourceFile, diffFile, true);
+                            // Request access to the global semaphore. If another task is transferring a large file, this task will wait.
+                            Debug.WriteLine($">>> [DIFF] Tâche [{_saveTask.getName()}] : Attente verrou pour {fileInfo.Name}");
+                            Config.LargeFileSemaphore.Wait();
+                            Debug.WriteLine($">>> [DIFF] Tâche [{_saveTask.getName()}] : Verrou REÇU !");
+
+                            //test 
+                            Thread.Sleep(5000);
                         }
 
-                        // Logging 
-                        _logger.log(Logger.formatLogMessage(
-                            needEncryption ? "Copying File (Differential + Encrypted)" : "Copying File (Differential)",
-                            sourceFile,
-                            diffFile,
-                            (int)fileInfo.Length,
-                            encryptionDuration, // 0 if copy, ms if encrypted
-                            startTime.ToString("yyyy-MM-dd HH:mm:ss")
-                        ));
+                        try
+                        {
 
-                        // Abort if the encryption/copy process failed (duration < 0)
-                        if (encryptionDuration < 0) return false;
+                           
+                            // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
+                            double encryptionDuration = 0;
+                            DateTime startTime = DateTime.Now;
+                             string extension = Path.GetExtension(sourceFile);
+
+                            // Encryption Decision 
+                            bool needEncryption = !string.IsNullOrEmpty(cryptoKey)
+                                                  && cryptoExtensions != null
+                                                  && cryptoExtensions.Contains(extension);
+
+                            if (needEncryption)
+                            {
+                                // Call the CryptoSoft DLL method
+                                encryptionDuration = FileManager.CryptFile(sourceFile, diffFile, cryptoKey);
+                            }
+                            else
+                            {
+                                // Standard file copy
+                                File.Copy(sourceFile, diffFile, true);
+                            }
+
+                            // Logging 
+                            _logger.log(Logger.formatLogMessage(
+                                needEncryption ? "Copying File (Differential + Encrypted)" : "Copying File (Differential)",
+                                sourceFile,
+                                diffFile,
+                                (int)fileInfo.Length,
+                                encryptionDuration, // 0 if copy, ms if encrypted
+                                startTime.ToString("yyyy-MM-dd HH:mm:ss")
+                            ));
+
+                            // Abort if the encryption/copy process failed (duration < 0)
+                            if (encryptionDuration < 0) return false;
+                        }
+                        finally
+                        {
+                            //Release the semaphore to allow other waiting tasks to proceed,
+                            if (isLargeFile)
+                            {
+                                Config.LargeFileSemaphore.Release();
+                                Debug.WriteLine($">>> [DIFF] Tâche [{_saveTask.getName()}] : Verrou LIBÉRÉ.");
+                            }
+                        }
+
+
                     }
+                      
                 }
 
                 // "Save completed" log
@@ -238,5 +273,7 @@ namespace ProjetEasySave.Model
                 return false;
             }
         }
+
+
     }
 }

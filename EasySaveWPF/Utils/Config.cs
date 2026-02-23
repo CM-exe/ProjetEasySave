@@ -207,5 +207,8 @@ namespace ProjetEasySave.Utils
             maxFileSize = newSize;
             saveConfigFile();
         }
+
+        // Global semaphore to synchronize large file transfers across all save strategies (Complete and Differential).
+        public static readonly SemaphoreSlim LargeFileSemaphore = new SemaphoreSlim(1, 1);
     }
 }
