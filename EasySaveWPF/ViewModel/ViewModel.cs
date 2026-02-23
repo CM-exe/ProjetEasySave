@@ -13,6 +13,14 @@ namespace ProjetEasySave.ViewModel
         private SaveModel _model;
         private LanguageService _languageService;
         private readonly Logger logger = Logger.getInstance(Config.Instance); // Load logger
+         
+        // Translations
+        public string CurrentFileLabel => translate("CurrentFileLabel");
+        public string PausedSuffix => translate("PausedSuffix");
+        public string StoppedSuffix => translate("StoppedSuffix");
+        public string SaveCompletedMessage => translate("SaveCompleted");
+        public string SaveStoppedMessage => translate("SaveStopped");
+        public string SaveWindowTitle => translate("SaveInProgressTitle");
 
         private int _progress;
         public int Progress
@@ -55,16 +63,15 @@ namespace ProjetEasySave.ViewModel
             return _model.removeSaveSpace(name);
         }
 
-        public async Task StartSaveAsync(string name)
+        public async Task<bool> StartSaveAsync(string name)
         {
             _model.SubscribeProgress(name, (p, f) =>
             {
-                //Console.WriteLine($"Progress : {p}%, Current File: {f}");
                 Progress = p;
                 CurrentFile = f;
             });
 
-            await _model.StartSaveAsync(name);
+            return await _model.StartSaveAsync(name);
         }
 
         public void PauseSave(string name)

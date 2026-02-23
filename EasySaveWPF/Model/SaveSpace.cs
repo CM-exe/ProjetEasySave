@@ -24,15 +24,18 @@ namespace ProjetEasySave.Model
         [JsonIgnore]
         private Logger logger = Logger.getInstance(Config.Instance);
         [JsonIgnore]
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource? _cts;
         [JsonIgnore]
-        private ManualResetEventSlim _pauseEvent;
+        private ManualResetEventSlim? _pauseEvent;
 
         public event Action<int, string>? ProgressChanged;
 
         // Constructor
         public SaveSpace(string name, string sourcePath, string destinationPath, string typeSave, string completeSavePath = "")
         {
+            _cts = new CancellationTokenSource();
+            _pauseEvent = new ManualResetEventSlim(true);
+
             _name = name;
             _sourcePath = sourcePath;
             _destinationPath = destinationPath;
@@ -65,8 +68,6 @@ namespace ProjetEasySave.Model
                 _taskStates[task] = SaveTaskState.PENDING; // Initial state
             }
 
-            _cts = new CancellationTokenSource();
-            _pauseEvent = new ManualResetEventSlim(true);
         }
 
         // Methods
@@ -99,6 +100,9 @@ namespace ProjetEasySave.Model
 
         public async Task<bool> ExecuteAsync()
         {
+            _cts = new CancellationTokenSource();
+            _pauseEvent = new ManualResetEventSlim(true);
+
             try
             {
                 var tasks = _saveTasks.Select(task =>
@@ -135,11 +139,11 @@ namespace ProjetEasySave.Model
 
         public void Stop()
         {
-            _cts.Cancel();
-
             updateTaskState(_saveTasks[0], SaveTaskState.STOPPED);
 
             SaveTaskStateChanged?.Invoke(this, EventArgs.Empty);
+
+            _cts.Cancel();
         }
 
 

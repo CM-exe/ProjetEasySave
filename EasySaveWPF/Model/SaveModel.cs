@@ -151,16 +151,6 @@ namespace ProjetEasySave.Model
             return false;
         }
 
-        //public async Task<bool> startSave(string name)
-        //{
-        //    var saveSpaceToStart = _saveSpaces.FirstOrDefault(s => s.getName() == name);
-        //    if (saveSpaceToStart != null)
-        //    {
-        //        return await saveSpaceToStart.executeSaveAsync();
-        //    }
-        //    return false;
-        //}
-
         public Task<bool> StartSaveAsync(string name)
         {
             var saveSpace = _saveSpaces.FirstOrDefault(s => s.getName() == name);

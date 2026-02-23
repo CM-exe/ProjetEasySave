@@ -1,7 +1,7 @@
 ﻿<Window x:Class="EasySaveWPF.SaveProgressWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Sauvegarde en cours"
+        Title="{Binding SaveWindowTitle}"
         Height="220"
         Width="420"
         WindowStartupLocation="CenterOwner">
@@ -20,7 +20,7 @@
 
         <TextBlock
             Grid.Row="0"
-            Text="Fichier en cours :"
+            Text="{Binding CurrentFileLabel}"
             FontWeight="Bold"/>
 
         <TextBlock

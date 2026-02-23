@@ -1,10 +1,8 @@
 ﻿using CryptoSoft;
 using EasyLog;
 using ProjetEasySave.Utils;
-using ProjetEasySave.ViewModel;
 using System.Diagnostics;
 using System.IO;
-using System.Windows;
 
 namespace ProjetEasySave.Model
 {
@@ -216,7 +214,7 @@ namespace ProjetEasySave.Model
                 foreach (var file in files)
                 {
                     token.ThrowIfCancellationRequested();
-                    pauseEvent.Wait(); // pause ici si demandé
+                    pauseEvent.Wait();
 
                     string relative = Path.GetRelativePath(source, file);
                     string target = Path.Combine(destination, relative);
