@@ -91,7 +91,7 @@
     ManualResetEventSlim pauseEvent,
     Action<int, string>? progress)
         {
-            _saveSpace.onSaveTaskStateChanged(this, SaveTaskState.RUNNING);
+            _saveSpace.updateTaskState(this, SaveTaskState.RUNNING);
 
             try
             {
@@ -103,7 +103,7 @@
                     progress
                 );
 
-                _saveSpace.onSaveTaskStateChanged(
+                _saveSpace.updateTaskState(
                     this,
                     ok ? SaveTaskState.COMPLETED : SaveTaskState.FAILED
                 );
@@ -112,7 +112,7 @@
             }
             catch (OperationCanceledException)
             {
-                _saveSpace.onSaveTaskStateChanged(this, SaveTaskState.STOPPED);
+                _saveSpace.updateTaskState(this, SaveTaskState.STOPPED);
                 throw;
             }
         }
@@ -155,7 +155,7 @@
         {
             _state = state;
             // Notify the SaveSpace of the state change
-            _saveSpace.onSaveTaskStateChanged(this, state);
+            _saveSpace.updateTaskState(this, state);
             return _state;
 
         }

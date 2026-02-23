@@ -63,7 +63,7 @@ namespace EasySaveWPF
             if (btnLanguage != null) btnLanguage.Click += OnLanguageClick;
             if (btnLogsFormat != null) btnLogsFormat.Click += OnLogsFormatClick;
 
-            // Abonnement à l'événement onSaveTaskStateChanged pour chaque SaveSpace existant
+            // Abonnement à l'événement updateTaskState pour chaque SaveSpace existant
             SubscribeToSaveSpaceEvents();
 
             RefreshList();
@@ -72,7 +72,7 @@ namespace EasySaveWPF
 
 
 
-        // Méthode pour s'abonner à l'événement onSaveTaskStateChanged de chaque SaveSpace
+        // Méthode pour s'abonner à l'événement updateTaskState de chaque SaveSpace
         private void SubscribeToSaveSpaceEvents()
         {
             var spaces = _viewModel.getSaveSpaces();
@@ -81,13 +81,13 @@ namespace EasySaveWPF
             foreach (var space in spaces)
             {
                 // Désabonnement préalable pour éviter les doublons
-                space.SaveTaskStateChanged -= SaveSpace_onSaveTaskStateChanged;
-                space.SaveTaskStateChanged += SaveSpace_onSaveTaskStateChanged;
+                space.SaveTaskStateChanged -= SaveSpace_updateTaskState;
+                space.SaveTaskStateChanged += SaveSpace_updateTaskState;
             }
         }
 
         // Gestionnaire d'événement appelé lors d'un changement d'état d'une tâche de sauvegarde
-        private void SaveSpace_onSaveTaskStateChanged(object? sender, EventArgs e)
+        private void SaveSpace_updateTaskState(object? sender, EventArgs e)
         {
             // Rafraîchir la liste sur le thread UI
             Dispatcher.Invoke(RefreshList);

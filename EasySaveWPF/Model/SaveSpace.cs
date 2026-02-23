@@ -70,7 +70,7 @@ namespace ProjetEasySave.Model
         }
 
         // Methods
-        public SaveTaskState onSaveTaskStateChanged(SaveTask task, SaveTaskState newState)
+        public SaveTaskState updateTaskState(SaveTask task, SaveTaskState newState)
         {
             if (!_taskStates.ContainsKey(task))
                 return newState;
@@ -96,23 +96,6 @@ namespace ProjetEasySave.Model
 
         // EventHandler SaveTaskStateChanged for the view to update the UI in real-time
         public event EventHandler? SaveTaskStateChanged;
-
-
-        //public async Task<bool> executeSaveAsync()
-        //{
-        //    var tasks = new List<Task<bool>>();
-
-        //    foreach (var saveTask in _saveTasks)
-        //    {
-        //        tasks.Add(
-        //            saveTask.saveAsync(_sourcePath, _destinationPath)
-        //        );
-        //    }
-
-        //    bool[] results = await Task.WhenAll(tasks);
-
-        //    return results.All(r => r);
-        //}
 
         public async Task<bool> ExecuteAsync()
         {
@@ -153,6 +136,10 @@ namespace ProjetEasySave.Model
         public void Stop()
         {
             _cts.Cancel();
+
+            updateTaskState(_saveTasks[0], SaveTaskState.STOPPED);
+
+            SaveTaskStateChanged?.Invoke(this, EventArgs.Empty);
         }
 
 

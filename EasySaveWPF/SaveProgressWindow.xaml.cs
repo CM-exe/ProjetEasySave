@@ -53,25 +53,48 @@ namespace EasySaveWPF
         {
             if(_isPaused)
             {
-                // Reprendre
                 _viewModel.ResumeSave(_saveSpaceName);
                 PlayPauseButton.Content = "⏸";
                 ProgressBar.Foreground = Brushes.Green;
                 _isPaused = false;
+                if (_viewModel.CurrentFile.EndsWith(" (en pause)"))
+                {
+                    _viewModel.CurrentFile = _viewModel.CurrentFile.Replace(" (en pause)", "");
+                }
             }
             else
             {
-                // Mettre en pause
                 _viewModel.PauseSave(_saveSpaceName);
                 PlayPauseButton.Content = "▶";
                 ProgressBar.Foreground = Brushes.Gold;
                 _isPaused = true;
+
+                if (!_viewModel.CurrentFile.EndsWith(" (en pause)"))
+                {
+                    _viewModel.CurrentFile += " (en pause)";
+                }
             }
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.StopSave(_saveSpaceName);
+
+            ProgressBar.Foreground = Brushes.Red;
+            if (_viewModel.CurrentFile.EndsWith(" (en pause)"))
+            {
+                _viewModel.CurrentFile = _viewModel.CurrentFile.Replace(" (en pause)", "");
+            }
+            _viewModel.CurrentFile += " (arrêtée)";
+
+            MessageBox.Show(
+                "La sauvegarde a été arrêtée.",
+                "EasySave",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning
+            );
+
+            Close();
         }
     }
 }
