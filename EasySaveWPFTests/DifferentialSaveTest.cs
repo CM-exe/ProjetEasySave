@@ -22,7 +22,7 @@ namespace EasySaveWPFTests
 
             // First save (complete)
             SaveSpace completeSaveSpace = new SaveSpace("TestSaveSpace", sourceDirectory, destinationDirectory, "complete");
-            await completeSaveSpace.executeSaveAsync();
+            await completeSaveSpace.ExecuteAsync();
 
             // Get file info after first save
             string destinationFile = Path.Combine(destinationDirectory, "test.txt");
@@ -35,7 +35,7 @@ namespace EasySaveWPFTests
             // When
             // Second save (differential)
             SaveSpace differentialSaveSpace = new SaveSpace("TestSaveSpace", sourceDirectory, differentialDestinationDirectory, "differential", destinationDirectory);
-            await differentialSaveSpace.executeSaveAsync();
+            await differentialSaveSpace.ExecuteAsync();
 
             // Then
             string diffFile = Path.Combine(differentialDestinationDirectory, "test.txt");

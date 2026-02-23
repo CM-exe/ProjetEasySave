@@ -22,7 +22,7 @@ namespace EasySaveWPFTests
             // When
             // Create a SaveSpace with a CompleteSave strategy and execute the save
             SaveSpace saveSpace = new SaveSpace("TestSaveSpace", sourceDirectory, destinationDirectory, "complete");
-            await saveSpace.executeSaveAsync();
+            await saveSpace.ExecuteAsync();
 
             // Then
             // Verify that the file was copied to the destination directory

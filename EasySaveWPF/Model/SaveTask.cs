@@ -46,7 +46,7 @@
         {
             _state = state;
             // Notify the SaveSpace of the state change
-            _saveSpace.onSaveTaskStateChanged(this);
+            _saveSpace.updateTaskState(this);
             return _state;
 
         }

@@ -13,7 +13,7 @@ namespace ProjetEasySave.Model
         
         // Interface methods
         bool doSave(string sourcePath, string destinationPath, List<string> priorityExt);
-
+        bool doSave(string source, string destination, CancellationToken token, ManualResetEventSlim pauseEvent, Action<int, string> progressCallback);
         bool isBusinessSoftwareRunning();
 
         void waitForBusinessSoftwareToClose();

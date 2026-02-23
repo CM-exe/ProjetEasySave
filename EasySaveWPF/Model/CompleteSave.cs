@@ -279,5 +279,88 @@ namespace ProjetEasySave.Model
                 return false;
             }
         }
+
+        public bool doSave(
+            string source,
+            string destination,
+            CancellationToken token,
+            ManualResetEventSlim pauseEvent,
+            Action<int, string> progress)
+        {
+            try
+            {
+                _state = SaveTaskState.RUNNING;
+
+                var files = Directory.GetFiles(source, "*", SearchOption.AllDirectories);
+                long totalBytes = files.Sum(f => new FileInfo(f).Length);
+                long copiedBytes = 0;
+
+                foreach (var file in files)
+                {
+                    token.ThrowIfCancellationRequested();
+                    pauseEvent.Wait();
+
+                    string relative = Path.GetRelativePath(source, file);
+                    string target = Path.Combine(destination, relative);
+
+                    Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+
+                    CopyFile(
+                        file,
+                        target,
+                        ref copiedBytes,
+                        totalBytes,
+                        token,
+                        pauseEvent,
+                        progress
+                    );
+                }
+
+                _state = SaveTaskState.COMPLETED;
+                return true;
+            }
+            catch (OperationCanceledException)
+            {
+                _state = SaveTaskState.STOPPED;
+                throw;
+            }
+            catch
+            {
+                _state = SaveTaskState.FAILED;
+                return false;
+            }
+        }
+
+        private void CopyFile(
+            string source,
+            string destination,
+            ref long copiedBytes,
+            long totalBytes,
+            CancellationToken token,
+            ManualResetEventSlim pauseEvent,
+            Action<int, string> progress)
+        {
+            const int bufferSize = 81920;
+            byte[] buffer = new byte[bufferSize];
+
+            using var input = File.OpenRead(source);
+            using var output = File.Create(destination);
+
+            int read;
+            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                token.ThrowIfCancellationRequested();
+                pauseEvent.Wait();
+
+                output.Write(buffer, 0, read);
+                copiedBytes += read;
+
+                int percent = totalBytes == 0
+                    ? 100
+                    : (int)(copiedBytes * 100 / totalBytes);
+
+                progress?.Invoke(percent, Path.GetFileName(source));
+            }
+        }
     }
 }

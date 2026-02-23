@@ -30,7 +30,7 @@ namespace EasySaveWPF
         private void render()
         {
             // Text of each elements
-            btnConfig.Content = "⚙ " + _viewModel.translate("Config");
+            btnLanguage.Content = "⚙ " + _viewModel.translate("Config");
             btnAddSpace.Content = "➕ " + _viewModel.translate("AddSaveSpace");
             btnDeleteSpace.Content = "🗑 " + _viewModel.translate("RemoveSaveSpace");
             btnEditSpace.Content = "✏️ " + _viewModel.translate("EditSaveSpace");
@@ -56,13 +56,13 @@ namespace EasySaveWPF
                 listSaveSpaces.SelectionChanged += (_, __) => UpdateButtonsState();
             }
 
-            if (btnConfig != null) btnConfig.Click += OnConfigClick;
+            if (btnLanguage != null) btnLanguage.Click += OnConfigClick;
             if (btnAddSpace != null) btnAddSpace.Click += OnAddClick;
             if (btnEditSpace != null) btnEditSpace.Click += OnEditClick;
             if (btnDeleteSpace != null) btnDeleteSpace.Click += OnDeleteClick;
             if (btnStartSave != null) btnStartSave.Click += OnStartClick;
 
-            // Abonnement à l'événement onSaveTaskStateChanged pour chaque SaveSpace existant
+            // Abonnement à l'événement updateTaskState pour chaque SaveSpace existant
             SubscribeToSaveSpaceEvents();
 
             RefreshList();
@@ -71,7 +71,7 @@ namespace EasySaveWPF
 
 
 
-        // Méthode pour s'abonner à l'événement onSaveTaskStateChanged de chaque SaveSpace
+        // Méthode pour s'abonner à l'événement updateTaskState de chaque SaveSpace
         private void SubscribeToSaveSpaceEvents()
         {
             var spaces = _viewModel.getSaveSpaces();
@@ -80,13 +80,13 @@ namespace EasySaveWPF
             foreach (var space in spaces)
             {
                 // Désabonnement préalable pour éviter les doublons
-                space.SaveTaskStateChanged -= SaveSpace_onSaveTaskStateChanged;
-                space.SaveTaskStateChanged += SaveSpace_onSaveTaskStateChanged;
+                space.SaveTaskStateChanged -= SaveSpace_updateTaskState;
+                space.SaveTaskStateChanged += SaveSpace_updateTaskState;
             }
         }
 
         // Gestionnaire d'événement appelé lors d'un changement d'état d'une tâche de sauvegarde
-        private void SaveSpace_onSaveTaskStateChanged(object? sender, EventArgs e)
+        private void SaveSpace_updateTaskState(object? sender, EventArgs e)
         {
             // Rafraîchir la liste sur le thread UI
             Dispatcher.Invoke(RefreshList);
@@ -197,9 +197,21 @@ namespace EasySaveWPF
             }
 
 
-            ShowResult(true, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
-            bool ok = await _viewModel.startSave(row.Name);
-            ShowResult(ok, _viewModel.translate("SaveCompleted"), _viewModel.translate("SaveStartFailed"));
+            //ShowResult(true, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
+            //bool ok = await _viewModel.startSave(row.Name);
+            //ShowResult(ok, _viewModel.translate("SaveCompleted"), _viewModel.translate("SaveStartFailed"));
+
+            if (false) // TODO: Check if the business software is running for this SaveSpace
+            {
+                // Display an error message and abort the flow
+                MessageBox.Show(_viewModel.translate("ErrorBusinessSoftwareRunning"), "EasySave", MessageBoxButton.OK, MessageBoxImage.Error); return;
+            }
+
+            var progressWindow = new SaveProgressWindow(_viewModel, row.Name)
+            {
+                Owner = this
+            };
+            progressWindow.ShowDialog();
         }
 
         public void OnConfigClick(object sender, RoutedEventArgs e)

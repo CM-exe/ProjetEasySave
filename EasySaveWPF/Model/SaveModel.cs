@@ -163,9 +163,35 @@ namespace ProjetEasySave.Model
             var saveSpaceToStart = _saveSpaces.FirstOrDefault(s => s.getName() == name);
             if (saveSpaceToStart != null)
             {
-                return await saveSpaceToStart.executeSaveAsync();
+                return await saveSpaceToStart.ExecuteAsync();
             }
             return false;
+        }
+
+        public Task<bool> StartSaveAsync(string name)
+        {
+            var saveSpace = _saveSpaces.FirstOrDefault(s => s.getName() == name);
+            return saveSpace?.ExecuteAsync() ?? Task.FromResult(false);
+        }
+
+        public void PauseSave(string name)
+        {
+            _saveSpaces.First(s => s.getName() == name).Pause();
+        }
+
+        public void ResumeSave(string name)
+        {
+            _saveSpaces.First(s => s.getName() == name).Play();
+        }
+        public void StopSave(string name)
+        {
+            _saveSpaces.First(s => s.getName() == name).Stop();
+        }
+
+        public void SubscribeProgress(string name, Action<int, string> handler)
+        {
+            _saveSpaces.First(s => s.getName() == name)
+                       .ProgressChanged += handler;
         }
 
         // Private method to save the current SaveSpaces to the config file
