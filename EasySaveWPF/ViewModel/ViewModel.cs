@@ -59,6 +59,7 @@ namespace ProjetEasySave.ViewModel
         {
             _model.SubscribeProgress(name, (p, f) =>
             {
+                //Console.WriteLine($"Progress : {p}%, Current File: {f}");
                 Progress = p;
                 CurrentFile = f;
             });

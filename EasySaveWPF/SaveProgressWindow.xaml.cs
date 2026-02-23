@@ -13,11 +13,10 @@ namespace EasySaveWPF
             InitializeComponent();
             _viewModel = viewModel;
             _saveSpaceName = saveSpaceName;
+
             DataContext = _viewModel;
 
             Loaded += SaveProgressWindow_Loaded;
-
-            _ = _viewModel.StartSaveAsync(_saveSpaceName);
         }
 
         private async void SaveProgressWindow_Loaded(object sender, RoutedEventArgs e)

@@ -37,6 +37,15 @@
             Maximum="100"
             Value="{Binding Progress}"/>
 
+        <TextBlock
+            Grid.Row="3"
+            Text="{Binding Progress, StringFormat={}{0}%}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Margin="-300,0,0,0"
+            FontWeight="Bold"
+            Foreground="Black"/>
+        
         <StackPanel
             Grid.Row="3"
             Orientation="Horizontal"
