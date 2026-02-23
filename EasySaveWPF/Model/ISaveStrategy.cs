@@ -12,7 +12,7 @@ namespace ProjetEasySave.Model
         private static SaveTaskState _state; // The state for the task
         
         // Interface methods
-        bool doSave(string sourcePath, string destinationPath);
+        bool doSave(string sourcePath, string destinationPath, List<string> priorityExt);
 
         bool isBusinessSoftwareRunning();
 

@@ -29,9 +29,9 @@
         }
 
         // Methods
-        public bool save(string sourceFolder, string destinationFolder)
+        public bool save(string sourceFolder, string destinationFolder, List<string> priorityExt)
         {
-            bool well_executed = _saveStrategy.doSave(sourceFolder, destinationFolder);
+            bool well_executed = _saveStrategy.doSave(sourceFolder, destinationFolder, priorityExt);
             return well_executed;
         }
 
@@ -82,11 +82,11 @@
             return string.Empty;
         }
 
-        public Task<bool> saveAsync(string sourceFolder, string destinationFolder)
+        public Task<bool> saveAsync(string sourceFolder, string destinationFolder, List<string> priorityExt)
         {
             return Task.Run(() =>
             {
-                return save(sourceFolder, destinationFolder);
+                return save(sourceFolder, destinationFolder, priorityExt);
             });
         }
 

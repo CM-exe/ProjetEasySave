@@ -86,7 +86,7 @@ namespace ProjetEasySave.Model
         }
 
         // doSave method implementation for Differential Save
-        public bool doSave(string sourcePath, string destinationPath)
+        public bool doSave(string sourcePath, string destinationPath, List<string> priorityExt)
         {
             try
             {
@@ -148,7 +148,16 @@ namespace ProjetEasySave.Model
                 }
 
                 // Main loop: iterate through all files in the source directory and apply differential logic
-                foreach (var sourceFile in Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories))
+                var files = Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories);
+                // Order files based on priority extensions (files with priority extensions first)
+                var sortedFiles = files.OrderBy(f =>
+                {
+                    string ext = Path.GetExtension(f);
+                    int index = priorityExt.FindIndex(e => e.Equals(ext, StringComparison.OrdinalIgnoreCase));
+                    return index >= 0 ? index : int.MaxValue;
+                }).ToArray();
+
+                foreach (var sourceFile in sortedFiles)
                 {
                     if (isBusinessSoftwareRunning())
                     {

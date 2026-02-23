@@ -211,7 +211,7 @@ namespace ProjetEasySave.View
                 completeSavePath = "";
             }
 
-            var ok = _viewModel.addSaveSpace(name, source, destination, typeSave, completeSavePath);
+            var ok = _viewModel.addSaveSpace(name, source, destination, typeSave, [], completeSavePath);
             renderResult(ok, _viewModel.translate("SaveSpaceAdded"), _viewModel.translate("SaveSpaceAddFailed"));
             pause();
         }
