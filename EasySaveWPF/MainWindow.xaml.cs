@@ -136,7 +136,7 @@ namespace EasySaveWPF
             if (dialog.ShowDialog() == true)
             {
                 var input = dialog.Result;
-                bool ok = _viewModel.addSaveSpace(input.Name, input.SourcePath, input.TargetPath, input.TypeSave, input.PriorityExt.Where(p => !p.StartsWith(".")).ToList(), input.CompleteSavePath);
+                bool ok = _viewModel.addSaveSpace(input.Name, input.SourcePath, input.TargetPath, input.TypeSave, input.PriorityExt.Select(p => p.StartsWith(".") ? p : "." + p).ToList(), input.CompleteSavePath);
                 ShowResult(ok, _viewModel.translate("SaveSpaceAdded"), _viewModel.translate("SaveSpaceAddFailed"));
                 RefreshList();
             }
@@ -173,7 +173,7 @@ namespace EasySaveWPF
             {
                 var input = dialog.Result;
                 _viewModel.removeSaveSpace(space.getName());
-                bool ok = _viewModel.addSaveSpace(input.Name, input.SourcePath, input.TargetPath, input.TypeSave, input.PriorityExt.Where(p => !p.StartsWith(".")).ToList(), input.CompleteSavePath);
+                bool ok = _viewModel.addSaveSpace(input.Name, input.SourcePath, input.TargetPath, input.TypeSave, input.PriorityExt.Select(p => p.StartsWith(".") ? p : "." + p).ToList(), input.CompleteSavePath);
                 ShowResult(ok, _viewModel.translate("SaveSpaceAdded"), _viewModel.translate("SaveSpaceAddFailed"));
                 RefreshList();
             }

@@ -130,17 +130,13 @@ namespace ProjetEasySave.Model
 
                 // Main File Loop
                 string[] files = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
-
-                Console.WriteLine($"Fist files : {string.Join("\n", files[0..5])}");
                 // Order files based on priority extensions (files with priority extensions first)
                 files = files.OrderBy(f =>
                 {
                     string ext = Path.GetExtension(f);
                     int index = priorityExt.FindIndex(e => e.Equals(ext, StringComparison.OrdinalIgnoreCase));
-                    return index >= 0 ? index : int.MaxValue; // Files with priority extensions get a lower index
+                    return index >= 0 ? index : int.MaxValue;
                 }).ToArray();
-                // Print 5 first files to copy for debugging
-                Console.WriteLine($"Fist files : {string.Join("\n", files[0..5])}");
                 foreach (var file in files)
                 {
                     if (isBusinessSoftwareRunning())
