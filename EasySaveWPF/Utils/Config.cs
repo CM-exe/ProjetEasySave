@@ -27,6 +27,8 @@ namespace ProjetEasySave.Utils
         private string defaultEncryptionKey;
         private string defaultServerIp;
         private string defaultServerPort;
+        private string defaultBoolLogsOnServer;
+        private string defaultBoolLogsOnLocal;
 
         // Loaded variables
         private string language;
@@ -39,6 +41,8 @@ namespace ProjetEasySave.Utils
         private string encryptionKey;
         private string serverIp;
         private string serverPort;
+        private string boolLogsOnServer;
+        private string boolLogsOnLocal;
 
         private Config()
         {
@@ -53,6 +57,8 @@ namespace ProjetEasySave.Utils
             defaultEncryptionKey = "maCleDeSecurite1234";
             defaultServerIp = "127.0.0.1";
             defaultServerPort = "8080";
+            defaultBoolLogsOnLocal = "true";
+            defaultBoolLogsOnServer = "true";
         }
 
         public static Config Instance
@@ -89,7 +95,9 @@ namespace ProjetEasySave.Utils
                     {"encryptionExtensions", JsonSerializer.Serialize(defaultEncryptionExtensions)  }, // Ajout de la liste des extensions à chiffrer
                     {"encryptionKey", new string(defaultEncryptionKey) }, // Ajout de la clé de chiffrement
                     {"serverIp", new string(defaultServerIp)  },
-                    {"serverPort", new string(defaultServerPort) }
+                    {"serverPort", new string(defaultServerPort) },
+                    {"boolLogsOnLocal", new string(defaultBoolLogsOnLocal)  },
+                    {"boolLogsOnServer", new string(defaultBoolLogsOnServer) },
                 };
                 // Save as JSON object
                 var options = new JsonSerializerOptions { WriteIndented = true };
@@ -109,6 +117,8 @@ namespace ProjetEasySave.Utils
                 encryptionKey = defaultEncryptionKey;
                 serverIp = defaultServerIp;
                 serverPort = defaultServerPort;
+                boolLogsOnServer = defaultBoolLogsOnServer;
+                boolLogsOnLocal = defaultBoolLogsOnLocal;
                 saveConfigFile();
 
             }
@@ -163,6 +173,12 @@ namespace ProjetEasySave.Utils
 
                 if (dict.ContainsKey("serverPort")) serverPort = dict["serverPort"].ToString();
                 else serverPort = defaultServerPort;
+
+                if (dict.ContainsKey("boolLogsOnServer")) boolLogsOnServer = dict["boolLogsOnServer"].ToString();
+                else boolLogsOnServer = defaultBoolLogsOnServer;
+
+                if (dict.ContainsKey("boolLogsOnLocal")) boolLogsOnLocal = dict["boolLogsOnLocal"].ToString();
+                else boolLogsOnLocal = defaultBoolLogsOnLocal;
             }
 
         }
@@ -181,6 +197,8 @@ namespace ProjetEasySave.Utils
                 encryptionExtensions = encryptionExtensions, // Ajout de la liste (sera sauvegardée comme tableau [])
                 serverIp = serverIp,
                 serverPort = serverPort,
+                boolLogsOnServer = boolLogsOnServer,
+                boolLogsOnLocal = boolLogsOnLocal,
             };
 
             var options = new JsonSerializerOptions { WriteIndented = true };
@@ -201,6 +219,8 @@ namespace ProjetEasySave.Utils
         public string getEncryptionKey() { return encryptionKey; }
         public string getServerIp() { return serverIp; }
         public int getServerPort() { return int.Parse(serverPort); }
+        public bool getBoolLogsOnServer() { return bool.Parse(boolLogsOnServer); }
+        public bool getBoolLogsOnLocal() { return bool.Parse(boolLogsOnLocal); }
 
 
         // Setters
@@ -211,5 +231,7 @@ namespace ProjetEasySave.Utils
         public void setServerIp(string newServerIp) { serverIp = newServerIp; saveConfigFile(); }
 
         public void setServerPort(int newServerPort) { serverPort = newServerPort.ToString(); saveConfigFile(); }
+        public void setBoolLogsOnServer(bool newBoolLogsOnServer) { boolLogsOnServer = newBoolLogsOnServer.ToString(); saveConfigFile(); }
+        public void setBoolLogsOnLocal(bool newBoolLogsOnLocal) { boolLogsOnLocal = newBoolLogsOnLocal.ToString(); saveConfigFile(); }
     }
 }

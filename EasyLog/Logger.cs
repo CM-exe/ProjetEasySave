@@ -74,12 +74,14 @@ namespace EasyLog
             string todaysDate = DateTime.Today.ToString("yyyy-MM-dd");
             string logFilePath = Path.Combine(logDirectoryPath, todaysDate + "_log" + extension);
 
+            bool wellExecuted = true;
+
             // Format content based on the selected format
             string formattedContent = currentFormat == LogFormat.Json
                 ? FormatToJson(message)
                 : FormatToXml(message);
 
-            if (loggingServerSocket != null) {
+            if (loggingServerSocket != null && _config.getBoolLogsOnServer()) {
                 try
                 {
                     sendMessageToServer(loggingServerSocket, formattedContent);
@@ -89,10 +91,24 @@ namespace EasyLog
                     Console.WriteLine("Failed to send log to server: " + ex.Message);
                     // If sending fails, we can choose to fallback to file logging or just return false
                     // For this implementation, we'll fallback to file logging
+                    wellExecuted = false; 
                 }
             }
 
-            return WriteToFile(logFilePath, formattedContent, currentFormat);
+            if (_config.getBoolLogsOnLocal())
+            {
+                try
+                {
+                    WriteToFile(logFilePath, formattedContent, currentFormat);
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Failed to write log to file: " + ex.Message);
+                    wellExecuted = false;
+                }
+            }
+            return wellExecuted;
         }
 
         // --- Socket connection to the logging server method ---
