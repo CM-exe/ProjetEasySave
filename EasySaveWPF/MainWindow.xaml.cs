@@ -30,12 +30,11 @@ namespace EasySaveWPF
         private void render()
         {
             // Text of each elements
+            btnConfig.Content = "⚙ " + _viewModel.translate("Config");
             btnAddSpace.Content = "➕ " + _viewModel.translate("AddSaveSpace");
             btnDeleteSpace.Content = "🗑 " + _viewModel.translate("RemoveSaveSpace");
             btnEditSpace.Content = "✏️ " + _viewModel.translate("EditSaveSpace");
             btnStartSave.Content = "▶ " + _viewModel.translate("StartSave");
-            btnLanguage.Content = "🌐 " + _viewModel.translate("ChangeLanguage");
-            btnLogsFormat.Content = "📝 " + _viewModel.translate("ChangeLogsFormat");
             textAppDescription.Text = _viewModel.translate("textAppDescription");
             textList.Text = _viewModel.translate("textList");
             textWorkspace.Text = _viewModel.translate("textWorkspace");
@@ -57,12 +56,11 @@ namespace EasySaveWPF
                 listSaveSpaces.SelectionChanged += (_, __) => UpdateButtonsState();
             }
 
+            if (btnConfig != null) btnConfig.Click += OnConfigClick;
             if (btnAddSpace != null) btnAddSpace.Click += OnAddClick;
             if (btnEditSpace != null) btnEditSpace.Click += OnEditClick;
             if (btnDeleteSpace != null) btnDeleteSpace.Click += OnDeleteClick;
             if (btnStartSave != null) btnStartSave.Click += OnStartClick;
-            if (btnLanguage != null) btnLanguage.Click += OnLanguageClick;
-            if (btnLogsFormat != null) btnLogsFormat.Click += OnLogsFormatClick;
 
             // Abonnement à l'événement onSaveTaskStateChanged pour chaque SaveSpace existant
             SubscribeToSaveSpaceEvents();
@@ -198,52 +196,18 @@ namespace EasySaveWPF
                 return;
             }
 
-            if (false) // TODO: Check if the business software is running for this SaveSpace
-            {
-                // Display an error message and abort the flow
-                MessageBox.Show(_viewModel.translate("ErrorBusinessSoftwareRunning"), "EasySave", MessageBoxButton.OK, MessageBoxImage.Error); return;
-            }
-
 
             ShowResult(true, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
             bool ok = await _viewModel.startSave(row.Name);
             ShowResult(ok, _viewModel.translate("SaveCompleted"), _viewModel.translate("SaveStartFailed"));
         }
 
-        private void OnLanguageClick(object sender, RoutedEventArgs e)
+        public void OnConfigClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new SelectDialog(_viewModel.translate("LanguageCodePrompt"), _viewModel.translate("CurrentLanguage") + ": " + _viewModel.getLanguage(), _viewModel.translate("Language") + " :", ["en","fr"]);
-            if (dialog.ShowDialog() == true)
-            {
-                // Change the language
-                var code = dialog.Value.Trim();
-                _viewModel.setLanguage(code);
-                MessageBox.Show(
-                    _viewModel.translate("Language") + ": " + _viewModel.getLanguage(),
-                    "EasySave",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information
-                );
-                RefreshList();
-                render();
-            }
-        }
-
-        private void OnLogsFormatClick(object sender, RoutedEventArgs e)
-        {
-            var dialog = new SelectDialog(_viewModel.translate("LogsFormatPrompt"), _viewModel.translate("CurrentLogsFormat") + ": " + _viewModel.getLogsFormat(), _viewModel.translate("LogsFormat") + " :", ["json", "xml"]);
-            if (dialog.ShowDialog() == true)
-            {
-                // Change the logs format
-                var format = dialog.Value.Trim();
-                _viewModel.setLogsFormat(format);
-                MessageBox.Show(
-                    _viewModel.translate("CurrentLogsFormat") + ": " + _viewModel.getLogsFormat(),
-                    "EasySave",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information
-                );
-            }
+            var dialog = new ConfigDialog(_viewModel);
+            dialog.ShowDialog();
+            RefreshList();
+            render(); // Re-render to update texts if language was changed
         }
 
         private void ShowResult(bool ok, string success, string fail)
@@ -316,6 +280,178 @@ namespace EasySaveWPF
             public string TypeSave { get; set; } = "complete";
             public string CompleteSavePath { get; set; } = string.Empty;
             public List<string> PriorityExt { get; set; } = new List<string>();
+        }
+
+        private sealed class ConfigDialog : Window
+        {
+            private readonly LanguageService _language = new LanguageService();
+            private readonly TextBlock _languageLabel = new();
+            private readonly Button _languageButton = new();
+            private readonly TextBlock _logsFormatLabel = new();
+            private readonly Button _logsFormatButton = new();
+            private readonly TextBlock _maxSizeLabel = new();
+            private readonly TextBox _maxSizeTextBox = new();
+
+            public ConfigDialog(ViewModel _viewModel)
+            {
+                Title = _language.translate("Config");
+                Width = 400;
+                Height = 250;
+                WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                ResizeMode = ResizeMode.NoResize;
+
+                var grid = new Grid { Margin = new Thickness(12) };
+
+                // Add row definitions for each setting and for gaps
+                for (int i = 0; i < 3; i++)
+                {
+                    grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                    if (i < 2) // Add gap after each row except the last
+                        grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(8) });
+                }
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+                void RefreshTexts()
+                {
+                    Title = _language.translate("Config");
+                    _languageLabel.Text = _language.translate("CurrentLanguage") + ": " + _language.getLanguage();
+                    _languageButton.Content = "🌐 " + _language.translate("ChangeLanguage");
+                    _logsFormatLabel.Text = _language.translate("CurrentLogsFormat") + ": " + _viewModel.getLogsFormat();
+                    _logsFormatButton.Content = "📝 " + _language.translate("ChangeLogsFormat");
+                    _maxSizeLabel.Text = _language.translate("MaxSize") + " (Ko):";
+                }
+
+                RefreshTexts();
+
+                // Language row
+                Grid.SetRow(_languageLabel, 0);
+                Grid.SetColumn(_languageLabel, 0);
+                grid.Children.Add(_languageLabel);
+
+                Grid.SetRow(_languageButton, 0);
+                Grid.SetColumn(_languageButton, 1);
+                grid.Children.Add(_languageButton);
+
+                // Logs format row
+                Grid.SetRow(_logsFormatLabel, 2);
+                Grid.SetColumn(_logsFormatLabel, 0);
+                grid.Children.Add(_logsFormatLabel);
+
+                Grid.SetRow(_logsFormatButton, 2);
+                Grid.SetColumn(_logsFormatButton, 1);
+                grid.Children.Add(_logsFormatButton);
+
+                // Max size row
+                Grid.SetRow(_maxSizeLabel, 4);
+                Grid.SetColumn(_maxSizeLabel, 0);
+                grid.Children.Add(_maxSizeLabel);
+
+                Grid.SetRow(_maxSizeTextBox, 4);
+                Grid.SetColumn(_maxSizeTextBox, 1);
+                grid.Children.Add(_maxSizeTextBox);
+
+                // Language button click
+                _languageButton.Click += (_, __) =>
+                {
+                    var dialog = new SelectDialog(
+                        _language.translate("LanguageCodePrompt"),
+                        _language.translate("CurrentLanguage") + ": " + _language.getLanguage(),
+                        _language.translate("Language") + " :",
+                        new[] { "en", "fr" }
+                    );
+                    if (dialog.ShowDialog() == true)
+                    {
+                        var code = dialog.Value.Trim();
+                        _language.setLanguage(code);
+                        RefreshTexts();
+                        MessageBox.Show(
+                            _language.translate("Language") + ": " + _language.getLanguage(),
+                            "EasySave",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Information
+                        );
+                    }
+                };
+
+                // Logs format button click
+                _logsFormatButton.Click += (_, __) =>
+                {
+                    var dialog = new SelectDialog(
+                        _language.translate("LogsFormatPrompt"),
+                        _language.translate("CurrentLogsFormat") + ": " + _viewModel.getLogsFormat(),
+                        _language.translate("LogsFormat") + " :",
+                        new[] { "json", "xml" }
+                    );
+                    if (dialog.ShowDialog() == true)
+                    {
+                        var format = dialog.Value.Trim();
+                        _viewModel.setLogsFormat(format);
+                        RefreshTexts();
+                        MessageBox.Show(
+                            _language.translate("CurrentLogsFormat") + ": " + _viewModel.getLogsFormat(),
+                            "EasySave",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Information
+                        );
+                    }
+                };
+
+                // Set initial value for max size
+                _maxSizeTextBox.Text = _viewModel.getMaxSize().ToString();
+
+                // Only allow numbers in _maxSizeTextBox
+                _maxSizeTextBox.PreviewTextInput += (s, e) =>
+                {
+                    e.Handled = !e.Text.All(char.IsDigit);
+                };
+                DataObject.AddPastingHandler(_maxSizeTextBox, (s, e) =>
+                {
+                    if (e.DataObject.GetDataPresent(DataFormats.Text))
+                    {
+                        string text = (string)e.DataObject.GetData(DataFormats.Text);
+                        if (!text.All(char.IsDigit))
+                        {
+                            e.CancelCommand();
+                        }
+                    }
+                    else
+                    {
+                        e.CancelCommand();
+                    }
+                });
+
+                _maxSizeTextBox.LostFocus += (s, e) =>
+                {
+                    if (int.TryParse(_maxSizeTextBox.Text.Trim(), out int maxSize))
+                    {
+                        _viewModel.setMaxSize(maxSize);
+                    }
+                    else
+                    {
+                        _maxSizeTextBox.Text = _viewModel.getMaxSize().ToString();
+                        MessageBox.Show(
+                            _language.translate("InvalidMaxSize"),
+                            "EasySave",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error
+                        );
+                    }
+                };
+
+                // On change if valid try to update the value in the view model, otherwise reset the text box to the current value in the view model and show an error message
+                _maxSizeTextBox.TextChanged += (s, e) =>
+                {
+                    if (int.TryParse(_maxSizeTextBox.Text.Trim(), out int maxSize))
+                    {
+                        _viewModel.setMaxSize(maxSize);
+                    }
+                };
+
+                Content = grid;
+            }
         }
 
         private sealed class SaveSpaceDialog : Window

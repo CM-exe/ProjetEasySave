@@ -26,8 +26,10 @@ namespace ProjetEasySave.Model
         [JsonIgnore]
         private Logger logger = Logger.getInstance(Config.Instance);
 
+        private SemaphoreSlim _bigFileSemaphore;
+
         // Constructor
-        public SaveSpace(string name, string sourcePath, string destinationPath, string typeSave, List<string> priorityExt, string completeSavePath = "")
+        public SaveSpace(string name, string sourcePath, string destinationPath, string typeSave, List<string> priorityExt, SemaphoreSlim bigFileSemaphore, string completeSavePath = "")
         {
             _name = name;
             _sourcePath = sourcePath;
@@ -37,10 +39,10 @@ namespace ProjetEasySave.Model
             switch (typeSave.ToLower())
             {
                 case "complete":
-                    _saveTasks.Add(new SaveTask("complete", this));
+                    _saveTasks.Add(new SaveTask("complete", this, bigFileSemaphore));
                     break;
                 case "differential":
-                    _saveTasks.Add(new SaveTask("differential", this, completeSavePath));
+                    _saveTasks.Add(new SaveTask("differential", this, bigFileSemaphore, completeSavePath));
                     break;
                 default:
                     throw new ArgumentException("Invalid save strategy type");
@@ -63,6 +65,9 @@ namespace ProjetEasySave.Model
             {
                 _taskStates[task] = SaveTaskState.PENDING; // Initial state
             }
+
+            // Set the static semaphore for big file handling
+            _bigFileSemaphore = bigFileSemaphore;
         }
 
         // Methods
@@ -167,10 +172,10 @@ namespace ProjetEasySave.Model
             switch (typeSave.ToLower())
             {
                 case "complete":
-                    _saveTasks.Add(new SaveTask("complete", this));
+                    _saveTasks.Add(new SaveTask("complete", this, _bigFileSemaphore));
                     break;
                 case "differential":
-                    _saveTasks.Add(new SaveTask("differential", this));
+                    _saveTasks.Add(new SaveTask("differential", this, _bigFileSemaphore));
                     break;
                 default:
                     throw new ArgumentException("Invalid save strategy type");

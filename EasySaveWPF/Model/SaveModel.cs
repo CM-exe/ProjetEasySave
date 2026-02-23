@@ -15,11 +15,15 @@ namespace ProjetEasySave.Model
         private Config config = Config.Instance;
         private string _configPath;
 
+        // Semaphore for big files to avoid multiple big saves at the same time
+        private static SemaphoreSlim _bigFileSemaphore;
+
         // Constructor
         public SaveModel()
         {
             _saveSpaces = new List<SaveSpace>();
             _configPath = config.getConfigModelsPath();
+            _bigFileSemaphore = new SemaphoreSlim(1, 1);
             // Load existing SaveSpaces from config file if it exists
             if (File.Exists(_configPath))
             {
@@ -59,7 +63,7 @@ namespace ProjetEasySave.Model
                 }
 
                 // Create and add the new SaveSpace
-                var newSaveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSave, priorityExt, completeSavePath);
+                var newSaveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSave, priorityExt, _bigFileSemaphore, completeSavePath);
                 _saveSpaces.Add(newSaveSpace);
 
                 // Update Config
@@ -122,7 +126,7 @@ namespace ProjetEasySave.Model
                         .ToList();
                     var completeSavePathValue = completeSavePath.Count > 0 ? completeSavePath[0] : "";
                     var priorityExt = element.TryGetProperty("_priorityExt", out var y) && y.ValueKind == JsonValueKind.Array ? y.EnumerateArray().Select(item => item.ValueKind == JsonValueKind.String ? item.GetString() ?? "" : item.ToString()).ToList() : new List<string>();
-                    var saveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSaveValue, priorityExt, completeSavePathValue);
+                    var saveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSaveValue, priorityExt, _bigFileSemaphore, completeSavePathValue);
                     spaces.Add(saveSpace);
                 }
                 _saveSpaces = spaces;

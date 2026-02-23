@@ -29,6 +29,7 @@ namespace ProjetEasySave.Utils
         private string defaultServerPort;
         private string defaultBoolLogsOnServer;
         private string defaultBoolLogsOnLocal;
+        private string defaultBiggestSize;
 
         // Loaded variables
         private string language;
@@ -43,6 +44,7 @@ namespace ProjetEasySave.Utils
         private string serverPort;
         private string boolLogsOnServer;
         private string boolLogsOnLocal;
+        private string biggestSize;
 
         private Config()
         {
@@ -59,6 +61,7 @@ namespace ProjetEasySave.Utils
             defaultServerPort = "8080";
             defaultBoolLogsOnLocal = "true";
             defaultBoolLogsOnServer = "true";
+            defaultBiggestSize = "10"; // En Ko
         }
 
         public static Config Instance
@@ -98,6 +101,7 @@ namespace ProjetEasySave.Utils
                     {"serverPort", new string(defaultServerPort) },
                     {"boolLogsOnLocal", new string(defaultBoolLogsOnLocal)  },
                     {"boolLogsOnServer", new string(defaultBoolLogsOnServer) },
+                    {"biggestSize", new string(defaultBiggestSize) },
                 };
                 // Save as JSON object
                 var options = new JsonSerializerOptions { WriteIndented = true };
@@ -119,6 +123,7 @@ namespace ProjetEasySave.Utils
                 serverPort = defaultServerPort;
                 boolLogsOnServer = defaultBoolLogsOnServer;
                 boolLogsOnLocal = defaultBoolLogsOnLocal;
+                biggestSize = defaultBiggestSize;
                 saveConfigFile();
 
             }
@@ -179,6 +184,9 @@ namespace ProjetEasySave.Utils
 
                 if (dict.ContainsKey("boolLogsOnLocal")) boolLogsOnLocal = dict["boolLogsOnLocal"].ToString();
                 else boolLogsOnLocal = defaultBoolLogsOnLocal;
+
+                if (dict.ContainsKey("biggestSize")) biggestSize = dict["biggestSize"].ToString();
+                else biggestSize = defaultBiggestSize;
             }
 
         }
@@ -199,6 +207,7 @@ namespace ProjetEasySave.Utils
                 serverPort = serverPort,
                 boolLogsOnServer = boolLogsOnServer,
                 boolLogsOnLocal = boolLogsOnLocal,
+                biggestSize = biggestSize
             };
 
             var options = new JsonSerializerOptions { WriteIndented = true };
@@ -221,6 +230,7 @@ namespace ProjetEasySave.Utils
         public int getServerPort() { return int.Parse(serverPort); }
         public bool getBoolLogsOnServer() { return bool.Parse(boolLogsOnServer); }
         public bool getBoolLogsOnLocal() { return bool.Parse(boolLogsOnLocal); }
+        public int getBiggestSize() { return int.Parse(biggestSize); }
 
 
         // Setters
@@ -233,5 +243,6 @@ namespace ProjetEasySave.Utils
         public void setServerPort(int newServerPort) { serverPort = newServerPort.ToString(); saveConfigFile(); }
         public void setBoolLogsOnServer(bool newBoolLogsOnServer) { boolLogsOnServer = newBoolLogsOnServer.ToString(); saveConfigFile(); }
         public void setBoolLogsOnLocal(bool newBoolLogsOnLocal) { boolLogsOnLocal = newBoolLogsOnLocal.ToString(); saveConfigFile(); }
+        public void setBiggestSize(int newBiggestSize) { biggestSize = newBiggestSize.ToString(); saveConfigFile(); }
     }
 }
