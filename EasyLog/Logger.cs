@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
+using System.Net;
 
 namespace EasyLog
 {
@@ -15,8 +17,10 @@ namespace EasyLog
         private static Logger singletonInstance;
         private string logDirectoryPath;
         private string logRealTimeFile;
-        //private Config config = Config.Instance; // Load config
-        private IConfig config;
+        private static IConfig _config; // Load config
+        private static Socket loggingServerSocket; // Socket for logging server connection
+
+
 
         // Property to define the current format (adjustable by the user)
         private LogFormat currentFormat = LogFormat.Json;
@@ -24,18 +28,29 @@ namespace EasyLog
         // Private constructor for Singleton pattern
         private Logger(IConfig config)
         {
-            this.config = config;
+            _config = config;
             // Default log directory path
-            logDirectoryPath = config.getLogDirectoryPath();
+            logDirectoryPath = _config.getLogDirectoryPath();
             if (!Directory.Exists(logDirectoryPath))
             {
                 Directory.CreateDirectory(logDirectoryPath);
             }
 
-            currentFormat = config.getLogsFormat().ToLower() == "xml" ? LogFormat.Xml : LogFormat.Json;
+            currentFormat = _config.getLogsFormat().ToLower() == "xml" ? LogFormat.Xml : LogFormat.Json;
 
             // Initialize the base path for real-time logging
-            logRealTimeFile = config.getLogRealTimeFile();
+            logRealTimeFile = _config.getLogRealTimeFile();
+
+            // Establish a socket connection to the logging server for logging server
+            try
+            {
+                loggingServerSocket = connectToServer();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to connect to logging server: " + ex.Message);
+                loggingServerSocket = null; // Set to null if connection fails
+            }
         }
 
         // Method to get the unique instance of the Logger
@@ -59,12 +74,57 @@ namespace EasyLog
             string todaysDate = DateTime.Today.ToString("yyyy-MM-dd");
             string logFilePath = Path.Combine(logDirectoryPath, todaysDate + "_log" + extension);
 
+            bool wellExecuted = true;
+
             // Format content based on the selected format
             string formattedContent = currentFormat == LogFormat.Json
                 ? FormatToJson(message)
                 : FormatToXml(message);
 
-            return WriteToFile(logFilePath, formattedContent, currentFormat);
+            if (loggingServerSocket != null && _config.getBoolLogsOnServer()) {
+                try
+                {
+                    sendMessageToServer(loggingServerSocket, formattedContent);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Failed to send log to server: " + ex.Message);
+                    // If sending fails, we can choose to fallback to file logging or just return false
+                    // For this implementation, we'll fallback to file logging
+                    wellExecuted = false; 
+                }
+            }
+
+            if (_config.getBoolLogsOnLocal())
+            {
+                try
+                {
+                    WriteToFile(logFilePath, formattedContent, currentFormat);
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Failed to write log to file: " + ex.Message);
+                    wellExecuted = false;
+                }
+            }
+            return wellExecuted;
+        }
+
+        // --- Socket connection to the logging server method ---
+        private static Socket connectToServer()
+        {
+            // Create a new socket for the client
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            // Connect to the server using the config values for IP and port
+            socket.Connect(new IPEndPoint(IPAddress.Parse(_config.getServerIp()),_config.getServerPort()));
+            return socket;
+        }
+
+        private static void sendMessageToServer(Socket socket, string message)
+        {
+            byte[] data = Encoding.UTF8.GetBytes(message);
+            socket.Send(data);
         }
 
         // --- Real-Time Logging Method (Overwrite mode) ---
@@ -89,6 +149,12 @@ namespace EasyLog
 
         private string FormatToJson(Dictionary<string, string> message)
         {
+            // Add the first element to be the Environement.UserName to identify the user who performed the save
+            if (message == null)
+            {
+                message = new Dictionary<string, string>();
+            }
+            message["user"] = Environment.UserName;
             // We create a collection of formatted strings for each key-value pair
             var entries = message.Select(kvp =>
             {
@@ -106,6 +172,8 @@ namespace EasyLog
         {
             StringBuilder xml = new StringBuilder();
             xml.Append("<logEntry>");
+            // Add the first element to be the Environement.UserName to identify the user who performed the save
+            xml.AppendFormat("<user>{0}</user>", Environment.UserName);
             foreach (var kvp in message)
             {
                 xml.AppendFormat("<{0}>{1}</{0}>", kvp.Key, kvp.Value);
@@ -213,7 +281,7 @@ namespace EasyLog
         public void setCurrentFormat(LogFormat format)
         {
             currentFormat = format;
-            config.setLogsFormat(format == LogFormat.Json ? "json" : "xml"); // Save the new format in the config file
+            _config.setLogsFormat(format == LogFormat.Json ? "json" : "xml"); // Save the new format in the config file
         }
 
         // Using string for easier interaction with the UI

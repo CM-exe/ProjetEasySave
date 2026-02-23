@@ -1,6 +1,4 @@
 ﻿using ProjetEasySave.Model;
-using ProjetEasySave.Utils;
-using System.Threading.Tasks;
 
 namespace EasySaveWPFTests
 {

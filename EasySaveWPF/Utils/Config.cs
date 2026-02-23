@@ -25,6 +25,10 @@ namespace ProjetEasySave.Utils
         private string defaultBusinessSoftwareName;
         private List<string> defaultEncryptionExtensions;
         private string defaultEncryptionKey;
+        private string defaultServerIp;
+        private string defaultServerPort;
+        private string defaultBoolLogsOnServer;
+        private string defaultBoolLogsOnLocal;
 
         // Loaded variables
         private string language;
@@ -35,6 +39,10 @@ namespace ProjetEasySave.Utils
         private string businessSoftwareName;
         private List<string> encryptionExtensions;
         private string encryptionKey;
+        private string serverIp;
+        private string serverPort;
+        private string boolLogsOnServer;
+        private string boolLogsOnLocal;
 
         private Config()
         {
@@ -47,6 +55,10 @@ namespace ProjetEasySave.Utils
             defaultBusinessSoftwareName = "CalculatorApp";
             defaultEncryptionExtensions = new List<string> { ".txt", ".docx", ".jpg", ".png", ".pdf" };
             defaultEncryptionKey = "maCleDeSecurite1234";
+            defaultServerIp = "127.0.0.1";
+            defaultServerPort = "8080";
+            defaultBoolLogsOnLocal = "true";
+            defaultBoolLogsOnServer = "true";
         }
 
         public static Config Instance
@@ -82,6 +94,10 @@ namespace ProjetEasySave.Utils
                     {"businessSoftwareName", new string(defaultBusinessSoftwareName) },
                     {"encryptionExtensions", JsonSerializer.Serialize(defaultEncryptionExtensions)  }, // Ajout de la liste des extensions à chiffrer
                     {"encryptionKey", new string(defaultEncryptionKey) }, // Ajout de la clé de chiffrement
+                    {"serverIp", new string(defaultServerIp)  },
+                    {"serverPort", new string(defaultServerPort) },
+                    {"boolLogsOnLocal", new string(defaultBoolLogsOnLocal)  },
+                    {"boolLogsOnServer", new string(defaultBoolLogsOnServer) },
                 };
                 // Save as JSON object
                 var options = new JsonSerializerOptions { WriteIndented = true };
@@ -99,6 +115,10 @@ namespace ProjetEasySave.Utils
                 businessSoftwareName = defaultBusinessSoftwareName;
                 encryptionExtensions = defaultEncryptionExtensions;
                 encryptionKey = defaultEncryptionKey;
+                serverIp = defaultServerIp;
+                serverPort = defaultServerPort;
+                boolLogsOnServer = defaultBoolLogsOnServer;
+                boolLogsOnLocal = defaultBoolLogsOnLocal;
                 saveConfigFile();
 
             }
@@ -147,6 +167,18 @@ namespace ProjetEasySave.Utils
                 {
                     encryptionExtensions = defaultEncryptionExtensions;
                 }
+
+                if (dict.ContainsKey("serverIp")) serverIp = dict["serverIp"].ToString();
+                else serverIp = defaultServerIp;
+
+                if (dict.ContainsKey("serverPort")) serverPort = dict["serverPort"].ToString();
+                else serverPort = defaultServerPort;
+
+                if (dict.ContainsKey("boolLogsOnServer")) boolLogsOnServer = dict["boolLogsOnServer"].ToString();
+                else boolLogsOnServer = defaultBoolLogsOnServer;
+
+                if (dict.ContainsKey("boolLogsOnLocal")) boolLogsOnLocal = dict["boolLogsOnLocal"].ToString();
+                else boolLogsOnLocal = defaultBoolLogsOnLocal;
             }
 
         }
@@ -162,7 +194,11 @@ namespace ProjetEasySave.Utils
                 logsFormat = logsFormat,
                 businessSoftwareName = businessSoftwareName,
                 encryptionKey = encryptionKey, // Ajout de la clé
-                encryptionExtensions = encryptionExtensions // Ajout de la liste (sera sauvegardée comme tableau [])
+                encryptionExtensions = encryptionExtensions, // Ajout de la liste (sera sauvegardée comme tableau [])
+                serverIp = serverIp,
+                serverPort = serverPort,
+                boolLogsOnServer = boolLogsOnServer,
+                boolLogsOnLocal = boolLogsOnLocal,
             };
 
             var options = new JsonSerializerOptions { WriteIndented = true };
@@ -181,11 +217,21 @@ namespace ProjetEasySave.Utils
         public string getBusinessSoftwareName() { return businessSoftwareName; }
         public List<string> getEncryptionExtensions() { return encryptionExtensions; }
         public string getEncryptionKey() { return encryptionKey; }
+        public string getServerIp() { return serverIp; }
+        public int getServerPort() { return int.Parse(serverPort); }
+        public bool getBoolLogsOnServer() { return bool.Parse(boolLogsOnServer); }
+        public bool getBoolLogsOnLocal() { return bool.Parse(boolLogsOnLocal); }
 
 
         // Setters
         public void setLanguage(string newLanguage) { language = newLanguage; saveConfigFile(); }
 
         public void setLogsFormat(string newLogsFormat) { logsFormat = newLogsFormat; saveConfigFile(); }
+
+        public void setServerIp(string newServerIp) { serverIp = newServerIp; saveConfigFile(); }
+
+        public void setServerPort(int newServerPort) { serverPort = newServerPort.ToString(); saveConfigFile(); }
+        public void setBoolLogsOnServer(bool newBoolLogsOnServer) { boolLogsOnServer = newBoolLogsOnServer.ToString(); saveConfigFile(); }
+        public void setBoolLogsOnLocal(bool newBoolLogsOnLocal) { boolLogsOnLocal = newBoolLogsOnLocal.ToString(); saveConfigFile(); }
     }
 }
