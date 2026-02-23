@@ -1,5 +1,6 @@
 ﻿using ProjetEasySave.ViewModel;
 using System.Windows;
+using System.Windows.Media;
 
 namespace EasySaveWPF
 {
@@ -7,6 +8,7 @@ namespace EasySaveWPF
     {
         private readonly ViewModel _viewModel;
         private readonly string _saveSpaceName;
+        private bool _isPaused = false;
 
         public SaveProgressWindow(ViewModel viewModel, string saveSpaceName)
         {
@@ -47,14 +49,24 @@ namespace EasySaveWPF
             }
         }
 
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        private void PlayPauseButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.ResumeSave(_saveSpaceName);
-        }
-
-        private void PauseButton_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.PauseSave(_saveSpaceName);
+            if(_isPaused)
+            {
+                // Reprendre
+                _viewModel.ResumeSave(_saveSpaceName);
+                PlayPauseButton.Content = "⏸";
+                ProgressBar.Foreground = Brushes.Green;
+                _isPaused = false;
+            }
+            else
+            {
+                // Mettre en pause
+                _viewModel.PauseSave(_saveSpaceName);
+                PlayPauseButton.Content = "▶";
+                ProgressBar.Foreground = Brushes.Gold;
+                _isPaused = true;
+            }
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
