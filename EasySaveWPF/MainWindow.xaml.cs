@@ -584,10 +584,5 @@ namespace EasySaveWPF
                 Content = grid;
             }
         }
-
-        private void listSaveSpaces_SelectionChanged()
-        {
-
-        }
     }
 }
