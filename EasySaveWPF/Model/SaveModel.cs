@@ -36,7 +36,7 @@ namespace ProjetEasySave.Model
         // Serialization/Deserialization constructor
 
         // Methods
-        public bool addSaveSpace(string name, string sourcePath, string destinationPath, string typeSave, string completeSavePath = "")
+        public bool addSaveSpace(string name, string sourcePath, string destinationPath, string typeSave, List<string> priorityExt, string completeSavePath = "")
         {
             try
             {
@@ -59,7 +59,7 @@ namespace ProjetEasySave.Model
                 }
 
                 // Create and add the new SaveSpace
-                var newSaveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSave, completeSavePath);
+                var newSaveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSave, priorityExt, completeSavePath);
                 _saveSpaces.Add(newSaveSpace);
 
                 // Update Config
@@ -121,20 +121,21 @@ namespace ProjetEasySave.Model
                         .Select(e => e.GetString() ?? "")
                         .ToList();
                     var completeSavePathValue = completeSavePath.Count > 0 ? completeSavePath[0] : "";
-                    var saveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSaveValue, completeSavePathValue);
+                    var priorityExt = element.TryGetProperty("_priorityExt", out var y) && y.ValueKind == JsonValueKind.Array ? y.EnumerateArray().Select(item => item.ValueKind == JsonValueKind.String ? item.GetString() ?? "" : item.ToString()).ToList() : new List<string>();
+                    var saveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSaveValue, priorityExt, completeSavePathValue);
                     spaces.Add(saveSpace);
                 }
                 _saveSpaces = spaces;
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
         }
 
-        public bool updateSaveSpace(string name, string newSourcePath, string newDestinationPath, string newTypeSave)
+        public bool updateSaveSpace(string name, string newSourcePath, string newDestinationPath, string newTypeSave, string priorityExt)
         {
             var saveSpaceToUpdate = _saveSpaces.FirstOrDefault(s => s.getName() == name);
             if (saveSpaceToUpdate != null)
@@ -143,6 +144,7 @@ namespace ProjetEasySave.Model
                 saveSpaceToUpdate.setSourcePath(newSourcePath);
                 saveSpaceToUpdate.setDestinationPath(newDestinationPath);
                 saveSpaceToUpdate.setTypeSave(newTypeSave);
+                saveSpaceToUpdate.setPriorityExt(priorityExt);
 
                 // Update Config
                 saveToConfig();

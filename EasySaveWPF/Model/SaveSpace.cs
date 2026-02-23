@@ -17,6 +17,8 @@ namespace ProjetEasySave.Model
         private List<string> _saveTaskStrategies; // For serialization purposes only
         [JsonInclude]
         private List<string> _saveTaskCompleteSavePaths; // For serialization purposes only
+        [JsonInclude]
+        private List<string> _priorityExt; // For serialization purposes only
         [JsonIgnore]
         private List<SaveTask> _saveTasks;
         [JsonIgnore]
@@ -25,7 +27,7 @@ namespace ProjetEasySave.Model
         private Logger logger = Logger.getInstance(Config.Instance);
 
         // Constructor
-        public SaveSpace(string name, string sourcePath, string destinationPath, string typeSave, string completeSavePath = "")
+        public SaveSpace(string name, string sourcePath, string destinationPath, string typeSave, List<string> priorityExt, string completeSavePath = "")
         {
             _name = name;
             _sourcePath = sourcePath;
@@ -51,6 +53,9 @@ namespace ProjetEasySave.Model
             // Store the complete save path for serialization (if applicable)
             _saveTaskCompleteSavePaths = new List<string>();
             _saveTaskCompleteSavePaths.Add(completeSavePath);
+
+            // Initialize priority file extensions
+            _priorityExt = priorityExt;
 
             // Initialize task states
             _taskStates = new Dictionary<SaveTask, SaveTaskState>();
@@ -85,7 +90,7 @@ namespace ProjetEasySave.Model
             foreach (var saveTask in _saveTasks)
             {
                 tasks.Add(
-                    saveTask.saveAsync(_sourcePath, _destinationPath)
+                    saveTask.saveAsync(_sourcePath, _destinationPath, _priorityExt)
                 );
             }
 
@@ -108,6 +113,11 @@ namespace ProjetEasySave.Model
         public string getDestinationPath()
         {
             return _destinationPath;
+        }
+
+        public List<string> getPriorityExt()
+        {
+            return _priorityExt;
         }
 
         public string getTypeSave()
@@ -171,6 +181,10 @@ namespace ProjetEasySave.Model
             {
                 _taskStates[task] = SaveTaskState.PENDING; // Initial state
             }
+        }
+        public void setPriorityExt(string priorityExt)
+        {
+            _priorityExt = priorityExt.Split(',').Select(ext => ext.Trim()).ToList();
         }
     }
 }

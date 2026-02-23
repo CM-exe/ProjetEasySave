@@ -43,6 +43,7 @@ namespace EasySaveWPF
             headerSource.Header = _viewModel.translate("Source");
             headerDestination.Header = _viewModel.translate("Destination");
             headerCompleteSavePath.Header = _viewModel.translate("CompleteSavePath");
+            headerPriorityExt.Header = _viewModel.translate("PriorityExtensions");
             headerType.Header = _viewModel.translate("Type");
             headerState.Header = _viewModel.translate("State");
         }
@@ -112,7 +113,8 @@ namespace EasySaveWPF
                     TargetPath = space.getDestinationPath(),
                     BackupType = space.getTypeSave(),
                     CompleteSavePath = space.getCompleteSavePath(),
-                    State = space.getTaskStates().First().ToString() // <-- Récupération de l'état
+                    PriorityExt = string.Join(", ", space.getPriorityExt()),
+                    State = space.getTaskStates().First().ToString()
                 });
             }
 
@@ -134,7 +136,7 @@ namespace EasySaveWPF
             if (dialog.ShowDialog() == true)
             {
                 var input = dialog.Result;
-                bool ok = _viewModel.addSaveSpace(input.Name, input.SourcePath, input.TargetPath, input.TypeSave, input.CompleteSavePath);
+                bool ok = _viewModel.addSaveSpace(input.Name, input.SourcePath, input.TargetPath, input.TypeSave, input.PriorityExt.Where(p => !p.StartsWith(".")).ToList(), input.CompleteSavePath);
                 ShowResult(ok, _viewModel.translate("SaveSpaceAdded"), _viewModel.translate("SaveSpaceAddFailed"));
                 RefreshList();
             }
@@ -162,7 +164,8 @@ namespace EasySaveWPF
                     SourcePath = space.getSourcePath(),
                     TargetPath = space.getDestinationPath(),
                     TypeSave = space.getTypeSave(),
-                    CompleteSavePath = space.getCompleteSavePath()
+                    CompleteSavePath = space.getCompleteSavePath(),
+                    PriorityExt = space.getPriorityExt()
                 }
             };
 
@@ -170,7 +173,7 @@ namespace EasySaveWPF
             {
                 var input = dialog.Result;
                 _viewModel.removeSaveSpace(space.getName());
-                bool ok = _viewModel.addSaveSpace(input.Name, input.SourcePath, input.TargetPath, input.TypeSave, input.CompleteSavePath);
+                bool ok = _viewModel.addSaveSpace(input.Name, input.SourcePath, input.TargetPath, input.TypeSave, input.PriorityExt.Where(p => !p.StartsWith(".")).ToList(), input.CompleteSavePath);
                 ShowResult(ok, _viewModel.translate("SaveSpaceAdded"), _viewModel.translate("SaveSpaceAddFailed"));
                 RefreshList();
             }
@@ -301,6 +304,8 @@ namespace EasySaveWPF
             public string CompleteSavePath { get; init; } = string.Empty;
 
             public string State { get; init; } = string.Empty; // <-- Add State property
+
+            public string PriorityExt { get; init; } = string.Empty;
         }
 
         private sealed class SaveSpaceInput
@@ -310,6 +315,7 @@ namespace EasySaveWPF
             public string TargetPath { get; set; } = string.Empty;
             public string TypeSave { get; set; } = "complete";
             public string CompleteSavePath { get; set; } = string.Empty;
+            public List<string> PriorityExt { get; set; } = new List<string>();
         }
 
         private sealed class SaveSpaceDialog : Window
@@ -321,6 +327,7 @@ namespace EasySaveWPF
             private readonly Button _targetBrowserButton = new();
             private readonly ComboBox _typeBox = new();
             private readonly TextBox _completeBox = new();
+            private readonly TextBox _priorityBox = new();
             private readonly Button _completeBrowserButton = new();
             private readonly LanguageService _language = new LanguageService();
 
@@ -335,7 +342,7 @@ namespace EasySaveWPF
                 ResizeMode = ResizeMode.NoResize;
 
                 var grid = new Grid { Margin = new Thickness(12) };
-                for (int i = 0; i < 6; i++) grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                for (int i = 0; i < 7; i++) grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
 
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120) });
@@ -375,6 +382,8 @@ namespace EasySaveWPF
                 ConfigureBrowseButton(_completeBrowserButton, _completeBox);
                 AddRow(grid, 4, _language.translate("CompleteSavePath"), CreateBrowseRow(_completeBox, _completeBrowserButton));
 
+                AddRow(grid, 5, _language.translate("PriorityExtensions"), _priorityBox);
+
                 var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 12, 0, 0) };
                 var ok = new Button { Content = _language.translate("Ok"), Width = 80, Margin = new Thickness(0, 0, 8, 0) };
                 var cancel = new Button { Content = _language.translate("Cancel"), Width = 80 };
@@ -383,7 +392,7 @@ namespace EasySaveWPF
                 buttons.Children.Add(ok);
                 buttons.Children.Add(cancel);
 
-                Grid.SetRow(buttons, 5);
+                Grid.SetRow(buttons, 6);
                 Grid.SetColumnSpan(buttons, 2);
                 grid.Children.Add(buttons);
 
@@ -432,6 +441,7 @@ namespace EasySaveWPF
                 _typeBox.SelectedItem = Result.TypeSave;
                 _completeBox.Text = Result.CompleteSavePath;
                 _completeBox.IsEnabled = Result.TypeSave == "differential";
+                _priorityBox.Text = string.Join(", ", Result.PriorityExt);
             }
 
             private void ApplyResult()
@@ -441,6 +451,7 @@ namespace EasySaveWPF
                 Result.TargetPath = _targetBox.Text.Trim();
                 Result.TypeSave = _typeBox.SelectedItem?.ToString() ?? "complete";
                 Result.CompleteSavePath = _completeBox.Text.Trim();
+                Result.PriorityExt = _priorityBox.Text.Split(",").Select(p => p.Trim()).Where(p => !string.IsNullOrWhiteSpace(p)).ToList();
             }
 
             private static void AddRow(Grid grid, int row, string label, FrameworkElement control)
@@ -468,7 +479,7 @@ namespace EasySaveWPF
             public InputDialog(string title, string text, string label)
             {
                 Title = title;
-                Width = 360;
+                Width = 380;
                 Height = 200;
                 WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 ResizeMode = ResizeMode.NoResize;
@@ -574,5 +585,9 @@ namespace EasySaveWPF
             }
         }
 
+        private void listSaveSpaces_SelectionChanged()
+        {
+
+        }
     }
 }
