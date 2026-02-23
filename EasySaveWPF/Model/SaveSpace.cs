@@ -1,7 +1,6 @@
 ﻿using ProjetEasySave.Utils;
 using System.Text.Json.Serialization;
 using EasyLog;
-using System.Threading.Tasks.Sources;
 
 namespace ProjetEasySave.Model
 {
@@ -71,17 +70,28 @@ namespace ProjetEasySave.Model
         }
 
         // Methods
-        public SaveTaskState onSaveTaskStateChanged(SaveTask task)
+        public SaveTaskState onSaveTaskStateChanged(SaveTask task, SaveTaskState newState)
         {
-            // Update the state of the task in the dictionary
-            _taskStates[task] = task.getState();
-            // Log the state change
-            logger.logRealTime(Logger.formatInfoRealTimeMessage(_name, _sourcePath, _destinationPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), task.getState()));
-            
-            // Trigger the event to notify the view of the state change
+            if (!_taskStates.ContainsKey(task))
+                return newState;
+
+            _taskStates[task] = newState;
+
+            // Log
+            logger.logRealTime(
+                Logger.formatInfoRealTimeMessage(
+                    _name,
+                    _sourcePath,
+                    _destinationPath,
+                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                    newState
+                )
+            );
+
+            // Notify UI
             SaveTaskStateChanged?.Invoke(this, EventArgs.Empty);
 
-            return task.getState();
+            return newState;
         }
 
         // EventHandler SaveTaskStateChanged for the view to update the UI in real-time

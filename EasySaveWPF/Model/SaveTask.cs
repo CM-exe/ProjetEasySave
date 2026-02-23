@@ -91,18 +91,30 @@
     ManualResetEventSlim pauseEvent,
     Action<int, string>? progress)
         {
-            _state = SaveTaskState.RUNNING;
+            _saveSpace.onSaveTaskStateChanged(this, SaveTaskState.RUNNING);
 
-            bool ok = _saveStrategy.doSave(
-                sourceFolder,
-                destinationFolder,
-                token,
-                pauseEvent,
-                progress
-            );
+            try
+            {
+                bool ok = _saveStrategy.doSave(
+                    sourceFolder,
+                    destinationFolder,
+                    token,
+                    pauseEvent,
+                    progress
+                );
 
-            _state = ok ? SaveTaskState.COMPLETED : SaveTaskState.FAILED;
-            return ok;
+                _saveSpace.onSaveTaskStateChanged(
+                    this,
+                    ok ? SaveTaskState.COMPLETED : SaveTaskState.FAILED
+                );
+
+                return ok;
+            }
+            catch (OperationCanceledException)
+            {
+                _saveSpace.onSaveTaskStateChanged(this, SaveTaskState.STOPPED);
+                throw;
+            }
         }
 
         //public Task<bool> saveAsync(string sourceFolder, string destinationFolder)
@@ -143,7 +155,7 @@
         {
             _state = state;
             // Notify the SaveSpace of the state change
-            _saveSpace.onSaveTaskStateChanged(this);
+            _saveSpace.onSaveTaskStateChanged(this, state);
             return _state;
 
         }
