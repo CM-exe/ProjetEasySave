@@ -56,7 +56,8 @@ namespace ProjetEasySave.ViewModel
             {
                 logger.setLogsFormat(format);
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 return false;
             }
             return true;
@@ -70,6 +71,16 @@ namespace ProjetEasySave.ViewModel
         public string translate(string key)
         {
             return _languageService.translate(key);
+        }
+
+        public int getMaxSize()
+        {
+            return Config.Instance.getBiggestSize();
+        }
+
+        public void setMaxSize(int size)
+        {
+            Config.Instance.setBiggestSize(size);
         }
     }
 }

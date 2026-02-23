@@ -8,19 +8,19 @@
         private SaveTaskState _state;
 
         // Constructor
-        public SaveTask(string strategy, SaveSpace space, string completeFolder = "")
+        public SaveTask(string strategy, SaveSpace space, SemaphoreSlim bigFileSemaphore, string completeFolder = "")
         {
             switch (strategy.ToLower())
             {
                 case "complete":
-                    _saveStrategy = new CompleteSave(this);
+                    _saveStrategy = new CompleteSave(this, bigFileSemaphore);
                     break;
                 case "differential":
                     if (string.IsNullOrWhiteSpace(completeFolder))
                     {
                         throw new ArgumentException("Complete folder path must be provided for differential save strategy");
                     }
-                    _saveStrategy = new DifferentialSave(this,completeFolder);
+                    _saveStrategy = new DifferentialSave(this, bigFileSemaphore, completeFolder);
                     break;
                 default:
                     throw new ArgumentException("Invalid save strategy type");

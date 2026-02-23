@@ -21,12 +21,16 @@ namespace ProjetEasySave.Model
         private Logger _logger = Logger.getInstance(Config.Instance);
         private string _fullBackupPath; // Reference path of the full backup
         private SaveTask _saveTask;
+        private SemaphoreSlim _bigFileSemaphore; // Semaphore for big file handling
+        private Queue<string> _pendingFiles; // Queue to manage big file save requests
 
         // Constructor
-        public DifferentialSave(SaveTask saveTask, string fullBackupPath)
+        public DifferentialSave(SaveTask saveTask, SemaphoreSlim bigFileSempahore, string fullBackupPath)
         {
             _saveTask = saveTask;
+            _bigFileSemaphore = bigFileSempahore;
             _fullBackupPath = fullBackupPath;
+            _pendingFiles = new Queue<string>();
         }
 
         // Methods
@@ -66,7 +70,6 @@ namespace ProjetEasySave.Model
                 {
                     process.WaitForExit();
                 }
-                
             }
             setState(SaveTaskState.RUNNING);
         }
@@ -83,6 +86,52 @@ namespace ProjetEasySave.Model
         public SaveTaskState getState()
         {
             return _state; 
+        }
+
+        private int processFile(string sourceFile, string sourcePath, string destinationPath, string fullBackupPath, string cryptoKey, List<string> cryptoExtensions)
+        {
+            var relativePath = Path.GetRelativePath(sourcePath, sourceFile);
+            var fullFile = Path.Combine(fullBackupPath, relativePath);
+            var diffFile = Path.Combine(destinationPath, relativePath);
+
+            // Ensure the subdirectory exists in the destination
+            Directory.CreateDirectory(Path.GetDirectoryName(diffFile)!);
+
+            FileInfo fileInfo = new FileInfo(sourceFile);
+            string extension = Path.GetExtension(sourceFile);
+
+            // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
+            double encryptionDuration = 0;
+            DateTime startTime = DateTime.Now;
+
+            bool needEncryption = !string.IsNullOrEmpty(cryptoKey)
+                                  && cryptoExtensions != null
+                                  && cryptoExtensions.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
+
+            if (needEncryption)
+            {
+                encryptionDuration = FileManager.CryptFile(sourceFile, diffFile, cryptoKey);
+                if (encryptionDuration < 0)
+                {
+                    _logger.log(Logger.formatErrMessage($"Error encrypting file: {sourceFile}"));
+                    return -1;
+                }
+            }
+            else
+            {
+                File.Copy(sourceFile, diffFile, true);
+            }
+
+            _logger.log(Logger.formatLogMessage(
+                needEncryption ? "Copying File (Differential + Encrypted)" : "Copying File (Differential)",
+                sourceFile,
+                diffFile,
+                (int)fileInfo.Length,
+                encryptionDuration,
+                startTime.ToString("yyyy-MM-dd HH:mm:ss")
+            ));
+
+            return (int)encryptionDuration;
         }
 
         // doSave method implementation for Differential Save
@@ -166,7 +215,6 @@ namespace ProjetEasySave.Model
 
                     var relativePath = Path.GetRelativePath(sourcePath, sourceFile);
                     var fullFile = Path.Combine(_fullBackupPath, relativePath);
-                    var diffFile = Path.Combine(destinationPath, relativePath);
 
                     bool shouldCopy = false;
 
@@ -186,46 +234,62 @@ namespace ProjetEasySave.Model
                         }
                     }
 
-                    if (shouldCopy)
+                    if (!shouldCopy) { continue; }
+
+                    // If the queue is not empty and the semaphore is available, process the pending files first
+                    if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
                     {
-                        // Ensure the subdirectory exists in the destination
-                        Directory.CreateDirectory(Path.GetDirectoryName(diffFile)!);
-
-                        FileInfo fileInfo = new FileInfo(sourceFile);
-                        string extension = Path.GetExtension(sourceFile);
-
-                        // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
-                        double encryptionDuration = 0;
-                        DateTime startTime = DateTime.Now;
-
-                        // Encryption Decision 
-                        bool needEncryption = !string.IsNullOrEmpty(cryptoKey)
-                                              && cryptoExtensions != null
-                                              && cryptoExtensions.Contains(extension);
-
-                        if (needEncryption)
+                        while (_pendingFiles.Count > 0)
                         {
-                            // Call the CryptoSoft DLL method
-                            encryptionDuration = FileManager.CryptFile(sourceFile, diffFile, cryptoKey);
+                            _bigFileSemaphore.Wait();
+                            string pendingFile = _pendingFiles.Dequeue();
+                            int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
+                            _bigFileSemaphore.Release();
+                            if (local_encryptionDuration < 0)
+                            {
+                                return false;
+                            }
                         }
-                        else
+                    }
+
+                    // Check file size for big file handling
+                    FileInfo fileInfo = new FileInfo(sourceFile);
+                    // If the file is bigger than the configured biggest size and the semaphore is not available, add it to the pending queue
+                    if (fileInfo.Length > (_config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount == 0)
+                    {
+                        _pendingFiles.Enqueue(sourceFile);
+                        continue;
+                    }
+                    // If the file is bigger than the configured biggest size and the semaphore is available, process it immediately
+                    else if (fileInfo.Length > (_config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount > 0)
+                    {
+                        _bigFileSemaphore.Wait();
+                        int local_encryptionDuration = processFile(sourceFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
+                        _bigFileSemaphore.Release();
+                        if (local_encryptionDuration < 0)
                         {
-                            // Standard file copy
-                            File.Copy(sourceFile, diffFile, true);
+                            return false;
                         }
-
-                        // Logging 
-                        _logger.log(Logger.formatLogMessage(
-                            needEncryption ? "Copying File (Differential + Encrypted)" : "Copying File (Differential)",
-                            sourceFile,
-                            diffFile,
-                            (int)fileInfo.Length,
-                            encryptionDuration, // 0 if copy, ms if encrypted
-                            startTime.ToString("yyyy-MM-dd HH:mm:ss")
-                        ));
-
-                        // Abort if the encryption/copy process failed (duration < 0)
+                        continue;
+                    }
+                    else
+                    {
+                        int encryptionDuration = processFile(sourceFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
                         if (encryptionDuration < 0) return false;
+                        continue;
+                    }
+                }
+
+                // Final check to process any remaining pending files after the main loop
+                while (_pendingFiles.Count > 0)
+                {
+                    _bigFileSemaphore.Wait();
+                    string pendingFile = _pendingFiles.Dequeue();
+                    int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
+                    _bigFileSemaphore.Release();
+                    if (local_encryptionDuration < 0)
+                    {
+                        return false;
                     }
                 }
 

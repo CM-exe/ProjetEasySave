@@ -21,9 +21,16 @@ namespace ProjetEasySave.Model
         // Attributes
         private Logger _logger = Logger.getInstance(Config.Instance);
         private SaveTask _saveTask; // Reference to the SaveTask for state updates (if needed)
+        private SemaphoreSlim _bigFileSemaphore; // Semaphore for big file handling
+        private Queue<string> _pendingFiles; // Queue to manage pending files when big file is being processed
 
         // Constructor
-        public CompleteSave(SaveTask saveTask) { _saveTask = saveTask; }
+        public CompleteSave(SaveTask saveTask, SemaphoreSlim bigFileSemaphore)
+        {
+            _saveTask = saveTask;
+            _bigFileSemaphore = bigFileSemaphore;
+            _pendingFiles = new Queue<string>();
+        }
 
         // Instance method to check if the business software is running
         public bool isBusinessSoftwareRunning()
@@ -72,6 +79,54 @@ namespace ProjetEasySave.Model
         public SaveTaskState getState()
         {
             return _state;
+        }
+
+        private int proccesFile(string file, string sourcePath, string destinationPath, string cryptoKey, List<string> cryptoExtensions)
+        {
+            var relative = Path.GetRelativePath(sourcePath, file);
+            var targetFile = Path.Combine(destinationPath, relative);
+            Directory.CreateDirectory(Path.GetDirectoryName(targetFile)!);
+
+            FileInfo fileInfo = new FileInfo(file);
+            string extension = Path.GetExtension(file);
+
+            // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
+            double encryptionDuration = 0;
+            DateTime startTime = DateTime.Now;
+
+            bool shouldEncrypt = !string.IsNullOrEmpty(cryptoKey)
+                                 && cryptoExtensions != null
+                                 // Utilise LINQ pour vérifier si l'extension existe, en ignorant la casse
+                                 && cryptoExtensions.Any(e =>
+                                     e.Equals(extension, StringComparison.OrdinalIgnoreCase));
+
+            if (shouldEncrypt)
+            {
+                // Call CryptoSoft DLL
+                // Returns time in ms or -1 on error
+                encryptionDuration = FileManager.CryptFile(file, targetFile, cryptoKey);
+                if (encryptionDuration < 0)
+                {
+                    _logger.log(Logger.formatErrMessage($"Error encrypting file: {file}"));
+                    return -1; // Indicate error
+                }
+            }
+            else
+            {
+                // Standard copy (encryptionDuration remains 0)
+                File.Copy(file, targetFile, true);
+            }
+
+            // Passing encryptionDuration: 0 if standard copy, result of DLL if encrypted
+            _logger.log(Logger.formatLogMessage(
+                shouldEncrypt ? "Copying File (Encrypted)" : "Copying File",
+                file,
+                targetFile,
+                (int)fileInfo.Length,
+                encryptionDuration,
+                startTime.ToString("yyyy-MM-dd HH:mm:ss")
+            ));
+            return (int)encryptionDuration;
         }
 
         // Interface method implementation
@@ -144,47 +199,66 @@ namespace ProjetEasySave.Model
                         waitForBusinessSoftwareToClose();
                     }
 
-                    var relative = Path.GetRelativePath(sourcePath, file);
-                    var targetFile = Path.Combine(destinationPath, relative);
-                    Directory.CreateDirectory(Path.GetDirectoryName(targetFile)!);
-
-                    FileInfo fileInfo = new FileInfo(file);
-                    string extension = Path.GetExtension(file);
-
-                    // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
-                    double encryptionDuration = 0;
-                    DateTime startTime = DateTime.Now;
-
-                    bool shouldEncrypt = !string.IsNullOrEmpty(cryptoKey)
-                                         && cryptoExtensions != null
-                                         // Utilise LINQ pour vérifier si l'extension existe, en ignorant la casse
-                                         && cryptoExtensions.Any(e =>
-                                             e.Equals(extension, StringComparison.OrdinalIgnoreCase));
-
-                    if (shouldEncrypt)
+                    // If the queue is not empty and the semaphore is available, process the pending files first
+                    if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
                     {
-                        // Call CryptoSoft DLL
-                        // Returns time in ms or -1 on error
-                        encryptionDuration = FileManager.CryptFile(file, targetFile, cryptoKey);
+                        while (_pendingFiles.Count > 0)
+                        {
+                            // Take the semaphore to process the pending file
+                            _bigFileSemaphore.Wait();
+                            // Process the pending file
+                            string pendingFile = _pendingFiles.Dequeue();
+                            int local_encryptionDuration = proccesFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
+                            // Release the semaphore after processing
+                            _bigFileSemaphore.Release();
+                            if (local_encryptionDuration < 0)
+                            {
+                                return false; // Abort if the encryption/copy process failed
+                            }
+                        }
+                    }
+
+                    // Check if the current file to process is too big (greater than the threshold defined in config) and if the semaphore is not available (another big file is being processed)
+                    FileInfo fileInfo = new FileInfo(file);
+                    if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount == 0) // * 1000 to convert from o to Ko
+                    {
+                        // Add it to the pending queue and continue with the next file
+                        _pendingFiles.Enqueue(file);
+                        continue;
+                    }
+                    else if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount > 0)
+                    {
+                        // If the file is big but the semaphore is available, take the semaphore and process it immediately
+                        _bigFileSemaphore.Wait();
+                        int local_encryptionDuration = proccesFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
+                        _bigFileSemaphore.Release();
+                        if (local_encryptionDuration < 0)
+                        {
+                            return false; // Abort if the encryption/copy process failed
+                        }
+                        continue;
                     }
                     else
                     {
-                        // Standard copy (encryptionDuration remains 0)
-                        File.Copy(file, targetFile, true);
+                        int encryptionDuration = proccesFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
+
+                        // Abort if the encryption/copy process failed (duration < 0)
+                        if (encryptionDuration < 0) return false;
+                        continue;
                     }
+                }
 
-                    // Passing encryptionDuration: 0 if standard copy, result of DLL if encrypted
-                    _logger.log(Logger.formatLogMessage(
-                        shouldEncrypt ? "Copying File (Encrypted)" : "Copying File",
-                        file,
-                        targetFile,
-                        (int)fileInfo.Length,
-                        encryptionDuration,
-                        startTime.ToString("yyyy-MM-dd HH:mm:ss")
-                    ));
-
-                    // Abort if the encryption/copy process failed (duration < 0)
-                    if (encryptionDuration < 0) return false;
+                // Final check to process any remaining pending files after the main loop
+                while (_pendingFiles.Count > 0)
+                {
+                    _bigFileSemaphore.Wait();
+                    string pendingFile = _pendingFiles.Dequeue();
+                    int local_encryptionDuration = proccesFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
+                    _bigFileSemaphore.Release();
+                    if (local_encryptionDuration < 0)
+                    {
+                        return false; // Abort if the encryption/copy process failed
+                    }
                 }
 
                 // "Save completed" Log
