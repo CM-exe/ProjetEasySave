@@ -29,7 +29,7 @@ namespace ProjetEasySave.ViewModel
             set { _progress = value; OnPropertyChanged(); }
         }
 
-        private string _currentFile;
+        private string _currentFile = string.Empty;
         public string CurrentFile
         {
             get => _currentFile;
@@ -74,7 +74,14 @@ namespace ProjetEasySave.ViewModel
                 CurrentFile = f;
             });
 
-            return await _model.StartSaveAsync(name);
+            try
+            {
+                return await _model.StartSaveAsync(name);
+            }
+            catch (OperationCanceledException) 
+            { 
+                return false; 
+            }
         }
 
         public void PauseSave(string name)

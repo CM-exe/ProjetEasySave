@@ -81,7 +81,17 @@ namespace ProjetEasySave.Model
             return _state;
         }
 
-        private int proccesFile(string file, string sourcePath, string destinationPath, string cryptoKey, List<string> cryptoExtensions)
+        private int processFile(
+    string file,
+    string sourcePath,
+    string destinationPath,
+    string cryptoKey,
+    List<string> cryptoExtensions,
+    long totalBytes,
+    ref long copiedBytes,
+    CancellationToken token,
+    ManualResetEventSlim pauseEvent,
+    Action<int, string> progress)
         {
             var relative = Path.GetRelativePath(sourcePath, file);
             var targetFile = Path.Combine(destinationPath, relative);
@@ -96,28 +106,47 @@ namespace ProjetEasySave.Model
 
             bool shouldEncrypt = !string.IsNullOrEmpty(cryptoKey)
                                  && cryptoExtensions != null
-                                 // Utilise LINQ pour vérifier si l'extension existe, en ignorant la casse
-                                 && cryptoExtensions.Any(e =>
-                                     e.Equals(extension, StringComparison.OrdinalIgnoreCase));
+                                 && cryptoExtensions.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
+
+            int currentPercentage = totalBytes > 0 ? (int)((copiedBytes * 100) / totalBytes) : 0;
+            progress?.Invoke(currentPercentage, fileInfo.Name);
 
             if (shouldEncrypt)
             {
-                // Call CryptoSoft DLL
-                // Returns time in ms or -1 on error
                 encryptionDuration = FileManager.CryptFile(file, targetFile, cryptoKey);
                 if (encryptionDuration < 0)
                 {
                     _logger.log(Logger.formatErrMessage($"Error encrypting file: {file}"));
-                    return -1; // Indicate error
+                    return -1;
                 }
+
+                copiedBytes += fileInfo.Length;
+                currentPercentage = totalBytes > 0 ? (int)((copiedBytes * 100) / totalBytes) : 100;
+                progress?.Invoke(currentPercentage, fileInfo.Name);
             }
             else
             {
-                // Standard copy (encryptionDuration remains 0)
-                File.Copy(file, targetFile, true);
+                using (FileStream sourceStream = new FileStream(file, FileMode.Open, FileAccess.Read))
+                using (FileStream destinationStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
+                {
+                    byte[] buffer = new byte[81920];
+                    int bytesRead;
+
+                    while ((bytesRead = sourceStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        token.ThrowIfCancellationRequested();
+                        pauseEvent.Wait(token);
+
+                        destinationStream.Write(buffer, 0, bytesRead);
+                        copiedBytes += bytesRead;
+
+                        // Update UI
+                        currentPercentage = totalBytes > 0 ? (int)((copiedBytes * 100) / totalBytes) : 100;
+                        progress?.Invoke(currentPercentage, fileInfo.Name);
+                    }
+                }
             }
 
-            // Passing encryptionDuration: 0 if standard copy, result of DLL if encrypted
             _logger.log(Logger.formatLogMessage(
                 shouldEncrypt ? "Copying File (Encrypted)" : "Copying File",
                 file,
@@ -126,6 +155,7 @@ namespace ProjetEasySave.Model
                 encryptionDuration,
                 startTime.ToString("yyyy-MM-dd HH:mm:ss")
             ));
+
             return (int)encryptionDuration;
         }
 
@@ -143,7 +173,8 @@ namespace ProjetEasySave.Model
             {
                 setState(SaveTaskState.RUNNING);
 
-                // Validate paths
+                _pendingFiles.Clear();
+
                 if (string.IsNullOrWhiteSpace(sourcePath) || string.IsNullOrWhiteSpace(destinationPath))
                 {
                     _logger.log(Logger.formatErrMessage("Source or destination path is invalid."));
@@ -158,23 +189,18 @@ namespace ProjetEasySave.Model
                     return false;
                 }
 
-                // Check if business software is running before starting the save process
                 if (isBusinessSoftwareRunning())
                 {
                     waitForBusinessSoftwareToClose();
                 }
 
-                // Initial log
                 _logger.log(Logger.formatLogMessage("Complete Save Started", sourcePath, destinationPath, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
 
-                // Fetch keys and extensions from the Config singleton
                 string cryptoKey = Config.Instance.getEncryptionKey();
                 List<string> cryptoExtensions = Config.Instance.getEncryptionExtensions();
 
-                // Initialize and clean destination directory
                 if (!Directory.Exists(destinationPath))
                 {
-                    // Create directory structure
                     foreach (var dir in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
                     {
                         var relative = Path.GetRelativePath(sourcePath, dir);
@@ -184,20 +210,17 @@ namespace ProjetEasySave.Model
                 }
                 else
                 {
-                    // Clean the destination directory before starting
                     foreach (var file in Directory.EnumerateFiles(destinationPath, "*", SearchOption.AllDirectories))
                     {
-                        token.ThrowIfCancellationRequested(); // Check cancellation even during cleanup
+                        token.ThrowIfCancellationRequested(); 
                         File.Delete(file);
                     }
                 }
 
-                // Fetch all files and calculate total bytes for progress reporting
                 string[] files = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
                 long totalBytes = files.Sum(f => new FileInfo(f).Length);
                 long copiedBytes = 0;
 
-                // Order files based on priority extensions
                 files = files.OrderBy(f =>
                 {
                     string ext = Path.GetExtension(f);
@@ -208,7 +231,6 @@ namespace ProjetEasySave.Model
                 // Main File Loop
                 foreach (var file in files)
                 {
-                    // Respect pause and cancellation requests
                     token.ThrowIfCancellationRequested();
                     pauseEvent.Wait(token);
 
@@ -217,7 +239,6 @@ namespace ProjetEasySave.Model
                         waitForBusinessSoftwareToClose();
                     }
 
-                    // Process pending big files first if semaphore is available
                     if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
                     {
                         while (_pendingFiles.Count > 0)
@@ -227,16 +248,18 @@ namespace ProjetEasySave.Model
 
                             _bigFileSemaphore.Wait(token);
                             string pendingFile = _pendingFiles.Dequeue();
-
-                            // Note: You might need to update proccesFile to accept progress/token parameters
-                            int local_encryptionDuration = proccesFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
+                            try
+                            {
+                                int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
+                                if (local_encryptionDuration < 0) return false;
+                            }
+                            finally
+                            {
                             _bigFileSemaphore.Release();
-
-                            if (local_encryptionDuration < 0) return false;
+                            }
                         }
                     }
 
-                    // Check if current file is big and handle semaphore logic
                     FileInfo fileInfo = new FileInfo(file);
                     if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount == 0)
                     {
@@ -246,22 +269,25 @@ namespace ProjetEasySave.Model
                     else if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount > 0)
                     {
                         _bigFileSemaphore.Wait(token);
-                        int local_encryptionDuration = proccesFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
-                        _bigFileSemaphore.Release();
-
-                        if (local_encryptionDuration < 0) return false;
+                        try
+                        {
+                            int local_encryptionDuration = processFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
+                            if (local_encryptionDuration < 0) return false;
+                        }
+                        finally
+                        {
+                            _bigFileSemaphore.Release();
+                        }
                         continue;
                     }
                     else
                     {
-                        // Process normal file
-                        int encryptionDuration = proccesFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
+                        int encryptionDuration = processFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
                         if (encryptionDuration < 0) return false;
                         continue;
                     }
                 }
 
-                // Final check to process any remaining pending files
                 while (_pendingFiles.Count > 0)
                 {
                     token.ThrowIfCancellationRequested();
@@ -269,13 +295,17 @@ namespace ProjetEasySave.Model
 
                     _bigFileSemaphore.Wait(token);
                     string pendingFile = _pendingFiles.Dequeue();
-                    int local_encryptionDuration = proccesFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
-                    _bigFileSemaphore.Release();
-
-                    if (local_encryptionDuration < 0) return false;
+                    try
+                    {
+                        int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
+                        if (local_encryptionDuration < 0) return false;
+                    }
+                    finally
+                    {
+                        _bigFileSemaphore.Release();
+                    }
                 }
 
-                // Log completion and update state
                 _logger.log(Logger.formatCompleteSaveMessage("Complete Save Finished", sourcePath, destinationPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
                 setState(SaveTaskState.COMPLETED);
 
@@ -283,13 +313,11 @@ namespace ProjetEasySave.Model
             }
             catch (OperationCanceledException)
             {
-                // Handle explicit cancellation
                 setState(SaveTaskState.STOPPED);
                 throw;
             }
             catch (Exception ex)
             {
-                // Handle unexpected errors
                 _logger.log(Logger.formatErrMessage($"Error during complete save: {ex.Message}"));
                 setState(SaveTaskState.FAILED);
                 return false;
