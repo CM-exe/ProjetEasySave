@@ -7,6 +7,11 @@
         private SaveSpace _saveSpace;
         private SaveTaskState _state;
 
+        private CancellationTokenSource _cts;
+        private ManualResetEventSlim _pauseEvent = new(true);
+
+        public event Action<int, string>? ProgressUpdated;
+
         // Constructor
         public SaveTask(string strategy, SaveSpace space, SemaphoreSlim bigFileSemaphore, string completeFolder = "")
         {
@@ -26,13 +31,92 @@
                     throw new ArgumentException("Invalid save strategy type");
             }
             _saveSpace = space;
+            _state = SaveTaskState.PENDING; 
         }
 
         // Methods
+
+        public async Task<bool> StartAsync(string sourceFolder, string destinationFolder)
+        {
+            _cts = new CancellationTokenSource();
+            setState(SaveTaskState.RUNNING);
+
+            try
+            {
+                bool result = await Task.Run(() =>
+                    _saveStrategy.doSave(
+                        sourceFolder,
+                        destinationFolder,
+                        _cts.Token,
+                        _pauseEvent,
+                        reportProgress
+                    )
+                );
+
+                setState(result ? SaveTaskState.COMPLETED : SaveTaskState.FAILED);
+                return result;
+            }
+            catch (OperationCanceledException)
+            {
+                setState(SaveTaskState.STOPPED);
+                return false;
+            }
+        }
+
+        public void Pause()
+        {
+            if (_state == SaveTaskState.RUNNING)
+                _pauseEvent.Reset();
+        }
+
+        public void Resume()
+        {
+            if (_state == SaveTaskState.RUNNING)
+                _pauseEvent.Set();
+        }
+
+        public void Stop()
+        {
+            _cts?.Cancel();
+        }
         public bool save(string sourceFolder, string destinationFolder, List<string> priorityExt)
         {
             bool well_executed = _saveStrategy.doSave(sourceFolder, destinationFolder, priorityExt);
             return well_executed;
+        }
+
+        // Override
+        public bool save(
+    string sourceFolder,
+    string destinationFolder,
+    CancellationToken token,
+    ManualResetEventSlim pauseEvent,
+    Action<int, string>? progress)
+        {
+            _saveSpace.updateTaskState(this, SaveTaskState.RUNNING);
+
+            try
+            {
+                bool ok = _saveStrategy.doSave(
+                    sourceFolder,
+                    destinationFolder,
+                    token,
+                    pauseEvent,
+                    progress
+                );
+
+                _saveSpace.updateTaskState(
+                    this,
+                    ok ? SaveTaskState.COMPLETED : SaveTaskState.FAILED
+                );
+
+                return ok;
+            }
+            catch (OperationCanceledException)
+            {
+                _saveSpace.updateTaskState(this, SaveTaskState.STOPPED);
+                throw;
+            }
         }
 
         public SaveTaskState onSaveTaskStateUpdated(ISaveStrategy strategy)
@@ -46,7 +130,7 @@
         {
             _state = state;
             // Notify the SaveSpace of the state change
-            _saveSpace.updateTaskState(this);
+            _saveSpace.updateTaskState(this, state);
             return _state;
 
         }
@@ -90,5 +174,29 @@
             });
         }
 
+        // Override
+        public Task<bool> saveAsync(
+    string sourceFolder,
+    string destinationFolder,
+    CancellationToken token,
+    ManualResetEventSlim pauseEvent,
+    Action<int, string>? progress = null)
+        {
+            return Task.Run(() =>
+            {
+                return save(
+                    sourceFolder,
+                    destinationFolder,
+                    token,
+                    pauseEvent,
+                    progress
+                );
+            }, token);
+        }
+
+        private void reportProgress(int progress, string message)
+        {
+            ProgressUpdated?.Invoke(progress, message);
+        }
     }
 }

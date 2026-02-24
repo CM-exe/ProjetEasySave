@@ -18,10 +18,12 @@ namespace EasySaveWPFTests
             // Create a destination directory
             string destinationDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()).ToString();
             Directory.CreateDirectory(destinationDirectory);
+            var priorityExt = new List<string>();
+            var semaphore = new SemaphoreSlim(1, 1);
 
             // When
             // Create a SaveSpace with a CompleteSave strategy and execute the save
-            SaveSpace saveSpace = new SaveSpace("TestSaveSpace", sourceDirectory, destinationDirectory, "complete");
+            SaveSpace saveSpace = new SaveSpace("TestSaveSpace", sourceDirectory, destinationDirectory, "complete", priorityExt, semaphore);
             await saveSpace.ExecuteAsync();
 
             // Then

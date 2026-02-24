@@ -35,7 +35,15 @@ namespace ProjetEasySave.Model
 		private SemaphoreSlim _bigFileSemaphore;
 
         // Constructor
-        public SaveSpace(string name, string sourcePath, string destinationPath, string typeSave, List<string> priorityExt, SemaphoreSlim bigFileSemaphore, string completeSavePath = "")
+        public SaveSpace(
+            string name, 
+            string sourcePath, 
+            string destinationPath, 
+            string typeSave, 
+            List<string> priorityExt, 
+            SemaphoreSlim bigFileSemaphore, 
+            string completeSavePath = ""
+            )
         {
             _name = name;
             _sourcePath = sourcePath;

@@ -196,11 +196,6 @@ namespace EasySaveWPF
                 return;
             }
 
-
-            //ShowResult(true, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
-            //bool ok = await _viewModel.startSave(row.Name);
-            //ShowResult(ok, _viewModel.translate("SaveCompleted"), _viewModel.translate("SaveStartFailed"));
-
             if (false) // TODO: Check if the business software is running for this SaveSpace
             {
                 // Display an error message and abort the flow
