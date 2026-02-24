@@ -183,5 +183,10 @@ namespace ProjetEasySave.ViewModel
         {
             Config.Instance.setBiggestSize(size);
         }
+
+        public void setEncryptionKey(string key)
+        {
+            Config.Instance.setEncryptionKey(key);
+        }
     }
 }

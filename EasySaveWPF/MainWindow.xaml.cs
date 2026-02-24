@@ -35,6 +35,7 @@ namespace EasySaveWPF
             btnDeleteSpace.Content = "🗑 " + _viewModel.translate("RemoveSaveSpace");
             btnEditSpace.Content = "✏️ " + _viewModel.translate("EditSaveSpace");
             btnStartSave.Content = "▶ " + _viewModel.translate("StartSave");
+            btnValidateEncryptKey.Content = "OK";
             textAppDescription.Text = _viewModel.translate("textAppDescription");
             textList.Text = _viewModel.translate("textList");
             textWorkspace.Text = _viewModel.translate("textWorkspace");
@@ -215,6 +216,26 @@ namespace EasySaveWPF
             dialog.ShowDialog();
             RefreshList();
             render(); // Re-render to update texts if language was changed
+        }
+
+        private void SaveEncryptionKey_Click(object sender, RoutedEventArgs e)
+        {
+            // Retrieve the password directly from the UI element
+            string newKey = EncryptionKeyPasswordBox.Password;
+
+            if (!string.IsNullOrWhiteSpace(newKey))
+            {
+                // Send it to the ViewModel
+                _viewModel.setEncryptionKey(newKey);
+
+                // Optional: Clear the box or show a success message
+                EncryptionKeyPasswordBox.Clear();
+                MessageBox.Show("Encryption key successfully updated.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("The encryption key cannot be empty.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void ShowResult(bool ok, string success, string fail)

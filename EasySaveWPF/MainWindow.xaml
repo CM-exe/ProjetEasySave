@@ -60,6 +60,14 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,12,0,0">
             <Button x:Name="btnConfig" Content="configuration" Width="auto" Margin="8,0,0,0" Padding="2,2,2,2"/>
         </StackPanel>
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="100,12,0,0">
+            <Label Content="{Binding EncryptionKeyLabel}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+    
+            <PasswordBox x:Name="EncryptionKeyPasswordBox" Width="200" Margin="0,0,10,0"/>
+    
+            <Button x:Name="btnValidateEncryptKey" Content="{Binding SaveSettingsButton}" Click="SaveEncryptionKey_Click" Padding="10,5"/>
+        </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
             <TextBlock x:Name="textActions" Text="Actions :" FontWeight="SemiBold" Foreground="#0F172A" VerticalAlignment="Center"/>
