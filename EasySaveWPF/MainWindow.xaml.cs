@@ -196,10 +196,17 @@ namespace EasySaveWPF
                 return;
             }
 
+            if (false) // TODO: Check if the business software is running for this SaveSpace
+            {
+                // Display an error message and abort the flow
+                MessageBox.Show(_viewModel.translate("ErrorBusinessSoftwareRunning"), "EasySave", MessageBoxButton.OK, MessageBoxImage.Error); return;
+            }
 
-            ShowResult(true, _viewModel.translate("SaveStarted"), _viewModel.translate("SaveStartFailed"));
-            bool ok = await _viewModel.startSave(row.Name);
-            ShowResult(ok, _viewModel.translate("SaveCompleted"), _viewModel.translate("SaveStartFailed"));
+            var progressWindow = new SaveProgressWindow(_viewModel, row.Name)
+            {
+                Owner = this
+            };
+            progressWindow.ShowDialog();
         }
 
         public void OnConfigClick(object sender, RoutedEventArgs e)

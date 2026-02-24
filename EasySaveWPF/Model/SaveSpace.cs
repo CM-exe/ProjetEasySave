@@ -25,17 +25,33 @@ namespace ProjetEasySave.Model
         private Dictionary<SaveTask, SaveTaskState> _taskStates;
         [JsonIgnore]
         private Logger logger = Logger.getInstance(Config.Instance);
+		[JsonIgnore]
+		private CancellationTokenSource? _cts;
+		[JsonIgnore]
+		private ManualResetEventSlim? _pauseEvent;
 
-        private SemaphoreSlim _bigFileSemaphore;
+		public event Action<int, string>? ProgressChanged;
+
+		private SemaphoreSlim _bigFileSemaphore;
 
         // Constructor
-        public SaveSpace(string name, string sourcePath, string destinationPath, string typeSave, List<string> priorityExt, SemaphoreSlim bigFileSemaphore, string completeSavePath = "")
+        public SaveSpace(
+            string name, 
+            string sourcePath, 
+            string destinationPath, 
+            string typeSave, 
+            List<string> priorityExt, 
+            SemaphoreSlim bigFileSemaphore, 
+            string completeSavePath = ""
+            )
         {
             _name = name;
             _sourcePath = sourcePath;
             _destinationPath = destinationPath;
-            // Initialize save tasks based on the typeSave parameter
-            _saveTasks = new List<SaveTask>();
+			_cts = new CancellationTokenSource();
+			_pauseEvent = new ManualResetEventSlim(true);
+			// Initialize save tasks based on the typeSave parameter
+			_saveTasks = new List<SaveTask>();
             switch (typeSave.ToLower())
             {
                 case "complete":
@@ -71,17 +87,29 @@ namespace ProjetEasySave.Model
         }
 
         // Methods
-        public SaveTaskState onSaveTaskStateChanged(SaveTask task)
+        public SaveTaskState onSaveTaskStateChanged(SaveTask task, SaveTaskState newState)
         {
-            // Update the state of the task in the dictionary
-            _taskStates[task] = task.getState();
+			if (!_taskStates.ContainsKey(task))
+				return newState;
+
+			// Update the state of the task in the dictionary
+			_taskStates[task] = newState;
+
             // Log the state change
-            logger.logRealTime(Logger.formatInfoRealTimeMessage(_name, _sourcePath, _destinationPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), task.getState()));
+			logger.logRealTime(
+				Logger.formatInfoRealTimeMessage(
+					_name,
+					_sourcePath,
+					_destinationPath,
+					DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+					newState
+				)
+			);
             
             // Trigger the event to notify the view of the state change
             SaveTaskStateChanged?.Invoke(this, EventArgs.Empty);
 
-            return task.getState();
+            return newState;
         }
 
         // EventHandler SaveTaskStateChanged for the view to update the UI in real-time
@@ -90,23 +118,55 @@ namespace ProjetEasySave.Model
 
         public async Task<bool> executeSaveAsync()
         {
-            var tasks = new List<Task<bool>>();
+			_cts = new CancellationTokenSource();
+			_pauseEvent = new ManualResetEventSlim(true);
 
-            foreach (var saveTask in _saveTasks)
+            try
             {
-                tasks.Add(
-                    saveTask.saveAsync(_sourcePath, _destinationPath, _priorityExt)
+                var tasks = _saveTasks.Select(task =>
+                    task.saveAsync(
+                        _sourcePath,
+                        _destinationPath,
+                        _priorityExt,
+                        _cts.Token,
+                        _pauseEvent,
+                        (percent, file) =>
+                        {
+                            ProgressChanged?.Invoke(percent, file);
+                        }
+                    )
                 );
+
+                await Task.WhenAll(tasks);
+                return true;
             }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
+	    }
 
-            bool[] results = await Task.WhenAll(tasks);
+		public void Play()
+		{
+			_pauseEvent.Set();
+		}
 
-            return results.All(r => r);
-        }
+		public void Pause()
+		{
+			_pauseEvent.Reset();
+		}
 
+		public void Stop()
+		{
+			onSaveTaskStateChanged(_saveTasks[0], SaveTaskState.STOPPED);
 
-        // Getters
-        public string getName()
+			SaveTaskStateChanged?.Invoke(this, EventArgs.Empty);
+
+			_cts.Cancel();
+		}
+
+		// Getters
+		public string getName()
         {
             return _name;
         }

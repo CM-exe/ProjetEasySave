@@ -46,7 +46,13 @@
     "Ok": "OK",
     "Cancel": "Annuler",
     "MaxSize": "Seuil de tailles des fichiers",
-    "Config": "Configuration"
+    "Config": "Configuration",
+    "CurrentFileLabel": "Fichier en cours :",
+    "PausedSuffix": " (en pause)",
+    "StoppedSuffix": " (arrêtée)",
+    "SaveCompletedMsg": "Sauvegarde terminée avec succès",
+    "SaveStopped": "La sauvegarde a été arrêtée.",
+    "SaveInProgressTitle": "Sauvegarde en cours"
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -95,6 +101,12 @@
     "Ok": "OK",
     "Cancel": "Cancel",
     "MaxSize": "File size threshold",
-    "Config" :  "Configuration"
+    "Config": "Configuration",
+    "CurrentFileLabel": "Current file:",
+    "PausedSuffix": " (paused)",
+    "StoppedSuffix": " (stopped)",
+    "SaveCompletedMsg": "Backup completed successfully",
+    "SaveStopped": "Backup has been stopped.",
+    "SaveInProgressTitle": "Backup in progress"
   }
 }

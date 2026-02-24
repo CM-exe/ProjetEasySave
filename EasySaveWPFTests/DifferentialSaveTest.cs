@@ -19,9 +19,11 @@ namespace EasySaveWPFTests
             Directory.CreateDirectory(destinationDirectory);
             string differentialDestinationDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             Directory.CreateDirectory(differentialDestinationDirectory);
+            var priorityExt = new List<string>();
+            var semaphore = new SemaphoreSlim(1, 1);
 
             // First save (complete)
-            SaveSpace completeSaveSpace = new SaveSpace("TestSaveSpace", sourceDirectory, destinationDirectory, "complete");
+            SaveSpace completeSaveSpace = new SaveSpace("TestSaveSpace", sourceDirectory, destinationDirectory, "complete", priorityExt, semaphore);
             await completeSaveSpace.executeSaveAsync();
 
             // Get file info after first save
@@ -34,7 +36,7 @@ namespace EasySaveWPFTests
 
             // When
             // Second save (differential)
-            SaveSpace differentialSaveSpace = new SaveSpace("TestSaveSpace", sourceDirectory, differentialDestinationDirectory, "differential", destinationDirectory);
+            SaveSpace differentialSaveSpace = new SaveSpace("TestSaveSpace", sourceDirectory, differentialDestinationDirectory, "differential", priorityExt, semaphore, destinationDirectory);
             await differentialSaveSpace.executeSaveAsync();
 
             // Then

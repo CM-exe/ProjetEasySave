@@ -2,15 +2,46 @@
 using ProjetEasySave.Utils;
 using System.Diagnostics;
 using EasyLog;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ProjetEasySave.ViewModel
 {
-    public class ViewModel
+    public class ViewModel : INotifyPropertyChanged
     {
         // Attributes
         private SaveModel _model;
         private LanguageService _languageService;
         private readonly Logger logger = Logger.getInstance(Config.Instance); // Load logger
+
+        // Translations
+        public string CurrentFileLabel => translate("CurrentFileLabel");
+        public string PausedSuffix => translate("PausedSuffix");
+        public string StoppedSuffix => translate("StoppedSuffix");
+        public string SaveCompletedMessage => translate("SaveCompleted");
+        public string SaveStoppedMessage => translate("SaveStopped");
+        public string SaveWindowTitle => translate("SaveInProgressTitle");
+
+        private int _progress;
+        public int Progress
+        {
+            get => _progress;
+            set { _progress = value; OnPropertyChanged(); }
+        }
+
+        private string _currentFile = string.Empty;
+        public string CurrentFile
+        {
+            get => _currentFile;
+            set { _currentFile = value; OnPropertyChanged(); }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
         // Constructor
         public ViewModel()
@@ -33,6 +64,39 @@ namespace ProjetEasySave.ViewModel
         public async Task<bool> startSave(string name)
         {
             return await _model.startSave(name);
+        }
+
+        public async Task<bool> StartSaveAsync(string name)
+        {
+            _model.SubscribeProgress(name, (p, f) =>
+            {
+                Progress = p;
+                CurrentFile = f;
+            });
+
+            try
+            {
+                return await _model.StartSaveAsync(name);
+            }
+            catch (OperationCanceledException) 
+            { 
+                return false; 
+            }
+        }
+
+        public void PauseSave(string name)
+        {
+            _model.PauseSave(name);
+        }
+
+        public void ResumeSave(string name)
+        {
+            _model.ResumeSave(name);
+        }
+
+        public void StopSave(string name)
+        {
+            _model.StopSave(name);
         }
 
         public List<SaveSpace> getSaveSpaces()
