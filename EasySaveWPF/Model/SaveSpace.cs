@@ -116,7 +116,7 @@ namespace ProjetEasySave.Model
         public event EventHandler? SaveTaskStateChanged;
 
 
-        public async Task<bool> ExecuteAsync()
+        public async Task<bool> executeSaveAsync()
         {
 			_cts = new CancellationTokenSource();
 			_pauseEvent = new ManualResetEventSlim(true);

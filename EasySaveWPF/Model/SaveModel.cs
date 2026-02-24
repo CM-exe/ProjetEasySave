@@ -163,7 +163,7 @@ namespace ProjetEasySave.Model
             var saveSpaceToStart = _saveSpaces.FirstOrDefault(s => s.getName() == name);
             if (saveSpaceToStart != null)
             {
-                return await saveSpaceToStart.ExecuteAsync();
+                return await saveSpaceToStart.executeSaveAsync();
             }
             return false;
         }
@@ -171,7 +171,7 @@ namespace ProjetEasySave.Model
         public Task<bool> StartSaveAsync(string name)
         {
             var saveSpace = _saveSpaces.FirstOrDefault(s => s.getName() == name);
-            return saveSpace?.ExecuteAsync() ?? Task.FromResult(false);
+            return saveSpace?.executeSaveAsync() ?? Task.FromResult(false);
         }
 
         public void PauseSave(string name)
