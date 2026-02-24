@@ -183,5 +183,25 @@ namespace ProjetEasySave.ViewModel
         {
             Config.Instance.setBiggestSize(size);
         }
+
+        public bool getBoolLogsOnServer()
+        {
+            return Config.Instance.getBoolLogsOnServer();
+        }
+
+        public bool getBoolLogsOnLocal()
+        {
+            return Config.Instance.getBoolLogsOnLocal();
+        }
+
+        public void setBoolLogsOnServer(bool value)
+        {
+            Config.Instance.setBoolLogsOnServer(value);
+        }
+
+        public void setBoolLogsOnLocal(bool value)
+        {
+            Config.Instance.setBoolLogsOnLocal(value);
+        }
     }
 }

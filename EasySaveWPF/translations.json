@@ -53,7 +53,10 @@
     "SaveCompletedMsg": "Sauvegarde terminée avec succès",
     "SaveStopped": "La sauvegarde a été arrêtée.",
     "SaveInProgressTitle": "Sauvegarde en cours",
-    "PausePendingSuffix": " (pause en attente...)"
+    "PausePendingSuffix": " (pause en attente...)",
+    "Close": "Fermer",
+    "Enabled": "Activé",
+    "Disabled": "Désactivé"
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -109,6 +112,9 @@
     "SaveCompletedMsg": "Backup completed successfully",
     "SaveStopped": "Backup has been stopped.",
     "SaveInProgressTitle": "Backup in progress",
-    "PausePendingSuffix" :  " (pausing...)"
+    "PausePendingSuffix": " (pausing...)",
+    "Close": "Close",
+    "Enabled": "Enabled",
+    "Disabled": "Disabled"
   }
 }

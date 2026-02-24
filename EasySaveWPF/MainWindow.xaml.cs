@@ -298,25 +298,30 @@ namespace EasySaveWPF
             private readonly Button _logsFormatButton = new();
             private readonly TextBlock _maxSizeLabel = new();
             private readonly TextBox _maxSizeTextBox = new();
+            private readonly TextBlock _logsOnServerLabel = new();
+            private readonly ToggleButton _logsOnServerToggle = new();
+            private readonly TextBlock _logsOnLocalLabel = new();
+            private readonly ToggleButton _logsOnLocalToggle = new();
 
             public ConfigDialog(ViewModel _viewModel, MainWindow _mainWindow)
             {
                 Title = _language.translate("Config");
-                Width = 400;
-                Height = 250;
+                Width = 420;
+                Height = 300;
                 WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 ResizeMode = ResizeMode.NoResize;
 
                 var grid = new Grid { Margin = new Thickness(12) };
 
-                // Add row definitions for each setting and for gaps
-                for (int i = 0; i < 3; i++)
+                // Row layout: 5 setting rows with small gaps, then spacer, then buttons row
+                for (int i = 0; i < 5; i++)
                 {
                     grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                    if (i < 2) // Add gap after each row except the last
-                        grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(8) });
+                    if (i < 4)
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(8) });
                 }
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }); // spacer
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto }); // buttons
 
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
@@ -329,58 +334,95 @@ namespace EasySaveWPF
                     _logsFormatLabel.Text = _language.translate("CurrentLogsFormat") + ": " + _viewModel.getLogsFormat();
                     _logsFormatButton.Content = "📝 " + _language.translate("ChangeLogsFormat");
                     _maxSizeLabel.Text = _language.translate("MaxSize") + " (Ko):";
+                    _logsOnServerLabel.Text = _language.translate("LogsOnServer");
+                    _logsOnServerToggle.Content = _logsOnServerToggle.IsChecked == true ? _language.translate("Enabled") : _language.translate("Disabled");
+                    _logsOnLocalLabel.Text = _language.translate("LogsOnLocal");
+                    _logsOnLocalToggle.Content = _logsOnLocalToggle.IsChecked == true ? _language.translate("Enabled") : _language.translate("Disabled");
                 }
+
+                // Initial toggle states
+                _logsOnServerToggle.IsChecked = _viewModel.getBoolLogsOnServer();
+                _logsOnLocalToggle.IsChecked = _viewModel.getBoolLogsOnLocal();
 
                 RefreshTexts();
 
-                // Language row
+                // Language row (row 0)
                 Grid.SetRow(_languageLabel, 0);
                 Grid.SetColumn(_languageLabel, 0);
+                _languageLabel.VerticalAlignment = VerticalAlignment.Center;
                 grid.Children.Add(_languageLabel);
 
                 Grid.SetRow(_languageButton, 0);
                 Grid.SetColumn(_languageButton, 1);
+                _languageButton.Margin = new Thickness(0, 0, 0, 0);
                 grid.Children.Add(_languageButton);
 
-                // Logs format row
+                // Logs format row (row 2)
                 Grid.SetRow(_logsFormatLabel, 2);
                 Grid.SetColumn(_logsFormatLabel, 0);
+                _logsFormatLabel.VerticalAlignment = VerticalAlignment.Center;
                 grid.Children.Add(_logsFormatLabel);
 
                 Grid.SetRow(_logsFormatButton, 2);
                 Grid.SetColumn(_logsFormatButton, 1);
                 grid.Children.Add(_logsFormatButton);
 
-                // Max size row
+                // Max size row (row 4)
                 Grid.SetRow(_maxSizeLabel, 4);
                 Grid.SetColumn(_maxSizeLabel, 0);
+                _maxSizeLabel.VerticalAlignment = VerticalAlignment.Center;
                 grid.Children.Add(_maxSizeLabel);
 
                 Grid.SetRow(_maxSizeTextBox, 4);
                 Grid.SetColumn(_maxSizeTextBox, 1);
+                _maxSizeTextBox.Width = 100;
                 grid.Children.Add(_maxSizeTextBox);
+
+                // Logs on server row (row 6)
+                Grid.SetRow(_logsOnServerLabel, 6);
+                Grid.SetColumn(_logsOnServerLabel, 0);
+                _logsOnServerLabel.VerticalAlignment = VerticalAlignment.Center;
+                grid.Children.Add(_logsOnServerLabel);
+
+                Grid.SetRow(_logsOnServerToggle, 6);
+                Grid.SetColumn(_logsOnServerToggle, 1);
+                _logsOnServerToggle.HorizontalAlignment = HorizontalAlignment.Left;
+                _logsOnServerToggle.Margin = new Thickness(0);
+                grid.Children.Add(_logsOnServerToggle);
+
+                // Logs on local row (row 8)
+                Grid.SetRow(_logsOnLocalLabel, 8);
+                Grid.SetColumn(_logsOnLocalLabel, 0);
+                _logsOnLocalLabel.VerticalAlignment = VerticalAlignment.Center;
+                grid.Children.Add(_logsOnLocalLabel);
+
+                Grid.SetRow(_logsOnLocalToggle, 8);
+                Grid.SetColumn(_logsOnLocalToggle, 1);
+                _logsOnLocalToggle.HorizontalAlignment = HorizontalAlignment.Left;
+                _logsOnLocalToggle.Margin = new Thickness(0);
+                grid.Children.Add(_logsOnLocalToggle);
 
                 // Language button click
                 _languageButton.Click += (_, __) =>
                 {
                     var dialog = new SelectDialog(
-                        _language.translate("LanguageCodePrompt"),
-                        _language.translate("CurrentLanguage") + ": " + _language.getLanguage(),
-                        _language.translate("Language") + " :",
-                        new[] { "en", "fr" }
+                    _language.translate("LanguageCodePrompt"),
+                    _language.translate("CurrentLanguage") + ": " + _language.getLanguage(),
+                    _language.translate("Language") + " :",
+                    new[] { "en", "fr" }
                     );
                     if (dialog.ShowDialog() == true)
                     {
-                        var code = dialog.Value.Trim();
-                        _language.setLanguage(code);
-                        RefreshTexts();
-                        _mainWindow.render(); // Re-render main window to update all texts
-                        MessageBox.Show(
-                            _language.translate("Language") + ": " + _language.getLanguage(),
-                            "EasySave",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Information
-                        );
+                    var code = dialog.Value.Trim();
+                    _language.setLanguage(code);
+                    RefreshTexts();
+                    _mainWindow.render(); // Re-render main window to update all texts
+                    MessageBox.Show(
+                        _language.translate("Language") + ": " + _language.getLanguage(),
+                        "EasySave",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information
+                    );
                     }
                 };
 
@@ -388,22 +430,22 @@ namespace EasySaveWPF
                 _logsFormatButton.Click += (_, __) =>
                 {
                     var dialog = new SelectDialog(
-                        _language.translate("LogsFormatPrompt"),
-                        _language.translate("CurrentLogsFormat") + ": " + _viewModel.getLogsFormat(),
-                        _language.translate("LogsFormat") + " :",
-                        new[] { "json", "xml" }
+                    _language.translate("LogsFormatPrompt"),
+                    _language.translate("CurrentLogsFormat") + ": " + _viewModel.getLogsFormat(),
+                    _language.translate("LogsFormat") + " :",
+                    new[] { "json", "xml" }
                     );
                     if (dialog.ShowDialog() == true)
                     {
-                        var format = dialog.Value.Trim();
-                        _viewModel.setLogsFormat(format);
-                        RefreshTexts();
-                        MessageBox.Show(
-                            _language.translate("CurrentLogsFormat") + ": " + _viewModel.getLogsFormat(),
-                            "EasySave",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Information
-                        );
+                    var format = dialog.Value.Trim();
+                    _viewModel.setLogsFormat(format);
+                    RefreshTexts();
+                    MessageBox.Show(
+                        _language.translate("CurrentLogsFormat") + ": " + _viewModel.getLogsFormat(),
+                        "EasySave",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information
+                    );
                     }
                 };
 
@@ -417,17 +459,18 @@ namespace EasySaveWPF
                 };
                 DataObject.AddPastingHandler(_maxSizeTextBox, (s, e) =>
                 {
-                    if (e.DataObject.GetDataPresent(DataFormats.Text))
+                    if (e is DataObjectPastingEventArgs args && args.DataObject.GetDataPresent(DataFormats.Text))
                     {
-                        string text = (string)e.DataObject.GetData(DataFormats.Text);
-                        if (!text.All(char.IsDigit))
-                        {
-                            e.CancelCommand();
-                        }
+                    string text = (string)args.DataObject.GetData(DataFormats.Text);
+                    if (!text.All(char.IsDigit))
+                    {
+                        args.CancelCommand();
+                    }
                     }
                     else
                     {
-                        e.CancelCommand();
+                    // If not text, cancel
+                    if (e is DataObjectPastingEventArgs args2) args2.CancelCommand();
                     }
                 });
 
@@ -435,28 +478,50 @@ namespace EasySaveWPF
                 {
                     if (int.TryParse(_maxSizeTextBox.Text.Trim(), out int maxSize))
                     {
-                        _viewModel.setMaxSize(maxSize);
+                    _viewModel.setMaxSize(maxSize);
+                    RefreshTexts();
                     }
                     else
                     {
-                        _maxSizeTextBox.Text = _viewModel.getMaxSize().ToString();
-                        MessageBox.Show(
-                            _language.translate("InvalidMaxSize"),
-                            "EasySave",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Error
-                        );
+                    _maxSizeTextBox.Text = _viewModel.getMaxSize().ToString();
+                    MessageBox.Show(
+                        _language.translate("InvalidMaxSize"),
+                        "EasySave",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
                     }
                 };
 
-                // On change if valid try to update the value in the view model, otherwise reset the text box to the current value in the view model and show an error message
+                // Update viewmodel as the user types valid numbers
                 _maxSizeTextBox.TextChanged += (s, e) =>
                 {
                     if (int.TryParse(_maxSizeTextBox.Text.Trim(), out int maxSize))
                     {
-                        _viewModel.setMaxSize(maxSize);
+                    _viewModel.setMaxSize(maxSize);
                     }
                 };
+
+                // Logs on server toggle
+                _logsOnServerToggle.Checked += (s, e) => { _viewModel.setBoolLogsOnServer(true); RefreshTexts(); };
+                _logsOnServerToggle.Unchecked += (s, e) => { _viewModel.setBoolLogsOnServer(false); RefreshTexts(); };
+
+                // Logs on local toggle
+                _logsOnLocalToggle.Checked += (s, e) => { _viewModel.setBoolLogsOnLocal(true); RefreshTexts(); };
+                _logsOnLocalToggle.Unchecked += (s, e) => { _viewModel.setBoolLogsOnLocal(false); RefreshTexts(); };
+
+                // Buttons (row after spacer)
+                var buttonsPanel = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
+                var ok = new Button { Content = _language.translate("Ok"), Width = 80, Margin = new Thickness(0, 0, 8, 0) };
+                var cancel = new Button { Content = _language.translate("Close"), Width = 80 };
+                ok.Click += (_, __) => { DialogResult = true; Close(); };
+                cancel.Click += (_, __) => { DialogResult = false; Close(); };
+                buttonsPanel.Children.Add(ok);
+                buttonsPanel.Children.Add(cancel);
+
+                Grid.SetRow(buttonsPanel, grid.RowDefinitions.Count - 1);
+                Grid.SetColumnSpan(buttonsPanel, 2);
+                grid.Children.Add(buttonsPanel);
 
                 Content = grid;
             }
