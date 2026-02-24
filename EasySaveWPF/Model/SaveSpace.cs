@@ -87,7 +87,7 @@ namespace ProjetEasySave.Model
         }
 
         // Methods
-        public SaveTaskState updateTaskState(SaveTask task, SaveTaskState newState)
+        public SaveTaskState onSaveTaskStateChanged(SaveTask task, SaveTaskState newState)
         {
 			if (!_taskStates.ContainsKey(task))
 				return newState;
@@ -158,7 +158,7 @@ namespace ProjetEasySave.Model
 
 		public void Stop()
 		{
-			updateTaskState(_saveTasks[0], SaveTaskState.STOPPED);
+			onSaveTaskStateChanged(_saveTasks[0], SaveTaskState.STOPPED);
 
 			SaveTaskStateChanged?.Invoke(this, EventArgs.Empty);
 

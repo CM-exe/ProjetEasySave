@@ -104,6 +104,7 @@ namespace ProjetEasySave.Model
             var relativePath = Path.GetRelativePath(sourcePath, sourceFile);
             var diffFile = Path.Combine(destinationPath, relativePath);
 
+            // Ensure the subdirectory exists in the destination
             Directory.CreateDirectory(Path.GetDirectoryName(diffFile)!);
 
             FileInfo fileInfo = new FileInfo(sourceFile);
@@ -117,12 +118,13 @@ namespace ProjetEasySave.Model
                                   && cryptoExtensions != null
                                   && cryptoExtensions.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
 
-            // Update UI
+            // Update UI with the current file name before starting
             int currentPercentage = totalBytes > 0 ? (int)((copiedBytes * 100) / totalBytes) : 0;
             progress?.Invoke(currentPercentage, fileInfo.Name);
 
             if (needEncryption)
             {
+                // Call CryptoSoft DLL (Blocking operation)
                 encryptionDuration = FileManager.CryptFile(sourceFile, diffFile, cryptoKey);
                 if (encryptionDuration < 0)
                 {
@@ -130,27 +132,30 @@ namespace ProjetEasySave.Model
                     return -1;
                 }
 
+                // Add full file size after encryption and update progress
                 copiedBytes += fileInfo.Length;
                 currentPercentage = totalBytes > 0 ? (int)((copiedBytes * 100) / totalBytes) : 100;
                 progress?.Invoke(currentPercentage, fileInfo.Name);
             }
             else
             {
+                // Standard copy using streams to allow pausing, stopping, and progress tracking mid-file
                 using (FileStream sourceStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read))
                 using (FileStream destinationStream = new FileStream(diffFile, FileMode.Create, FileAccess.Write))
                 {
-                    byte[] buffer = new byte[81920]; 
+                    byte[] buffer = new byte[81920]; // 80 KB buffer chunk
                     int bytesRead;
 
                     while ((bytesRead = sourceStream.Read(buffer, 0, buffer.Length)) > 0)
                     {
+                        // Check for Stop or Pause requests during the copy loop
                         token.ThrowIfCancellationRequested();
                         pauseEvent.Wait(token);
 
                         destinationStream.Write(buffer, 0, bytesRead);
                         copiedBytes += bytesRead;
 
-                        // Update UI
+                        // Update UI progress safely
                         currentPercentage = totalBytes > 0 ? (int)((copiedBytes * 100) / totalBytes) : 100;
                         progress?.Invoke(currentPercentage, fileInfo.Name);
                     }
@@ -206,29 +211,34 @@ namespace ProjetEasySave.Model
                     return false;
                 }
 
+                // Check if business software is running before starting the save process
                 if (isBusinessSoftwareRunning())
                 {
                     waitForBusinessSoftwareToClose();
                 }
 
+                // Get global encryption settings from Config Singleton
                 string cryptoKey = Config.Instance.getEncryptionKey();
                 List<string> cryptoExtensions = Config.Instance.getEncryptionExtensions();
 
                 _logger.log(Logger.formatLogMessage("Differential Save Started", sourcePath, destinationPath, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
 
+                // Initialize and clean destination directory
                 if (!Directory.Exists(destinationPath))
                 {
                     Directory.CreateDirectory(destinationPath);
                 }
                 else
                 {
+                    // Clean the destination directory before starting
                     foreach (var file in Directory.EnumerateFiles(destinationPath, "*", SearchOption.AllDirectories))
                     {
-                        token.ThrowIfCancellationRequested(); 
+                        token.ThrowIfCancellationRequested(); // Check cancellation during cleanup
                         File.Delete(file);
                     }
                 }
 
+                // Pre-filter files using differential logic to calculate accurate totalBytes
                 var allFiles = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
                 var filesToProcess = new List<string>();
 
@@ -237,15 +247,18 @@ namespace ProjetEasySave.Model
                     var relativePath = Path.GetRelativePath(sourcePath, file);
                     var fullFile = Path.Combine(_fullBackupPath, relativePath);
 
+                    // Check if file is new or modified compared to the full backup
                     if (!File.Exists(fullFile) || File.GetLastWriteTime(file) > File.GetLastWriteTime(fullFile))
                     {
                         filesToProcess.Add(file);
                     }
                 }
 
+                // Calculate total bytes for the progress bar based ONLY on files that need copying
                 long totalBytes = filesToProcess.Sum(f => new FileInfo(f).Length);
-                long copiedBytes = 0; 
+                long copiedBytes = 0; // Ready to be passed to processFile when updated
 
+                // Order filtered files based on priority extensions
                 var sortedFiles = filesToProcess.OrderBy(f =>
                 {
                     string ext = Path.GetExtension(f);
@@ -256,6 +269,7 @@ namespace ProjetEasySave.Model
                 // Main File Loop
                 foreach (var sourceFile in sortedFiles)
                 {
+                    // Respect pause and cancellation requests
                     token.ThrowIfCancellationRequested();
                     pauseEvent.Wait(token);
 
@@ -264,6 +278,7 @@ namespace ProjetEasySave.Model
                         waitForBusinessSoftwareToClose();
                     }
 
+                    // Process pending big files first if semaphore is available
                     if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
                     {
                         while (_pendingFiles.Count > 0)
@@ -280,6 +295,7 @@ namespace ProjetEasySave.Model
                         }
                     }
 
+                    // Check file size for big file handling
                     FileInfo fileInfo = new FileInfo(sourceFile);
 
                     if (fileInfo.Length > (_config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount == 0)
@@ -298,12 +314,14 @@ namespace ProjetEasySave.Model
                     }
                     else
                     {
+                        // Process normal file
                         int encryptionDuration = processFile(sourceFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, progress, token, pauseEvent);
                         if (encryptionDuration < 0) return false;
                         continue;
                     }
                 }
-                
+
+                // Final check to process any remaining pending files after the main loop
                 while (_pendingFiles.Count > 0)
                 {
                     token.ThrowIfCancellationRequested();
@@ -317,6 +335,7 @@ namespace ProjetEasySave.Model
                     if (local_encryptionDuration < 0) return false;
                 }
 
+                // Log completion and update state
                 _logger.log(Logger.formatCompleteSaveMessage("Differential Save Finished", sourcePath, destinationPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
                 setState(SaveTaskState.COMPLETED);
 
@@ -324,11 +343,13 @@ namespace ProjetEasySave.Model
             }
             catch (OperationCanceledException)
             {
+                // Handle explicit cancellation
                 setState(SaveTaskState.STOPPED);
                 throw;
             }
             catch (Exception ex)
             {
+                // Handle unexpected errors
                 _logger.log(Logger.formatErrMessage($"An error occurred during differential save: {ex.Message}"));
                 setState(SaveTaskState.FAILED);
                 return false;

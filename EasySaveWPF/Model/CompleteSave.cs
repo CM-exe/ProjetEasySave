@@ -108,39 +108,44 @@ namespace ProjetEasySave.Model
                                  && cryptoExtensions != null
                                  && cryptoExtensions.Any(e => e.Equals(extension, StringComparison.OrdinalIgnoreCase));
 
+            // Update UI with the current file name before starting
             int currentPercentage = totalBytes > 0 ? (int)((copiedBytes * 100) / totalBytes) : 0;
             progress?.Invoke(currentPercentage, fileInfo.Name);
 
             if (shouldEncrypt)
             {
+                // Call CryptoSoft DLL (Blocking operation)
                 encryptionDuration = FileManager.CryptFile(file, targetFile, cryptoKey);
                 if (encryptionDuration < 0)
                 {
                     _logger.log(Logger.formatErrMessage($"Error encrypting file: {file}"));
-                    return -1;
+                    return -1; // Indicate error
                 }
 
+                // Add full file size after encryption and update progress
                 copiedBytes += fileInfo.Length;
                 currentPercentage = totalBytes > 0 ? (int)((copiedBytes * 100) / totalBytes) : 100;
                 progress?.Invoke(currentPercentage, fileInfo.Name);
             }
             else
             {
+                // Standard copy using streams to allow pausing and stopping mid-file
                 using (FileStream sourceStream = new FileStream(file, FileMode.Open, FileAccess.Read))
                 using (FileStream destinationStream = new FileStream(targetFile, FileMode.Create, FileAccess.Write))
                 {
-                    byte[] buffer = new byte[81920];
+                    byte[] buffer = new byte[81920]; // 80 KB buffer chunk
                     int bytesRead;
 
                     while ((bytesRead = sourceStream.Read(buffer, 0, buffer.Length)) > 0)
                     {
+                        // Check for Stop or Pause requests during the copy loop
                         token.ThrowIfCancellationRequested();
                         pauseEvent.Wait(token);
 
                         destinationStream.Write(buffer, 0, bytesRead);
                         copiedBytes += bytesRead;
 
-                        // Update UI
+                        // Update UI progress safely
                         currentPercentage = totalBytes > 0 ? (int)((copiedBytes * 100) / totalBytes) : 100;
                         progress?.Invoke(currentPercentage, fileInfo.Name);
                     }
@@ -175,6 +180,7 @@ namespace ProjetEasySave.Model
 
                 _pendingFiles.Clear();
 
+                // Validate paths
                 if (string.IsNullOrWhiteSpace(sourcePath) || string.IsNullOrWhiteSpace(destinationPath))
                 {
                     _logger.log(Logger.formatErrMessage("Source or destination path is invalid."));
@@ -189,18 +195,23 @@ namespace ProjetEasySave.Model
                     return false;
                 }
 
+                // Check if business software is running before starting the save process
                 if (isBusinessSoftwareRunning())
                 {
                     waitForBusinessSoftwareToClose();
                 }
 
+                // Initial log
                 _logger.log(Logger.formatLogMessage("Complete Save Started", sourcePath, destinationPath, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
 
+                // Fetch keys and extensions from the Config singleton
                 string cryptoKey = Config.Instance.getEncryptionKey();
                 List<string> cryptoExtensions = Config.Instance.getEncryptionExtensions();
 
+                // Initialize and clean destination directory
                 if (!Directory.Exists(destinationPath))
                 {
+                    // Create directory structure
                     foreach (var dir in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
                     {
                         var relative = Path.GetRelativePath(sourcePath, dir);
@@ -210,17 +221,20 @@ namespace ProjetEasySave.Model
                 }
                 else
                 {
+                    // Clean the destination directory before starting
                     foreach (var file in Directory.EnumerateFiles(destinationPath, "*", SearchOption.AllDirectories))
                     {
-                        token.ThrowIfCancellationRequested(); 
+                        token.ThrowIfCancellationRequested(); // Check cancellation even during cleanup
                         File.Delete(file);
                     }
                 }
 
+                // Fetch all files and calculate total bytes for progress reporting
                 string[] files = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
                 long totalBytes = files.Sum(f => new FileInfo(f).Length);
                 long copiedBytes = 0;
 
+                // Order files based on priority extensions
                 files = files.OrderBy(f =>
                 {
                     string ext = Path.GetExtension(f);
@@ -231,6 +245,7 @@ namespace ProjetEasySave.Model
                 // Main File Loop
                 foreach (var file in files)
                 {
+                    // Respect pause and cancellation requests
                     token.ThrowIfCancellationRequested();
                     pauseEvent.Wait(token);
 
@@ -239,6 +254,7 @@ namespace ProjetEasySave.Model
                         waitForBusinessSoftwareToClose();
                     }
 
+                    // Process pending big files first if semaphore is available
                     if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
                     {
                         while (_pendingFiles.Count > 0)
@@ -260,6 +276,7 @@ namespace ProjetEasySave.Model
                         }
                     }
 
+                    // Check if current file is big and handle semaphore logic
                     FileInfo fileInfo = new FileInfo(file);
                     if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount == 0)
                     {
@@ -282,12 +299,14 @@ namespace ProjetEasySave.Model
                     }
                     else
                     {
+                        // Process normal file
                         int encryptionDuration = processFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
                         if (encryptionDuration < 0) return false;
                         continue;
                     }
                 }
 
+                // Final check to process any remaining pending files
                 while (_pendingFiles.Count > 0)
                 {
                     token.ThrowIfCancellationRequested();
@@ -306,6 +325,7 @@ namespace ProjetEasySave.Model
                     }
                 }
 
+                // Log completion and update state
                 _logger.log(Logger.formatCompleteSaveMessage("Complete Save Finished", sourcePath, destinationPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
                 setState(SaveTaskState.COMPLETED);
 
@@ -313,11 +333,13 @@ namespace ProjetEasySave.Model
             }
             catch (OperationCanceledException)
             {
+                // Handle explicit cancellation
                 setState(SaveTaskState.STOPPED);
                 throw;
             }
             catch (Exception ex)
             {
+                // Handle unexpected errors
                 _logger.log(Logger.formatErrMessage($"Error during complete save: {ex.Message}"));
                 setState(SaveTaskState.FAILED);
                 return false;

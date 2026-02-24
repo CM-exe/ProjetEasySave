@@ -7,6 +7,6 @@
          */
 
         // Method to be called when a SaveTask state changes
-        SaveTaskState updateTaskState(SaveTask task, SaveTaskState newState);
+        SaveTaskState onSaveTaskStateChanged(SaveTask task, SaveTaskState newState);
     }
 }
