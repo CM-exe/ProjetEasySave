@@ -17,6 +17,7 @@ namespace ProjetEasySave.ViewModel
         // Translations
         public string CurrentFileLabel => translate("CurrentFileLabel");
         public string PausedSuffix => translate("PausedSuffix");
+        public string PausePendingSuffix => translate("PausePendingSuffix");
         public string StoppedSuffix => translate("StoppedSuffix");
         public string SaveCompletedMessage => translate("SaveCompleted");
         public string SaveStoppedMessage => translate("SaveStopped");
@@ -34,6 +35,13 @@ namespace ProjetEasySave.ViewModel
         {
             get => _currentFile;
             set { _currentFile = value; OnPropertyChanged(); }
+        }
+
+        private bool _isPausePending = false;
+        public bool IsPausePending
+        {
+            get => _isPausePending;
+            set { _isPausePending = value; OnPropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -70,27 +78,56 @@ namespace ProjetEasySave.ViewModel
         {
             _model.SubscribeProgress(name, (p, f) =>
             {
+                if (f == "Paused")
+                {
+                    IsPausePending = false;
+
+                    if (CurrentFile.EndsWith(PausePendingSuffix))
+                    {
+                        CurrentFile = CurrentFile.Replace(PausePendingSuffix, PausedSuffix);
+                    }
+                    else if (!CurrentFile.EndsWith(PausedSuffix))
+                    {
+                        CurrentFile += PausedSuffix;
+                    }
+
+                    return;
+                }
+
                 Progress = p;
-                CurrentFile = f;
+
+                if (IsPausePending)
+                {
+                    if (!f.EndsWith(PausePendingSuffix))
+                    {
+                        CurrentFile = f + PausePendingSuffix;
+                    }
+                }
+                else
+                {
+                    CurrentFile = f;
+                }
             });
 
             try
             {
                 return await _model.StartSaveAsync(name);
             }
-            catch (OperationCanceledException) 
-            { 
-                return false; 
+            catch (OperationCanceledException)
+            {
+                return false;
             }
         }
 
         public void PauseSave(string name)
         {
+            IsPausePending = true;
             _model.PauseSave(name);
         }
 
         public void ResumeSave(string name)
         {
+            IsPausePending = false;
             _model.ResumeSave(name);
         }
 

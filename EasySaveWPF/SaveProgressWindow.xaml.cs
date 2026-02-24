@@ -55,10 +55,6 @@ namespace EasySaveWPF
                 PlayPauseButton.Content = "⏸";
                 ProgressBar.Foreground = Brushes.Green;
                 _isPaused = false;
-                if (_viewModel.CurrentFile.EndsWith(_viewModel.PausedSuffix))
-                {
-                    _viewModel.CurrentFile = _viewModel.CurrentFile.Replace(_viewModel.PausedSuffix, "");
-                }
             }
             else
             {
@@ -66,11 +62,6 @@ namespace EasySaveWPF
                 PlayPauseButton.Content = "▶";
                 ProgressBar.Foreground = Brushes.Gold;
                 _isPaused = true;
-
-                if (!_viewModel.CurrentFile.EndsWith(_viewModel.PausedSuffix))
-                {
-                    _viewModel.CurrentFile += _viewModel.PausedSuffix;
-                }
             }
         }
 
