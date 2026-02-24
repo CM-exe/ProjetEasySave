@@ -150,7 +150,6 @@ namespace ProjetEasySave.Model
                     {
                         // Check for Stop or Pause requests during the copy loop
                         token.ThrowIfCancellationRequested();
-                        pauseEvent.Wait(token);
 
                         destinationStream.Write(buffer, 0, bytesRead);
                         copiedBytes += bytesRead;
