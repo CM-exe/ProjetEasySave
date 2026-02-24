@@ -152,7 +152,6 @@ namespace ProjetEasySave.Model
                     {
                         // Check for Stop or Pause requests during the copy loop
                         token.ThrowIfCancellationRequested();
-                        pauseEvent.Wait(token);
 
                         destinationStream.Write(buffer, 0, bytesRead);
                         copiedBytes += bytesRead;
@@ -279,6 +278,9 @@ namespace ProjetEasySave.Model
                     {
                         // Respect pause and cancellation requests
                         token.ThrowIfCancellationRequested();
+                        
+                        if (!pauseEvent.IsSet) progress?.Invoke(0, "Paused");
+                        
                         pauseEvent.Wait(token);
 
                         if (isBusinessSoftwareRunning())
@@ -292,6 +294,9 @@ namespace ProjetEasySave.Model
                             while (_pendingFiles.Count > 0)
                             {
                                 token.ThrowIfCancellationRequested();
+                                
+                                if (!pauseEvent.IsSet) progress?.Invoke(0, "Paused");
+                                
                                 pauseEvent.Wait(token);
 
                                 _bigFileSemaphore.Wait(token);
