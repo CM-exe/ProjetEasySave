@@ -7,9 +7,6 @@
         private SaveSpace _saveSpace;
         private SaveTaskState _state;
 
-        private CancellationTokenSource _cts;
-        private ManualResetEventSlim _pauseEvent = new(true);
-
         public event Action<int, string>? ProgressUpdated;
 
         // Constructor
@@ -36,49 +33,6 @@
 
         // Methods
 
-        public async Task<bool> StartAsync(string sourceFolder, string destinationFolder)
-        {
-            _cts = new CancellationTokenSource();
-            setState(SaveTaskState.RUNNING);
-
-            try
-            {
-                bool result = await Task.Run(() =>
-                    _saveStrategy.doSave(
-                        sourceFolder,
-                        destinationFolder,
-                        _cts.Token,
-                        _pauseEvent,
-                        reportProgress
-                    )
-                );
-
-                setState(result ? SaveTaskState.COMPLETED : SaveTaskState.FAILED);
-                return result;
-            }
-            catch (OperationCanceledException)
-            {
-                setState(SaveTaskState.STOPPED);
-                return false;
-            }
-        }
-
-        public void Pause()
-        {
-            if (_state == SaveTaskState.RUNNING)
-                _pauseEvent.Reset();
-        }
-
-        public void Resume()
-        {
-            if (_state == SaveTaskState.RUNNING)
-                _pauseEvent.Set();
-        }
-
-        public void Stop()
-        {
-            _cts?.Cancel();
-        }
         public bool save(string sourceFolder, string destinationFolder, List<string> priorityExt)
         {
             bool well_executed = _saveStrategy.doSave(sourceFolder, destinationFolder, priorityExt);
@@ -136,10 +90,6 @@
         }
 
         // Getters
-        public SaveTaskState getState()
-        {
-            return _state;
-        }
 
         public string getStrategyType()
         {
@@ -166,14 +116,6 @@
             return string.Empty;
         }
 
-        public Task<bool> saveAsync(string sourceFolder, string destinationFolder, List<string> priorityExt)
-        {
-            return Task.Run(() =>
-            {
-                return save(sourceFolder, destinationFolder, priorityExt);
-            });
-        }
-
         // Override
         public Task<bool> saveAsync(
     string sourceFolder,
@@ -192,11 +134,6 @@
                     progress
                 );
             }, token);
-        }
-
-        private void reportProgress(int progress, string message)
-        {
-            ProgressUpdated?.Invoke(progress, message);
         }
     }
 }
