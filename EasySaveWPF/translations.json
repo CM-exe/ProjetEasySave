@@ -56,7 +56,9 @@
     "PausePendingSuffix": " (pause en attente...)",
     "Close": "Fermer",
     "Enabled": "Activé",
-    "Disabled": "Désactivé"
+    "Disabled": "Désactivé",
+    "LogsOnServer": "Logs envoyés au serveur de log centralisé",
+    "LogsOnLocal": "Logs enregistrés localement"
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -115,6 +117,8 @@
     "PausePendingSuffix": " (pausing...)",
     "Close": "Close",
     "Enabled": "Enabled",
-    "Disabled": "Disabled"
+    "Disabled": "Disabled",
+    "LogsOnServer": "Logs sent to centralized log server",
+    "LogsOnLocal": "Logs saved locally"
   }
 }
