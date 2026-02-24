@@ -127,6 +127,7 @@ namespace ProjetEasySave.Model
                     task.saveAsync(
                         _sourcePath,
                         _destinationPath,
+                        _priorityExt,
                         _cts.Token,
                         _pauseEvent,
                         (percent, file) =>

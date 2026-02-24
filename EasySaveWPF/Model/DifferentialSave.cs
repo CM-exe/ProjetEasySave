@@ -134,11 +134,19 @@ namespace ProjetEasySave.Model
             return (int)encryptionDuration;
         }
 
-        // doSave method implementation for Differential Save
-        public bool doSave(string sourcePath, string destinationPath, List<string> priorityExt)
+        public bool doSave(
+            string sourcePath,
+            string destinationPath,
+            List<string> priorityExt,
+            CancellationToken token,
+            ManualResetEventSlim pauseEvent,
+            Action<int, string> progress)
         {
             try
             {
+                // Set initial state
+                setState(SaveTaskState.RUNNING);
+
                 // Validate paths
                 if (string.IsNullOrWhiteSpace(sourcePath) ||
                     string.IsNullOrWhiteSpace(destinationPath) ||
@@ -163,7 +171,7 @@ namespace ProjetEasySave.Model
                     return false;
                 }
 
-                // Check a first time if business software is running before starting the save process
+                // Check if business software is running before starting the save process
                 if (isBusinessSoftwareRunning())
                 {
                     waitForBusinessSoftwareToClose();
@@ -173,16 +181,9 @@ namespace ProjetEasySave.Model
                 string cryptoKey = Config.Instance.getEncryptionKey();
                 List<string> cryptoExtensions = Config.Instance.getEncryptionExtensions();
 
-                _logger.log(Logger.formatLogMessage(
-                    "Differential Save Started",
-                    sourcePath,
-                    destinationPath,
-                    0,
-                    0,
-                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                ));
+                _logger.log(Logger.formatLogMessage("Differential Save Started", sourcePath, destinationPath, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
 
-                // Initialize destination directory
+                // Initialize and clean destination directory
                 if (!Directory.Exists(destinationPath))
                 {
                     Directory.CreateDirectory(destinationPath);
@@ -192,88 +193,88 @@ namespace ProjetEasySave.Model
                     // Clean the destination directory before starting
                     foreach (var file in Directory.EnumerateFiles(destinationPath, "*", SearchOption.AllDirectories))
                     {
+                        token.ThrowIfCancellationRequested(); // Check cancellation during cleanup
                         File.Delete(file);
                     }
                 }
 
-                // Main loop: iterate through all files in the source directory and apply differential logic
-                var files = Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories);
-                // Order files based on priority extensions (files with priority extensions first)
-                var sortedFiles = files.OrderBy(f =>
+                // Pre-filter files using differential logic to calculate accurate totalBytes
+                var allFiles = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
+                var filesToProcess = new List<string>();
+
+                foreach (var file in allFiles)
+                {
+                    var relativePath = Path.GetRelativePath(sourcePath, file);
+                    var fullFile = Path.Combine(_fullBackupPath, relativePath);
+
+                    // Check if file is new or modified compared to the full backup
+                    if (!File.Exists(fullFile) || File.GetLastWriteTime(file) > File.GetLastWriteTime(fullFile))
+                    {
+                        filesToProcess.Add(file);
+                    }
+                }
+
+                // Calculate total bytes for the progress bar based ONLY on files that need copying
+                long totalBytes = filesToProcess.Sum(f => new FileInfo(f).Length);
+                long copiedBytes = 0; // Ready to be passed to processFile when updated
+
+                // Order filtered files based on priority extensions
+                var sortedFiles = filesToProcess.OrderBy(f =>
                 {
                     string ext = Path.GetExtension(f);
                     int index = priorityExt.FindIndex(e => e.Equals(ext, StringComparison.OrdinalIgnoreCase));
                     return index >= 0 ? index : int.MaxValue;
                 }).ToArray();
 
+                // Main File Loop
                 foreach (var sourceFile in sortedFiles)
                 {
+                    // Respect pause and cancellation requests
+                    token.ThrowIfCancellationRequested();
+                    pauseEvent.Wait(token);
+
                     if (isBusinessSoftwareRunning())
                     {
                         waitForBusinessSoftwareToClose();
                     }
 
-                    var relativePath = Path.GetRelativePath(sourcePath, sourceFile);
-                    var fullFile = Path.Combine(_fullBackupPath, relativePath);
-
-                    bool shouldCopy = false;
-
-                    // Differential logic: check if file is new or modified
-                    if (!File.Exists(fullFile))
-                    {
-                        shouldCopy = true;
-                    }
-                    else
-                    {
-                        var sourceDate = File.GetLastWriteTime(sourceFile);
-                        var fullDate = File.GetLastWriteTime(fullFile);
-
-                        if (sourceDate > fullDate)
-                        {
-                            shouldCopy = true;
-                        }
-                    }
-
-                    if (!shouldCopy) { continue; }
-
-                    // If the queue is not empty and the semaphore is available, process the pending files first
+                    // Process pending big files first if semaphore is available
                     if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
                     {
                         while (_pendingFiles.Count > 0)
                         {
-                            _bigFileSemaphore.Wait();
+                            token.ThrowIfCancellationRequested();
+                            pauseEvent.Wait(token);
+
+                            _bigFileSemaphore.Wait(token);
                             string pendingFile = _pendingFiles.Dequeue();
                             int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
                             _bigFileSemaphore.Release();
-                            if (local_encryptionDuration < 0)
-                            {
-                                return false;
-                            }
+
+                            if (local_encryptionDuration < 0) return false;
                         }
                     }
 
                     // Check file size for big file handling
                     FileInfo fileInfo = new FileInfo(sourceFile);
-                    // If the file is bigger than the configured biggest size and the semaphore is not available, add it to the pending queue
+
                     if (fileInfo.Length > (_config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount == 0)
                     {
                         _pendingFiles.Enqueue(sourceFile);
                         continue;
                     }
-                    // If the file is bigger than the configured biggest size and the semaphore is available, process it immediately
                     else if (fileInfo.Length > (_config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount > 0)
                     {
-                        _bigFileSemaphore.Wait();
+                        _bigFileSemaphore.Wait(token);
                         int local_encryptionDuration = processFile(sourceFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
                         _bigFileSemaphore.Release();
-                        if (local_encryptionDuration < 0)
-                        {
-                            return false;
-                        }
+
+                        if (local_encryptionDuration < 0) return false;
                         continue;
                     }
                     else
                     {
+                        // Process normal file
                         int encryptionDuration = processFile(sourceFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
                         if (encryptionDuration < 0) return false;
                         continue;
@@ -283,86 +284,34 @@ namespace ProjetEasySave.Model
                 // Final check to process any remaining pending files after the main loop
                 while (_pendingFiles.Count > 0)
                 {
-                    _bigFileSemaphore.Wait();
+                    token.ThrowIfCancellationRequested();
+                    pauseEvent.Wait(token);
+
+                    _bigFileSemaphore.Wait(token);
                     string pendingFile = _pendingFiles.Dequeue();
                     int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
                     _bigFileSemaphore.Release();
-                    if (local_encryptionDuration < 0)
-                    {
-                        return false;
-                    }
+
+                    if (local_encryptionDuration < 0) return false;
                 }
 
-                // "Save completed" log
-                _logger.log(Logger.formatCompleteSaveMessage(
-                    "Differential Save Finished",
-                    sourcePath,
-                    destinationPath,
-                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                ));
+                // Log completion and update state
+                _logger.log(Logger.formatCompleteSaveMessage("Differential Save Finished", sourcePath, destinationPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
                 setState(SaveTaskState.COMPLETED);
 
                 return true;
             }
-            catch (Exception ex)
-            {
-                _logger.log(Logger.formatErrMessage($"An error occurred during differential save: {ex.Message}"));
-                setState(SaveTaskState.FAILED);
-                return false;
-            }
-        }
-
-        // Overloaded doSave method with cancellation and progress reporting
-        public bool doSave(
-            string source,
-            string destination,
-            CancellationToken token,
-            ManualResetEventSlim pauseEvent,
-            Action<int, string> progress)
-        {
-            try
-            {
-                _state = SaveTaskState.RUNNING;
-
-                var files = Directory.GetFiles(source, "*", SearchOption.AllDirectories)
-                    .Where(f => IsNewOrModified(f, source))
-                    .ToArray();
-
-                long totalBytes = files.Sum(f => new FileInfo(f).Length);
-                long copiedBytes = 0;
-
-                foreach (var file in files)
-                {
-                    token.ThrowIfCancellationRequested();
-                    pauseEvent.Wait();
-
-                    string relative = Path.GetRelativePath(source, file);
-                    string target = Path.Combine(destination, relative);
-
-                    Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-
-                    CopyFile(
-                        file,
-                        target,
-                        ref copiedBytes,
-                        totalBytes,
-                        token,
-                        pauseEvent,
-                        progress
-                    );
-                }
-
-                _state = SaveTaskState.COMPLETED;
-                return true;
-            }
             catch (OperationCanceledException)
             {
-                _state = SaveTaskState.STOPPED;
+                // Handle explicit cancellation
+                setState(SaveTaskState.STOPPED);
                 throw;
             }
-            catch
+            catch (Exception ex)
             {
-                _state = SaveTaskState.FAILED;
+                // Handle unexpected errors
+                _logger.log(Logger.formatErrMessage($"An error occurred during differential save: {ex.Message}"));
+                setState(SaveTaskState.FAILED);
                 return false;
             }
         }

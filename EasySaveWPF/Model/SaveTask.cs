@@ -33,16 +33,17 @@
 
         // Methods
 
-        public bool save(string sourceFolder, string destinationFolder, List<string> priorityExt)
-        {
-            bool well_executed = _saveStrategy.doSave(sourceFolder, destinationFolder, priorityExt);
-            return well_executed;
-        }
+        //public bool save(string sourceFolder, string destinationFolder, List<string> priorityExt)
+        //{
+        //    bool well_executed = _saveStrategy.doSave(sourceFolder, destinationFolder, priorityExt);
+        //    return well_executed;
+        //}
 
         // Override
         public bool save(
     string sourceFolder,
     string destinationFolder,
+    List<string> priorityExt,
     CancellationToken token,
     ManualResetEventSlim pauseEvent,
     Action<int, string>? progress)
@@ -54,6 +55,7 @@
                 bool ok = _saveStrategy.doSave(
                     sourceFolder,
                     destinationFolder,
+                    priorityExt,
                     token,
                     pauseEvent,
                     progress
@@ -120,6 +122,7 @@
         public Task<bool> saveAsync(
     string sourceFolder,
     string destinationFolder,
+    List<string> priorityExt,
     CancellationToken token,
     ManualResetEventSlim pauseEvent,
     Action<int, string>? progress = null)
@@ -129,6 +132,7 @@
                 return save(
                     sourceFolder,
                     destinationFolder,
+                    priorityExt,
                     token,
                     pauseEvent,
                     progress
