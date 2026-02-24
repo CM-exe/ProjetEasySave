@@ -4,6 +4,7 @@ using ProjetEasySave.Utils;
 using ProjetEasySave.ViewModel;
 using System.Diagnostics;
 using System.IO;
+using System.Collections.Concurrent;
 using System.Windows;
 
 namespace ProjetEasySave.Model
@@ -82,16 +83,17 @@ namespace ProjetEasySave.Model
         }
 
         private int processFile(
-    string file,
-    string sourcePath,
-    string destinationPath,
-    string cryptoKey,
-    List<string> cryptoExtensions,
-    long totalBytes,
-    ref long copiedBytes,
-    CancellationToken token,
-    ManualResetEventSlim pauseEvent,
-    Action<int, string> progress)
+            string file,
+            string sourcePath,
+            string destinationPath,
+            string cryptoKey,
+            List<string> cryptoExtensions,
+            long totalBytes,
+            ref long copiedBytes,
+            CancellationToken token,
+            ManualResetEventSlim pauseEvent,
+            Action<int, string> progress
+        )
         {
             var relative = Path.GetRelativePath(sourcePath, file);
             var targetFile = Path.Combine(destinationPath, relative);
@@ -165,169 +167,175 @@ namespace ProjetEasySave.Model
         }
 
         // Interface method implementation
-
         public bool doSave(
             string sourcePath,
             string destinationPath,
             List<string> priorityExt,
             CancellationToken token,
             ManualResetEventSlim pauseEvent,
-            Action<int, string> progress)
+            Action<int, string> progress
+        )
         {
             try
             {
-                setState(SaveTaskState.RUNNING);
+                ConcurrentDictionary<string, object> dict_lock = SaveModel.getDictLock();
+                object lock_var = dict_lock.GetOrAdd(destinationPath, _ => new object());
+
+                setState(SaveTaskState.WAITING);
 
                 _pendingFiles.Clear();
-
-                // Validate paths
-                if (string.IsNullOrWhiteSpace(sourcePath) || string.IsNullOrWhiteSpace(destinationPath))
+                lock (lock_var)
                 {
-                    _logger.log(Logger.formatErrMessage("Source or destination path is invalid."));
-                    setState(SaveTaskState.FAILED);
-                    return false;
-                }
-
-                if (!Directory.Exists(sourcePath))
-                {
-                    _logger.log(Logger.formatErrMessage($"Source path does not exist: {sourcePath}"));
-                    setState(SaveTaskState.FAILED);
-                    return false;
-                }
-
-                // Check if business software is running before starting the save process
-                if (isBusinessSoftwareRunning())
-                {
-                    waitForBusinessSoftwareToClose();
-                }
-
-                // Initial log
-                _logger.log(Logger.formatLogMessage("Complete Save Started", sourcePath, destinationPath, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
-
-                // Fetch keys and extensions from the Config singleton
-                string cryptoKey = Config.Instance.getEncryptionKey();
-                List<string> cryptoExtensions = Config.Instance.getEncryptionExtensions();
-
-                // Initialize and clean destination directory
-                if (!Directory.Exists(destinationPath))
-                {
-                    // Create directory structure
-                    foreach (var dir in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+                    setState(SaveTaskState.RUNNING);
+                    // Validate paths
+                    if (string.IsNullOrWhiteSpace(sourcePath) || string.IsNullOrWhiteSpace(destinationPath))
                     {
-                        var relative = Path.GetRelativePath(sourcePath, dir);
-                        var targetDir = Path.Combine(destinationPath, relative);
-                        Directory.CreateDirectory(targetDir);
+                        _logger.log(Logger.formatErrMessage("Source or destination path is invalid."));
+                        setState(SaveTaskState.FAILED);
+                        return false;
                     }
-                }
-                else
-                {
-                    // Clean the destination directory before starting
-                    foreach (var file in Directory.EnumerateFiles(destinationPath, "*", SearchOption.AllDirectories))
+
+                    if (!Directory.Exists(sourcePath))
                     {
-                        token.ThrowIfCancellationRequested(); // Check cancellation even during cleanup
-                        File.Delete(file);
+                        _logger.log(Logger.formatErrMessage($"Source path does not exist: {sourcePath}"));
+                        setState(SaveTaskState.FAILED);
+                        return false;
                     }
-                }
 
-                // Fetch all files and calculate total bytes for progress reporting
-                string[] files = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
-                long totalBytes = files.Sum(f => new FileInfo(f).Length);
-                long copiedBytes = 0;
-
-                // Order files based on priority extensions
-                files = files.OrderBy(f =>
-                {
-                    string ext = Path.GetExtension(f);
-                    int index = priorityExt.FindIndex(e => e.Equals(ext, StringComparison.OrdinalIgnoreCase));
-                    return index >= 0 ? index : int.MaxValue;
-                }).ToArray();
-
-                // Main File Loop
-                foreach (var file in files)
-                {
-                    // Respect pause and cancellation requests
-                    token.ThrowIfCancellationRequested();
-                    pauseEvent.Wait(token);
-
+                    // Check if business software is running before starting the save process
                     if (isBusinessSoftwareRunning())
                     {
                         waitForBusinessSoftwareToClose();
                     }
 
-                    // Process pending big files first if semaphore is available
-                    if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
-                    {
-                        while (_pendingFiles.Count > 0)
-                        {
-                            token.ThrowIfCancellationRequested();
-                            pauseEvent.Wait(token);
+                    // Initial log
+                    _logger.log(Logger.formatLogMessage("Complete Save Started", sourcePath, destinationPath, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
 
+                    // Fetch keys and extensions from the Config singleton
+                    string cryptoKey = Config.Instance.getEncryptionKey();
+                    List<string> cryptoExtensions = Config.Instance.getEncryptionExtensions();
+
+                    // Initialize and clean destination directory
+                    if (!Directory.Exists(destinationPath))
+                    {
+                        // Create directory structure
+                        foreach (var dir in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+                        {
+                            var relative = Path.GetRelativePath(sourcePath, dir);
+                            var targetDir = Path.Combine(destinationPath, relative);
+                            Directory.CreateDirectory(targetDir);
+                        }
+                    }
+                    else
+                    {
+                        // Clean the destination directory before starting
+                        foreach (var file in Directory.EnumerateFiles(destinationPath, "*", SearchOption.AllDirectories))
+                        {
+                            token.ThrowIfCancellationRequested(); // Check cancellation even during cleanup
+                            File.Delete(file);
+                        }
+                    }
+
+                    // Fetch all files and calculate total bytes for progress reporting
+                    string[] files = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
+                    long totalBytes = files.Sum(f => new FileInfo(f).Length);
+                    long copiedBytes = 0;
+
+                    // Order files based on priority extensions
+                    files = files.OrderBy(f =>
+                    {
+                        string ext = Path.GetExtension(f);
+                        int index = priorityExt.FindIndex(e => e.Equals(ext, StringComparison.OrdinalIgnoreCase));
+                        return index >= 0 ? index : int.MaxValue;
+                    }).ToArray();
+
+                    // Main File Loop
+                    foreach (var file in files)
+                    {
+                        // Respect pause and cancellation requests
+                        token.ThrowIfCancellationRequested();
+                        pauseEvent.Wait(token);
+
+                        if (isBusinessSoftwareRunning())
+                        {
+                            waitForBusinessSoftwareToClose();
+                        }
+
+                        // Process pending big files first if semaphore is available
+                        if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
+                        {
+                            while (_pendingFiles.Count > 0)
+                            {
+                                token.ThrowIfCancellationRequested();
+                                pauseEvent.Wait(token);
+
+                                _bigFileSemaphore.Wait(token);
+                                string pendingFile = _pendingFiles.Dequeue();
+                                try
+                                {
+                                    int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
+                                    if (local_encryptionDuration < 0) return false;
+                                }
+                                finally
+                                {
+                                    _bigFileSemaphore.Release();
+                                }
+                            }
+                        }
+
+                        // Check if current file is big and handle semaphore logic
+                        FileInfo fileInfo = new FileInfo(file);
+                        if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount == 0)
+                        {
+                            _pendingFiles.Enqueue(file);
+                            continue;
+                        }
+                        else if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount > 0)
+                        {
                             _bigFileSemaphore.Wait(token);
-                            string pendingFile = _pendingFiles.Dequeue();
                             try
                             {
-                                int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
+                                int local_encryptionDuration = processFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
                                 if (local_encryptionDuration < 0) return false;
                             }
                             finally
                             {
-                            _bigFileSemaphore.Release();
+                                _bigFileSemaphore.Release();
                             }
+                            continue;
+                        }
+                        else
+                        {
+                            // Process normal file
+                            int encryptionDuration = processFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
+                            if (encryptionDuration < 0) return false;
+                            continue;
                         }
                     }
 
-                    // Check if current file is big and handle semaphore logic
-                    FileInfo fileInfo = new FileInfo(file);
-                    if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount == 0)
+                    // Final check to process any remaining pending files
+                    while (_pendingFiles.Count > 0)
                     {
-                        _pendingFiles.Enqueue(file);
-                        continue;
-                    }
-                    else if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount > 0)
-                    {
+                        token.ThrowIfCancellationRequested();
+                        pauseEvent.Wait(token);
+
                         _bigFileSemaphore.Wait(token);
+                        string pendingFile = _pendingFiles.Dequeue();
                         try
                         {
-                            int local_encryptionDuration = processFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
+                            int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
                             if (local_encryptionDuration < 0) return false;
                         }
                         finally
                         {
                             _bigFileSemaphore.Release();
                         }
-                        continue;
                     }
-                    else
-                    {
-                        // Process normal file
-                        int encryptionDuration = processFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
-                        if (encryptionDuration < 0) return false;
-                        continue;
-                    }
+
+                    // Log completion and update state
+                    _logger.log(Logger.formatCompleteSaveMessage("Complete Save Finished", sourcePath, destinationPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+                    setState(SaveTaskState.COMPLETED);
                 }
-
-                // Final check to process any remaining pending files
-                while (_pendingFiles.Count > 0)
-                {
-                    token.ThrowIfCancellationRequested();
-                    pauseEvent.Wait(token);
-
-                    _bigFileSemaphore.Wait(token);
-                    string pendingFile = _pendingFiles.Dequeue();
-                    try
-                    {
-                        int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions, totalBytes, ref copiedBytes, token, pauseEvent, progress);
-                        if (local_encryptionDuration < 0) return false;
-                    }
-                    finally
-                    {
-                        _bigFileSemaphore.Release();
-                    }
-                }
-
-                // Log completion and update state
-                _logger.log(Logger.formatCompleteSaveMessage("Complete Save Finished", sourcePath, destinationPath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
-                setState(SaveTaskState.COMPLETED);
 
                 return true;
             }
