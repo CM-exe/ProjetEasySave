@@ -10,9 +10,11 @@ namespace ProjetEasySave.ViewModel
         private Config config = Config.Instance; // Load config
         private string _currentLanguage;
         private Dictionary<string, Dictionary<string, string>> _translations;
+        // Making it singleton
+        private static LanguageService _instance = null;
 
         // Constructor
-        public LanguageService()
+        private LanguageService()
         {
             _currentLanguage = config.getLanguage();
             _translations = new Dictionary<string, Dictionary<string, string>>();
@@ -29,6 +31,15 @@ namespace ProjetEasySave.ViewModel
             {
                 _translations = data;
             }
+        }
+
+        public static LanguageService getInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new LanguageService();
+            }
+            return _instance;
         }
 
         // Methods

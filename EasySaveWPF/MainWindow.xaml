@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="EasySave - Outil de sauvegarde" Height="450" Width="800"
         Background="#F5F7FA"
-        ResizeMode="NoResize">
+        MinWidth="800"
+        MinHeight="450"
+        >
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
