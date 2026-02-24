@@ -211,7 +211,7 @@ namespace EasySaveWPF
 
         public void OnConfigClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new ConfigDialog(_viewModel);
+            var dialog = new ConfigDialog(_viewModel, this);
             dialog.ShowDialog();
             RefreshList();
             render(); // Re-render to update texts if language was changed
@@ -291,7 +291,7 @@ namespace EasySaveWPF
 
         private sealed class ConfigDialog : Window
         {
-            private readonly LanguageService _language = new LanguageService();
+            private readonly LanguageService _language = LanguageService.getInstance();
             private readonly TextBlock _languageLabel = new();
             private readonly Button _languageButton = new();
             private readonly TextBlock _logsFormatLabel = new();
@@ -299,7 +299,7 @@ namespace EasySaveWPF
             private readonly TextBlock _maxSizeLabel = new();
             private readonly TextBox _maxSizeTextBox = new();
 
-            public ConfigDialog(ViewModel _viewModel)
+            public ConfigDialog(ViewModel _viewModel, MainWindow _mainWindow)
             {
                 Title = _language.translate("Config");
                 Width = 400;
@@ -374,6 +374,7 @@ namespace EasySaveWPF
                         var code = dialog.Value.Trim();
                         _language.setLanguage(code);
                         RefreshTexts();
+                        _mainWindow.render(); // Re-render main window to update all texts
                         MessageBox.Show(
                             _language.translate("Language") + ": " + _language.getLanguage(),
                             "EasySave",
@@ -472,7 +473,7 @@ namespace EasySaveWPF
             private readonly TextBox _completeBox = new();
             private readonly TextBox _priorityBox = new();
             private readonly Button _completeBrowserButton = new();
-            private readonly LanguageService _language = new LanguageService();
+            private readonly LanguageService _language = LanguageService.getInstance();
 
             public SaveSpaceInput Result { get; set; } = new();
 
@@ -615,7 +616,7 @@ namespace EasySaveWPF
         private sealed class InputDialog : Window
         {
             private readonly TextBox _inputBox = new();
-            private readonly LanguageService _language = new LanguageService();
+            private readonly LanguageService _language = LanguageService.getInstance();
 
             public string Value { get; private set; } = string.Empty;
 
@@ -672,7 +673,7 @@ namespace EasySaveWPF
         private sealed class SelectDialog : Window
         {
             private readonly ComboBox _comboBox = new();
-            private readonly LanguageService _language = new LanguageService();
+            private readonly LanguageService _language = LanguageService.getInstance();
 
             public string Value { get; private set; } = string.Empty;
 

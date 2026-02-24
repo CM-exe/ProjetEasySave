@@ -47,7 +47,7 @@ namespace ProjetEasySave.ViewModel
         public ViewModel()
         {
             _model = new SaveModel();
-            _languageService = new LanguageService();
+            _languageService = LanguageService.getInstance();
         }
 
         // Methods
