@@ -2,6 +2,7 @@
 using EasyLog;
 using ProjetEasySave.Utils;
 using ProjetEasySave.ViewModel;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -134,141 +135,145 @@ namespace ProjetEasySave.Model
         {
             try
             {
-                // Validate paths
-                if (string.IsNullOrWhiteSpace(sourcePath) || string.IsNullOrWhiteSpace(destinationPath))
-                {
-                    _logger.log(Logger.formatErrMessage("Source or destination path is invalid."));
-                    setState(SaveTaskState.FAILED);
-                    return false;
-                }
-
-                if (!Directory.Exists(sourcePath))
-                {
-                    _logger.log(Logger.formatErrMessage($"Source path does not exist: {sourcePath}"));
-                    setState(SaveTaskState.FAILED);
-                    return false;
-                }
-
-                // Check a first time if business software is running before starting the save process
-                if (isBusinessSoftwareRunning())
-                {
-                    waitForBusinessSoftwareToClose();
-                }
-
-                // Initial Log
-                _logger.log(Logger.formatLogMessage("Complete Save Started", sourcePath, destinationPath, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
-
-                // Fetching keys and extensions from your Config singleton
-                string cryptoKey = Config.Instance.getEncryptionKey();
-                List<string> cryptoExtensions = Config.Instance.getEncryptionExtensions();
-
-
-                // Initialize destination directory
-                if (!Directory.Exists(destinationPath))
-                {
-                    // Create directory structure
-                    foreach (var dir in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+                ConcurrentDictionary<string, object> dict_lock = SaveModel.getDictLock();
+                object lock_var = dict_lock.GetOrAdd(destinationPath, _ => new object());
+                lock (lock_var) {
+                    // Validate paths
+                    if (string.IsNullOrWhiteSpace(sourcePath) || string.IsNullOrWhiteSpace(destinationPath))
                     {
-                        var relative = Path.GetRelativePath(sourcePath, dir);
-                        var targetDir = Path.Combine(destinationPath, relative);
-                        Directory.CreateDirectory(targetDir);
+                        _logger.log(Logger.formatErrMessage("Source or destination path is invalid."));
+                        setState(SaveTaskState.FAILED);
+                        return false;
                     }
-                }
-                else
-                {
-                    // Clean the destination directory before starting
-                    foreach (var file in Directory.EnumerateFiles(destinationPath, "*", SearchOption.AllDirectories))
-                    {
-                        File.Delete(file);
-                    }
-                }
 
-                // Main File Loop
-                string[] files = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
-                // Order files based on priority extensions (files with priority extensions first)
-                files = files.OrderBy(f =>
-                {
-                    string ext = Path.GetExtension(f);
-                    int index = priorityExt.FindIndex(e => e.Equals(ext, StringComparison.OrdinalIgnoreCase));
-                    return index >= 0 ? index : int.MaxValue;
-                }).ToArray();
-                foreach (var file in files)
-                {
+                    if (!Directory.Exists(sourcePath))
+                    {
+                        _logger.log(Logger.formatErrMessage($"Source path does not exist: {sourcePath}"));
+                        setState(SaveTaskState.FAILED);
+                        return false;
+                    }
+
+                    // Check a first time if business software is running before starting the save process
                     if (isBusinessSoftwareRunning())
                     {
                         waitForBusinessSoftwareToClose();
                     }
 
-                    // If the queue is not empty and the semaphore is available, process the pending files first
-                    if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
+                    // Initial Log
+                    _logger.log(Logger.formatLogMessage("Complete Save Started", sourcePath, destinationPath, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
+
+                    // Fetching keys and extensions from your Config singleton
+                    string cryptoKey = Config.Instance.getEncryptionKey();
+                    List<string> cryptoExtensions = Config.Instance.getEncryptionExtensions();
+
+
+                    // Initialize destination directory
+                    if (!Directory.Exists(destinationPath))
                     {
-                        while (_pendingFiles.Count > 0)
+                        // Create directory structure
+                        foreach (var dir in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
                         {
-                            // Take the semaphore to process the pending file
+                            var relative = Path.GetRelativePath(sourcePath, dir);
+                            var targetDir = Path.Combine(destinationPath, relative);
+                            Directory.CreateDirectory(targetDir);
+                        }
+                    }
+                    else
+                    {
+                        // Clean the destination directory before starting
+                        foreach (var file in Directory.EnumerateFiles(destinationPath, "*", SearchOption.AllDirectories))
+                        {
+                            File.Delete(file);
+                        }
+                    }
+
+                    // Main File Loop
+                    string[] files = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
+                    // Order files based on priority extensions (files with priority extensions first)
+                    files = files.OrderBy(f =>
+                    {
+                        string ext = Path.GetExtension(f);
+                        int index = priorityExt.FindIndex(e => e.Equals(ext, StringComparison.OrdinalIgnoreCase));
+                        return index >= 0 ? index : int.MaxValue;
+                    }).ToArray();
+                    foreach (var file in files)
+                    {
+                        if (isBusinessSoftwareRunning())
+                        {
+                            waitForBusinessSoftwareToClose();
+                        }
+
+                        // If the queue is not empty and the semaphore is available, process the pending files first
+                        if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
+                        {
+                            while (_pendingFiles.Count > 0)
+                            {
+                                // Take the semaphore to process the pending file
+                                _bigFileSemaphore.Wait();
+                                // Process the pending file
+                                string pendingFile = _pendingFiles.Dequeue();
+                                int local_encryptionDuration = proccesFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
+                                // Release the semaphore after processing
+                                _bigFileSemaphore.Release();
+                                if (local_encryptionDuration < 0)
+                                {
+                                    return false; // Abort if the encryption/copy process failed
+                                }
+                            }
+                        }
+
+                        // Check if the current file to process is too big (greater than the threshold defined in config) and if the semaphore is not available (another big file is being processed)
+                        FileInfo fileInfo = new FileInfo(file);
+                        if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount == 0) // * 1000 to convert from o to Ko
+                        {
+                            // Add it to the pending queue and continue with the next file
+                            _pendingFiles.Enqueue(file);
+                            continue;
+                        }
+                        else if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount > 0)
+                        {
+                            // If the file is big but the semaphore is available, take the semaphore and process it immediately
                             _bigFileSemaphore.Wait();
-                            // Process the pending file
-                            string pendingFile = _pendingFiles.Dequeue();
-                            int local_encryptionDuration = proccesFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
-                            // Release the semaphore after processing
+                            int local_encryptionDuration = proccesFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
                             _bigFileSemaphore.Release();
                             if (local_encryptionDuration < 0)
                             {
                                 return false; // Abort if the encryption/copy process failed
                             }
+                            continue;
+                        }
+                        else
+                        {
+                            int encryptionDuration = proccesFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
+
+                            // Abort if the encryption/copy process failed (duration < 0)
+                            if (encryptionDuration < 0) return false;
+                            continue;
                         }
                     }
 
-                    // Check if the current file to process is too big (greater than the threshold defined in config) and if the semaphore is not available (another big file is being processed)
-                    FileInfo fileInfo = new FileInfo(file);
-                    if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount == 0) // * 1000 to convert from o to Ko
+                    // Final check to process any remaining pending files after the main loop
+                    while (_pendingFiles.Count > 0)
                     {
-                        // Add it to the pending queue and continue with the next file
-                        _pendingFiles.Enqueue(file);
-                        continue;
-                    }
-                    else if (fileInfo.Length > (config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount > 0)
-                    {
-                        // If the file is big but the semaphore is available, take the semaphore and process it immediately
                         _bigFileSemaphore.Wait();
-                        int local_encryptionDuration = proccesFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
+                        string pendingFile = _pendingFiles.Dequeue();
+                        int local_encryptionDuration = proccesFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
                         _bigFileSemaphore.Release();
                         if (local_encryptionDuration < 0)
                         {
                             return false; // Abort if the encryption/copy process failed
                         }
-                        continue;
                     }
-                    else
-                    {
-                        int encryptionDuration = proccesFile(file, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
 
-                        // Abort if the encryption/copy process failed (duration < 0)
-                        if (encryptionDuration < 0) return false;
-                        continue;
-                    }
+                    // "Save completed" Log
+                    _logger.log(Logger.formatCompleteSaveMessage(
+                        "Complete Save Finished",
+                        sourcePath,
+                        destinationPath,
+                        DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    ));
+                    setState(SaveTaskState.COMPLETED);
                 }
-
-                // Final check to process any remaining pending files after the main loop
-                while (_pendingFiles.Count > 0)
-                {
-                    _bigFileSemaphore.Wait();
-                    string pendingFile = _pendingFiles.Dequeue();
-                    int local_encryptionDuration = proccesFile(pendingFile, sourcePath, destinationPath, cryptoKey, cryptoExtensions);
-                    _bigFileSemaphore.Release();
-                    if (local_encryptionDuration < 0)
-                    {
-                        return false; // Abort if the encryption/copy process failed
-                    }
-                }
-
-                // "Save completed" Log
-                _logger.log(Logger.formatCompleteSaveMessage(
-                    "Complete Save Finished",
-                    sourcePath,
-                    destinationPath,
-                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                ));
-                setState(SaveTaskState.COMPLETED);
 
                 return true;
             }

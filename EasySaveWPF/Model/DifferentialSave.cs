@@ -1,6 +1,7 @@
 ﻿using CryptoSoft;
 using EasyLog;
 using ProjetEasySave.Utils;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 
@@ -139,168 +140,173 @@ namespace ProjetEasySave.Model
         {
             try
             {
-                // Validate paths
-                if (string.IsNullOrWhiteSpace(sourcePath) ||
+                ConcurrentDictionary<string, object> dict_lock = SaveModel.getDictLock();
+                object lock_var = dict_lock.GetOrAdd(destinationPath, _ => new object());
+                lock (lock_var)
+                {
+                    // Validate paths
+                    if (string.IsNullOrWhiteSpace(sourcePath) ||
                     string.IsNullOrWhiteSpace(destinationPath) ||
                     string.IsNullOrWhiteSpace(_fullBackupPath))
-                {
-                    _logger.log(Logger.formatErrMessage("Source, destination, or full backup path is invalid."));
-                    setState(SaveTaskState.FAILED);
-                    return false;
-                }
-
-                if (!Directory.Exists(sourcePath))
-                {
-                    _logger.log(Logger.formatErrMessage($"Source path '{sourcePath}' does not exist."));
-                    setState(SaveTaskState.FAILED);
-                    return false;
-                }
-
-                if (!Directory.Exists(_fullBackupPath))
-                {
-                    _logger.log(Logger.formatErrMessage($"Full backup path '{_fullBackupPath}' does not exist."));
-                    setState(SaveTaskState.FAILED);
-                    return false;
-                }
-
-                // Check a first time if business software is running before starting the save process
-                if (isBusinessSoftwareRunning())
-                {
-                    waitForBusinessSoftwareToClose();
-                }
-
-                // Get global encryption settings from Config Singleton
-                string cryptoKey = Config.Instance.getEncryptionKey();
-                List<string> cryptoExtensions = Config.Instance.getEncryptionExtensions();
-
-                _logger.log(Logger.formatLogMessage(
-                    "Differential Save Started",
-                    sourcePath,
-                    destinationPath,
-                    0,
-                    0,
-                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                ));
-
-                // Initialize destination directory
-                if (!Directory.Exists(destinationPath))
-                {
-                    Directory.CreateDirectory(destinationPath);
-                }
-                else
-                {
-                    // Clean the destination directory before starting
-                    foreach (var file in Directory.EnumerateFiles(destinationPath, "*", SearchOption.AllDirectories))
                     {
-                        File.Delete(file);
+                        _logger.log(Logger.formatErrMessage("Source, destination, or full backup path is invalid."));
+                        setState(SaveTaskState.FAILED);
+                        return false;
                     }
-                }
 
-                // Main loop: iterate through all files in the source directory and apply differential logic
-                var files = Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories);
-                // Order files based on priority extensions (files with priority extensions first)
-                var sortedFiles = files.OrderBy(f =>
-                {
-                    string ext = Path.GetExtension(f);
-                    int index = priorityExt.FindIndex(e => e.Equals(ext, StringComparison.OrdinalIgnoreCase));
-                    return index >= 0 ? index : int.MaxValue;
-                }).ToArray();
+                    if (!Directory.Exists(sourcePath))
+                    {
+                        _logger.log(Logger.formatErrMessage($"Source path '{sourcePath}' does not exist."));
+                        setState(SaveTaskState.FAILED);
+                        return false;
+                    }
 
-                foreach (var sourceFile in sortedFiles)
-                {
+                    if (!Directory.Exists(_fullBackupPath))
+                    {
+                        _logger.log(Logger.formatErrMessage($"Full backup path '{_fullBackupPath}' does not exist."));
+                        setState(SaveTaskState.FAILED);
+                        return false;
+                    }
+
+                    // Check a first time if business software is running before starting the save process
                     if (isBusinessSoftwareRunning())
                     {
                         waitForBusinessSoftwareToClose();
                     }
 
-                    var relativePath = Path.GetRelativePath(sourcePath, sourceFile);
-                    var fullFile = Path.Combine(_fullBackupPath, relativePath);
+                    // Get global encryption settings from Config Singleton
+                    string cryptoKey = Config.Instance.getEncryptionKey();
+                    List<string> cryptoExtensions = Config.Instance.getEncryptionExtensions();
 
-                    bool shouldCopy = false;
+                    _logger.log(Logger.formatLogMessage(
+                        "Differential Save Started",
+                        sourcePath,
+                        destinationPath,
+                        0,
+                        0,
+                        DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    ));
 
-                    // Differential logic: check if file is new or modified
-                    if (!File.Exists(fullFile))
+                    // Initialize destination directory
+                    if (!Directory.Exists(destinationPath))
                     {
-                        shouldCopy = true;
+                        Directory.CreateDirectory(destinationPath);
                     }
                     else
                     {
-                        var sourceDate = File.GetLastWriteTime(sourceFile);
-                        var fullDate = File.GetLastWriteTime(fullFile);
-
-                        if (sourceDate > fullDate)
+                        // Clean the destination directory before starting
+                        foreach (var file in Directory.EnumerateFiles(destinationPath, "*", SearchOption.AllDirectories))
                         {
-                            shouldCopy = true;
+                            File.Delete(file);
                         }
                     }
 
-                    if (!shouldCopy) { continue; }
-
-                    // If the queue is not empty and the semaphore is available, process the pending files first
-                    if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
+                    // Main loop: iterate through all files in the source directory and apply differential logic
+                    var files = Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories);
+                    // Order files based on priority extensions (files with priority extensions first)
+                    var sortedFiles = files.OrderBy(f =>
                     {
-                        while (_pendingFiles.Count > 0)
+                        string ext = Path.GetExtension(f);
+                        int index = priorityExt.FindIndex(e => e.Equals(ext, StringComparison.OrdinalIgnoreCase));
+                        return index >= 0 ? index : int.MaxValue;
+                    }).ToArray();
+
+                    foreach (var sourceFile in sortedFiles)
+                    {
+                        if (isBusinessSoftwareRunning())
+                        {
+                            waitForBusinessSoftwareToClose();
+                        }
+
+                        var relativePath = Path.GetRelativePath(sourcePath, sourceFile);
+                        var fullFile = Path.Combine(_fullBackupPath, relativePath);
+
+                        bool shouldCopy = false;
+
+                        // Differential logic: check if file is new or modified
+                        if (!File.Exists(fullFile))
+                        {
+                            shouldCopy = true;
+                        }
+                        else
+                        {
+                            var sourceDate = File.GetLastWriteTime(sourceFile);
+                            var fullDate = File.GetLastWriteTime(fullFile);
+
+                            if (sourceDate > fullDate)
+                            {
+                                shouldCopy = true;
+                            }
+                        }
+
+                        if (!shouldCopy) { continue; }
+
+                        // If the queue is not empty and the semaphore is available, process the pending files first
+                        if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
+                        {
+                            while (_pendingFiles.Count > 0)
+                            {
+                                _bigFileSemaphore.Wait();
+                                string pendingFile = _pendingFiles.Dequeue();
+                                int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
+                                _bigFileSemaphore.Release();
+                                if (local_encryptionDuration < 0)
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+
+                        // Check file size for big file handling
+                        FileInfo fileInfo = new FileInfo(sourceFile);
+                        // If the file is bigger than the configured biggest size and the semaphore is not available, add it to the pending queue
+                        if (fileInfo.Length > (_config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount == 0)
+                        {
+                            _pendingFiles.Enqueue(sourceFile);
+                            continue;
+                        }
+                        // If the file is bigger than the configured biggest size and the semaphore is available, process it immediately
+                        else if (fileInfo.Length > (_config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount > 0)
                         {
                             _bigFileSemaphore.Wait();
-                            string pendingFile = _pendingFiles.Dequeue();
-                            int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
+                            int local_encryptionDuration = processFile(sourceFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
                             _bigFileSemaphore.Release();
                             if (local_encryptionDuration < 0)
                             {
                                 return false;
                             }
+                            continue;
+                        }
+                        else
+                        {
+                            int encryptionDuration = processFile(sourceFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
+                            if (encryptionDuration < 0) return false;
+                            continue;
                         }
                     }
 
-                    // Check file size for big file handling
-                    FileInfo fileInfo = new FileInfo(sourceFile);
-                    // If the file is bigger than the configured biggest size and the semaphore is not available, add it to the pending queue
-                    if (fileInfo.Length > (_config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount == 0)
-                    {
-                        _pendingFiles.Enqueue(sourceFile);
-                        continue;
-                    }
-                    // If the file is bigger than the configured biggest size and the semaphore is available, process it immediately
-                    else if (fileInfo.Length > (_config.getBiggestSize() * 1000) && _bigFileSemaphore.CurrentCount > 0)
+                    // Final check to process any remaining pending files after the main loop
+                    while (_pendingFiles.Count > 0)
                     {
                         _bigFileSemaphore.Wait();
-                        int local_encryptionDuration = processFile(sourceFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
+                        string pendingFile = _pendingFiles.Dequeue();
+                        int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
                         _bigFileSemaphore.Release();
                         if (local_encryptionDuration < 0)
                         {
                             return false;
                         }
-                        continue;
                     }
-                    else
-                    {
-                        int encryptionDuration = processFile(sourceFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
-                        if (encryptionDuration < 0) return false;
-                        continue;
-                    }
-                }
 
-                // Final check to process any remaining pending files after the main loop
-                while (_pendingFiles.Count > 0)
-                {
-                    _bigFileSemaphore.Wait();
-                    string pendingFile = _pendingFiles.Dequeue();
-                    int local_encryptionDuration = processFile(pendingFile, sourcePath, destinationPath, _fullBackupPath, cryptoKey, cryptoExtensions);
-                    _bigFileSemaphore.Release();
-                    if (local_encryptionDuration < 0)
-                    {
-                        return false;
-                    }
+                    // "Save completed" log
+                    _logger.log(Logger.formatCompleteSaveMessage(
+                        "Differential Save Finished",
+                        sourcePath,
+                        destinationPath,
+                        DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    ));
+                    setState(SaveTaskState.COMPLETED);
                 }
-
-                // "Save completed" log
-                _logger.log(Logger.formatCompleteSaveMessage(
-                    "Differential Save Finished",
-                    sourcePath,
-                    destinationPath,
-                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                ));
-                setState(SaveTaskState.COMPLETED);
 
                 return true;
             }

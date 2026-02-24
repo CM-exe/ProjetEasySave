@@ -1,4 +1,5 @@
 ﻿using ProjetEasySave.Utils;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text.Json;
@@ -15,6 +16,9 @@ namespace ProjetEasySave.Model
         private Config config = Config.Instance;
         private string _configPath;
 
+        // Lock dict
+        private static ConcurrentDictionary<string, object> dict_lock = new ConcurrentDictionary<string, object>();
+
         // Semaphore for big files to avoid multiple big saves at the same time
         private static SemaphoreSlim _bigFileSemaphore;
 
@@ -27,7 +31,7 @@ namespace ProjetEasySave.Model
             // Load existing SaveSpaces from config file if it exists
             if (File.Exists(_configPath))
             {
-                loadSaveSpaces(_configPath);
+                loadSaveSpaces(_configPath, dict_lock);
             }
         }
 
@@ -69,6 +73,9 @@ namespace ProjetEasySave.Model
                 // Update Config
                 saveToConfig();
 
+                //Add to dict_lock
+                updateDictLock();
+
                 return true;
             }
             catch (Exception)
@@ -82,6 +89,9 @@ namespace ProjetEasySave.Model
             var saveSpaceToRemove = _saveSpaces.FirstOrDefault(s => s.getName() == name);
             if (saveSpaceToRemove != null)
             {
+                // Update dict_lock
+                updateDictLock();
+
                 _saveSpaces.Remove(saveSpaceToRemove);
 
                 // Update Config
@@ -97,7 +107,7 @@ namespace ProjetEasySave.Model
             return _saveSpaces;
         }
 
-        public bool loadSaveSpaces(string jsonConfigPath)
+        public bool loadSaveSpaces(string jsonConfigPath, ConcurrentDictionary<string, object> dict_lock)
         {
             try
             {
@@ -128,6 +138,10 @@ namespace ProjetEasySave.Model
                     var priorityExt = element.TryGetProperty("_priorityExt", out var y) && y.ValueKind == JsonValueKind.Array ? y.EnumerateArray().Select(item => item.ValueKind == JsonValueKind.String ? item.GetString() ?? "" : item.ToString()).ToList() : new List<string>();
                     var saveSpace = new SaveSpace(name, sourcePath, destinationPath, typeSaveValue, priorityExt, _bigFileSemaphore, completeSavePathValue);
                     spaces.Add(saveSpace);
+
+                    // Add to dict_lock
+                    updateDictLock();
+
                 }
                 _saveSpaces = spaces;
 
@@ -139,11 +153,12 @@ namespace ProjetEasySave.Model
             }
         }
 
-        public bool updateSaveSpace(string name, string newSourcePath, string newDestinationPath, string newTypeSave, string priorityExt)
+        public bool updateSaveSpace(string name, string newSourcePath, string newDestinationPath, string newTypeSave, string priorityExt, ConcurrentDictionary<string, object> dict_lock)
         {
             var saveSpaceToUpdate = _saveSpaces.FirstOrDefault(s => s.getName() == name);
             if (saveSpaceToUpdate != null)
             {
+                Console.WriteLine("zekjfnzeifzeifhz'iu");
                 // Update Save Space
                 saveSpaceToUpdate.setSourcePath(newSourcePath);
                 saveSpaceToUpdate.setDestinationPath(newDestinationPath);
@@ -152,6 +167,10 @@ namespace ProjetEasySave.Model
 
                 // Update Config
                 saveToConfig();
+
+                // Update dict
+                dict_lock.GetOrAdd(newSourcePath, _ => new object());
+                dict_lock.GetOrAdd(newDestinationPath, _ => new object());
 
                 return true;
             }
@@ -188,6 +207,21 @@ namespace ProjetEasySave.Model
             {
                 // Ignore exceptions during finalization
             }
+        }
+
+        public static ConcurrentDictionary<string, object> getDictLock()
+        {
+            return dict_lock;
+        }
+
+        private void updateDictLock()
+        {
+            ConcurrentDictionary<string, object> temp_dict_lock = new();
+            foreach (SaveSpace saveSpace in _saveSpaces) {
+                temp_dict_lock.GetOrAdd(saveSpace.getSourcePath(), _ => new object());
+                temp_dict_lock.GetOrAdd(saveSpace.getDestinationPath(), _ => new object());
+            }
+            dict_lock = temp_dict_lock;
         }
     }
 }
