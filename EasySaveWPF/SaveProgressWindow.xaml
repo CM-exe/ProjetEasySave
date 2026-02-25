@@ -1,7 +1,8 @@
 ﻿<Window x:Class="EasySaveWPF.SaveProgressWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="{Binding SaveWindowTitle}"
+        x:Name="ProgressWindow"
+        Title="{Binding ElementName=ProgressWindow, Path=MainViewModel.SaveWindowTitle}"
         Height="220"
         Width="420"
         WindowStartupLocation="CenterOwner">
@@ -20,7 +21,7 @@
 
         <TextBlock
             Grid.Row="0"
-            Text="{Binding CurrentFileLabel}"
+            Text="{Binding ElementName=ProgressWindow, Path=MainViewModel.CurrentFileLabel}"
             FontWeight="Bold"/>
 
         <TextBlock

@@ -7,22 +7,8 @@ using System.Runtime.CompilerServices;
 
 namespace ProjetEasySave.ViewModel
 {
-    public class ViewModel : INotifyPropertyChanged
+    public class SaveJobState : INotifyPropertyChanged
     {
-        // Attributes
-        private SaveModel _model;
-        private LanguageService _languageService;
-        private readonly Logger logger = Logger.getInstance(Config.Instance); // Load logger
-
-        // Translations
-        public string CurrentFileLabel => translate("CurrentFileLabel");
-        public string PausedSuffix => translate("PausedSuffix");
-        public string PausePendingSuffix => translate("PausePendingSuffix");
-        public string StoppedSuffix => translate("StoppedSuffix");
-        public string SaveCompletedMessage => translate("SaveCompleted");
-        public string SaveStoppedMessage => translate("SaveStopped");
-        public string SaveWindowTitle => translate("SaveInProgressTitle");
-
         private int _progress;
         public int Progress
         {
@@ -44,6 +30,53 @@ namespace ProjetEasySave.ViewModel
             set { _isPausePending = value; OnPropertyChanged(); }
         }
 
+        // Added to differentiate between "Waiting to pause" and "Actually paused"
+        private bool _isPaused = false;
+        public bool IsPaused
+        {
+            get => _isPaused;
+            set { _isPaused = value; OnPropertyChanged(); }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+    }
+
+    public class ViewModel : INotifyPropertyChanged
+    {
+        // Attributes
+        private SaveModel _model;
+        private LanguageService _languageService;
+        private readonly Logger logger = Logger.getInstance(Config.Instance); // Load logger
+
+        // Translations
+        public string CurrentFileLabel => translate("CurrentFileLabel");
+        public string PausedSuffix => translate("PausedSuffix");
+        public string PausePendingSuffix => translate("PausePendingSuffix");
+        public string StoppedSuffix => translate("StoppedSuffix");
+        public string SaveCompletedMessage => translate("SaveCompleted");
+        public string SaveStoppedMessage => translate("SaveStopped");
+        public string SaveWindowTitle => translate("SaveInProgressTitle");
+
+        // Dictionary to store the specific state of each save job
+        public Dictionary<string, SaveJobState> JobStates { get; set; } = new Dictionary<string, SaveJobState>();
+
+        // Helper method to retrieve or create a job state safely
+        public SaveJobState GetJobState(string name)
+        {
+            if (!JobStates.ContainsKey(name))
+            {
+                JobStates[name] = new SaveJobState();
+            }
+            return JobStates[name];
+        }
+
+        public event Action<string>? RealPaused;
+
         public Action<bool>? BusinessSoftwareStateChanged;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -51,6 +84,26 @@ namespace ProjetEasySave.ViewModel
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        // Method to trigger the real pause transition safely
+        public void TriggerRealPause(string name)
+        {
+            var state = GetJobState(name);
+            state.IsPausePending = false;
+            state.IsPaused = true;
+
+            // Secure UI update using Dispatcher
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (state.CurrentFile != null)
+                {
+                    state.CurrentFile = state.CurrentFile
+                        .Replace(PausePendingSuffix, "")
+                        .Replace(PausedSuffix, "") + PausedSuffix;
+                }
+                RealPaused?.Invoke(name);
+            });
         }
 
         // Constructor
@@ -78,6 +131,15 @@ namespace ProjetEasySave.ViewModel
 
         public async Task<bool> StartSaveAsync(string name)
         {
+            // Retrieve the specific state object for this backup job
+            var state = GetJobState(name);
+
+            // Reset properties for a fresh run
+            state.IsPausePending = false;
+            state.IsPaused = false;
+            state.CurrentFile = string.Empty;
+            state.Progress = 0;
+
             using var cts = new CancellationTokenSource();
             _ = WatchBusinessSoftware(name, cts.Token);
 
@@ -85,32 +147,33 @@ namespace ProjetEasySave.ViewModel
             {
                 if (f == "Paused")
                 {
-                    IsPausePending = false;
+                    state.IsPausePending = false;
+                    state.IsPaused = true;
 
-                    if (CurrentFile.EndsWith(PausePendingSuffix))
+                    if (state.CurrentFile.EndsWith(PausePendingSuffix))
                     {
-                        CurrentFile = CurrentFile.Replace(PausePendingSuffix, PausedSuffix);
+                        state.CurrentFile = state.CurrentFile.Replace(PausePendingSuffix, PausedSuffix);
                     }
-                    else if (!CurrentFile.EndsWith(PausedSuffix))
+                    else if (!state.CurrentFile.EndsWith(PausedSuffix))
                     {
-                        CurrentFile += PausedSuffix;
+                        state.CurrentFile += PausedSuffix;
                     }
 
                     return;
                 }
 
-                Progress = p;
+                state.Progress = p;
 
-                if (IsPausePending)
+                if (state.IsPausePending)
                 {
                     if (!f.EndsWith(PausePendingSuffix))
                     {
-                        CurrentFile = f + PausePendingSuffix;
+                        state.CurrentFile = f + PausePendingSuffix;
                     }
                 }
                 else
                 {
-                    CurrentFile = f;
+                    state.CurrentFile = f;
                 }
             });
 
@@ -133,7 +196,7 @@ namespace ProjetEasySave.ViewModel
             bool wasRunning = false;
             while (!token.IsCancellationRequested)
             {
-                bool isRunning = isBusinessSoftwareRunning();
+                bool isRunning = isBusinessSoftwareRunning(); // Assuming this is defined elsewhere
                 if (isRunning && !wasRunning)
                 {
                     wasRunning = true;
@@ -161,13 +224,19 @@ namespace ProjetEasySave.ViewModel
 
         public void PauseSave(string name)
         {
-            IsPausePending = true;
+            var state = GetJobState(name);
+            state.IsPausePending = true;
+            state.IsPaused = false;
+
             _model.PauseSave(name);
         }
 
         public void ResumeSave(string name)
         {
-            IsPausePending = false;
+            var state = GetJobState(name);
+            state.IsPausePending = false;
+            state.IsPaused = false;
+
             _model.ResumeSave(name);
         }
 
