@@ -308,19 +308,23 @@ namespace EasySaveWPF
             private readonly TextBox _serverPortTextBox = new();
             private readonly Button _reconnectToServerBtn = new();
             private readonly TextBlock _connectionToServerStateText = new();
+            private readonly TextBlock _businessSoftareLabel = new();
+            private readonly TextBox _businessSoftwareTextBox = new();
 
             public ConfigDialog(ViewModel _viewModel, MainWindow _mainWindow)
             {
                 Title = _language.translate("Config");
                 Width = 420;
-                Height = 300;
+                Height = 350;
+                MinHeight = Height;
+                MinWidth = Width;
                 WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 ResizeMode = ResizeMode.NoResize;
 
                 var grid = new Grid { Margin = new Thickness(12) };
 
-                // Row layout: 8 setting rows with small gaps, then spacer, then buttons row
-                const int settingRows = 8;
+                // Row layout: 9 setting rows with small gaps, then spacer, then buttons row
+                const int settingRows = 9;
                 for (int i = 0; i < settingRows; i++)
                 {
                     grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
@@ -349,6 +353,7 @@ namespace EasySaveWPF
                     _serverPortLabel.Text = _language.translate("ServerPort");
                     _reconnectToServerBtn.Content = "🔌 " + _language.translate("ReconnectToServer");
                     _connectionToServerStateText.Text = _viewModel.isConnectedToServer() ? _language.translate("Connected") : _language.translate("Disconnected");
+                    _businessSoftareLabel.Text = _language.translate("BusinessSoftware");
                 }
 
                 // Initial toggle states
@@ -445,6 +450,17 @@ namespace EasySaveWPF
                 Grid.SetColumn(_connectionToServerStateText, 1);
                 _connectionToServerStateText.HorizontalAlignment = HorizontalAlignment.Center;
                 grid.Children.Add(_connectionToServerStateText);
+
+                // Business software row (row 16)
+                Grid.SetRow(_businessSoftareLabel, 16);
+                Grid.SetColumn(_businessSoftareLabel, 0);
+                _businessSoftareLabel.VerticalAlignment = VerticalAlignment.Center;
+                grid.Children.Add(_businessSoftareLabel);
+
+                Grid.SetRow(_businessSoftwareTextBox, 16);
+                Grid.SetColumn(_businessSoftwareTextBox, 1);
+                _businessSoftwareTextBox.HorizontalAlignment = HorizontalAlignment.Center;
+                grid.Children.Add(_businessSoftwareTextBox);
 
                 // Language button click
                 _languageButton.Click += (_, __) =>
@@ -640,6 +656,13 @@ namespace EasySaveWPF
                     RefreshTexts();
                 };
 
+                // Business software text box
+                _businessSoftwareTextBox.Text = _viewModel.getBusinessSoftwareName();
+                _businessSoftwareTextBox.LostFocus += (s, e) =>
+                {
+                    string name = _businessSoftwareTextBox.Text.Trim();
+                    _viewModel.setBusinessSoftwareName(name);
+                };
 
 
                 // Buttons (row after spacer)

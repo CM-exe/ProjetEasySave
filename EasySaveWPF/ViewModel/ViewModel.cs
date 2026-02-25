@@ -233,5 +233,15 @@ namespace ProjetEasySave.ViewModel
         {
             return logger.isConnectedToServer();
         }
+
+        public string getBusinessSoftwareName()
+        {
+            return Config.Instance.getBusinessSoftwareName();
+        }
+
+        public void setBusinessSoftwareName(string name)
+        {
+            Config.Instance.setBusinessSoftwareName(name);
+        }
     }
 }
