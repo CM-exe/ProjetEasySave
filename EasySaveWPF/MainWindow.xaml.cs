@@ -192,23 +192,59 @@ namespace EasySaveWPF
 
         private async void OnStartClick(object sender, RoutedEventArgs e)
         {
-            if (listSaveSpaces?.SelectedItem is not SaveSpaceRow row)
+            // Collect selected rows (supports single or multiple selection now)
+            var selectedRows = new List<SaveSpaceRow>();
+            if (listSaveSpaces?.SelectedItems != null && listSaveSpaces.SelectedItems.Count > 0)
+            {
+                selectedRows.AddRange(listSaveSpaces.SelectedItems.OfType<SaveSpaceRow>());
+            }
+            else if (listSaveSpaces?.SelectedItem is SaveSpaceRow singleRow)
+            {
+                selectedRows.Add(singleRow);
+            }
+
+            if (selectedRows.Count == 0)
             {
                 return;
             }
 
-            if (_viewModel.isBusinessSoftwareRunning()) // TODO: Check if the business software is running for this SaveSpace
+            // If multiple selected, ask confirmation
+            if (selectedRows.Count > 1)
             {
-                // Display an error message and abort the flow
-                MessageBox.Show(_viewModel.translate("ErrorBusinessSoftwareRunning"), "EasySave", MessageBoxButton.OK, MessageBoxImage.Error); 
+                var confirm = MessageBox.Show(
+                    _viewModel.translate("StartMultipleSavesConfirmation"),
+                    "EasySave",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                );
+
+                if (confirm != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+            }
+
+            // Global business-software check (keeps existing behavior)
+            if (_viewModel.isBusinessSoftwareRunning()) // TODO: refine to check per SaveSpace if supported
+            {
+                MessageBox.Show(
+                    _viewModel.translate("ErrorBusinessSoftwareRunning"),
+                    "EasySave",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
                 return;
             }
 
-            var progressWindow = new SaveProgressWindow(_viewModel, row.Name)
+            // Start a progress window for each selected save space
+            foreach (var saveRow in selectedRows)
             {
-                Owner = this
-            };
-            progressWindow.Show();
+                var progressWindow = new SaveProgressWindow(_viewModel, saveRow.Name)
+                {
+                    Owner = this
+                };
+                progressWindow.Show();
+            }
         }
 
         public void OnConfigClick(object sender, RoutedEventArgs e)

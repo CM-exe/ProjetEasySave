@@ -65,7 +65,8 @@
     "Connected": "Connecté",
     "Disconnected": "Déconnecté",
     "Connecting": "Connexion en cours...",
-    "BusinessSoftware": "Logiciel métier"
+    "BusinessSoftware": "Logiciel métier",
+    "StartMultipleSavesConfirmation": "Vous êtes sur le point de démarrer plusieurs sauvegardes. Êtes-vous sûr de vouloir continuer ?"
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -133,6 +134,7 @@
     "Connected": "Connected",
     "Disconnected": "Déconnected",
     "Connecting": "Connecting...",
-    "BusinessSoftware": "Business software"
+    "BusinessSoftware": "Business software",
+    "StartMultipleSavesConfirmation": "You are about to start multiple backups. Are you sure you want to continue ?"
   }
 }
