@@ -106,6 +106,11 @@ namespace ProjetEasySave.Model
             var relativePath = Path.GetRelativePath(sourcePath, sourceFile);
             var diffFile = Path.Combine(destinationPath, relativePath);
 
+            if (isBusinessSoftwareRunning())
+            {
+                waitForBusinessSoftwareToClose();
+            }
+
             // Ensure the subdirectory exists in the destination
             Directory.CreateDirectory(Path.GetDirectoryName(diffFile)!);
 
@@ -298,11 +303,6 @@ namespace ProjetEasySave.Model
                         if (!pauseEvent.IsSet) progress?.Invoke(0, "Paused");
                         
                         pauseEvent.Wait(token);
-
-                        if (isBusinessSoftwareRunning())
-                        {
-                            waitForBusinessSoftwareToClose();
-                        }
 
                         // Process pending big files first if semaphore is available
                         if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)

@@ -18,7 +18,40 @@ namespace EasySaveWPF
 
             DataContext = _viewModel;
 
+            _viewModel.BusinessSoftwareStateChanged += OnBusinessSoftwareStateChanged;
+
             Loaded += SaveProgressWindow_Loaded;
+            Closed += SaveProgressWindow_Closed;
+        }
+
+        private void OnBusinessSoftwareStateChanged(bool isPausedBySoftware)
+        {
+            // Must use Dispatcher to update UI from a background thread
+            Dispatcher.Invoke(() =>
+            {
+                if (isPausedBySoftware)
+                {
+                    PlayPauseButton.Content = "▶";
+                    PlayPauseButton.IsEnabled = false; // Block the user from manually resuming
+                    ProgressBar.Foreground = Brushes.Gold;
+                    _isPaused = true;
+                }
+                else
+                {
+                    PlayPauseButton.Content = "⏸";
+                    PlayPauseButton.IsEnabled = true; // Unlock the button
+                    ProgressBar.Foreground = Brushes.Green;
+                    _isPaused = false;
+                }
+            });
+        }
+
+        private void SaveProgressWindow_Closed(object? sender, EventArgs e)
+        {
+            if (_viewModel != null)
+            {
+                _viewModel.BusinessSoftwareStateChanged -= OnBusinessSoftwareStateChanged;  
+            }
         }
 
         private async void SaveProgressWindow_Loaded(object sender, RoutedEventArgs e)

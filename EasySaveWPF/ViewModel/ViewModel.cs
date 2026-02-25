@@ -44,6 +44,8 @@ namespace ProjetEasySave.ViewModel
             set { _isPausePending = value; OnPropertyChanged(); }
         }
 
+        public Action<bool>? BusinessSoftwareStateChanged;
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
@@ -76,6 +78,9 @@ namespace ProjetEasySave.ViewModel
 
         public async Task<bool> StartSaveAsync(string name)
         {
+            using var cts = new CancellationTokenSource();
+            _ = WatchBusinessSoftware(name, cts.Token);
+
             _model.SubscribeProgress(name, (p, f) =>
             {
                 if (f == "Paused")
@@ -116,6 +121,41 @@ namespace ProjetEasySave.ViewModel
             catch (OperationCanceledException)
             {
                 return false;
+            }
+            finally
+            {
+                cts.Cancel();
+            }
+        }
+
+        private async Task WatchBusinessSoftware(string name, CancellationToken token)
+        {
+            bool wasRunning = false;
+            while (!token.IsCancellationRequested)
+            {
+                bool isRunning = isBusinessSoftwareRunning();
+                if (isRunning && !wasRunning)
+                {
+                    wasRunning = true;
+                    PauseSave(name); // Simulates a user pause
+                    BusinessSoftwareStateChanged?.Invoke(true); // Tell View to turn yellow & lock button
+                }
+                else if (!isRunning && wasRunning)
+                {
+                    wasRunning = false;
+                    ResumeSave(name); // Simulates a user resume
+                    BusinessSoftwareStateChanged?.Invoke(false); // Tell View to turn green & unlock button
+                }
+
+                try
+                {
+                    // Check every 1.5 seconds
+                    await Task.Delay(1500, token);
+                }
+                catch (TaskCanceledException)
+                {
+                    break;
+                }
             }
         }
 
@@ -232,6 +272,11 @@ namespace ProjetEasySave.ViewModel
         public bool isConnectedToServer()
         {
             return logger.isConnectedToServer();
+        }
+
+        public bool isBusinessSoftwareRunning()
+        {
+            return _model.isBusinessSoftwareRunning();
         }
     }
 }
