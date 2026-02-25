@@ -102,10 +102,10 @@ namespace ProjetEasySave.Model
             FileInfo fileInfo = new FileInfo(file);
             string extension = Path.GetExtension(file);
 
-            //if (isBusinessSoftwareRunning())
-            //{
-            //    waitForBusinessSoftwareToClose();
-            //}
+            if (isBusinessSoftwareRunning())
+            {
+                waitForBusinessSoftwareToClose();
+            }
 
             // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
             double encryptionDuration = 0;
@@ -223,10 +223,10 @@ namespace ProjetEasySave.Model
                     }
 
                     // Check if business software is running before starting the save process
-                    //if (isBusinessSoftwareRunning())
-                    //{
-                    //    waitForBusinessSoftwareToClose();
-                    //}
+                    if (isBusinessSoftwareRunning())
+                    {
+                        waitForBusinessSoftwareToClose();
+                    }
 
                     // Initial log
                     _logger.log(Logger.formatLogMessage("Complete Save Started", sourcePath, destinationPath, 0, 0, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
