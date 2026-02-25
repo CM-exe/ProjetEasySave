@@ -116,6 +116,22 @@ namespace ProjetEasySave.Model
 
             if (shouldEncrypt)
             {
+                // Check Cryptosoft is mono instance and wait if necessary
+                if (!FileManager.IsSingleInstance)
+                {
+                   _logger.log(Logger.formatInfoRealTimeMessage(
+                        "CryptoSoft is currently busy, waiting for it to be available...",
+                        "CompleteSave",
+                        "",
+                        DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                        SaveTaskState.WAITING
+                    ));
+                    setState(SaveTaskState.WAITING);
+                    FileManager.WaitForInstance();
+                }
+
+                setState(SaveTaskState.RUNNING);
+
                 // Call CryptoSoft DLL (Blocking operation)
                 encryptionDuration = FileManager.CryptFile(file, targetFile, cryptoKey);
                 if (encryptionDuration < 0)
