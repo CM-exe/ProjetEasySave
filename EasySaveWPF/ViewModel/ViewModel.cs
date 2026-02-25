@@ -347,5 +347,9 @@ namespace ProjetEasySave.ViewModel
         {
             return _model.isBusinessSoftwareRunning();
         }
+        public void setEncryptionKey(string key)
+        {
+            Config.Instance.setEncryptionKey(key);
+        }
     }
 }
