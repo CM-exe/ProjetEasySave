@@ -32,14 +32,6 @@
         }
 
         // Methods
-
-        //public bool save(string sourceFolder, string destinationFolder, List<string> priorityExt)
-        //{
-        //    bool well_executed = _saveStrategy.doSave(sourceFolder, destinationFolder, priorityExt);
-        //    return well_executed;
-        //}
-
-        // Override
         public bool save(
     string sourceFolder,
     string destinationFolder,
@@ -118,7 +110,6 @@
             return string.Empty;
         }
 
-        // Override
         public Task<bool> saveAsync(
     string sourceFolder,
     string destinationFolder,

@@ -247,5 +247,11 @@ namespace ProjetEasySave.Model
             }
             _dict_lock = temp_dict_lock;
         }
+
+        public bool isBusinessSoftwareRunning()
+        {
+            ISaveStrategy tempStrategy = new CompleteSave(null, null);
+            return tempStrategy.isBusinessSoftwareRunning();
+        }
     }
 }

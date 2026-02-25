@@ -102,6 +102,11 @@ namespace ProjetEasySave.Model
             FileInfo fileInfo = new FileInfo(file);
             string extension = Path.GetExtension(file);
 
+            if (isBusinessSoftwareRunning())
+            {
+                waitForBusinessSoftwareToClose();
+            }
+
             // Information: 0 (no encryption), >0 (time in ms), <0 (error code)
             double encryptionDuration = 0;
             DateTime startTime = DateTime.Now;
@@ -273,11 +278,6 @@ namespace ProjetEasySave.Model
                         if (!pauseEvent.IsSet) progress?.Invoke(0, "Paused");
                         
                         pauseEvent.Wait(token);
-
-                        if (isBusinessSoftwareRunning())
-                        {
-                            waitForBusinessSoftwareToClose();
-                        }
 
                         // Process pending big files first if semaphore is available
                         if (_pendingFiles.Count > 0 && _bigFileSemaphore.CurrentCount > 0)
