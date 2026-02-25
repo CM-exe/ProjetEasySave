@@ -245,5 +245,6 @@ namespace ProjetEasySave.Utils
         public void setBoolLogsOnLocal(bool newBoolLogsOnLocal) { boolLogsOnLocal = newBoolLogsOnLocal.ToString(); saveConfigFile(); }
         public void setBiggestSize(int newBiggestSize) { biggestSize = newBiggestSize.ToString(); saveConfigFile(); }
         public void setEncryptionKey(string newEncryptionKey) { encryptionKey = newEncryptionKey; saveConfigFile(); }
+        public void setBusinessSoftwareName(string newBusinessSoftwareName) { businessSoftwareName = newBusinessSoftwareName; saveConfigFile(); }
     }
 }
