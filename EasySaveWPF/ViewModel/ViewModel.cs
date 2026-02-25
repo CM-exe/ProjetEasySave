@@ -203,5 +203,35 @@ namespace ProjetEasySave.ViewModel
         {
             Config.Instance.setBoolLogsOnLocal(value);
         }
+
+        public string getServerIp()
+        {
+            return Config.Instance.getServerIp();
+        }
+
+        public int getServerPort()
+        {
+            return Config.Instance.getServerPort();
+        }
+
+        public void setServerIp(string ip)
+        {
+            Config.Instance.setServerIp(ip);
+        }
+
+        public void setServerPort(int port)
+        {
+            Config.Instance.setServerPort(port);
+        }
+
+        public void reconnectToServer()
+        {
+            logger.reconnectToServer();
+        }
+
+        public bool isConnectedToServer()
+        {
+            return logger.isConnectedToServer();
+        }
     }
 }

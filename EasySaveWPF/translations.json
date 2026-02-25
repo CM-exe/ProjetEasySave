@@ -58,7 +58,13 @@
     "Enabled": "Activé",
     "Disabled": "Désactivé",
     "LogsOnServer": "Logs envoyés au serveur de log centralisé",
-    "LogsOnLocal": "Logs enregistrés localement"
+    "LogsOnLocal": "Logs enregistrés localement",
+    "ServerIp": "Ip du serveur de logs",
+    "ServerPort": "Port du serveur de logs",
+    "ReconnectToServer": "Essayer de se reconnecter au serveur de logs...",
+    "Connected": "Connecté",
+    "Disconnected": "Déconnecté",
+    "Connecting": "Connexion en cours..."
   },
   "en": {
     "AddSaveSpace": "Add save space",
@@ -119,6 +125,12 @@
     "Enabled": "Enabled",
     "Disabled": "Disabled",
     "LogsOnServer": "Logs sent to centralized log server",
-    "LogsOnLocal": "Logs saved locally"
+    "LogsOnLocal": "Logs saved locally",
+    "ServerIp": "Server ip of the log server",
+    "ServerPort": "Server port of the log server",
+    "ReconnectToServer": "Trying to reconnect to the log server...",
+    "Connected": "Connected",
+    "Disconnected": "Déconnected",
+    "Connecting": "Connecting..."
   }
 }

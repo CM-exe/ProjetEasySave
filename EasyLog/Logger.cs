@@ -121,6 +121,36 @@ namespace EasyLog
             return socket;
         }
 
+        private static void disconnectFromServer(Socket socket)
+        {
+            if (socket != null && socket.Connected)
+            {
+                socket.Shutdown(SocketShutdown.Both);
+                socket.Close();
+            }
+        }
+
+        public bool reconnectToServer()
+        {
+            try
+            {
+                disconnectFromServer(loggingServerSocket);
+                loggingServerSocket = connectToServer();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to reconnect to logging server: " + ex.Message);
+                loggingServerSocket = null; // Set to null if connection fails
+                return false;
+            }
+        }
+
+        public bool isConnectedToServer()
+        {
+            return loggingServerSocket != null && loggingServerSocket.Connected;
+        }
+
         private static void sendMessageToServer(Socket socket, string message)
         {
             byte[] data = Encoding.UTF8.GetBytes(message);

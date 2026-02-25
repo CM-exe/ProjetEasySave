@@ -302,6 +302,12 @@ namespace EasySaveWPF
             private readonly ToggleButton _logsOnServerToggle = new();
             private readonly TextBlock _logsOnLocalLabel = new();
             private readonly ToggleButton _logsOnLocalToggle = new();
+            private readonly TextBlock _serverIpLabel = new();
+            private readonly TextBox _serverIpTextBox = new();
+            private readonly TextBlock _serverPortLabel = new();
+            private readonly TextBox _serverPortTextBox = new();
+            private readonly Button _reconnectToServerBtn = new();
+            private readonly TextBlock _connectionToServerStateText = new();
 
             public ConfigDialog(ViewModel _viewModel, MainWindow _mainWindow)
             {
@@ -313,11 +319,12 @@ namespace EasySaveWPF
 
                 var grid = new Grid { Margin = new Thickness(12) };
 
-                // Row layout: 5 setting rows with small gaps, then spacer, then buttons row
-                for (int i = 0; i < 5; i++)
+                // Row layout: 8 setting rows with small gaps, then spacer, then buttons row
+                const int settingRows = 8;
+                for (int i = 0; i < settingRows; i++)
                 {
                     grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                    if (i < 4)
+                    if (i < settingRows-1)
                     grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(8) });
                 }
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }); // spacer
@@ -338,6 +345,10 @@ namespace EasySaveWPF
                     _logsOnServerToggle.Content = _logsOnServerToggle.IsChecked == true ? _language.translate("Enabled") : _language.translate("Disabled");
                     _logsOnLocalLabel.Text = _language.translate("LogsOnLocal");
                     _logsOnLocalToggle.Content = _logsOnLocalToggle.IsChecked == true ? _language.translate("Enabled") : _language.translate("Disabled");
+                    _serverIpLabel.Text = _language.translate("ServerIp");
+                    _serverPortLabel.Text = _language.translate("ServerPort");
+                    _reconnectToServerBtn.Content = "🔌 " + _language.translate("ReconnectToServer");
+                    _connectionToServerStateText.Text = _viewModel.isConnectedToServer() ? _language.translate("Connected") : _language.translate("Disconnected");
                 }
 
                 // Initial toggle states
@@ -386,7 +397,7 @@ namespace EasySaveWPF
 
                 Grid.SetRow(_logsOnServerToggle, 6);
                 Grid.SetColumn(_logsOnServerToggle, 1);
-                _logsOnServerToggle.HorizontalAlignment = HorizontalAlignment.Left;
+                _logsOnServerToggle.HorizontalAlignment = HorizontalAlignment.Center;
                 _logsOnServerToggle.Margin = new Thickness(0);
                 grid.Children.Add(_logsOnServerToggle);
 
@@ -398,9 +409,42 @@ namespace EasySaveWPF
 
                 Grid.SetRow(_logsOnLocalToggle, 8);
                 Grid.SetColumn(_logsOnLocalToggle, 1);
-                _logsOnLocalToggle.HorizontalAlignment = HorizontalAlignment.Left;
+                _logsOnLocalToggle.HorizontalAlignment = HorizontalAlignment.Center;
                 _logsOnLocalToggle.Margin = new Thickness(0);
                 grid.Children.Add(_logsOnLocalToggle);
+
+                // Server IP row (row 10)
+                Grid.SetRow(_serverIpLabel, 10);
+                Grid.SetColumn(_serverIpLabel, 0);
+                _serverIpLabel.VerticalAlignment = VerticalAlignment.Center;
+                grid.Children.Add(_serverIpLabel);
+                
+                Grid.SetRow(_serverIpTextBox, 10);
+                Grid.SetColumn(_serverIpTextBox, 1);
+                _serverIpTextBox.Width = 150;
+                grid.Children.Add(_serverIpTextBox);
+
+                // Server port row (row 12)
+                Grid.SetRow(_serverPortLabel, 12);
+                Grid.SetColumn(_serverPortLabel, 0);
+                _serverPortLabel.VerticalAlignment = VerticalAlignment.Center;
+                grid.Children.Add(_serverPortLabel);
+
+                Grid.SetRow(_serverPortTextBox, 12);
+                Grid.SetColumn(_serverPortTextBox, 1);
+                _serverPortTextBox.Width = 100;
+                grid.Children.Add(_serverPortTextBox);
+
+                // Reconnect to server button row (row 14)
+                Grid.SetRow(_reconnectToServerBtn, 14);
+                Grid.SetColumn(_reconnectToServerBtn, 0);
+                _reconnectToServerBtn.HorizontalAlignment = HorizontalAlignment.Center;
+                grid.Children.Add(_reconnectToServerBtn);
+
+                Grid.SetRow(_connectionToServerStateText, 14);
+                Grid.SetColumn(_connectionToServerStateText, 1);
+                _connectionToServerStateText.HorizontalAlignment = HorizontalAlignment.Center;
+                grid.Children.Add(_connectionToServerStateText);
 
                 // Language button click
                 _languageButton.Click += (_, __) =>
@@ -473,7 +517,7 @@ namespace EasySaveWPF
                     if (e is DataObjectPastingEventArgs args2) args2.CancelCommand();
                     }
                 });
-
+                // Validate and update config on lost focus
                 _maxSizeTextBox.LostFocus += (s, e) =>
                 {
                     if (int.TryParse(_maxSizeTextBox.Text.Trim(), out int maxSize))
@@ -493,15 +537,6 @@ namespace EasySaveWPF
                     }
                 };
 
-                // Update viewmodel as the user types valid numbers
-                _maxSizeTextBox.TextChanged += (s, e) =>
-                {
-                    if (int.TryParse(_maxSizeTextBox.Text.Trim(), out int maxSize))
-                    {
-                    _viewModel.setMaxSize(maxSize);
-                    }
-                };
-
                 // Logs on server toggle
                 _logsOnServerToggle.Checked += (s, e) => { _viewModel.setBoolLogsOnServer(true); RefreshTexts(); };
                 _logsOnServerToggle.Unchecked += (s, e) => { _viewModel.setBoolLogsOnServer(false); RefreshTexts(); };
@@ -509,6 +544,103 @@ namespace EasySaveWPF
                 // Logs on local toggle
                 _logsOnLocalToggle.Checked += (s, e) => { _viewModel.setBoolLogsOnLocal(true); RefreshTexts(); };
                 _logsOnLocalToggle.Unchecked += (s, e) => { _viewModel.setBoolLogsOnLocal(false); RefreshTexts(); };
+
+                // Set initial value for server IP
+                _serverIpTextBox.Text = _viewModel.getServerIp();
+
+                // Only allow ip format
+                _serverIpTextBox.PreviewTextInput += (s, e) =>
+                {
+                    e.Handled = !char.IsDigit(e.Text, 0) && e.Text != ".";
+                };
+                DataObject.AddPastingHandler(_serverIpTextBox, (s, e) =>
+                {
+                    if (e is DataObjectPastingEventArgs args && args.DataObject.GetDataPresent(DataFormats.Text))
+                    {
+                    string text = (string)args.DataObject.GetData(DataFormats.Text);
+                    if (!text.All(c => char.IsDigit(c) || c == '.'))
+                    {
+                        args.CancelCommand();
+                    }
+                    }
+                    else
+                    {
+                    // If not text, cancel
+                    if (e is DataObjectPastingEventArgs args2) args2.CancelCommand();
+                    }
+                });
+                // Validate and update config on lost focus
+                _serverIpTextBox.LostFocus += (s, e) =>
+                {
+                    string ip = _serverIpTextBox.Text.Trim();
+                    if (System.Net.IPAddress.TryParse(ip, out _))
+                    {
+                        _viewModel.setServerIp(ip);
+                    }
+                    else
+                    {
+                        _serverIpTextBox.Text = _viewModel.getServerIp();
+                        MessageBox.Show(
+                            _language.translate("InvalidServerIp"),
+                            "EasySave",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error
+                        );
+                    }
+                };
+
+                // Set initial value for server port
+                _serverPortTextBox.Text = _viewModel.getServerPort().ToString();
+
+                // Only allow numbers in _serverPortTextBox
+                _serverPortTextBox.PreviewTextInput += (s, e) =>
+                {
+                    e.Handled = !e.Text.All(char.IsDigit);
+                };
+                DataObject.AddPastingHandler(_serverPortTextBox, (s, e) =>
+                {
+                    if (e is DataObjectPastingEventArgs args && args.DataObject.GetDataPresent(DataFormats.Text))
+                    {
+                    string text = (string)args.DataObject.GetData(DataFormats.Text);
+                    if (!text.All(char.IsDigit))
+                    {
+                        args.CancelCommand();
+                    }
+                    }
+                    else
+                    {
+                    // If not text, cancel
+                    if (e is DataObjectPastingEventArgs args2) args2.CancelCommand();
+                    }
+                });
+                // Validate and update config on lost focus
+                _serverPortTextBox.LostFocus += (s, e) =>
+                {
+                    if (int.TryParse(_serverPortTextBox.Text.Trim(), out int port) && port >= 0 && port <= 65535)
+                    {
+                        _viewModel.setServerPort(port);
+                    }
+                    else
+                    {
+                        _serverPortTextBox.Text = _viewModel.getServerPort().ToString();
+                        MessageBox.Show(
+                            _language.translate("InvalidServerPort"),
+                            "EasySave",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error
+                        );
+                    }
+                };
+
+                // Reconnect to server button click
+                _reconnectToServerBtn.Click += (_, __) =>
+                {
+                    _connectionToServerStateText.Text = _language.translate("Connecting");
+                    _viewModel.reconnectToServer();
+                    RefreshTexts();
+                };
+
+
 
                 // Buttons (row after spacer)
                 var buttonsPanel = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
