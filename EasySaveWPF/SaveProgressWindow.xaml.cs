@@ -22,6 +22,9 @@ namespace EasySaveWPF
             _viewModel = viewModel;
             _saveSpaceName = saveSpaceName;
 
+            // Set the save space name in the view
+            SaveNameTextBlock.Text = _saveSpaceName;
+
 
             DataContext = _viewModel.GetJobState(_saveSpaceName);
 
