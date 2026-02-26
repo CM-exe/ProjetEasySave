@@ -1,0 +1,505 @@
+### YamlMime:ManagedReference
+items:
+- uid: CryptoSoft.FileManager
+  commentId: T:CryptoSoft.FileManager
+  id: FileManager
+  parent: CryptoSoft
+  children:
+  - CryptoSoft.FileManager.CryptFile(System.String,System.String,System.String)
+  - CryptoSoft.FileManager.IsSingleInstance
+  - CryptoSoft.FileManager.ReleaseInstance
+  - CryptoSoft.FileManager.WaitForInstance
+  langs:
+  - csharp
+  - vb
+  name: FileManager
+  nameWithType: FileManager
+  fullName: CryptoSoft.FileManager
+  type: Class
+  source:
+    remote:
+      path: CryptoSoft/FileManager.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: FileManager
+    path: CryptoSoft/FileManager.cs
+    startLine: 24
+  assemblies:
+  - CryptoSoft
+  namespace: CryptoSoft
+  summary: >-
+    Provides logic for file encryption and decryption using XOR operations.
+
+    Ensures single-instance execution across the system using a global Mutex.
+  example:
+  - >-
+    Usage example:
+
+
+    <pre><code class="lang-csharp">if (FileManager.IsSingleInstance)
+
+    {
+        // This is the only instance, proceed with encryption
+        double timeTaken = FileManager.CryptFile("path/to/source.txt", "path/to/dest.txt", "encryptionKey");
+        Console.WriteLine($"File encrypted in {timeTaken} ms");
+    }
+
+    else
+
+    {
+        // Another instance is already running, wait for it to finish
+        Console.WriteLine("Another instance is running. Waiting...");
+        FileManager.WaitForInstance();
+        Console.WriteLine("Previous instance finished. You can now run the encryption.");
+    }</code></pre>
+  syntax:
+    content: public class FileManager
+    content.vb: Public Class FileManager
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: CryptoSoft.FileManager.IsSingleInstance
+  commentId: P:CryptoSoft.FileManager.IsSingleInstance
+  id: IsSingleInstance
+  parent: CryptoSoft.FileManager
+  langs:
+  - csharp
+  - vb
+  name: IsSingleInstance
+  nameWithType: FileManager.IsSingleInstance
+  fullName: CryptoSoft.FileManager.IsSingleInstance
+  type: Property
+  source:
+    remote:
+      path: CryptoSoft/FileManager.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: IsSingleInstance
+    path: CryptoSoft/FileManager.cs
+    startLine: 44
+  assemblies:
+  - CryptoSoft
+  namespace: CryptoSoft
+  summary: >-
+    Gets a value indicating whether this process is the only instance (true), 
+
+    or if another instance already holds the encryption mutex (false).
+  example: []
+  syntax:
+    content: public static bool IsSingleInstance { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared ReadOnly Property IsSingleInstance As Boolean
+  overload: CryptoSoft.FileManager.IsSingleInstance*
+- uid: CryptoSoft.FileManager.ReleaseInstance
+  commentId: M:CryptoSoft.FileManager.ReleaseInstance
+  id: ReleaseInstance
+  parent: CryptoSoft.FileManager
+  langs:
+  - csharp
+  - vb
+  name: ReleaseInstance()
+  nameWithType: FileManager.ReleaseInstance()
+  fullName: CryptoSoft.FileManager.ReleaseInstance()
+  type: Method
+  source:
+    remote:
+      path: CryptoSoft/FileManager.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: ReleaseInstance
+    path: CryptoSoft/FileManager.cs
+    startLine: 50
+  assemblies:
+  - CryptoSoft
+  namespace: CryptoSoft
+  summary: >-
+    Releases the global mutex if this process created and owns it.
+
+    Note: This is optional as the mutex will be automatically released upon process exit.
+  example: []
+  syntax:
+    content: public static void ReleaseInstance()
+    content.vb: Public Shared Sub ReleaseInstance()
+  overload: CryptoSoft.FileManager.ReleaseInstance*
+- uid: CryptoSoft.FileManager.WaitForInstance
+  commentId: M:CryptoSoft.FileManager.WaitForInstance
+  id: WaitForInstance
+  parent: CryptoSoft.FileManager
+  langs:
+  - csharp
+  - vb
+  name: WaitForInstance()
+  nameWithType: FileManager.WaitForInstance()
+  fullName: CryptoSoft.FileManager.WaitForInstance()
+  type: Method
+  source:
+    remote:
+      path: CryptoSoft/FileManager.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: WaitForInstance
+    path: CryptoSoft/FileManager.cs
+    startLine: 62
+  assemblies:
+  - CryptoSoft
+  namespace: CryptoSoft
+  summary: Blocks the current thread and waits until the global mutex is released by another running instance.
+  example: []
+  syntax:
+    content: public static void WaitForInstance()
+    content.vb: Public Shared Sub WaitForInstance()
+  overload: CryptoSoft.FileManager.WaitForInstance*
+- uid: CryptoSoft.FileManager.CryptFile(System.String,System.String,System.String)
+  commentId: M:CryptoSoft.FileManager.CryptFile(System.String,System.String,System.String)
+  id: CryptFile(System.String,System.String,System.String)
+  parent: CryptoSoft.FileManager
+  langs:
+  - csharp
+  - vb
+  name: CryptFile(string, string, string)
+  nameWithType: FileManager.CryptFile(string, string, string)
+  fullName: CryptoSoft.FileManager.CryptFile(string, string, string)
+  type: Method
+  source:
+    remote:
+      path: CryptoSoft/FileManager.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: CryptFile
+    path: CryptoSoft/FileManager.cs
+    startLine: 77
+  assemblies:
+  - CryptoSoft
+  namespace: CryptoSoft
+  summary: Encrypts (or decrypts) a source file and writes the result to a destination path using an XOR cipher.
+  example: []
+  syntax:
+    content: public static double CryptFile(string sourcePath, string destPath, string key)
+    parameters:
+    - id: sourcePath
+      type: System.String
+      description: The absolute or relative path to the file to be encrypted.
+    - id: destPath
+      type: System.String
+      description: The absolute or relative path where the encrypted file will be saved.
+    - id: key
+      type: System.String
+      description: The encryption key used for the XOR operation.
+    return:
+      type: System.Double
+      description: The time taken to complete the encryption process in milliseconds. Returns <code>-1</code> if the source file does not exist.
+    content.vb: Public Shared Function CryptFile(sourcePath As String, destPath As String, key As String) As Double
+  overload: CryptoSoft.FileManager.CryptFile*
+  nameWithType.vb: FileManager.CryptFile(String, String, String)
+  fullName.vb: CryptoSoft.FileManager.CryptFile(String, String, String)
+  name.vb: CryptFile(String, String, String)
+references:
+- uid: CryptoSoft
+  commentId: N:CryptoSoft
+  href: CryptoSoft.html
+  name: CryptoSoft
+  nameWithType: CryptoSoft
+  fullName: CryptoSoft
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: CryptoSoft.FileManager.IsSingleInstance*
+  commentId: Overload:CryptoSoft.FileManager.IsSingleInstance
+  href: CryptoSoft.FileManager.html#CryptoSoft_FileManager_IsSingleInstance
+  name: IsSingleInstance
+  nameWithType: FileManager.IsSingleInstance
+  fullName: CryptoSoft.FileManager.IsSingleInstance
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: CryptoSoft.FileManager.ReleaseInstance*
+  commentId: Overload:CryptoSoft.FileManager.ReleaseInstance
+  href: CryptoSoft.FileManager.html#CryptoSoft_FileManager_ReleaseInstance
+  name: ReleaseInstance
+  nameWithType: FileManager.ReleaseInstance
+  fullName: CryptoSoft.FileManager.ReleaseInstance
+- uid: CryptoSoft.FileManager.WaitForInstance*
+  commentId: Overload:CryptoSoft.FileManager.WaitForInstance
+  href: CryptoSoft.FileManager.html#CryptoSoft_FileManager_WaitForInstance
+  name: WaitForInstance
+  nameWithType: FileManager.WaitForInstance
+  fullName: CryptoSoft.FileManager.WaitForInstance
+- uid: CryptoSoft.FileManager.CryptFile*
+  commentId: Overload:CryptoSoft.FileManager.CryptFile
+  href: CryptoSoft.FileManager.html#CryptoSoft_FileManager_CryptFile_System_String_System_String_System_String_
+  name: CryptFile
+  nameWithType: FileManager.CryptFile
+  fullName: CryptoSoft.FileManager.CryptFile
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double

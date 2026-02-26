@@ -1,0 +1,62 @@
+### YamlMime:ManagedReference
+items:
+- uid: ProjetEasySave.ViewModel
+  commentId: N:ProjetEasySave.ViewModel
+  id: ProjetEasySave.ViewModel
+  children:
+  - ProjetEasySave.ViewModel.LanguageService
+  - ProjetEasySave.ViewModel.SaveJobState
+  - ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: ProjetEasySave.ViewModel
+  nameWithType: ProjetEasySave.ViewModel
+  fullName: ProjetEasySave.ViewModel
+  type: Namespace
+  assemblies:
+  - EasySaveWPF
+references:
+- uid: ProjetEasySave.ViewModel.LanguageService
+  commentId: T:ProjetEasySave.ViewModel.LanguageService
+  parent: ProjetEasySave.ViewModel
+  href: ProjetEasySave.ViewModel.LanguageService.html
+  name: LanguageService
+  nameWithType: LanguageService
+  fullName: ProjetEasySave.ViewModel.LanguageService
+- uid: ProjetEasySave.ViewModel.SaveJobState
+  commentId: T:ProjetEasySave.ViewModel.SaveJobState
+  parent: ProjetEasySave.ViewModel
+  href: ProjetEasySave.ViewModel.SaveJobState.html
+  name: SaveJobState
+  nameWithType: SaveJobState
+  fullName: ProjetEasySave.ViewModel.SaveJobState
+- uid: ProjetEasySave.ViewModel.ViewModel
+  commentId: T:ProjetEasySave.ViewModel.ViewModel
+  parent: ProjetEasySave.ViewModel
+  href: ProjetEasySave.ViewModel.ViewModel.html
+  name: ViewModel
+  nameWithType: ViewModel
+  fullName: ProjetEasySave.ViewModel.ViewModel
+- uid: ProjetEasySave.ViewModel
+  commentId: N:ProjetEasySave.ViewModel
+  href: ProjetEasySave.html
+  name: ProjetEasySave.ViewModel
+  nameWithType: ProjetEasySave.ViewModel
+  fullName: ProjetEasySave.ViewModel
+  spec.csharp:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.ViewModel
+    name: ViewModel
+    href: ProjetEasySave.ViewModel.html
+  spec.vb:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.ViewModel
+    name: ViewModel
+    href: ProjetEasySave.ViewModel.html

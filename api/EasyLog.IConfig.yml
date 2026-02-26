@@ -1,0 +1,507 @@
+### YamlMime:ManagedReference
+items:
+- uid: EasyLog.IConfig
+  commentId: T:EasyLog.IConfig
+  id: IConfig
+  parent: EasyLog
+  children:
+  - EasyLog.IConfig.getBoolLogsOnLocal
+  - EasyLog.IConfig.getBoolLogsOnServer
+  - EasyLog.IConfig.getLogDirectoryPath
+  - EasyLog.IConfig.getLogRealTimeFile
+  - EasyLog.IConfig.getLogsFormat
+  - EasyLog.IConfig.getServerIp
+  - EasyLog.IConfig.getServerPort
+  - EasyLog.IConfig.loadConfigFile
+  - EasyLog.IConfig.setLogsFormat(System.String)
+  - EasyLog.IConfig.setServerIp(System.String)
+  - EasyLog.IConfig.setServerPort(System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: IConfig
+  nameWithType: IConfig
+  fullName: EasyLog.IConfig
+  type: Interface
+  source:
+    remote:
+      path: EasyLog/IConfig.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: IConfig
+    path: EasyLog/IConfig.cs
+    startLine: 6
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: >-
+    Defines the configuration contract required by the logging system.
+
+    Any class implementing this interface must provide paths, formats, and networking details for the logger.
+  example: []
+  syntax:
+    content: public interface IConfig
+    content.vb: Public Interface IConfig
+- uid: EasyLog.IConfig.getLogDirectoryPath
+  commentId: M:EasyLog.IConfig.getLogDirectoryPath
+  id: getLogDirectoryPath
+  parent: EasyLog.IConfig
+  langs:
+  - csharp
+  - vb
+  name: getLogDirectoryPath()
+  nameWithType: IConfig.getLogDirectoryPath()
+  fullName: EasyLog.IConfig.getLogDirectoryPath()
+  type: Method
+  source:
+    remote:
+      path: EasyLog/IConfig.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getLogDirectoryPath
+    path: EasyLog/IConfig.cs
+    startLine: 12
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Retrieves the directory path where local daily log files are stored.
+  example: []
+  syntax:
+    content: string getLogDirectoryPath()
+    return:
+      type: System.String
+      description: A string representing the log directory path.
+    content.vb: Function getLogDirectoryPath() As String
+  overload: EasyLog.IConfig.getLogDirectoryPath*
+- uid: EasyLog.IConfig.loadConfigFile
+  commentId: M:EasyLog.IConfig.loadConfigFile
+  id: loadConfigFile
+  parent: EasyLog.IConfig
+  langs:
+  - csharp
+  - vb
+  name: loadConfigFile()
+  nameWithType: IConfig.loadConfigFile()
+  fullName: EasyLog.IConfig.loadConfigFile()
+  type: Method
+  source:
+    remote:
+      path: EasyLog/IConfig.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: loadConfigFile
+    path: EasyLog/IConfig.cs
+    startLine: 17
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Loads or reloads the configuration settings from the underlying physical file (e.g., a JSON config file).
+  example: []
+  syntax:
+    content: void loadConfigFile()
+    content.vb: Sub loadConfigFile()
+  overload: EasyLog.IConfig.loadConfigFile*
+- uid: EasyLog.IConfig.getLogsFormat
+  commentId: M:EasyLog.IConfig.getLogsFormat
+  id: getLogsFormat
+  parent: EasyLog.IConfig
+  langs:
+  - csharp
+  - vb
+  name: getLogsFormat()
+  nameWithType: IConfig.getLogsFormat()
+  fullName: EasyLog.IConfig.getLogsFormat()
+  type: Method
+  source:
+    remote:
+      path: EasyLog/IConfig.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getLogsFormat
+    path: EasyLog/IConfig.cs
+    startLine: 23
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Retrieves the current global formatting style used for generated logs (e.g., "JSON" or "XML").
+  example: []
+  syntax:
+    content: string getLogsFormat()
+    return:
+      type: System.String
+      description: A string representing the log format.
+    content.vb: Function getLogsFormat() As String
+  overload: EasyLog.IConfig.getLogsFormat*
+- uid: EasyLog.IConfig.getLogRealTimeFile
+  commentId: M:EasyLog.IConfig.getLogRealTimeFile
+  id: getLogRealTimeFile
+  parent: EasyLog.IConfig
+  langs:
+  - csharp
+  - vb
+  name: getLogRealTimeFile()
+  nameWithType: IConfig.getLogRealTimeFile()
+  fullName: EasyLog.IConfig.getLogRealTimeFile()
+  type: Method
+  source:
+    remote:
+      path: EasyLog/IConfig.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getLogRealTimeFile
+    path: EasyLog/IConfig.cs
+    startLine: 29
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Retrieves the specific file path used to track the real-time state of ongoing tasks.
+  example: []
+  syntax:
+    content: string getLogRealTimeFile()
+    return:
+      type: System.String
+      description: A string representing the real-time log file path.
+    content.vb: Function getLogRealTimeFile() As String
+  overload: EasyLog.IConfig.getLogRealTimeFile*
+- uid: EasyLog.IConfig.getServerIp
+  commentId: M:EasyLog.IConfig.getServerIp
+  id: getServerIp
+  parent: EasyLog.IConfig
+  langs:
+  - csharp
+  - vb
+  name: getServerIp()
+  nameWithType: IConfig.getServerIp()
+  fullName: EasyLog.IConfig.getServerIp()
+  type: Method
+  source:
+    remote:
+      path: EasyLog/IConfig.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getServerIp
+    path: EasyLog/IConfig.cs
+    startLine: 35
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Retrieves the target IP address of the centralized logging server.
+  example: []
+  syntax:
+    content: string getServerIp()
+    return:
+      type: System.String
+      description: A string representing the server's IP address.
+    content.vb: Function getServerIp() As String
+  overload: EasyLog.IConfig.getServerIp*
+- uid: EasyLog.IConfig.getServerPort
+  commentId: M:EasyLog.IConfig.getServerPort
+  id: getServerPort
+  parent: EasyLog.IConfig
+  langs:
+  - csharp
+  - vb
+  name: getServerPort()
+  nameWithType: IConfig.getServerPort()
+  fullName: EasyLog.IConfig.getServerPort()
+  type: Method
+  source:
+    remote:
+      path: EasyLog/IConfig.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getServerPort
+    path: EasyLog/IConfig.cs
+    startLine: 41
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Retrieves the target port number used to connect to the centralized logging server.
+  example: []
+  syntax:
+    content: int getServerPort()
+    return:
+      type: System.Int32
+      description: An integer representing the server's port.
+    content.vb: Function getServerPort() As Integer
+  overload: EasyLog.IConfig.getServerPort*
+- uid: EasyLog.IConfig.getBoolLogsOnServer
+  commentId: M:EasyLog.IConfig.getBoolLogsOnServer
+  id: getBoolLogsOnServer
+  parent: EasyLog.IConfig
+  langs:
+  - csharp
+  - vb
+  name: getBoolLogsOnServer()
+  nameWithType: IConfig.getBoolLogsOnServer()
+  fullName: EasyLog.IConfig.getBoolLogsOnServer()
+  type: Method
+  source:
+    remote:
+      path: EasyLog/IConfig.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getBoolLogsOnServer
+    path: EasyLog/IConfig.cs
+    startLine: 47
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Checks whether the application is configured to send logs over the network to a central server.
+  example: []
+  syntax:
+    content: bool getBoolLogsOnServer()
+    return:
+      type: System.Boolean
+      description: <code>true</code> if server logging is enabled; otherwise, <code>false</code>.
+    content.vb: Function getBoolLogsOnServer() As Boolean
+  overload: EasyLog.IConfig.getBoolLogsOnServer*
+- uid: EasyLog.IConfig.getBoolLogsOnLocal
+  commentId: M:EasyLog.IConfig.getBoolLogsOnLocal
+  id: getBoolLogsOnLocal
+  parent: EasyLog.IConfig
+  langs:
+  - csharp
+  - vb
+  name: getBoolLogsOnLocal()
+  nameWithType: IConfig.getBoolLogsOnLocal()
+  fullName: EasyLog.IConfig.getBoolLogsOnLocal()
+  type: Method
+  source:
+    remote:
+      path: EasyLog/IConfig.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getBoolLogsOnLocal
+    path: EasyLog/IConfig.cs
+    startLine: 53
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Checks whether the application is configured to persist logs locally on the machine.
+  example: []
+  syntax:
+    content: bool getBoolLogsOnLocal()
+    return:
+      type: System.Boolean
+      description: <code>true</code> if local logging is enabled; otherwise, <code>false</code>.
+    content.vb: Function getBoolLogsOnLocal() As Boolean
+  overload: EasyLog.IConfig.getBoolLogsOnLocal*
+- uid: EasyLog.IConfig.setLogsFormat(System.String)
+  commentId: M:EasyLog.IConfig.setLogsFormat(System.String)
+  id: setLogsFormat(System.String)
+  parent: EasyLog.IConfig
+  langs:
+  - csharp
+  - vb
+  name: setLogsFormat(string)
+  nameWithType: IConfig.setLogsFormat(string)
+  fullName: EasyLog.IConfig.setLogsFormat(string)
+  type: Method
+  source:
+    remote:
+      path: EasyLog/IConfig.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setLogsFormat
+    path: EasyLog/IConfig.cs
+    startLine: 59
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Updates the formatting style used for future log entries.
+  example: []
+  syntax:
+    content: void setLogsFormat(string newLogsFormat)
+    parameters:
+    - id: newLogsFormat
+      type: System.String
+      description: The new format to apply (e.g., "JSON" or "XML").
+    content.vb: Sub setLogsFormat(newLogsFormat As String)
+  overload: EasyLog.IConfig.setLogsFormat*
+  nameWithType.vb: IConfig.setLogsFormat(String)
+  fullName.vb: EasyLog.IConfig.setLogsFormat(String)
+  name.vb: setLogsFormat(String)
+- uid: EasyLog.IConfig.setServerIp(System.String)
+  commentId: M:EasyLog.IConfig.setServerIp(System.String)
+  id: setServerIp(System.String)
+  parent: EasyLog.IConfig
+  langs:
+  - csharp
+  - vb
+  name: setServerIp(string)
+  nameWithType: IConfig.setServerIp(string)
+  fullName: EasyLog.IConfig.setServerIp(string)
+  type: Method
+  source:
+    remote:
+      path: EasyLog/IConfig.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setServerIp
+    path: EasyLog/IConfig.cs
+    startLine: 65
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Updates the IP address of the remote centralized logging server.
+  example: []
+  syntax:
+    content: void setServerIp(string newServerIp)
+    parameters:
+    - id: newServerIp
+      type: System.String
+      description: The new server IP address.
+    content.vb: Sub setServerIp(newServerIp As String)
+  overload: EasyLog.IConfig.setServerIp*
+  nameWithType.vb: IConfig.setServerIp(String)
+  fullName.vb: EasyLog.IConfig.setServerIp(String)
+  name.vb: setServerIp(String)
+- uid: EasyLog.IConfig.setServerPort(System.Int32)
+  commentId: M:EasyLog.IConfig.setServerPort(System.Int32)
+  id: setServerPort(System.Int32)
+  parent: EasyLog.IConfig
+  langs:
+  - csharp
+  - vb
+  name: setServerPort(int)
+  nameWithType: IConfig.setServerPort(int)
+  fullName: EasyLog.IConfig.setServerPort(int)
+  type: Method
+  source:
+    remote:
+      path: EasyLog/IConfig.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setServerPort
+    path: EasyLog/IConfig.cs
+    startLine: 71
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Updates the port number of the remote centralized logging server.
+  example: []
+  syntax:
+    content: void setServerPort(int newServerPort)
+    parameters:
+    - id: newServerPort
+      type: System.Int32
+      description: The new server port number.
+    content.vb: Sub setServerPort(newServerPort As Integer)
+  overload: EasyLog.IConfig.setServerPort*
+  nameWithType.vb: IConfig.setServerPort(Integer)
+  fullName.vb: EasyLog.IConfig.setServerPort(Integer)
+  name.vb: setServerPort(Integer)
+references:
+- uid: EasyLog
+  commentId: N:EasyLog
+  href: EasyLog.html
+  name: EasyLog
+  nameWithType: EasyLog
+  fullName: EasyLog
+- uid: EasyLog.IConfig.getLogDirectoryPath*
+  commentId: Overload:EasyLog.IConfig.getLogDirectoryPath
+  href: EasyLog.IConfig.html#EasyLog_IConfig_getLogDirectoryPath
+  name: getLogDirectoryPath
+  nameWithType: IConfig.getLogDirectoryPath
+  fullName: EasyLog.IConfig.getLogDirectoryPath
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: EasyLog.IConfig.loadConfigFile*
+  commentId: Overload:EasyLog.IConfig.loadConfigFile
+  href: EasyLog.IConfig.html#EasyLog_IConfig_loadConfigFile
+  name: loadConfigFile
+  nameWithType: IConfig.loadConfigFile
+  fullName: EasyLog.IConfig.loadConfigFile
+- uid: EasyLog.IConfig.getLogsFormat*
+  commentId: Overload:EasyLog.IConfig.getLogsFormat
+  href: EasyLog.IConfig.html#EasyLog_IConfig_getLogsFormat
+  name: getLogsFormat
+  nameWithType: IConfig.getLogsFormat
+  fullName: EasyLog.IConfig.getLogsFormat
+- uid: EasyLog.IConfig.getLogRealTimeFile*
+  commentId: Overload:EasyLog.IConfig.getLogRealTimeFile
+  href: EasyLog.IConfig.html#EasyLog_IConfig_getLogRealTimeFile
+  name: getLogRealTimeFile
+  nameWithType: IConfig.getLogRealTimeFile
+  fullName: EasyLog.IConfig.getLogRealTimeFile
+- uid: EasyLog.IConfig.getServerIp*
+  commentId: Overload:EasyLog.IConfig.getServerIp
+  href: EasyLog.IConfig.html#EasyLog_IConfig_getServerIp
+  name: getServerIp
+  nameWithType: IConfig.getServerIp
+  fullName: EasyLog.IConfig.getServerIp
+- uid: EasyLog.IConfig.getServerPort*
+  commentId: Overload:EasyLog.IConfig.getServerPort
+  href: EasyLog.IConfig.html#EasyLog_IConfig_getServerPort
+  name: getServerPort
+  nameWithType: IConfig.getServerPort
+  fullName: EasyLog.IConfig.getServerPort
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: EasyLog.IConfig.getBoolLogsOnServer*
+  commentId: Overload:EasyLog.IConfig.getBoolLogsOnServer
+  href: EasyLog.IConfig.html#EasyLog_IConfig_getBoolLogsOnServer
+  name: getBoolLogsOnServer
+  nameWithType: IConfig.getBoolLogsOnServer
+  fullName: EasyLog.IConfig.getBoolLogsOnServer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: EasyLog.IConfig.getBoolLogsOnLocal*
+  commentId: Overload:EasyLog.IConfig.getBoolLogsOnLocal
+  href: EasyLog.IConfig.html#EasyLog_IConfig_getBoolLogsOnLocal
+  name: getBoolLogsOnLocal
+  nameWithType: IConfig.getBoolLogsOnLocal
+  fullName: EasyLog.IConfig.getBoolLogsOnLocal
+- uid: EasyLog.IConfig.setLogsFormat*
+  commentId: Overload:EasyLog.IConfig.setLogsFormat
+  href: EasyLog.IConfig.html#EasyLog_IConfig_setLogsFormat_System_String_
+  name: setLogsFormat
+  nameWithType: IConfig.setLogsFormat
+  fullName: EasyLog.IConfig.setLogsFormat
+- uid: EasyLog.IConfig.setServerIp*
+  commentId: Overload:EasyLog.IConfig.setServerIp
+  href: EasyLog.IConfig.html#EasyLog_IConfig_setServerIp_System_String_
+  name: setServerIp
+  nameWithType: IConfig.setServerIp
+  fullName: EasyLog.IConfig.setServerIp
+- uid: EasyLog.IConfig.setServerPort*
+  commentId: Overload:EasyLog.IConfig.setServerPort
+  href: EasyLog.IConfig.html#EasyLog_IConfig_setServerPort_System_Int32_
+  name: setServerPort
+  nameWithType: IConfig.setServerPort
+  fullName: EasyLog.IConfig.setServerPort

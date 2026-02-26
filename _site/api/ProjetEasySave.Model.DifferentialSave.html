@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class DifferentialSave | EasySaveDocs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class DifferentialSave | EasySaveDocs ">
+      
+      <meta name="description" content="Represents the differential backup strategy implementation of the  interface.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Natjom/ProjetEasySave/new/draft/V3-docfx/apiSpec/new?filename=ProjetEasySave_Model_DifferentialSave.md&amp;value=---%0Auid%3A%20ProjetEasySave.Model.DifferentialSave%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="EasySaveDocs">
+            EasySaveDocs
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="ProjetEasySave.Model.DifferentialSave">
+
+
+
+  <h1 id="ProjetEasySave_Model_DifferentialSave" data-uid="ProjetEasySave.Model.DifferentialSave" class="text-break">
+Class DifferentialSave  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/DifferentialSave.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="ProjetEasySave.html">ProjetEasySave</a>.<a class="xref" href="ProjetEasySave.Model.html">Model</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>EasySaveWPF.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Represents the differential backup strategy implementation of the <a class="xref" href="ProjetEasySave.Model.ISaveStrategy.html">ISaveStrategy</a> interface.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class DifferentialSave : ISaveStrategy</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">DifferentialSave</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="ProjetEasySave.Model.ISaveStrategy.html">ISaveStrategy</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="ProjetEasySave_Model_DifferentialSave_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This strategy compares the source directory against a previously completed full backup.
+It only copies files that are new or have been modified since that full backup.
+It handles large files, encryption, and pauses when restricted business software is running.</p>
+</div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="ProjetEasySave_Model_DifferentialSave__ctor_" data-uid="ProjetEasySave.Model.DifferentialSave.#ctor*"></a>
+
+  <h3 id="ProjetEasySave_Model_DifferentialSave__ctor_ProjetEasySave_Model_SaveTask_System_Threading_SemaphoreSlim_System_String_" data-uid="ProjetEasySave.Model.DifferentialSave.#ctor(ProjetEasySave.Model.SaveTask,System.Threading.SemaphoreSlim,System.String)">
+  DifferentialSave(SaveTask, SemaphoreSlim, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/DifferentialSave.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="ProjetEasySave.Model.DifferentialSave.html">DifferentialSave</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DifferentialSave(SaveTask saveTask, SemaphoreSlim bigFileSemaphore, string fullBackupPath)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>saveTask</code> <a class="xref" href="ProjetEasySave.Model.SaveTask.html">SaveTask</a></dt>
+    <dd><p>The main task object associated with this backup operation.</p>
+</dd>
+    <dt><code>bigFileSemaphore</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.semaphoreslim">SemaphoreSlim</a></dt>
+    <dd><p>The semaphore used to limit concurrent transfers of large files across the application.</p>
+</dd>
+    <dt><code>fullBackupPath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The reference path to the last complete backup used for comparison.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="ProjetEasySave_Model_DifferentialSave_doSave_" data-uid="ProjetEasySave.Model.DifferentialSave.doSave*"></a>
+
+  <h3 id="ProjetEasySave_Model_DifferentialSave_doSave_System_String_System_String_System_Collections_Generic_List_System_String__System_Threading_CancellationToken_System_Threading_ManualResetEventSlim_System_Action_System_Int32_System_String__" data-uid="ProjetEasySave.Model.DifferentialSave.doSave(System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.CancellationToken,System.Threading.ManualResetEventSlim,System.Action{System.Int32,System.String})">
+  doSave(string, string, List&lt;string&gt;, CancellationToken, ManualResetEventSlim, Action&lt;int, string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/DifferentialSave.cs/#L251"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Executes the differential backup process. Compares the source with the full backup,
+isolates modified or new files, and copies them to the destination.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool doSave(string sourcePath, string destinationPath, List&lt;string&gt; priorityExt, CancellationToken token, ManualResetEventSlim pauseEvent, Action&lt;int, string&gt; progress)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>sourcePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The path of the directory to be backed up.</p>
+</dd>
+    <dt><code>destinationPath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The path where the differential backup will be stored.</p>
+</dd>
+    <dt><code>priorityExt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A list of extensions dictating which files should be processed first.</p>
+</dd>
+    <dt><code>token</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token to handle stop requests mid-process.</p>
+</dd>
+    <dt><code>pauseEvent</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.manualreseteventslim">ManualResetEventSlim</a></dt>
+    <dd><p>A manual reset event to handle pause and resume functionalities.</p>
+</dd>
+    <dt><code>progress</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>An action delegate used to push progress percentage updates and filenames to the UI thread.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the save process successfully completed; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.operationcanceledexception">OperationCanceledException</a></dt>
+    <dd><p>Thrown when the backup process is explicitly cancelled by the user.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="ProjetEasySave_Model_DifferentialSave_getCompleteSavePath_" data-uid="ProjetEasySave.Model.DifferentialSave.getCompleteSavePath*"></a>
+
+  <h3 id="ProjetEasySave_Model_DifferentialSave_getCompleteSavePath" data-uid="ProjetEasySave.Model.DifferentialSave.getCompleteSavePath">
+  getCompleteSavePath()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/DifferentialSave.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves the reference path of the complete backup used by this differential strategy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getCompleteSavePath()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>A string representing the path to the full backup directory.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_DifferentialSave_getState_" data-uid="ProjetEasySave.Model.DifferentialSave.getState*"></a>
+
+  <h3 id="ProjetEasySave_Model_DifferentialSave_getState" data-uid="ProjetEasySave.Model.DifferentialSave.getState">
+  getState()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/DifferentialSave.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves the current execution state of the backup task.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SaveTaskState getState()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="SaveTaskState.html">SaveTaskState</a></dt>
+    <dd><p>The current <a class="xref" href="SaveTaskState.html">SaveTaskState</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_DifferentialSave_isBusinessSoftwareRunning_" data-uid="ProjetEasySave.Model.DifferentialSave.isBusinessSoftwareRunning*"></a>
+
+  <h3 id="ProjetEasySave_Model_DifferentialSave_isBusinessSoftwareRunning" data-uid="ProjetEasySave.Model.DifferentialSave.isBusinessSoftwareRunning">
+  isBusinessSoftwareRunning()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/DifferentialSave.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks whether the configured business software is currently actively running on the system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool isBusinessSoftwareRunning()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the business software is running; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_DifferentialSave_setState_" data-uid="ProjetEasySave.Model.DifferentialSave.setState*"></a>
+
+  <h3 id="ProjetEasySave_Model_DifferentialSave_setState_SaveTaskState_" data-uid="ProjetEasySave.Model.DifferentialSave.setState(SaveTaskState)">
+  setState(SaveTaskState)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/DifferentialSave.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Updates the execution state of the backup task and triggers the notification event in the main task.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SaveTaskState setState(SaveTaskState state)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>state</code> <a class="xref" href="SaveTaskState.html">SaveTaskState</a></dt>
+    <dd><p>The new <a class="xref" href="SaveTaskState.html">SaveTaskState</a> to apply.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="SaveTaskState.html">SaveTaskState</a></dt>
+    <dd><p>The updated state.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_DifferentialSave_waitForBusinessSoftwareToClose_" data-uid="ProjetEasySave.Model.DifferentialSave.waitForBusinessSoftwareToClose*"></a>
+
+  <h3 id="ProjetEasySave_Model_DifferentialSave_waitForBusinessSoftwareToClose" data-uid="ProjetEasySave.Model.DifferentialSave.waitForBusinessSoftwareToClose">
+  waitForBusinessSoftwareToClose()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/DifferentialSave.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Suspends the backup thread and waits until all instances of the conflicting business software are closed.
+Logs a waiting message to the real-time tracker.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void waitForBusinessSoftwareToClose()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/DifferentialSave.cs/#L18" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

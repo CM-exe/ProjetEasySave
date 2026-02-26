@@ -1,0 +1,1449 @@
+### YamlMime:ManagedReference
+items:
+- uid: ProjetEasySave.Model.SaveModel
+  commentId: T:ProjetEasySave.Model.SaveModel
+  id: SaveModel
+  parent: ProjetEasySave.Model
+  children:
+  - ProjetEasySave.Model.SaveModel.#ctor
+  - ProjetEasySave.Model.SaveModel.Finalize
+  - ProjetEasySave.Model.SaveModel.PauseSave(System.String)
+  - ProjetEasySave.Model.SaveModel.ResumeSave(System.String)
+  - ProjetEasySave.Model.SaveModel.StartSaveAsync(System.String)
+  - ProjetEasySave.Model.SaveModel.StopSave(System.String)
+  - ProjetEasySave.Model.SaveModel.SubscribeProgress(System.String,System.Action{System.Int32,System.String})
+  - ProjetEasySave.Model.SaveModel.addSaveSpace(System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)
+  - ProjetEasySave.Model.SaveModel.getDictLock
+  - ProjetEasySave.Model.SaveModel.getSaveSpaces
+  - ProjetEasySave.Model.SaveModel.isBusinessSoftwareRunning
+  - ProjetEasySave.Model.SaveModel.loadSaveSpaces(System.String,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})
+  - ProjetEasySave.Model.SaveModel.removeSaveSpace(System.String)
+  - ProjetEasySave.Model.SaveModel.startSave(System.String)
+  - ProjetEasySave.Model.SaveModel.updateSaveSpace(System.String,System.String,System.String,System.String,System.String,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})
+  langs:
+  - csharp
+  - vb
+  name: SaveModel
+  nameWithType: SaveModel
+  fullName: ProjetEasySave.Model.SaveModel
+  type: Class
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: SaveModel
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 15
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Serves as the central data model for the application, managing the collection of backup jobs (<xref href="ProjetEasySave.Model.SaveSpace" data-throw-if-not-resolved="false"></xref>).
+  remarks: >-
+    This class handles the persistence of backup configurations, provides CRUD operations for save spaces, 
+
+    and manages application-wide concurrency controls such as big file semaphores and directory locks.
+  example: []
+  syntax:
+    content: public class SaveModel
+    content.vb: Public Class SaveModel
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: ProjetEasySave.Model.SaveModel.#ctor
+  commentId: M:ProjetEasySave.Model.SaveModel.#ctor
+  id: '#ctor'
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: SaveModel()
+  nameWithType: SaveModel.SaveModel()
+  fullName: ProjetEasySave.Model.SaveModel.SaveModel()
+  type: Constructor
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: .ctor
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 34
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: >-
+    Initializes a new instance of the <xref href="ProjetEasySave.Model.SaveModel" data-throw-if-not-resolved="false"></xref> class.
+
+    Sets up the big file semaphore and attempts to load existing save spaces from the local configuration file.
+  example: []
+  syntax:
+    content: public SaveModel()
+    content.vb: Public Sub New()
+  overload: ProjetEasySave.Model.SaveModel.#ctor*
+  nameWithType.vb: SaveModel.New()
+  fullName.vb: ProjetEasySave.Model.SaveModel.New()
+  name.vb: New()
+- uid: ProjetEasySave.Model.SaveModel.Finalize
+  commentId: M:ProjetEasySave.Model.SaveModel.Finalize
+  id: Finalize
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: ~SaveModel()
+  nameWithType: SaveModel.~SaveModel()
+  fullName: ProjetEasySave.Model.SaveModel.~SaveModel()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: Finalize
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 50
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: >-
+    Finalizes an instance of the <xref href="ProjetEasySave.Model.SaveModel" data-throw-if-not-resolved="false"></xref> class.
+
+    Ensures that all current save spaces are persisted to the configuration file before the object is destroyed.
+  example: []
+  syntax:
+    content: protected ~SaveModel()
+    content.vb: 'Protected '
+  overload: ProjetEasySave.Model.SaveModel.Finalize*
+  nameWithType.vb: ''
+  fullName.vb: ''
+  name.vb: ''
+- uid: ProjetEasySave.Model.SaveModel.addSaveSpace(System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)
+  commentId: M:ProjetEasySave.Model.SaveModel.addSaveSpace(System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)
+  id: addSaveSpace(System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: addSaveSpace(string, string, string, string, List<string>, string)
+  nameWithType: SaveModel.addSaveSpace(string, string, string, string, List<string>, string)
+  fullName: ProjetEasySave.Model.SaveModel.addSaveSpace(string, string, string, string, System.Collections.Generic.List<string>, string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: addSaveSpace
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 68
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Adds a new backup job (Save Space) to the model.
+  example: []
+  syntax:
+    content: public bool addSaveSpace(string name, string sourcePath, string destinationPath, string typeSave, List<string> priorityExt, string completeSavePath = "")
+    parameters:
+    - id: name
+      type: System.String
+      description: The unique name of the backup job.
+    - id: sourcePath
+      type: System.String
+      description: The source directory path.
+    - id: destinationPath
+      type: System.String
+      description: The destination directory path.
+    - id: typeSave
+      type: System.String
+      description: The type of backup ("complete" or "differential").
+    - id: priorityExt
+      type: System.Collections.Generic.List{System.String}
+      description: A list of extensions that should be processed first.
+    - id: completeSavePath
+      type: System.String
+      description: The reference path for differential backups (optional).
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the save space was successfully added; <code>false</code> if validation failed or it is a duplicate.
+    content.vb: Public Function addSaveSpace(name As String, sourcePath As String, destinationPath As String, typeSave As String, priorityExt As List(Of String), completeSavePath As String = "") As Boolean
+  overload: ProjetEasySave.Model.SaveModel.addSaveSpace*
+  nameWithType.vb: SaveModel.addSaveSpace(String, String, String, String, List(Of String), String)
+  fullName.vb: ProjetEasySave.Model.SaveModel.addSaveSpace(String, String, String, String, System.Collections.Generic.List(Of String), String)
+  name.vb: addSaveSpace(String, String, String, String, List(Of String), String)
+- uid: ProjetEasySave.Model.SaveModel.removeSaveSpace(System.String)
+  commentId: M:ProjetEasySave.Model.SaveModel.removeSaveSpace(System.String)
+  id: removeSaveSpace(System.String)
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: removeSaveSpace(string)
+  nameWithType: SaveModel.removeSaveSpace(string)
+  fullName: ProjetEasySave.Model.SaveModel.removeSaveSpace(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: removeSaveSpace
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 113
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Removes an existing backup job from the model.
+  example: []
+  syntax:
+    content: public bool removeSaveSpace(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the save space to remove.
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the save space was successfully found and removed; otherwise, <code>false</code>.
+    content.vb: Public Function removeSaveSpace(name As String) As Boolean
+  overload: ProjetEasySave.Model.SaveModel.removeSaveSpace*
+  nameWithType.vb: SaveModel.removeSaveSpace(String)
+  fullName.vb: ProjetEasySave.Model.SaveModel.removeSaveSpace(String)
+  name.vb: removeSaveSpace(String)
+- uid: ProjetEasySave.Model.SaveModel.getSaveSpaces
+  commentId: M:ProjetEasySave.Model.SaveModel.getSaveSpaces
+  id: getSaveSpaces
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: getSaveSpaces()
+  nameWithType: SaveModel.getSaveSpaces()
+  fullName: ProjetEasySave.Model.SaveModel.getSaveSpaces()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getSaveSpaces
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 135
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Retrieves the list of all configured save spaces.
+  example: []
+  syntax:
+    content: public List<SaveSpace> getSaveSpaces()
+    return:
+      type: System.Collections.Generic.List{ProjetEasySave.Model.SaveSpace}
+      description: A list containing all current <xref href="ProjetEasySave.Model.SaveSpace" data-throw-if-not-resolved="false"></xref> objects.
+    content.vb: Public Function getSaveSpaces() As List(Of SaveSpace)
+  overload: ProjetEasySave.Model.SaveModel.getSaveSpaces*
+- uid: ProjetEasySave.Model.SaveModel.loadSaveSpaces(System.String,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})
+  commentId: M:ProjetEasySave.Model.SaveModel.loadSaveSpaces(System.String,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})
+  id: loadSaveSpaces(System.String,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: loadSaveSpaces(string, ConcurrentDictionary<string, object>)
+  nameWithType: SaveModel.loadSaveSpaces(string, ConcurrentDictionary<string, object>)
+  fullName: ProjetEasySave.Model.SaveModel.loadSaveSpaces(string, System.Collections.Concurrent.ConcurrentDictionary<string, object>)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: loadSaveSpaces
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 146
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Deserializes and loads save spaces from a specified JSON configuration file.
+  example: []
+  syntax:
+    content: public bool loadSaveSpaces(string jsonConfigPath, ConcurrentDictionary<string, object> dict_lock)
+    parameters:
+    - id: jsonConfigPath
+      type: System.String
+      description: The path to the JSON configuration file.
+    - id: dict_lock
+      type: System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object}
+      description: The dictionary used to manage directory locks across threads.
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the configuration was successfully loaded; otherwise, <code>false</code>.
+    content.vb: Public Function loadSaveSpaces(jsonConfigPath As String, dict_lock As ConcurrentDictionary(Of String, Object)) As Boolean
+  overload: ProjetEasySave.Model.SaveModel.loadSaveSpaces*
+  nameWithType.vb: SaveModel.loadSaveSpaces(String, ConcurrentDictionary(Of String, Object))
+  fullName.vb: ProjetEasySave.Model.SaveModel.loadSaveSpaces(String, System.Collections.Concurrent.ConcurrentDictionary(Of String, Object))
+  name.vb: loadSaveSpaces(String, ConcurrentDictionary(Of String, Object))
+- uid: ProjetEasySave.Model.SaveModel.updateSaveSpace(System.String,System.String,System.String,System.String,System.String,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})
+  commentId: M:ProjetEasySave.Model.SaveModel.updateSaveSpace(System.String,System.String,System.String,System.String,System.String,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})
+  id: updateSaveSpace(System.String,System.String,System.String,System.String,System.String,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: updateSaveSpace(string, string, string, string, string, ConcurrentDictionary<string, object>)
+  nameWithType: SaveModel.updateSaveSpace(string, string, string, string, string, ConcurrentDictionary<string, object>)
+  fullName: ProjetEasySave.Model.SaveModel.updateSaveSpace(string, string, string, string, string, System.Collections.Concurrent.ConcurrentDictionary<string, object>)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: updateSaveSpace
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 201
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Updates the configuration of an existing save space.
+  example: []
+  syntax:
+    content: public bool updateSaveSpace(string name, string newSourcePath, string newDestinationPath, string newTypeSave, string priorityExt, ConcurrentDictionary<string, object> dict_loc)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the save space to modify.
+    - id: newSourcePath
+      type: System.String
+      description: The new source directory path.
+    - id: newDestinationPath
+      type: System.String
+      description: The new destination directory path.
+    - id: newTypeSave
+      type: System.String
+      description: The new type of backup.
+    - id: priorityExt
+      type: System.String
+      description: The updated string of priority extensions.
+    - id: dict_loc
+      type: System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object}
+      description: The global dictionary used for thread locks.
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the save space was found and updated; otherwise, <code>false</code>.
+    content.vb: Public Function updateSaveSpace(name As String, newSourcePath As String, newDestinationPath As String, newTypeSave As String, priorityExt As String, dict_loc As ConcurrentDictionary(Of String, Object)) As Boolean
+  overload: ProjetEasySave.Model.SaveModel.updateSaveSpace*
+  nameWithType.vb: SaveModel.updateSaveSpace(String, String, String, String, String, ConcurrentDictionary(Of String, Object))
+  fullName.vb: ProjetEasySave.Model.SaveModel.updateSaveSpace(String, String, String, String, String, System.Collections.Concurrent.ConcurrentDictionary(Of String, Object))
+  name.vb: updateSaveSpace(String, String, String, String, String, ConcurrentDictionary(Of String, Object))
+- uid: ProjetEasySave.Model.SaveModel.startSave(System.String)
+  commentId: M:ProjetEasySave.Model.SaveModel.startSave(System.String)
+  id: startSave(System.String)
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: startSave(string)
+  nameWithType: SaveModel.startSave(string)
+  fullName: ProjetEasySave.Model.SaveModel.startSave(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: startSave
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 228
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Initiates the backup process for a specific save space.
+  example: []
+  syntax:
+    content: public Task<bool> startSave(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the save space to execute.
+    return:
+      type: System.Threading.Tasks.Task{System.Boolean}
+      description: A task representing the asynchronous operation, returning <code>true</code> if successful.
+    content.vb: Public Function startSave(name As String) As Task(Of Boolean)
+  overload: ProjetEasySave.Model.SaveModel.startSave*
+  nameWithType.vb: SaveModel.startSave(String)
+  fullName.vb: ProjetEasySave.Model.SaveModel.startSave(String)
+  name.vb: startSave(String)
+- uid: ProjetEasySave.Model.SaveModel.StartSaveAsync(System.String)
+  commentId: M:ProjetEasySave.Model.SaveModel.StartSaveAsync(System.String)
+  id: StartSaveAsync(System.String)
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: StartSaveAsync(string)
+  nameWithType: SaveModel.StartSaveAsync(string)
+  fullName: ProjetEasySave.Model.SaveModel.StartSaveAsync(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: StartSaveAsync
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 243
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Initiates the backup process for a specific save space asynchronously.
+  example: []
+  syntax:
+    content: public Task<bool> StartSaveAsync(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the save space to execute.
+    return:
+      type: System.Threading.Tasks.Task{System.Boolean}
+      description: A task containing the boolean result of the backup operation.
+    content.vb: Public Function StartSaveAsync(name As String) As Task(Of Boolean)
+  overload: ProjetEasySave.Model.SaveModel.StartSaveAsync*
+  nameWithType.vb: SaveModel.StartSaveAsync(String)
+  fullName.vb: ProjetEasySave.Model.SaveModel.StartSaveAsync(String)
+  name.vb: StartSaveAsync(String)
+- uid: ProjetEasySave.Model.SaveModel.PauseSave(System.String)
+  commentId: M:ProjetEasySave.Model.SaveModel.PauseSave(System.String)
+  id: PauseSave(System.String)
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: PauseSave(string)
+  nameWithType: SaveModel.PauseSave(string)
+  fullName: ProjetEasySave.Model.SaveModel.PauseSave(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: PauseSave
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 253
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Pauses the ongoing backup process for a specified save space.
+  example: []
+  syntax:
+    content: public void PauseSave(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the save space to pause.
+    content.vb: Public Sub PauseSave(name As String)
+  overload: ProjetEasySave.Model.SaveModel.PauseSave*
+  nameWithType.vb: SaveModel.PauseSave(String)
+  fullName.vb: ProjetEasySave.Model.SaveModel.PauseSave(String)
+  name.vb: PauseSave(String)
+- uid: ProjetEasySave.Model.SaveModel.ResumeSave(System.String)
+  commentId: M:ProjetEasySave.Model.SaveModel.ResumeSave(System.String)
+  id: ResumeSave(System.String)
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: ResumeSave(string)
+  nameWithType: SaveModel.ResumeSave(string)
+  fullName: ProjetEasySave.Model.SaveModel.ResumeSave(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: ResumeSave
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 262
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Resumes a previously paused backup process for a specified save space.
+  example: []
+  syntax:
+    content: public void ResumeSave(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the save space to resume.
+    content.vb: Public Sub ResumeSave(name As String)
+  overload: ProjetEasySave.Model.SaveModel.ResumeSave*
+  nameWithType.vb: SaveModel.ResumeSave(String)
+  fullName.vb: ProjetEasySave.Model.SaveModel.ResumeSave(String)
+  name.vb: ResumeSave(String)
+- uid: ProjetEasySave.Model.SaveModel.StopSave(System.String)
+  commentId: M:ProjetEasySave.Model.SaveModel.StopSave(System.String)
+  id: StopSave(System.String)
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: StopSave(string)
+  nameWithType: SaveModel.StopSave(string)
+  fullName: ProjetEasySave.Model.SaveModel.StopSave(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: StopSave
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 271
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Stops and cancels the ongoing backup process for a specified save space.
+  example: []
+  syntax:
+    content: public void StopSave(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the save space to stop.
+    content.vb: Public Sub StopSave(name As String)
+  overload: ProjetEasySave.Model.SaveModel.StopSave*
+  nameWithType.vb: SaveModel.StopSave(String)
+  fullName.vb: ProjetEasySave.Model.SaveModel.StopSave(String)
+  name.vb: StopSave(String)
+- uid: ProjetEasySave.Model.SaveModel.SubscribeProgress(System.String,System.Action{System.Int32,System.String})
+  commentId: M:ProjetEasySave.Model.SaveModel.SubscribeProgress(System.String,System.Action{System.Int32,System.String})
+  id: SubscribeProgress(System.String,System.Action{System.Int32,System.String})
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: SubscribeProgress(string, Action<int, string>)
+  nameWithType: SaveModel.SubscribeProgress(string, Action<int, string>)
+  fullName: ProjetEasySave.Model.SaveModel.SubscribeProgress(string, System.Action<int, string>)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: SubscribeProgress
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 281
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Subscribes an event handler to listen for progress updates from a specific backup job.
+  example: []
+  syntax:
+    content: public void SubscribeProgress(string name, Action<int, string> handler)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the save space emitting the progress events.
+    - id: handler
+      type: System.Action{System.Int32,System.String}
+      description: An action delegate accepting the completion percentage and current file name.
+    content.vb: Public Sub SubscribeProgress(name As String, handler As Action(Of Integer, String))
+  overload: ProjetEasySave.Model.SaveModel.SubscribeProgress*
+  nameWithType.vb: SaveModel.SubscribeProgress(String, Action(Of Integer, String))
+  fullName.vb: ProjetEasySave.Model.SaveModel.SubscribeProgress(String, System.Action(Of Integer, String))
+  name.vb: SubscribeProgress(String, Action(Of Integer, String))
+- uid: ProjetEasySave.Model.SaveModel.getDictLock
+  commentId: M:ProjetEasySave.Model.SaveModel.getDictLock
+  id: getDictLock
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: getDictLock()
+  nameWithType: SaveModel.getDictLock()
+  fullName: ProjetEasySave.Model.SaveModel.getDictLock()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getDictLock
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 315
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Retrieves the global dictionary used to lock destination directories and prevent concurrent writing conflicts.
+  example: []
+  syntax:
+    content: public static ConcurrentDictionary<string, object> getDictLock()
+    return:
+      type: System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object}
+      description: A thread-safe <xref href="System.Collections.Concurrent.ConcurrentDictionary%602" data-throw-if-not-resolved="false"></xref> mapping paths to lock objects.
+    content.vb: Public Shared Function getDictLock() As ConcurrentDictionary(Of String, Object)
+  overload: ProjetEasySave.Model.SaveModel.getDictLock*
+- uid: ProjetEasySave.Model.SaveModel.isBusinessSoftwareRunning
+  commentId: M:ProjetEasySave.Model.SaveModel.isBusinessSoftwareRunning
+  id: isBusinessSoftwareRunning
+  parent: ProjetEasySave.Model.SaveModel
+  langs:
+  - csharp
+  - vb
+  name: isBusinessSoftwareRunning()
+  nameWithType: SaveModel.isBusinessSoftwareRunning()
+  fullName: ProjetEasySave.Model.SaveModel.isBusinessSoftwareRunning()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: isBusinessSoftwareRunning
+    path: EasySaveWPF/Model/SaveModel.cs
+    startLine: 339
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Checks if the configured business software is currently running on the system.
+  example: []
+  syntax:
+    content: public bool isBusinessSoftwareRunning()
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the business software is active; otherwise, <code>false</code>.
+    content.vb: Public Function isBusinessSoftwareRunning() As Boolean
+  overload: ProjetEasySave.Model.SaveModel.isBusinessSoftwareRunning*
+references:
+- uid: ProjetEasySave.Model.SaveSpace
+  commentId: T:ProjetEasySave.Model.SaveSpace
+  parent: ProjetEasySave.Model
+  href: ProjetEasySave.Model.SaveSpace.html
+  name: SaveSpace
+  nameWithType: SaveSpace
+  fullName: ProjetEasySave.Model.SaveSpace
+- uid: ProjetEasySave.Model
+  commentId: N:ProjetEasySave.Model
+  href: ProjetEasySave.html
+  name: ProjetEasySave.Model
+  nameWithType: ProjetEasySave.Model
+  fullName: ProjetEasySave.Model
+  spec.csharp:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.Model
+    name: Model
+    href: ProjetEasySave.Model.html
+  spec.vb:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.Model
+    name: Model
+    href: ProjetEasySave.Model.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ProjetEasySave.Model.SaveModel
+  commentId: T:ProjetEasySave.Model.SaveModel
+  href: ProjetEasySave.Model.SaveModel.html
+  name: SaveModel
+  nameWithType: SaveModel
+  fullName: ProjetEasySave.Model.SaveModel
+- uid: ProjetEasySave.Model.SaveModel.#ctor*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.#ctor
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel__ctor
+  name: SaveModel
+  nameWithType: SaveModel.SaveModel
+  fullName: ProjetEasySave.Model.SaveModel.SaveModel
+  nameWithType.vb: SaveModel.New
+  fullName.vb: ProjetEasySave.Model.SaveModel.New
+  name.vb: New
+- uid: ProjetEasySave.Model.SaveModel.Finalize*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.Finalize
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_Finalize
+  name: ~SaveModel
+  nameWithType: SaveModel.~SaveModel
+  fullName: ProjetEasySave.Model.SaveModel.~SaveModel
+  spec.csharp:
+  - name: "~"
+  - uid: ProjetEasySave.Model.SaveModel.Finalize*
+    name: SaveModel
+    href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_Finalize
+- uid: ProjetEasySave.Model.SaveModel.addSaveSpace*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.addSaveSpace
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_addSaveSpace_System_String_System_String_System_String_System_String_System_Collections_Generic_List_System_String__System_String_
+  name: addSaveSpace
+  nameWithType: SaveModel.addSaveSpace
+  fullName: ProjetEasySave.Model.SaveModel.addSaveSpace
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: ProjetEasySave.Model.SaveModel.removeSaveSpace*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.removeSaveSpace
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_removeSaveSpace_System_String_
+  name: removeSaveSpace
+  nameWithType: SaveModel.removeSaveSpace
+  fullName: ProjetEasySave.Model.SaveModel.removeSaveSpace
+- uid: ProjetEasySave.Model.SaveModel.getSaveSpaces*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.getSaveSpaces
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_getSaveSpaces
+  name: getSaveSpaces
+  nameWithType: SaveModel.getSaveSpaces
+  fullName: ProjetEasySave.Model.SaveModel.getSaveSpaces
+- uid: System.Collections.Generic.List{ProjetEasySave.Model.SaveSpace}
+  commentId: T:System.Collections.Generic.List{ProjetEasySave.Model.SaveSpace}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<SaveSpace>
+  nameWithType: List<SaveSpace>
+  fullName: System.Collections.Generic.List<ProjetEasySave.Model.SaveSpace>
+  nameWithType.vb: List(Of SaveSpace)
+  fullName.vb: System.Collections.Generic.List(Of ProjetEasySave.Model.SaveSpace)
+  name.vb: List(Of SaveSpace)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: ProjetEasySave.Model.SaveSpace
+    name: SaveSpace
+    href: ProjetEasySave.Model.SaveSpace.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: ProjetEasySave.Model.SaveSpace
+    name: SaveSpace
+    href: ProjetEasySave.Model.SaveSpace.html
+  - name: )
+- uid: ProjetEasySave.Model.SaveModel.loadSaveSpaces*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.loadSaveSpaces
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_loadSaveSpaces_System_String_System_Collections_Concurrent_ConcurrentDictionary_System_String_System_Object__
+  name: loadSaveSpaces
+  nameWithType: SaveModel.loadSaveSpaces
+  fullName: ProjetEasySave.Model.SaveModel.loadSaveSpaces
+- uid: System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object}
+  commentId: T:System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object}
+  parent: System.Collections.Concurrent
+  definition: System.Collections.Concurrent.ConcurrentDictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2
+  name: ConcurrentDictionary<string, object>
+  nameWithType: ConcurrentDictionary<string, object>
+  fullName: System.Collections.Concurrent.ConcurrentDictionary<string, object>
+  nameWithType.vb: ConcurrentDictionary(Of String, Object)
+  fullName.vb: System.Collections.Concurrent.ConcurrentDictionary(Of String, Object)
+  name.vb: ConcurrentDictionary(Of String, Object)
+  spec.csharp:
+  - uid: System.Collections.Concurrent.ConcurrentDictionary`2
+    name: ConcurrentDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Concurrent.ConcurrentDictionary`2
+    name: ConcurrentDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Collections.Concurrent.ConcurrentDictionary`2
+  commentId: T:System.Collections.Concurrent.ConcurrentDictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2
+  name: ConcurrentDictionary<TKey, TValue>
+  nameWithType: ConcurrentDictionary<TKey, TValue>
+  fullName: System.Collections.Concurrent.ConcurrentDictionary<TKey, TValue>
+  nameWithType.vb: ConcurrentDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Concurrent.ConcurrentDictionary(Of TKey, TValue)
+  name.vb: ConcurrentDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Concurrent.ConcurrentDictionary`2
+    name: ConcurrentDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Concurrent.ConcurrentDictionary`2
+    name: ConcurrentDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Concurrent
+  commentId: N:System.Collections.Concurrent
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Concurrent
+  nameWithType: System.Collections.Concurrent
+  fullName: System.Collections.Concurrent
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Concurrent
+    name: Concurrent
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Concurrent
+    name: Concurrent
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent
+- uid: ProjetEasySave.Model.SaveModel.updateSaveSpace*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.updateSaveSpace
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_updateSaveSpace_System_String_System_String_System_String_System_String_System_String_System_Collections_Concurrent_ConcurrentDictionary_System_String_System_Object__
+  name: updateSaveSpace
+  nameWithType: SaveModel.updateSaveSpace
+  fullName: ProjetEasySave.Model.SaveModel.updateSaveSpace
+- uid: ProjetEasySave.Model.SaveModel.startSave*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.startSave
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_startSave_System_String_
+  name: startSave
+  nameWithType: SaveModel.startSave
+  fullName: ProjetEasySave.Model.SaveModel.startSave
+- uid: System.Threading.Tasks.Task{System.Boolean}
+  commentId: T:System.Threading.Tasks.Task{System.Boolean}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<bool>
+  nameWithType: Task<bool>
+  fullName: System.Threading.Tasks.Task<bool>
+  nameWithType.vb: Task(Of Boolean)
+  fullName.vb: System.Threading.Tasks.Task(Of Boolean)
+  name.vb: Task(Of Boolean)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: ProjetEasySave.Model.SaveModel.StartSaveAsync*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.StartSaveAsync
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_StartSaveAsync_System_String_
+  name: StartSaveAsync
+  nameWithType: SaveModel.StartSaveAsync
+  fullName: ProjetEasySave.Model.SaveModel.StartSaveAsync
+- uid: ProjetEasySave.Model.SaveModel.PauseSave*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.PauseSave
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_PauseSave_System_String_
+  name: PauseSave
+  nameWithType: SaveModel.PauseSave
+  fullName: ProjetEasySave.Model.SaveModel.PauseSave
+- uid: ProjetEasySave.Model.SaveModel.ResumeSave*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.ResumeSave
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_ResumeSave_System_String_
+  name: ResumeSave
+  nameWithType: SaveModel.ResumeSave
+  fullName: ProjetEasySave.Model.SaveModel.ResumeSave
+- uid: ProjetEasySave.Model.SaveModel.StopSave*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.StopSave
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_StopSave_System_String_
+  name: StopSave
+  nameWithType: SaveModel.StopSave
+  fullName: ProjetEasySave.Model.SaveModel.StopSave
+- uid: ProjetEasySave.Model.SaveModel.SubscribeProgress*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.SubscribeProgress
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_SubscribeProgress_System_String_System_Action_System_Int32_System_String__
+  name: SubscribeProgress
+  nameWithType: SaveModel.SubscribeProgress
+  fullName: ProjetEasySave.Model.SaveModel.SubscribeProgress
+- uid: System.Action{System.Int32,System.String}
+  commentId: T:System.Action{System.Int32,System.String}
+  parent: System
+  definition: System.Action`2
+  href: https://learn.microsoft.com/dotnet/api/system.action-2
+  name: Action<int, string>
+  nameWithType: Action<int, string>
+  fullName: System.Action<int, string>
+  nameWithType.vb: Action(Of Integer, String)
+  fullName.vb: System.Action(Of Integer, String)
+  name.vb: Action(Of Integer, String)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Action`2
+  commentId: T:System.Action`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-2
+  name: Action<T1, T2>
+  nameWithType: Action<T1, T2>
+  fullName: System.Action<T1, T2>
+  nameWithType.vb: Action(Of T1, T2)
+  fullName.vb: System.Action(Of T1, T2)
+  name.vb: Action(Of T1, T2)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: ProjetEasySave.Model.SaveModel.getDictLock*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.getDictLock
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_getDictLock
+  name: getDictLock
+  nameWithType: SaveModel.getDictLock
+  fullName: ProjetEasySave.Model.SaveModel.getDictLock
+- uid: ProjetEasySave.Model.SaveModel.isBusinessSoftwareRunning*
+  commentId: Overload:ProjetEasySave.Model.SaveModel.isBusinessSoftwareRunning
+  href: ProjetEasySave.Model.SaveModel.html#ProjetEasySave_Model_SaveModel_isBusinessSoftwareRunning
+  name: isBusinessSoftwareRunning
+  nameWithType: SaveModel.isBusinessSoftwareRunning
+  fullName: ProjetEasySave.Model.SaveModel.isBusinessSoftwareRunning

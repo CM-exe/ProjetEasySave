@@ -1,0 +1,102 @@
+### YamlMime:ManagedReference
+items:
+- uid: EasyLog.LogFormat
+  commentId: T:EasyLog.LogFormat
+  id: LogFormat
+  parent: EasyLog
+  children:
+  - EasyLog.LogFormat.Json
+  - EasyLog.LogFormat.Xml
+  langs:
+  - csharp
+  - vb
+  name: LogFormat
+  nameWithType: LogFormat
+  fullName: EasyLog.LogFormat
+  type: Enum
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: LogFormat
+    path: EasyLog/Logger.cs
+    startLine: 9
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Enumeration to define the supported log formats.
+  example: []
+  syntax:
+    content: public enum LogFormat
+    content.vb: Public Enum LogFormat
+- uid: EasyLog.LogFormat.Json
+  commentId: F:EasyLog.LogFormat.Json
+  id: Json
+  parent: EasyLog.LogFormat
+  langs:
+  - csharp
+  - vb
+  name: Json
+  nameWithType: LogFormat.Json
+  fullName: EasyLog.LogFormat.Json
+  type: Field
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: Json
+    path: EasyLog/Logger.cs
+    startLine: 12
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: JavaScript Object Notation format.
+  example: []
+  syntax:
+    content: Json = 0
+    return:
+      type: EasyLog.LogFormat
+- uid: EasyLog.LogFormat.Xml
+  commentId: F:EasyLog.LogFormat.Xml
+  id: Xml
+  parent: EasyLog.LogFormat
+  langs:
+  - csharp
+  - vb
+  name: Xml
+  nameWithType: LogFormat.Xml
+  fullName: EasyLog.LogFormat.Xml
+  type: Field
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: Xml
+    path: EasyLog/Logger.cs
+    startLine: 14
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Extensible Markup Language format.
+  example: []
+  syntax:
+    content: Xml = 1
+    return:
+      type: EasyLog.LogFormat
+references:
+- uid: EasyLog
+  commentId: N:EasyLog
+  href: EasyLog.html
+  name: EasyLog
+  nameWithType: EasyLog
+  fullName: EasyLog
+- uid: EasyLog.LogFormat
+  commentId: T:EasyLog.LogFormat
+  parent: EasyLog
+  href: EasyLog.LogFormat.html
+  name: LogFormat
+  nameWithType: LogFormat
+  fullName: EasyLog.LogFormat
