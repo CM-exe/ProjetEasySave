@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: ProjetEasySave.View
+  commentId: N:ProjetEasySave.View
+  id: ProjetEasySave.View
+  children:
+  - ProjetEasySave.View.View
+  langs:
+  - csharp
+  - vb
+  name: ProjetEasySave.View
+  nameWithType: ProjetEasySave.View
+  fullName: ProjetEasySave.View
+  type: Namespace
+  assemblies:
+  - EasySaveWPF
+references:
+- uid: ProjetEasySave.View.View
+  commentId: T:ProjetEasySave.View.View
+  href: ProjetEasySave.View.View.html
+  name: View
+  nameWithType: View
+  fullName: ProjetEasySave.View.View

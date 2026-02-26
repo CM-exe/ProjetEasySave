@@ -7,13 +7,16 @@ using System.IO;
 
 namespace ProjetEasySave.Model
 {
+    /// <summary>
+    /// Represents the differential backup strategy implementation of the <see cref="ISaveStrategy"/> interface.
+    /// </summary>
+    /// <remarks>
+    /// This strategy compares the source directory against a previously completed full backup. 
+    /// It only copies files that are new or have been modified since that full backup. 
+    /// It handles large files, encryption, and pauses when restricted business software is running.
+    /// </remarks>
     public class DifferentialSave : ISaveStrategy
     {
-        /*
-         * Differential Save implementation of the ISaveStrategy interface.
-         * This strategy only saves files that have changed since the last full backup.
-         */
-
         // Interface attributes
         private static Config _config = Config.Instance; // Load config for business software checking
         private static SaveTaskState _state = SaveTaskState.PENDING; // State for the task
@@ -25,22 +28,33 @@ namespace ProjetEasySave.Model
         private SemaphoreSlim _bigFileSemaphore; // Semaphore for big file handling
         private Queue<string> _pendingFiles; // Queue to manage big file save requests
 
-        // Constructor
-        public DifferentialSave(SaveTask saveTask, SemaphoreSlim bigFileSempahore, string fullBackupPath)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DifferentialSave"/> class.
+        /// </summary>
+        /// <param name="saveTask">The main task object associated with this backup operation.</param>
+        /// <param name="bigFileSemaphore">The semaphore used to limit concurrent transfers of large files across the application.</param>
+        /// <param name="fullBackupPath">The reference path to the last complete backup used for comparison.</param>
+        public DifferentialSave(SaveTask saveTask, SemaphoreSlim bigFileSemaphore, string fullBackupPath)
         {
             _saveTask = saveTask;
-            _bigFileSemaphore = bigFileSempahore;
+            _bigFileSemaphore = bigFileSemaphore;
             _fullBackupPath = fullBackupPath;
             _pendingFiles = new Queue<string>();
         }
 
-        // Methods
+        /// <summary>
+        /// Retrieves the reference path of the complete backup used by this differential strategy.
+        /// </summary>
+        /// <returns>A string representing the path to the full backup directory.</returns>
         public string getCompleteSavePath()
         {
             return _fullBackupPath;
         }
 
-        // Instance method to check if the business software is running
+        /// <summary>
+        /// Checks whether the configured business software is currently actively running on the system.
+        /// </summary>
+        /// <returns><c>true</c> if the business software is running; otherwise, <c>false</c>.</returns>
         public bool isBusinessSoftwareRunning()
         {
             // Name of the process to look for
@@ -53,6 +67,10 @@ namespace ProjetEasySave.Model
             return processes.Length > 0;
         }
 
+        /// <summary>
+        /// Suspends the backup thread and waits until all instances of the conflicting business software are closed.
+        /// Logs a waiting message to the real-time tracker.
+        /// </summary>
         public void waitForBusinessSoftwareToClose()
         {
             string businessSoftwareName = _config.getBusinessSoftwareName();
@@ -75,7 +93,11 @@ namespace ProjetEasySave.Model
             setState(SaveTaskState.RUNNING);
         }
 
-        // Update the state of the save task
+        /// <summary>
+        /// Updates the execution state of the backup task and triggers the notification event in the main task.
+        /// </summary>
+        /// <param name="state">The new <see cref="SaveTaskState"/> to apply.</param>
+        /// <returns>The updated state.</returns>
         public SaveTaskState setState(SaveTaskState state)
         {
             _state = state;
@@ -83,12 +105,30 @@ namespace ProjetEasySave.Model
             return state;
         }
 
-        // Getter for state
+        /// <summary>
+        /// Retrieves the current execution state of the backup task.
+        /// </summary>
+        /// <returns>The current <see cref="SaveTaskState"/>.</returns>
         public SaveTaskState getState()
         {
-            return _state; 
+            return _state;
         }
 
+        /// <summary>
+        /// Processes a single file by copying it to the destination and applying encryption if required.
+        /// </summary>
+        /// <param name="sourceFile">The full path of the source file to copy.</param>
+        /// <param name="sourcePath">The root directory path of the backup source.</param>
+        /// <param name="destinationPath">The root directory path of the backup destination.</param>
+        /// <param name="fullBackupPath">The root directory path of the full backup reference.</param>
+        /// <param name="cryptoKey">The key used for file encryption.</param>
+        /// <param name="cryptoExtensions">A list of file extensions that require encryption.</param>
+        /// <param name="totalBytes">The total size in bytes of all files that need to be copied.</param>
+        /// <param name="copiedBytes">The total number of bytes successfully copied so far (passed by reference).</param>
+        /// <param name="progress">A delegate used to report the progress percentage and current file name to the UI.</param>
+        /// <param name="token">A cancellation token to observe for stop requests mid-copy.</param>
+        /// <param name="pauseEvent">A reset event used to pause and resume the copying process.</param>
+        /// <returns>The duration of the encryption process in milliseconds, <c>0</c> if no encryption occurred, or <c>-1</c> if an error happened.</returns>
         private int processFile(
             string sourceFile,
             string sourcePath,
@@ -196,6 +236,18 @@ namespace ProjetEasySave.Model
             return (int)encryptionDuration;
         }
 
+        /// <summary>
+        /// Executes the differential backup process. Compares the source with the full backup, 
+        /// isolates modified or new files, and copies them to the destination.
+        /// </summary>
+        /// <param name="sourcePath">The path of the directory to be backed up.</param>
+        /// <param name="destinationPath">The path where the differential backup will be stored.</param>
+        /// <param name="priorityExt">A list of extensions dictating which files should be processed first.</param>
+        /// <param name="token">A cancellation token to handle stop requests mid-process.</param>
+        /// <param name="pauseEvent">A manual reset event to handle pause and resume functionalities.</param>
+        /// <param name="progress">An action delegate used to push progress percentage updates and filenames to the UI thread.</param>
+        /// <returns><c>true</c> if the save process successfully completed; otherwise, <c>false</c>.</returns>
+        /// <exception cref="OperationCanceledException">Thrown when the backup process is explicitly cancelled by the user.</exception>
         public bool doSave(
             string sourcePath,
             string destinationPath,
@@ -299,9 +351,9 @@ namespace ProjetEasySave.Model
                     {
                         // Respect pause and cancellation requests
                         token.ThrowIfCancellationRequested();
-                        
+
                         if (!pauseEvent.IsSet) progress?.Invoke(0, "Paused");
-                        
+
                         pauseEvent.Wait(token);
 
                         // Process pending big files first if semaphore is available
@@ -310,9 +362,9 @@ namespace ProjetEasySave.Model
                             while (_pendingFiles.Count > 0)
                             {
                                 token.ThrowIfCancellationRequested();
-                                
+
                                 if (!pauseEvent.IsSet) progress?.Invoke(0, "Paused");
-                                
+
                                 pauseEvent.Wait(token);
 
                                 _bigFileSemaphore.Wait(token);

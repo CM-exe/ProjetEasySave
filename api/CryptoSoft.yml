@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: CryptoSoft
+  commentId: N:CryptoSoft
+  id: CryptoSoft
+  children:
+  - CryptoSoft.FileManager
+  langs:
+  - csharp
+  - vb
+  name: CryptoSoft
+  nameWithType: CryptoSoft
+  fullName: CryptoSoft
+  type: Namespace
+  assemblies:
+  - CryptoSoft
+references:
+- uid: CryptoSoft.FileManager
+  commentId: T:CryptoSoft.FileManager
+  href: CryptoSoft.FileManager.html
+  name: FileManager
+  nameWithType: FileManager
+  fullName: CryptoSoft.FileManager

@@ -1,0 +1,1130 @@
+### YamlMime:ManagedReference
+items:
+- uid: ProjetEasySave.Model.DifferentialSave
+  commentId: T:ProjetEasySave.Model.DifferentialSave
+  id: DifferentialSave
+  parent: ProjetEasySave.Model
+  children:
+  - ProjetEasySave.Model.DifferentialSave.#ctor(ProjetEasySave.Model.SaveTask,System.Threading.SemaphoreSlim,System.String)
+  - ProjetEasySave.Model.DifferentialSave.doSave(System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.CancellationToken,System.Threading.ManualResetEventSlim,System.Action{System.Int32,System.String})
+  - ProjetEasySave.Model.DifferentialSave.getCompleteSavePath
+  - ProjetEasySave.Model.DifferentialSave.getState
+  - ProjetEasySave.Model.DifferentialSave.isBusinessSoftwareRunning
+  - ProjetEasySave.Model.DifferentialSave.setState(SaveTaskState)
+  - ProjetEasySave.Model.DifferentialSave.waitForBusinessSoftwareToClose
+  langs:
+  - csharp
+  - vb
+  name: DifferentialSave
+  nameWithType: DifferentialSave
+  fullName: ProjetEasySave.Model.DifferentialSave
+  type: Class
+  source:
+    remote:
+      path: EasySaveWPF/Model/DifferentialSave.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: DifferentialSave
+    path: EasySaveWPF/Model/DifferentialSave.cs
+    startLine: 17
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Represents the differential backup strategy implementation of the <xref href="ProjetEasySave.Model.ISaveStrategy" data-throw-if-not-resolved="false"></xref> interface.
+  remarks: >-
+    This strategy compares the source directory against a previously completed full backup. 
+
+    It only copies files that are new or have been modified since that full backup. 
+
+    It handles large files, encryption, and pauses when restricted business software is running.
+  example: []
+  syntax:
+    content: 'public class DifferentialSave : ISaveStrategy'
+    content.vb: Public Class DifferentialSave Implements ISaveStrategy
+  inheritance:
+  - System.Object
+  implements:
+  - ProjetEasySave.Model.ISaveStrategy
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: ProjetEasySave.Model.DifferentialSave.#ctor(ProjetEasySave.Model.SaveTask,System.Threading.SemaphoreSlim,System.String)
+  commentId: M:ProjetEasySave.Model.DifferentialSave.#ctor(ProjetEasySave.Model.SaveTask,System.Threading.SemaphoreSlim,System.String)
+  id: '#ctor(ProjetEasySave.Model.SaveTask,System.Threading.SemaphoreSlim,System.String)'
+  parent: ProjetEasySave.Model.DifferentialSave
+  langs:
+  - csharp
+  - vb
+  name: DifferentialSave(SaveTask, SemaphoreSlim, string)
+  nameWithType: DifferentialSave.DifferentialSave(SaveTask, SemaphoreSlim, string)
+  fullName: ProjetEasySave.Model.DifferentialSave.DifferentialSave(ProjetEasySave.Model.SaveTask, System.Threading.SemaphoreSlim, string)
+  type: Constructor
+  source:
+    remote:
+      path: EasySaveWPF/Model/DifferentialSave.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: .ctor
+    path: EasySaveWPF/Model/DifferentialSave.cs
+    startLine: 36
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Initializes a new instance of the <xref href="ProjetEasySave.Model.DifferentialSave" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public DifferentialSave(SaveTask saveTask, SemaphoreSlim bigFileSemaphore, string fullBackupPath)
+    parameters:
+    - id: saveTask
+      type: ProjetEasySave.Model.SaveTask
+      description: The main task object associated with this backup operation.
+    - id: bigFileSemaphore
+      type: System.Threading.SemaphoreSlim
+      description: The semaphore used to limit concurrent transfers of large files across the application.
+    - id: fullBackupPath
+      type: System.String
+      description: The reference path to the last complete backup used for comparison.
+    content.vb: Public Sub New(saveTask As SaveTask, bigFileSemaphore As SemaphoreSlim, fullBackupPath As String)
+  overload: ProjetEasySave.Model.DifferentialSave.#ctor*
+  nameWithType.vb: DifferentialSave.New(SaveTask, SemaphoreSlim, String)
+  fullName.vb: ProjetEasySave.Model.DifferentialSave.New(ProjetEasySave.Model.SaveTask, System.Threading.SemaphoreSlim, String)
+  name.vb: New(SaveTask, SemaphoreSlim, String)
+- uid: ProjetEasySave.Model.DifferentialSave.getCompleteSavePath
+  commentId: M:ProjetEasySave.Model.DifferentialSave.getCompleteSavePath
+  id: getCompleteSavePath
+  parent: ProjetEasySave.Model.DifferentialSave
+  langs:
+  - csharp
+  - vb
+  name: getCompleteSavePath()
+  nameWithType: DifferentialSave.getCompleteSavePath()
+  fullName: ProjetEasySave.Model.DifferentialSave.getCompleteSavePath()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/DifferentialSave.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getCompleteSavePath
+    path: EasySaveWPF/Model/DifferentialSave.cs
+    startLine: 48
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Retrieves the reference path of the complete backup used by this differential strategy.
+  example: []
+  syntax:
+    content: public string getCompleteSavePath()
+    return:
+      type: System.String
+      description: A string representing the path to the full backup directory.
+    content.vb: Public Function getCompleteSavePath() As String
+  overload: ProjetEasySave.Model.DifferentialSave.getCompleteSavePath*
+- uid: ProjetEasySave.Model.DifferentialSave.isBusinessSoftwareRunning
+  commentId: M:ProjetEasySave.Model.DifferentialSave.isBusinessSoftwareRunning
+  id: isBusinessSoftwareRunning
+  parent: ProjetEasySave.Model.DifferentialSave
+  langs:
+  - csharp
+  - vb
+  name: isBusinessSoftwareRunning()
+  nameWithType: DifferentialSave.isBusinessSoftwareRunning()
+  fullName: ProjetEasySave.Model.DifferentialSave.isBusinessSoftwareRunning()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/DifferentialSave.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: isBusinessSoftwareRunning
+    path: EasySaveWPF/Model/DifferentialSave.cs
+    startLine: 57
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Checks whether the configured business software is currently actively running on the system.
+  example: []
+  syntax:
+    content: public bool isBusinessSoftwareRunning()
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the business software is running; otherwise, <code>false</code>.
+    content.vb: Public Function isBusinessSoftwareRunning() As Boolean
+  overload: ProjetEasySave.Model.DifferentialSave.isBusinessSoftwareRunning*
+  implements:
+  - ProjetEasySave.Model.ISaveStrategy.isBusinessSoftwareRunning
+- uid: ProjetEasySave.Model.DifferentialSave.waitForBusinessSoftwareToClose
+  commentId: M:ProjetEasySave.Model.DifferentialSave.waitForBusinessSoftwareToClose
+  id: waitForBusinessSoftwareToClose
+  parent: ProjetEasySave.Model.DifferentialSave
+  langs:
+  - csharp
+  - vb
+  name: waitForBusinessSoftwareToClose()
+  nameWithType: DifferentialSave.waitForBusinessSoftwareToClose()
+  fullName: ProjetEasySave.Model.DifferentialSave.waitForBusinessSoftwareToClose()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/DifferentialSave.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: waitForBusinessSoftwareToClose
+    path: EasySaveWPF/Model/DifferentialSave.cs
+    startLine: 73
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: >-
+    Suspends the backup thread and waits until all instances of the conflicting business software are closed.
+
+    Logs a waiting message to the real-time tracker.
+  example: []
+  syntax:
+    content: public void waitForBusinessSoftwareToClose()
+    content.vb: Public Sub waitForBusinessSoftwareToClose()
+  overload: ProjetEasySave.Model.DifferentialSave.waitForBusinessSoftwareToClose*
+  implements:
+  - ProjetEasySave.Model.ISaveStrategy.waitForBusinessSoftwareToClose
+- uid: ProjetEasySave.Model.DifferentialSave.setState(SaveTaskState)
+  commentId: M:ProjetEasySave.Model.DifferentialSave.setState(SaveTaskState)
+  id: setState(SaveTaskState)
+  parent: ProjetEasySave.Model.DifferentialSave
+  langs:
+  - csharp
+  - vb
+  name: setState(SaveTaskState)
+  nameWithType: DifferentialSave.setState(SaveTaskState)
+  fullName: ProjetEasySave.Model.DifferentialSave.setState(SaveTaskState)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/DifferentialSave.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setState
+    path: EasySaveWPF/Model/DifferentialSave.cs
+    startLine: 100
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Updates the execution state of the backup task and triggers the notification event in the main task.
+  example: []
+  syntax:
+    content: public SaveTaskState setState(SaveTaskState state)
+    parameters:
+    - id: state
+      type: SaveTaskState
+      description: The new <xref href="SaveTaskState" data-throw-if-not-resolved="false"></xref> to apply.
+    return:
+      type: SaveTaskState
+      description: The updated state.
+    content.vb: Public Function setState(state As SaveTaskState) As SaveTaskState
+  overload: ProjetEasySave.Model.DifferentialSave.setState*
+  implements:
+  - ProjetEasySave.Model.ISaveStrategy.setState(SaveTaskState)
+- uid: ProjetEasySave.Model.DifferentialSave.getState
+  commentId: M:ProjetEasySave.Model.DifferentialSave.getState
+  id: getState
+  parent: ProjetEasySave.Model.DifferentialSave
+  langs:
+  - csharp
+  - vb
+  name: getState()
+  nameWithType: DifferentialSave.getState()
+  fullName: ProjetEasySave.Model.DifferentialSave.getState()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/DifferentialSave.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getState
+    path: EasySaveWPF/Model/DifferentialSave.cs
+    startLine: 111
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Retrieves the current execution state of the backup task.
+  example: []
+  syntax:
+    content: public SaveTaskState getState()
+    return:
+      type: SaveTaskState
+      description: The current <xref href="SaveTaskState" data-throw-if-not-resolved="false"></xref>.
+    content.vb: Public Function getState() As SaveTaskState
+  overload: ProjetEasySave.Model.DifferentialSave.getState*
+  implements:
+  - ProjetEasySave.Model.ISaveStrategy.getState
+- uid: ProjetEasySave.Model.DifferentialSave.doSave(System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.CancellationToken,System.Threading.ManualResetEventSlim,System.Action{System.Int32,System.String})
+  commentId: M:ProjetEasySave.Model.DifferentialSave.doSave(System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.CancellationToken,System.Threading.ManualResetEventSlim,System.Action{System.Int32,System.String})
+  id: doSave(System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.CancellationToken,System.Threading.ManualResetEventSlim,System.Action{System.Int32,System.String})
+  parent: ProjetEasySave.Model.DifferentialSave
+  langs:
+  - csharp
+  - vb
+  name: doSave(string, string, List<string>, CancellationToken, ManualResetEventSlim, Action<int, string>)
+  nameWithType: DifferentialSave.doSave(string, string, List<string>, CancellationToken, ManualResetEventSlim, Action<int, string>)
+  fullName: ProjetEasySave.Model.DifferentialSave.doSave(string, string, System.Collections.Generic.List<string>, System.Threading.CancellationToken, System.Threading.ManualResetEventSlim, System.Action<int, string>)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/DifferentialSave.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: doSave
+    path: EasySaveWPF/Model/DifferentialSave.cs
+    startLine: 250
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: >-
+    Executes the differential backup process. Compares the source with the full backup, 
+
+    isolates modified or new files, and copies them to the destination.
+  example: []
+  syntax:
+    content: public bool doSave(string sourcePath, string destinationPath, List<string> priorityExt, CancellationToken token, ManualResetEventSlim pauseEvent, Action<int, string> progress)
+    parameters:
+    - id: sourcePath
+      type: System.String
+      description: The path of the directory to be backed up.
+    - id: destinationPath
+      type: System.String
+      description: The path where the differential backup will be stored.
+    - id: priorityExt
+      type: System.Collections.Generic.List{System.String}
+      description: A list of extensions dictating which files should be processed first.
+    - id: token
+      type: System.Threading.CancellationToken
+      description: A cancellation token to handle stop requests mid-process.
+    - id: pauseEvent
+      type: System.Threading.ManualResetEventSlim
+      description: A manual reset event to handle pause and resume functionalities.
+    - id: progress
+      type: System.Action{System.Int32,System.String}
+      description: An action delegate used to push progress percentage updates and filenames to the UI thread.
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the save process successfully completed; otherwise, <code>false</code>.
+    content.vb: Public Function doSave(sourcePath As String, destinationPath As String, priorityExt As List(Of String), token As CancellationToken, pauseEvent As ManualResetEventSlim, progress As Action(Of Integer, String)) As Boolean
+  overload: ProjetEasySave.Model.DifferentialSave.doSave*
+  exceptions:
+  - type: System.OperationCanceledException
+    commentId: T:System.OperationCanceledException
+    description: Thrown when the backup process is explicitly cancelled by the user.
+  implements:
+  - ProjetEasySave.Model.ISaveStrategy.doSave(System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.CancellationToken,System.Threading.ManualResetEventSlim,System.Action{System.Int32,System.String})
+  nameWithType.vb: DifferentialSave.doSave(String, String, List(Of String), CancellationToken, ManualResetEventSlim, Action(Of Integer, String))
+  fullName.vb: ProjetEasySave.Model.DifferentialSave.doSave(String, String, System.Collections.Generic.List(Of String), System.Threading.CancellationToken, System.Threading.ManualResetEventSlim, System.Action(Of Integer, String))
+  name.vb: doSave(String, String, List(Of String), CancellationToken, ManualResetEventSlim, Action(Of Integer, String))
+references:
+- uid: ProjetEasySave.Model.ISaveStrategy
+  commentId: T:ProjetEasySave.Model.ISaveStrategy
+  parent: ProjetEasySave.Model
+  href: ProjetEasySave.Model.ISaveStrategy.html
+  name: ISaveStrategy
+  nameWithType: ISaveStrategy
+  fullName: ProjetEasySave.Model.ISaveStrategy
+- uid: ProjetEasySave.Model
+  commentId: N:ProjetEasySave.Model
+  href: ProjetEasySave.html
+  name: ProjetEasySave.Model
+  nameWithType: ProjetEasySave.Model
+  fullName: ProjetEasySave.Model
+  spec.csharp:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.Model
+    name: Model
+    href: ProjetEasySave.Model.html
+  spec.vb:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.Model
+    name: Model
+    href: ProjetEasySave.Model.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ProjetEasySave.Model.DifferentialSave
+  commentId: T:ProjetEasySave.Model.DifferentialSave
+  href: ProjetEasySave.Model.DifferentialSave.html
+  name: DifferentialSave
+  nameWithType: DifferentialSave
+  fullName: ProjetEasySave.Model.DifferentialSave
+- uid: ProjetEasySave.Model.DifferentialSave.#ctor*
+  commentId: Overload:ProjetEasySave.Model.DifferentialSave.#ctor
+  href: ProjetEasySave.Model.DifferentialSave.html#ProjetEasySave_Model_DifferentialSave__ctor_ProjetEasySave_Model_SaveTask_System_Threading_SemaphoreSlim_System_String_
+  name: DifferentialSave
+  nameWithType: DifferentialSave.DifferentialSave
+  fullName: ProjetEasySave.Model.DifferentialSave.DifferentialSave
+  nameWithType.vb: DifferentialSave.New
+  fullName.vb: ProjetEasySave.Model.DifferentialSave.New
+  name.vb: New
+- uid: ProjetEasySave.Model.SaveTask
+  commentId: T:ProjetEasySave.Model.SaveTask
+  parent: ProjetEasySave.Model
+  href: ProjetEasySave.Model.SaveTask.html
+  name: SaveTask
+  nameWithType: SaveTask
+  fullName: ProjetEasySave.Model.SaveTask
+- uid: System.Threading.SemaphoreSlim
+  commentId: T:System.Threading.SemaphoreSlim
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.semaphoreslim
+  name: SemaphoreSlim
+  nameWithType: SemaphoreSlim
+  fullName: System.Threading.SemaphoreSlim
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: ProjetEasySave.Model.DifferentialSave.getCompleteSavePath*
+  commentId: Overload:ProjetEasySave.Model.DifferentialSave.getCompleteSavePath
+  href: ProjetEasySave.Model.DifferentialSave.html#ProjetEasySave_Model_DifferentialSave_getCompleteSavePath
+  name: getCompleteSavePath
+  nameWithType: DifferentialSave.getCompleteSavePath
+  fullName: ProjetEasySave.Model.DifferentialSave.getCompleteSavePath
+- uid: ProjetEasySave.Model.DifferentialSave.isBusinessSoftwareRunning*
+  commentId: Overload:ProjetEasySave.Model.DifferentialSave.isBusinessSoftwareRunning
+  href: ProjetEasySave.Model.DifferentialSave.html#ProjetEasySave_Model_DifferentialSave_isBusinessSoftwareRunning
+  name: isBusinessSoftwareRunning
+  nameWithType: DifferentialSave.isBusinessSoftwareRunning
+  fullName: ProjetEasySave.Model.DifferentialSave.isBusinessSoftwareRunning
+- uid: ProjetEasySave.Model.ISaveStrategy.isBusinessSoftwareRunning
+  commentId: M:ProjetEasySave.Model.ISaveStrategy.isBusinessSoftwareRunning
+  parent: ProjetEasySave.Model.ISaveStrategy
+  href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_isBusinessSoftwareRunning
+  name: isBusinessSoftwareRunning()
+  nameWithType: ISaveStrategy.isBusinessSoftwareRunning()
+  fullName: ProjetEasySave.Model.ISaveStrategy.isBusinessSoftwareRunning()
+  spec.csharp:
+  - uid: ProjetEasySave.Model.ISaveStrategy.isBusinessSoftwareRunning
+    name: isBusinessSoftwareRunning
+    href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_isBusinessSoftwareRunning
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: ProjetEasySave.Model.ISaveStrategy.isBusinessSoftwareRunning
+    name: isBusinessSoftwareRunning
+    href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_isBusinessSoftwareRunning
+  - name: (
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: ProjetEasySave.Model.DifferentialSave.waitForBusinessSoftwareToClose*
+  commentId: Overload:ProjetEasySave.Model.DifferentialSave.waitForBusinessSoftwareToClose
+  href: ProjetEasySave.Model.DifferentialSave.html#ProjetEasySave_Model_DifferentialSave_waitForBusinessSoftwareToClose
+  name: waitForBusinessSoftwareToClose
+  nameWithType: DifferentialSave.waitForBusinessSoftwareToClose
+  fullName: ProjetEasySave.Model.DifferentialSave.waitForBusinessSoftwareToClose
+- uid: ProjetEasySave.Model.ISaveStrategy.waitForBusinessSoftwareToClose
+  commentId: M:ProjetEasySave.Model.ISaveStrategy.waitForBusinessSoftwareToClose
+  parent: ProjetEasySave.Model.ISaveStrategy
+  href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_waitForBusinessSoftwareToClose
+  name: waitForBusinessSoftwareToClose()
+  nameWithType: ISaveStrategy.waitForBusinessSoftwareToClose()
+  fullName: ProjetEasySave.Model.ISaveStrategy.waitForBusinessSoftwareToClose()
+  spec.csharp:
+  - uid: ProjetEasySave.Model.ISaveStrategy.waitForBusinessSoftwareToClose
+    name: waitForBusinessSoftwareToClose
+    href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_waitForBusinessSoftwareToClose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: ProjetEasySave.Model.ISaveStrategy.waitForBusinessSoftwareToClose
+    name: waitForBusinessSoftwareToClose
+    href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_waitForBusinessSoftwareToClose
+  - name: (
+  - name: )
+- uid: SaveTaskState
+  commentId: T:SaveTaskState
+  href: SaveTaskState.html
+  name: SaveTaskState
+  nameWithType: SaveTaskState
+  fullName: SaveTaskState
+- uid: ProjetEasySave.Model.DifferentialSave.setState*
+  commentId: Overload:ProjetEasySave.Model.DifferentialSave.setState
+  href: ProjetEasySave.Model.DifferentialSave.html#ProjetEasySave_Model_DifferentialSave_setState_SaveTaskState_
+  name: setState
+  nameWithType: DifferentialSave.setState
+  fullName: ProjetEasySave.Model.DifferentialSave.setState
+- uid: ProjetEasySave.Model.ISaveStrategy.setState(SaveTaskState)
+  commentId: M:ProjetEasySave.Model.ISaveStrategy.setState(SaveTaskState)
+  parent: ProjetEasySave.Model.ISaveStrategy
+  href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_setState_SaveTaskState_
+  name: setState(SaveTaskState)
+  nameWithType: ISaveStrategy.setState(SaveTaskState)
+  fullName: ProjetEasySave.Model.ISaveStrategy.setState(SaveTaskState)
+  spec.csharp:
+  - uid: ProjetEasySave.Model.ISaveStrategy.setState(SaveTaskState)
+    name: setState
+    href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_setState_SaveTaskState_
+  - name: (
+  - uid: SaveTaskState
+    name: SaveTaskState
+    href: SaveTaskState.html
+  - name: )
+  spec.vb:
+  - uid: ProjetEasySave.Model.ISaveStrategy.setState(SaveTaskState)
+    name: setState
+    href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_setState_SaveTaskState_
+  - name: (
+  - uid: SaveTaskState
+    name: SaveTaskState
+    href: SaveTaskState.html
+  - name: )
+- uid: ProjetEasySave.Model.DifferentialSave.getState*
+  commentId: Overload:ProjetEasySave.Model.DifferentialSave.getState
+  href: ProjetEasySave.Model.DifferentialSave.html#ProjetEasySave_Model_DifferentialSave_getState
+  name: getState
+  nameWithType: DifferentialSave.getState
+  fullName: ProjetEasySave.Model.DifferentialSave.getState
+- uid: ProjetEasySave.Model.ISaveStrategy.getState
+  commentId: M:ProjetEasySave.Model.ISaveStrategy.getState
+  parent: ProjetEasySave.Model.ISaveStrategy
+  href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_getState
+  name: getState()
+  nameWithType: ISaveStrategy.getState()
+  fullName: ProjetEasySave.Model.ISaveStrategy.getState()
+  spec.csharp:
+  - uid: ProjetEasySave.Model.ISaveStrategy.getState
+    name: getState
+    href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_getState
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: ProjetEasySave.Model.ISaveStrategy.getState
+    name: getState
+    href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_getState
+  - name: (
+  - name: )
+- uid: System.OperationCanceledException
+  commentId: T:System.OperationCanceledException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.operationcanceledexception
+  name: OperationCanceledException
+  nameWithType: OperationCanceledException
+  fullName: System.OperationCanceledException
+- uid: ProjetEasySave.Model.DifferentialSave.doSave*
+  commentId: Overload:ProjetEasySave.Model.DifferentialSave.doSave
+  href: ProjetEasySave.Model.DifferentialSave.html#ProjetEasySave_Model_DifferentialSave_doSave_System_String_System_String_System_Collections_Generic_List_System_String__System_Threading_CancellationToken_System_Threading_ManualResetEventSlim_System_Action_System_Int32_System_String__
+  name: doSave
+  nameWithType: DifferentialSave.doSave
+  fullName: ProjetEasySave.Model.DifferentialSave.doSave
+- uid: ProjetEasySave.Model.ISaveStrategy.doSave(System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.CancellationToken,System.Threading.ManualResetEventSlim,System.Action{System.Int32,System.String})
+  commentId: M:ProjetEasySave.Model.ISaveStrategy.doSave(System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.CancellationToken,System.Threading.ManualResetEventSlim,System.Action{System.Int32,System.String})
+  parent: ProjetEasySave.Model.ISaveStrategy
+  isExternal: true
+  href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_doSave_System_String_System_String_System_Collections_Generic_List_System_String__System_Threading_CancellationToken_System_Threading_ManualResetEventSlim_System_Action_System_Int32_System_String__
+  name: doSave(string, string, List<string>, CancellationToken, ManualResetEventSlim, Action<int, string>)
+  nameWithType: ISaveStrategy.doSave(string, string, List<string>, CancellationToken, ManualResetEventSlim, Action<int, string>)
+  fullName: ProjetEasySave.Model.ISaveStrategy.doSave(string, string, System.Collections.Generic.List<string>, System.Threading.CancellationToken, System.Threading.ManualResetEventSlim, System.Action<int, string>)
+  nameWithType.vb: ISaveStrategy.doSave(String, String, List(Of String), CancellationToken, ManualResetEventSlim, Action(Of Integer, String))
+  fullName.vb: ProjetEasySave.Model.ISaveStrategy.doSave(String, String, System.Collections.Generic.List(Of String), System.Threading.CancellationToken, System.Threading.ManualResetEventSlim, System.Action(Of Integer, String))
+  name.vb: doSave(String, String, List(Of String), CancellationToken, ManualResetEventSlim, Action(Of Integer, String))
+  spec.csharp:
+  - uid: ProjetEasySave.Model.ISaveStrategy.doSave(System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.CancellationToken,System.Threading.ManualResetEventSlim,System.Action{System.Int32,System.String})
+    name: doSave
+    href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_doSave_System_String_System_String_System_Collections_Generic_List_System_String__System_Threading_CancellationToken_System_Threading_ManualResetEventSlim_System_Action_System_Int32_System_String__
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: ','
+  - name: " "
+  - uid: System.Threading.ManualResetEventSlim
+    name: ManualResetEventSlim
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.manualreseteventslim
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: ProjetEasySave.Model.ISaveStrategy.doSave(System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.CancellationToken,System.Threading.ManualResetEventSlim,System.Action{System.Int32,System.String})
+    name: doSave
+    href: ProjetEasySave.Model.ISaveStrategy.html#ProjetEasySave_Model_ISaveStrategy_doSave_System_String_System_String_System_Collections_Generic_List_System_String__System_Threading_CancellationToken_System_Threading_ManualResetEventSlim_System_Action_System_Int32_System_String__
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: ','
+  - name: " "
+  - uid: System.Threading.ManualResetEventSlim
+    name: ManualResetEventSlim
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.manualreseteventslim
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.ManualResetEventSlim
+  commentId: T:System.Threading.ManualResetEventSlim
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.manualreseteventslim
+  name: ManualResetEventSlim
+  nameWithType: ManualResetEventSlim
+  fullName: System.Threading.ManualResetEventSlim
+- uid: System.Action{System.Int32,System.String}
+  commentId: T:System.Action{System.Int32,System.String}
+  parent: System
+  definition: System.Action`2
+  href: https://learn.microsoft.com/dotnet/api/system.action-2
+  name: Action<int, string>
+  nameWithType: Action<int, string>
+  fullName: System.Action<int, string>
+  nameWithType.vb: Action(Of Integer, String)
+  fullName.vb: System.Action(Of Integer, String)
+  name.vb: Action(Of Integer, String)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Action`2
+  commentId: T:System.Action`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-2
+  name: Action<T1, T2>
+  nameWithType: Action<T1, T2>
+  fullName: System.Action<T1, T2>
+  nameWithType.vb: Action(Of T1, T2)
+  fullName.vb: System.Action(Of T1, T2)
+  name.vb: Action(Of T1, T2)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )

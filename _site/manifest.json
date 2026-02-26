@@ -1,0 +1,453 @@
+{
+  "source_base_path": "C:/Users/noapi/ProjetGenieLogiciel/ProjetEasySave",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "EasySaveWPFTests/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "EasySaveWPFTests/README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CryptoSoft.FileManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CryptoSoft.FileManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "CryptoSoft.FileManager",
+      "Summary": "<p sourcefile=\"api/CryptoSoft.FileManager.yml\" sourcestartlinenumber=\"1\">Provides logic for file encryption and decryption using XOR operations.\nEnsures single-instance execution across the system using a global Mutex.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/CryptoSoft.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CryptoSoft.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "CryptoSoft",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/EasyLog.IConfig.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/EasyLog.IConfig.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyLog.IConfig",
+      "Summary": "<p sourcefile=\"api/EasyLog.IConfig.yml\" sourcestartlinenumber=\"1\">Defines the configuration contract required by the logging system.\nAny class implementing this interface must provide paths, formats, and networking details for the logger.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/EasyLog.LogFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/EasyLog.LogFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyLog.LogFormat",
+      "Summary": "<p sourcefile=\"api/EasyLog.LogFormat.yml\" sourcestartlinenumber=\"1\">Enumeration to define the supported log formats.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/EasyLog.Logger.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/EasyLog.Logger.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyLog.Logger",
+      "Summary": "<p sourcefile=\"api/EasyLog.Logger.yml\" sourcestartlinenumber=\"1\">Handles the generation, formatting, and dispatching of application logs.\nSupports writing to local files and streaming to a remote centralized logging server via TCP sockets.\nImplements the Singleton pattern to ensure a single logging stream across the application.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/EasyLog.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/EasyLog.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyLog",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/EasySaveWPF.App.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/EasySaveWPF.App.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasySaveWPF.App",
+      "Summary": "<p sourcefile=\"api/EasySaveWPF.App.yml\" sourcestartlinenumber=\"1\">Interaction logic for App.xaml</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/EasySaveWPF.MainWindow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/EasySaveWPF.MainWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasySaveWPF.MainWindow",
+      "Summary": "<p sourcefile=\"api/EasySaveWPF.MainWindow.yml\" sourcestartlinenumber=\"1\">MainWindow</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/EasySaveWPF.SaveProgressWindow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/EasySaveWPF.SaveProgressWindow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasySaveWPF.SaveProgressWindow",
+      "Summary": "<p sourcefile=\"api/EasySaveWPF.SaveProgressWindow.yml\" sourcestartlinenumber=\"1\">Interaction logic for SaveProgressWindow.xaml.\nHandles the UI representation of a backup job, including progress tracking, pausing, and stopping functionalities.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/EasySaveWPF.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/EasySaveWPF.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasySaveWPF",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/EasySaveWPFTests.CompleteSaveTest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/EasySaveWPFTests.CompleteSaveTest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasySaveWPFTests.CompleteSaveTest",
+      "Summary": "<p sourcefile=\"api/EasySaveWPFTests.CompleteSaveTest.yml\" sourcestartlinenumber=\"1\">Contains unit tests for the Complete Save strategy.\nEnsures that full backup operations correctly copy all files from the source to the destination.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/EasySaveWPFTests.DifferentialSaveTest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/EasySaveWPFTests.DifferentialSaveTest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasySaveWPFTests.DifferentialSaveTest",
+      "Summary": "<p sourcefile=\"api/EasySaveWPFTests.DifferentialSaveTest.yml\" sourcestartlinenumber=\"1\">Contains unit tests for the Differential Save strategy.\nEnsures that differential backup operations correctly detect modified files and copy only the changes compared to a reference full backup.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/EasySaveWPFTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/EasySaveWPFTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasySaveWPFTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.Model.CompleteSave.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.Model.CompleteSave.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.Model.CompleteSave",
+      "Summary": "<p sourcefile=\"api/ProjetEasySave.Model.CompleteSave.yml\" sourcestartlinenumber=\"1\">Represents the complete backup strategy implementation of the <xref href=\"ProjetEasySave.Model.ISaveStrategy\" data-throw-if-not-resolved=\"false\"></xref> interface.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.Model.DifferentialSave.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.Model.DifferentialSave.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.Model.DifferentialSave",
+      "Summary": "<p sourcefile=\"api/ProjetEasySave.Model.DifferentialSave.yml\" sourcestartlinenumber=\"1\">Represents the differential backup strategy implementation of the <xref href=\"ProjetEasySave.Model.ISaveStrategy\" data-throw-if-not-resolved=\"false\"></xref> interface.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.Model.ISaveStrategy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.Model.ISaveStrategy.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.Model.ISaveStrategy",
+      "Summary": "<p sourcefile=\"api/ProjetEasySave.Model.ISaveStrategy.yml\" sourcestartlinenumber=\"1\">Defines the contract for backup strategies within the EasySave application.\nImplementations of this interface (such as Complete or Differential saves) must provide specific logic for copying files, handling states, and reacting to business software constraints.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.Model.SaveModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.Model.SaveModel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.Model.SaveModel",
+      "Summary": "<p sourcefile=\"api/ProjetEasySave.Model.SaveModel.yml\" sourcestartlinenumber=\"1\">Serves as the central data model for the application, managing the collection of backup jobs (<xref href=\"ProjetEasySave.Model.SaveSpace\" data-throw-if-not-resolved=\"false\"></xref>).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.Model.SaveSpace.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.Model.SaveSpace.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.Model.SaveSpace",
+      "Summary": "<p sourcefile=\"api/ProjetEasySave.Model.SaveSpace.yml\" sourcestartlinenumber=\"1\">Represents a configured backup job, managing its properties, associated tasks, and execution state.\nActs as an observer to track changes from its underlying <xref href=\"ProjetEasySave.Model.SaveTask\" data-throw-if-not-resolved=\"false\"></xref> instances.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.Model.SaveTask.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.Model.SaveTask.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.Model.SaveTask",
+      "Summary": "<p sourcefile=\"api/ProjetEasySave.Model.SaveTask.yml\" sourcestartlinenumber=\"1\">Represents an individual execution unit for a backup operation.\nThis class wraps a specific backup strategy (Complete or Differential) and manages its lifecycle and state.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.Model.SaveTaskObserver.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.Model.SaveTaskObserver.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.Model.SaveTaskObserver",
+      "Summary": "<p sourcefile=\"api/ProjetEasySave.Model.SaveTaskObserver.yml\" sourcestartlinenumber=\"1\">Defines an observer interface for monitoring state changes within a backup task.\nImplementing classes (such as <xref href=\"ProjetEasySave.Model.SaveSpace\" data-throw-if-not-resolved=\"false\"></xref>) can use this to track and react to the lifecycle events of a <xref href=\"ProjetEasySave.Model.SaveTask\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.Model.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.Model.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.Model",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.View.View.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.View.View.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.View.View",
+      "Summary": "<p sourcefile=\"api/ProjetEasySave.View.View.yml\" sourcestartlinenumber=\"1\">Represents the console-based User Interface for the EasySave application.\nHandles command-line arguments, displays the interactive menu, captures user input, and communicates with the <xref href=\"ProjetEasySave.ViewModel\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.View.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.View.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.View",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.ViewModel.LanguageService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.ViewModel.LanguageService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.ViewModel.LanguageService",
+      "Summary": "<p sourcefile=\"api/ProjetEasySave.ViewModel.LanguageService.yml\" sourcestartlinenumber=\"1\">Provides internationalization and translation services for the EasySave application.\nThis class implements the Singleton pattern to ensure a single, thread-safe instance manages all translations.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.ViewModel.SaveJobState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.ViewModel.SaveJobState.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.ViewModel.SaveJobState",
+      "Summary": "<p sourcefile=\"api/ProjetEasySave.ViewModel.SaveJobState.yml\" sourcestartlinenumber=\"1\">Represents the real-time execution state of a specific backup job.\nImplements <xref href=\"System.ComponentModel.INotifyPropertyChanged\" data-throw-if-not-resolved=\"false\"></xref> to allow seamless data binding with the UI.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.ViewModel.ViewModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.ViewModel.ViewModel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.ViewModel.ViewModel",
+      "Summary": "<p sourcefile=\"api/ProjetEasySave.ViewModel.ViewModel.yml\" sourcestartlinenumber=\"1\">The central ViewModel for the application, acting as the intermediary between the View layer and the underlying Models.\nManages application state, UI translations, business logic routing, and background monitoring tasks.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ProjetEasySave.ViewModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ProjetEasySave.ViewModel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ProjetEasySave.ViewModel",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

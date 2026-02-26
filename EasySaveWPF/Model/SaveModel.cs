@@ -1,12 +1,18 @@
 ﻿using ProjetEasySave.Utils;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Collections.Concurrent;
 
 namespace ProjetEasySave.Model
 {
+    /// <summary>
+    /// Serves as the central data model for the application, managing the collection of backup jobs (<see cref="SaveSpace"/>).
+    /// </summary>
+    /// <remarks>
+    /// This class handles the persistence of backup configurations, provides CRUD operations for save spaces, 
+    /// and manages application-wide concurrency controls such as big file semaphores and directory locks.
+    /// </remarks>
     public class SaveModel
     {
         // Attribute
@@ -22,7 +28,10 @@ namespace ProjetEasySave.Model
         // Semaphore for big files to avoid multiple big saves at the same time
         private static SemaphoreSlim _bigFileSemaphore;
 
-        // Constructor
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SaveModel"/> class.
+        /// Sets up the big file semaphore and attempts to load existing save spaces from the local configuration file.
+        /// </summary>
         public SaveModel()
         {
             _saveSpaces = new List<SaveSpace>();
@@ -35,7 +44,10 @@ namespace ProjetEasySave.Model
             }
         }
 
-        // Destructor
+        /// <summary>
+        /// Finalizes an instance of the <see cref="SaveModel"/> class.
+        /// Ensures that all current save spaces are persisted to the configuration file before the object is destroyed.
+        /// </summary>
         ~SaveModel()
         {
             saveToConfig();
@@ -44,6 +56,16 @@ namespace ProjetEasySave.Model
         // Serialization/Deserialization constructor
 
         // Methods
+        /// <summary>
+        /// Adds a new backup job (Save Space) to the model.
+        /// </summary>
+        /// <param name="name">The unique name of the backup job.</param>
+        /// <param name="sourcePath">The source directory path.</param>
+        /// <param name="destinationPath">The destination directory path.</param>
+        /// <param name="typeSave">The type of backup ("complete" or "differential").</param>
+        /// <param name="priorityExt">A list of extensions that should be processed first.</param>
+        /// <param name="completeSavePath">The reference path for differential backups (optional).</param>
+        /// <returns><c>true</c> if the save space was successfully added; <c>false</c> if validation failed or it is a duplicate.</returns>
         public bool addSaveSpace(string name, string sourcePath, string destinationPath, string typeSave, List<string> priorityExt, string completeSavePath = "")
         {
             try
@@ -84,6 +106,11 @@ namespace ProjetEasySave.Model
             }
         }
 
+        /// <summary>
+        /// Removes an existing backup job from the model.
+        /// </summary>
+        /// <param name="name">The name of the save space to remove.</param>
+        /// <returns><c>true</c> if the save space was successfully found and removed; otherwise, <c>false</c>.</returns>
         public bool removeSaveSpace(string name)
         {
             var saveSpaceToRemove = _saveSpaces.FirstOrDefault(s => s.getName() == name);
@@ -102,11 +129,21 @@ namespace ProjetEasySave.Model
             return false;
         }
 
+        /// <summary>
+        /// Retrieves the list of all configured save spaces.
+        /// </summary>
+        /// <returns>A list containing all current <see cref="SaveSpace"/> objects.</returns>
         public List<SaveSpace> getSaveSpaces()
         {
             return _saveSpaces;
         }
 
+        /// <summary>
+        /// Deserializes and loads save spaces from a specified JSON configuration file.
+        /// </summary>
+        /// <param name="jsonConfigPath">The path to the JSON configuration file.</param>
+        /// <param name="dict_lock">The dictionary used to manage directory locks across threads.</param>
+        /// <returns><c>true</c> if the configuration was successfully loaded; otherwise, <c>false</c>.</returns>
         public bool loadSaveSpaces(string jsonConfigPath, ConcurrentDictionary<string, object> dict_lock)
         {
             try
@@ -152,6 +189,16 @@ namespace ProjetEasySave.Model
             }
         }
 
+        /// <summary>
+        /// Updates the configuration of an existing save space.
+        /// </summary>
+        /// <param name="name">The name of the save space to modify.</param>
+        /// <param name="newSourcePath">The new source directory path.</param>
+        /// <param name="newDestinationPath">The new destination directory path.</param>
+        /// <param name="newTypeSave">The new type of backup.</param>
+        /// <param name="priorityExt">The updated string of priority extensions.</param>
+        /// <param name="dict_loc">The global dictionary used for thread locks.</param>
+        /// <returns><c>true</c> if the save space was found and updated; otherwise, <c>false</c>.</returns>
         public bool updateSaveSpace(string name, string newSourcePath, string newDestinationPath, string newTypeSave, string priorityExt, ConcurrentDictionary<string, object> dict_loc)
         {
             var saveSpaceToUpdate = _saveSpaces.FirstOrDefault(s => s.getName() == name);
@@ -174,6 +221,11 @@ namespace ProjetEasySave.Model
             return false;
         }
 
+        /// <summary>
+        /// Initiates the backup process for a specific save space.
+        /// </summary>
+        /// <param name="name">The name of the save space to execute.</param>
+        /// <returns>A task representing the asynchronous operation, returning <c>true</c> if successful.</returns>
         public async Task<bool> startSave(string name)
         {
             var saveSpaceToStart = _saveSpaces.FirstOrDefault(s => s.getName() == name);
@@ -184,33 +236,58 @@ namespace ProjetEasySave.Model
             return false;
         }
 
+        /// <summary>
+        /// Initiates the backup process for a specific save space asynchronously.
+        /// </summary>
+        /// <param name="name">The name of the save space to execute.</param>
+        /// <returns>A task containing the boolean result of the backup operation.</returns>
         public Task<bool> StartSaveAsync(string name)
         {
             var saveSpace = _saveSpaces.FirstOrDefault(s => s.getName() == name);
             return saveSpace?.executeSaveAsync() ?? Task.FromResult(false);
         }
 
+        /// <summary>
+        /// Pauses the ongoing backup process for a specified save space.
+        /// </summary>
+        /// <param name="name">The name of the save space to pause.</param>
         public void PauseSave(string name)
         {
             _saveSpaces.First(s => s.getName() == name).Pause();
         }
 
+        /// <summary>
+        /// Resumes a previously paused backup process for a specified save space.
+        /// </summary>
+        /// <param name="name">The name of the save space to resume.</param>
         public void ResumeSave(string name)
         {
             _saveSpaces.First(s => s.getName() == name).Play();
         }
+
+        /// <summary>
+        /// Stops and cancels the ongoing backup process for a specified save space.
+        /// </summary>
+        /// <param name="name">The name of the save space to stop.</param>
         public void StopSave(string name)
         {
             _saveSpaces.First(s => s.getName() == name).Stop();
         }
 
+        /// <summary>
+        /// Subscribes an event handler to listen for progress updates from a specific backup job.
+        /// </summary>
+        /// <param name="name">The name of the save space emitting the progress events.</param>
+        /// <param name="handler">An action delegate accepting the completion percentage and current file name.</param>
         public void SubscribeProgress(string name, Action<int, string> handler)
         {
             _saveSpaces.First(s => s.getName() == name)
                        .ProgressChanged += handler;
         }
 
-        // Private method to save the current SaveSpaces to the config file
+        /// <summary>
+        /// Serializes the current state of all save spaces and writes it to the local JSON configuration file.
+        /// </summary>
         private void saveToConfig()
         {
             try
@@ -232,11 +309,19 @@ namespace ProjetEasySave.Model
             }
         }
 
+        /// <summary>
+        /// Retrieves the global dictionary used to lock destination directories and prevent concurrent writing conflicts.
+        /// </summary>
+        /// <returns>A thread-safe <see cref="ConcurrentDictionary{TKey, TValue}"/> mapping paths to lock objects.</returns>
         public static ConcurrentDictionary<string, object> getDictLock()
         {
             return _dict_lock;
         }
 
+        /// <summary>
+        /// Regenerates the global dictionary of directory locks based on the current list of save spaces.
+        /// Ensures each source and destination path has an associated locking object.
+        /// </summary>
         private void updateDictLock()
         {
             ConcurrentDictionary<string, object> temp_dict_lock = new();
@@ -248,6 +333,10 @@ namespace ProjetEasySave.Model
             _dict_lock = temp_dict_lock;
         }
 
+        /// <summary>
+        /// Checks if the configured business software is currently running on the system.
+        /// </summary>
+        /// <returns><c>true</c> if the business software is active; otherwise, <c>false</c>.</returns>
         public bool isBusinessSoftwareRunning()
         {
             ISaveStrategy tempStrategy = new CompleteSave(null, null);

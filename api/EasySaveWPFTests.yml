@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: EasySaveWPFTests
+  commentId: N:EasySaveWPFTests
+  id: EasySaveWPFTests
+  children:
+  - EasySaveWPFTests.CompleteSaveTest
+  - EasySaveWPFTests.DifferentialSaveTest
+  langs:
+  - csharp
+  - vb
+  name: EasySaveWPFTests
+  nameWithType: EasySaveWPFTests
+  fullName: EasySaveWPFTests
+  type: Namespace
+  assemblies:
+  - EasySaveWPFTests
+references:
+- uid: EasySaveWPFTests.CompleteSaveTest
+  commentId: T:EasySaveWPFTests.CompleteSaveTest
+  href: EasySaveWPFTests.CompleteSaveTest.html
+  name: CompleteSaveTest
+  nameWithType: CompleteSaveTest
+  fullName: EasySaveWPFTests.CompleteSaveTest
+- uid: EasySaveWPFTests.DifferentialSaveTest
+  commentId: T:EasySaveWPFTests.DifferentialSaveTest
+  href: EasySaveWPFTests.DifferentialSaveTest.html
+  name: DifferentialSaveTest
+  nameWithType: DifferentialSaveTest
+  fullName: EasySaveWPFTests.DifferentialSaveTest

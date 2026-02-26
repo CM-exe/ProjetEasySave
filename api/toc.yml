@@ -1,0 +1,91 @@
+### YamlMime:TableOfContent
+items:
+- uid: CryptoSoft
+  name: CryptoSoft
+  type: Namespace
+  items:
+  - uid: CryptoSoft.FileManager
+    name: FileManager
+    type: Class
+- uid: EasyLog
+  name: EasyLog
+  type: Namespace
+  items:
+  - uid: EasyLog.IConfig
+    name: IConfig
+    type: Interface
+  - uid: EasyLog.LogFormat
+    name: LogFormat
+    type: Enum
+  - uid: EasyLog.Logger
+    name: Logger
+    type: Class
+- uid: EasySaveWPF
+  name: EasySaveWPF
+  type: Namespace
+  items:
+  - uid: EasySaveWPF.App
+    name: App
+    type: Class
+  - uid: EasySaveWPF.MainWindow
+    name: MainWindow
+    type: Class
+  - uid: EasySaveWPF.SaveProgressWindow
+    name: SaveProgressWindow
+    type: Class
+- uid: EasySaveWPFTests
+  name: EasySaveWPFTests
+  type: Namespace
+  items:
+  - uid: EasySaveWPFTests.CompleteSaveTest
+    name: CompleteSaveTest
+    type: Class
+  - uid: EasySaveWPFTests.DifferentialSaveTest
+    name: DifferentialSaveTest
+    type: Class
+- uid: ProjetEasySave.Model
+  name: ProjetEasySave.Model
+  type: Namespace
+  items:
+  - uid: ProjetEasySave.Model.CompleteSave
+    name: CompleteSave
+    type: Class
+  - uid: ProjetEasySave.Model.DifferentialSave
+    name: DifferentialSave
+    type: Class
+  - uid: ProjetEasySave.Model.ISaveStrategy
+    name: ISaveStrategy
+    type: Interface
+  - uid: ProjetEasySave.Model.SaveModel
+    name: SaveModel
+    type: Class
+  - uid: ProjetEasySave.Model.SaveSpace
+    name: SaveSpace
+    type: Class
+  - uid: ProjetEasySave.Model.SaveTask
+    name: SaveTask
+    type: Class
+  - uid: ProjetEasySave.Model.SaveTaskObserver
+    name: SaveTaskObserver
+    type: Interface
+- uid: ProjetEasySave.View
+  name: ProjetEasySave.View
+  type: Namespace
+  items:
+  - uid: ProjetEasySave.View.View
+    name: View
+    type: Class
+- uid: ProjetEasySave.ViewModel
+  name: ProjetEasySave.ViewModel
+  type: Namespace
+  items:
+  - uid: ProjetEasySave.ViewModel.LanguageService
+    name: LanguageService
+    type: Class
+  - uid: ProjetEasySave.ViewModel.SaveJobState
+    name: SaveJobState
+    type: Class
+  - uid: ProjetEasySave.ViewModel.ViewModel
+    name: ViewModel
+    type: Class
+memberLayout: SamePage

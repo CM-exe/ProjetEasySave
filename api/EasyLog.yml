@@ -1,0 +1,46 @@
+### YamlMime:ManagedReference
+items:
+- uid: EasyLog
+  commentId: N:EasyLog
+  id: EasyLog
+  children:
+  - EasyLog.IConfig
+  - EasyLog.LogFormat
+  - EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: EasyLog
+  nameWithType: EasyLog
+  fullName: EasyLog
+  type: Namespace
+  assemblies:
+  - EasyLog
+references:
+- uid: EasyLog.IConfig
+  commentId: T:EasyLog.IConfig
+  parent: EasyLog
+  href: EasyLog.IConfig.html
+  name: IConfig
+  nameWithType: IConfig
+  fullName: EasyLog.IConfig
+- uid: EasyLog.LogFormat
+  commentId: T:EasyLog.LogFormat
+  parent: EasyLog
+  href: EasyLog.LogFormat.html
+  name: LogFormat
+  nameWithType: LogFormat
+  fullName: EasyLog.LogFormat
+- uid: EasyLog.Logger
+  commentId: T:EasyLog.Logger
+  parent: EasyLog
+  href: EasyLog.Logger.html
+  name: Logger
+  nameWithType: Logger
+  fullName: EasyLog.Logger
+- uid: EasyLog
+  commentId: N:EasyLog
+  href: EasyLog.html
+  name: EasyLog
+  nameWithType: EasyLog
+  fullName: EasyLog

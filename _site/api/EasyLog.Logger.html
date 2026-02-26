@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class Logger | EasySaveDocs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class Logger | EasySaveDocs ">
+      
+      <meta name="description" content="Handles the generation, formatting, and dispatching of application logs. Supports writing to local files and streaming to a remote centralized logging server via TCP sockets. Implements the Singleton pattern to ensure a single logging stream across the application.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Natjom/ProjetEasySave/new/draft/V3-docfx/apiSpec/new?filename=EasyLog_Logger.md&amp;value=---%0Auid%3A%20EasyLog.Logger%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="EasySaveDocs">
+            EasySaveDocs
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="EasyLog.Logger">
+
+
+
+  <h1 id="EasyLog_Logger" data-uid="EasyLog.Logger" class="text-break">
+Class Logger  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="EasyLog.html">EasyLog</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>EasyLog.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Handles the generation, formatting, and dispatching of application logs.
+Supports writing to local files and streaming to a remote centralized logging server via TCP sockets.
+Implements the Singleton pattern to ensure a single logging stream across the application.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class Logger</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">Logger</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="EasyLog_Logger_formatCompleteSaveMessage_" data-uid="EasyLog.Logger.formatCompleteSaveMessage*"></a>
+
+  <h3 id="EasyLog_Logger_formatCompleteSaveMessage_System_String_System_String_System_String_System_String_" data-uid="EasyLog.Logger.formatCompleteSaveMessage(System.String,System.String,System.String,System.String)">
+  formatCompleteSaveMessage(string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L388"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Formats the summary data of a fully completed backup job into a dictionary structure suitable for logging.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;string, string&gt; formatCompleteSaveMessage(string name, string source, string target, string time)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the backup job.</p>
+</dd>
+    <dt><code>source</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The root source directory.</p>
+</dd>
+    <dt><code>target</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The root target directory.</p>
+</dd>
+    <dt><code>time</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The timestamp of completion.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A dictionary containing the structured data.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="EasyLog_Logger_formatErrMessage_" data-uid="EasyLog.Logger.formatErrMessage*"></a>
+
+  <h3 id="EasyLog_Logger_formatErrMessage_System_String_" data-uid="EasyLog.Logger.formatErrMessage(System.String)">
+  formatErrMessage(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L404"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Formats an application exception or error message into a dictionary structure suitable for logging.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;string, string&gt; formatErrMessage(string errorMessage)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The raw error string or exception message.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A dictionary containing the error string and a timestamp.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="EasyLog_Logger_formatInfoRealTimeMessage_" data-uid="EasyLog.Logger.formatInfoRealTimeMessage*"></a>
+
+  <h3 id="EasyLog_Logger_formatInfoRealTimeMessage_System_String_System_String_System_String_System_String_System_Object_" data-uid="EasyLog.Logger.formatInfoRealTimeMessage(System.String,System.String,System.String,System.String,System.Object)">
+  formatInfoRealTimeMessage(string, string, string, string, dynamic)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L343"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Formats the raw data of a real-time state change into a dictionary structure suitable for logging.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;string, string&gt; formatInfoRealTimeMessage(string name, string source, string target, string time, dynamic saveTaskState)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the backup job.</p>
+</dd>
+    <dt><code>source</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The source file path.</p>
+</dd>
+    <dt><code>target</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The target file path.</p>
+</dd>
+    <dt><code>time</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The timestamp of the event.</p>
+</dd>
+    <dt><code>saveTaskState</code> <span class="xref">dynamic</span></dt>
+    <dd><p>The dynamic state of the task (e.g., RUNNING, PAUSED).</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A dictionary containing the structured data.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="EasyLog_Logger_formatLogMessage_" data-uid="EasyLog.Logger.formatLogMessage*"></a>
+
+  <h3 id="EasyLog_Logger_formatLogMessage_System_String_System_String_System_String_System_Int32_System_Double_System_String_" data-uid="EasyLog.Logger.formatLogMessage(System.String,System.String,System.String,System.Int32,System.Double,System.String)">
+  formatLogMessage(string, string, string, int, double, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L366"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Formats the raw data of a completed file transfer into a dictionary structure suitable for logging.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;string, string&gt; formatLogMessage(string name, string source, string target, int size, double transferTime, string time)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the backup job.</p>
+</dd>
+    <dt><code>source</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The source file path.</p>
+</dd>
+    <dt><code>target</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The target file path.</p>
+</dd>
+    <dt><code>size</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The size of the transferred file in bytes.</p>
+</dd>
+    <dt><code>transferTime</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The time taken to copy the file in milliseconds.</p>
+</dd>
+    <dt><code>time</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The timestamp of the completion.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A dictionary containing the structured data.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="EasyLog_Logger_getCurrentFormat_" data-uid="EasyLog.Logger.getCurrentFormat*"></a>
+
+  <h3 id="EasyLog_Logger_getCurrentFormat" data-uid="EasyLog.Logger.getCurrentFormat">
+  getCurrentFormat()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L418"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the current <a class="xref" href="EasyLog.LogFormat.html">LogFormat</a> enum value being used by the logger.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LogFormat getCurrentFormat()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="EasyLog.LogFormat.html">LogFormat</a></dt>
+    <dd><p>The active log format.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="EasyLog_Logger_getInstance_" data-uid="EasyLog.Logger.getInstance*"></a>
+
+  <h3 id="EasyLog_Logger_getInstance_EasyLog_IConfig_" data-uid="EasyLog.Logger.getInstance(EasyLog.IConfig)">
+  getInstance(IConfig)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves the thread-safe singleton instance of the <a class="xref" href="EasyLog.Logger.html">Logger</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Logger getInstance(IConfig config)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>config</code> <a class="xref" href="EasyLog.IConfig.html">IConfig</a></dt>
+    <dd><p>The configuration provider to use if the logger needs to be initialized.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="EasyLog.Logger.html">Logger</a></dt>
+    <dd><p>The single active instance of the <a class="xref" href="EasyLog.Logger.html">Logger</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="EasyLog_Logger_getLogsFormat_" data-uid="EasyLog.Logger.getLogsFormat*"></a>
+
+  <h3 id="EasyLog_Logger_getLogsFormat" data-uid="EasyLog.Logger.getLogsFormat">
+  getLogsFormat()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L437"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves the current format as a string (useful for UI data binding).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getLogsFormat()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>A string representation of the format (e.g., &quot;Json&quot; or &quot;Xml&quot;).</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="EasyLog_Logger_isConnectedToServer_" data-uid="EasyLog.Logger.isConnectedToServer*"></a>
+
+  <h3 id="EasyLog_Logger_isConnectedToServer" data-uid="EasyLog.Logger.isConnectedToServer">
+  isConnectedToServer()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L195"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks whether the logger currently has an active TCP connection to the remote server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool isConnectedToServer()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the socket is connected; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="EasyLog_Logger_log_" data-uid="EasyLog.Logger.log*"></a>
+
+  <h3 id="EasyLog_Logger_log_System_Collections_Generic_Dictionary_System_String_System_String__" data-uid="EasyLog.Logger.log(System.Collections.Generic.Dictionary{System.String,System.String})">
+  log(Dictionary&lt;string, string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Records a historical log entry. It appends the log to a local daily file and/or sends it to the remote server,
+depending on the active configuration settings.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool log(Dictionary&lt;string, string&gt; message)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>message</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A dictionary containing the key-value pairs representing the log data.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the log was successfully recorded/sent everywhere it was supposed to go; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="EasyLog_Logger_logRealTime_" data-uid="EasyLog.Logger.logRealTime*"></a>
+
+  <h3 id="EasyLog_Logger_logRealTime_System_Collections_Generic_Dictionary_System_String_System_String__" data-uid="EasyLog.Logger.logRealTime(System.Collections.Generic.Dictionary{System.String,System.String})">
+  logRealTime(Dictionary&lt;string, string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L219"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Records a real-time log entry by completely overwriting the target file.
+This is used to maintain a constant &quot;current state&quot; of the application for external monitoring tools.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool logRealTime(Dictionary&lt;string, string&gt; message)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>message</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A dictionary containing the state data.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the file was successfully overwritten; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="EasyLog_Logger_reconnectToServer_" data-uid="EasyLog.Logger.reconnectToServer*"></a>
+
+  <h3 id="EasyLog_Logger_reconnectToServer" data-uid="EasyLog.Logger.reconnectToServer">
+  reconnectToServer()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Forces a disconnection and attempts to establish a new connection to the remote logging server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool reconnectToServer()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the reconnection was successful; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="EasyLog_Logger_setCurrentFormat_" data-uid="EasyLog.Logger.setCurrentFormat*"></a>
+
+  <h3 id="EasyLog_Logger_setCurrentFormat_EasyLog_LogFormat_" data-uid="EasyLog.Logger.setCurrentFormat(EasyLog.LogFormat)">
+  setCurrentFormat(LogFormat)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L427"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the <a class="xref" href="EasyLog.LogFormat.html">LogFormat</a> enum and persists the change to the global configuration file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setCurrentFormat(LogFormat format)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>format</code> <a class="xref" href="EasyLog.LogFormat.html">LogFormat</a></dt>
+    <dd><p>The new <a class="xref" href="EasyLog.LogFormat.html">LogFormat</a> to apply.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="EasyLog_Logger_setLogsFormat_" data-uid="EasyLog.Logger.setLogsFormat*"></a>
+
+  <h3 id="EasyLog_Logger_setLogsFormat_System_String_" data-uid="EasyLog.Logger.setLogsFormat(System.String)">
+  setLogsFormat(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L446"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Attempts to parse a string input into a <a class="xref" href="EasyLog.LogFormat.html">LogFormat</a> enum and updates the logger.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setLogsFormat(string format)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>A string representing the format (&quot;json&quot; or &quot;xml&quot;, case-insensitive).</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasyLog/Logger.cs/#L23" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
