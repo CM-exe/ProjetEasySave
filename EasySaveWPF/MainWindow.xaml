@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="EasySave - Outil de sauvegarde" Height="450" Width="800"
         Background="#F5F7FA"
-        ResizeMode="NoResize">
+        MinWidth="800"
+        MinHeight="450"
+        >
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -49,19 +51,30 @@
                         <DataGridTextColumn x:Name="headerDestination" Header="Destination" Width="*" Binding="{Binding TargetPath}"/>
                         <DataGridTextColumn x:Name="headerType" Header="Type de sauvegarde" Width="*" Binding="{Binding BackupType}"/>
                         <DataGridTextColumn x:Name="headerCompleteSavePath" Header="Chemin de sauvegarde complet" Width="*" Binding="{Binding CompleteSavePath}"/>
+                        <DataGridTextColumn x:Name="headerPriorityExt" Header="Extension prioritaire" Width="*" Binding="{Binding PriorityExt}"/>
                         <DataGridTextColumn x:Name="headerState" Header="Statut" Width="*" Binding="{Binding State}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </Border>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="640,10,0,0">
+            <Button x:Name="btnConfig" Content="configuration" Width="auto" Margin="8,0,0,0" Padding="2,2,2,2"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="-20,12,0,0">
+            <Label Content="{Binding EncryptionKeyLabel}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+
+            <PasswordBox x:Name="EncryptionKeyPasswordBox" Width="200" Margin="0,0,0,0"/>
+
+            <Button x:Name="btnValidateEncryptKey" Content="{Binding SaveSettingsButton}" Click="SaveEncryptionKey_Click" Margin="10,0,0,0" Padding="10,5"/>
+        </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
-            <Button x:Name="btnAddSpace" Content="Ajouter" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
+            <TextBlock x:Name="textActions" Text="Actions :" FontWeight="SemiBold" Foreground="#0F172A" VerticalAlignment="Center"/>
+            <Button x:Name="btnAddSpace" Content="Ajouter" Width="auto" Margin="8,0,8,0" Padding="2,2,2,2"/>
             <Button x:Name="btnEditSpace" Content="Éditer" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
             <Button x:Name="btnDeleteSpace" Content="Supprimer" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
             <Button x:Name="btnStartSave" Content="Démarrer" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
-            <Button x:Name="btnLanguage" Content="Langue" Width="auto" Margin="0,0,8,0" Padding="2,2,2,2"/>
-            <Button x:Name="btnLogsFormat" Content="Format des logs" Width="auto" Padding="2,2,2,2"/>
         </StackPanel>
     </Grid>
 </Window>

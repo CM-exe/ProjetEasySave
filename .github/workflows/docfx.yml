@@ -1,0 +1,41 @@
+name: Build and Publish DocFX Docs
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+
+jobs:
+  docfx:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '10.0'
+
+      - name: Install DocFX
+        run: |
+          wget https://github.com/dotnet/docfx/releases/download/v3.2.306/docfx.zip
+          unzip docfx.zip -d docfx
+          echo "$PWD/docfx" >> $GITHUB_PATH
+
+      - name: Restore NuGet packages
+        run: dotnet restore ../EasySaveWPF/EasySaveWPF.slnx
+
+      - name: Build all projects with XML docs
+        run: dotnet build ../EasySaveWPF/EasySaveWPF.slnx -c Release /p:GenerateDocumentationFile=true
+
+      - name: Generate DocFX documentation
+        run: docfx docfx.json
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
