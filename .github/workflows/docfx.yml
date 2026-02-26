@@ -26,10 +26,10 @@ jobs:
         run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
       - name: Restore NuGet packages
-        run: dotnet restore ../EasySaveWPF/EasySaveWPF.slnx
+        run: dotnet restore EasySaveWPF/EasySaveWPF.sln
 
       - name: Build all projects with XML docs
-        run: dotnet build ../EasySaveWPF/EasySaveWPF.slnx -c Release /p:GenerateDocumentationFile=true
+        run: dotnet build EasySaveWPF/EasySaveWPF.sln -c Release /p:GenerateDocumentationFile=true
 
       - name: Generate DocFX documentation
         run: docfx docfx.json
