@@ -1,13 +1,9 @@
 ﻿using CryptoSoft;
 using EasyLog;
 using ProjetEasySave.Utils;
-using System;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Threading;
 
 namespace ProjetEasySave.Model
 {
