@@ -1,41 +1,24 @@
-name: Build and Publish DocFX Docs
+name: Serve DocFX Docs
 
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main      # Only trigger when _site is updated in main
+  workflow_dispatch:   # Optional: allow manual trigger
 
 jobs:
-  docfx:
-    runs-on: windows-latest
+  deploy:
+    runs-on: ubuntu-latest   # Windows not needed, no build only serve
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '10.0'
+          persist-credentials: true
 
-      - name: Install DocFX
-        run: dotnet tool install --global docfx --version 2.78.4
-        
-      - name: Update Path for DocFX
-        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
-
-      - name: Restore NuGet packages
-        run: dotnet restore EasySaveWPF/EasySaveWPF.slnx
-
-      - name: Build all projects with XML docs
-        run: dotnet build EasySaveWPF/EasySaveWPF.slnx -c Release /p:GenerateDocumentationFile=true
-
-      - name: Generate DocFX documentation
-        run: docfx docfx.json
-
-      - name: Deploy to GitHub Pages
+      - name: Deploy _site to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
+          force_orphan: true
