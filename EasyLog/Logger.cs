@@ -19,6 +19,7 @@ namespace EasyLog
         private string logRealTimeFile;
         private static IConfig _config; // Load config
         private static Socket loggingServerSocket; // Socket for logging server connection
+        private static readonly object _lockSingleton = new object();
 
 
 
@@ -56,9 +57,14 @@ namespace EasyLog
         // Method to get the unique instance of the Logger
         public static Logger getInstance(IConfig config)
         {
-            if (singletonInstance == null)
-                singletonInstance = new Logger(config);
-            return singletonInstance;
+            lock (_lockSingleton)
+            {
+                if (singletonInstance == null)
+                {
+                    singletonInstance = new Logger(config);
+                }
+                return singletonInstance;
+            }
         }
 
         // --- Historical Logging Method (Append mode) ---

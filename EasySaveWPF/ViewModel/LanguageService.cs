@@ -12,6 +12,7 @@ namespace ProjetEasySave.ViewModel
         private Dictionary<string, Dictionary<string, string>> _translations;
         // Making it singleton
         private static LanguageService _instance = null;
+        private static readonly object _lockSingleton = new object();
 
         // Constructor
         private LanguageService()
@@ -35,11 +36,14 @@ namespace ProjetEasySave.ViewModel
 
         public static LanguageService getInstance()
         {
-            if (_instance == null)
+            lock (_lockSingleton)
             {
-                _instance = new LanguageService();
-            }
+                if (_instance == null)
+                {
+                    _instance = new LanguageService();
+                }
             return _instance;
+            }
         }
 
         // Methods
