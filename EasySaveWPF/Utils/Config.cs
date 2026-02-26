@@ -48,11 +48,18 @@ namespace ProjetEasySave.Utils
 
         private Config()
         {
-            configFile = Path.Combine(AppContext.BaseDirectory, "../../../config.json");
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            // Create the EasySave directory if it doesn't exist
+            string easySaveDirectory = Path.Combine(appDataPath, "EasySave");
+            if (!Directory.Exists(easySaveDirectory))
+            {
+                Directory.CreateDirectory(easySaveDirectory);
+            }
+            configFile = Path.Combine(easySaveDirectory, "config.json");
             defaultLanguage = "en";
             defaultLogDirectoryPath = @"\\localhost\c$\EasyProject\Logs\";
             defaultLogRealTimeFile = Path.Combine(defaultLogDirectoryPath, "real_time_log");
-            defaultConfigModelsPath = Path.Combine(AppContext.BaseDirectory, "../../../config_models.json");
+            defaultConfigModelsPath = Path.Combine(easySaveDirectory, "config_models.json");
             defaultLogsFormat = "json";
             defaultBusinessSoftwareName = "CalculatorApp";
             defaultEncryptionExtensions = new List<string> { ".txt", ".docx", ".jpg", ".png", ".pdf" };

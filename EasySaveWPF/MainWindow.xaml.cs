@@ -368,6 +368,8 @@ namespace EasySaveWPF
             private readonly TextBlock _connectionToServerStateText = new();
             private readonly TextBlock _businessSoftareLabel = new();
             private readonly TextBox _businessSoftwareTextBox = new();
+            private readonly Button ok = new();
+            private readonly Button cancel = new();
 
             public ConfigDialog(ViewModel _viewModel, MainWindow _mainWindow)
             {
@@ -412,6 +414,8 @@ namespace EasySaveWPF
                     _reconnectToServerBtn.Content = "🔌 " + _language.translate("ReconnectToServer");
                     _connectionToServerStateText.Text = _viewModel.isConnectedToServer() ? _language.translate("Connected") : _language.translate("Disconnected");
                     _businessSoftareLabel.Text = _language.translate("BusinessSoftware");
+                    ok.Content = _language.translate("Ok");
+                    cancel.Content = _language.translate("Close");
                 }
 
                 // Initial toggle states
@@ -725,8 +729,9 @@ namespace EasySaveWPF
 
                 // Buttons (row after spacer)
                 var buttonsPanel = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
-                var ok = new Button { Content = _language.translate("Ok"), Width = 80, Margin = new Thickness(0, 0, 8, 0) };
-                var cancel = new Button { Content = _language.translate("Close"), Width = 80 };
+                ok.Width = 80;
+                ok.Margin = new Thickness(0, 0, 8, 0);
+                cancel.Width = 80;
                 ok.Click += (_, __) => { DialogResult = true; Close(); };
                 cancel.Click += (_, __) => { DialogResult = false; Close(); };
                 buttonsPanel.Children.Add(ok);
