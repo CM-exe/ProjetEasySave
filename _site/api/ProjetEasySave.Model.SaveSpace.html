@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class SaveSpace | EasySaveDocs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SaveSpace | EasySaveDocs ">
+      
+      <meta name="description" content="Represents a configured backup job, managing its properties, associated tasks, and execution state. Acts as an observer to track changes from its underlying  instances.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Natjom/ProjetEasySave/new/draft/V3-docfx/apiSpec/new?filename=ProjetEasySave_Model_SaveSpace.md&amp;value=---%0Auid%3A%20ProjetEasySave.Model.SaveSpace%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="EasySaveDocs">
+            EasySaveDocs
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="ProjetEasySave.Model.SaveSpace">
+
+
+
+  <h1 id="ProjetEasySave_Model_SaveSpace" data-uid="ProjetEasySave.Model.SaveSpace" class="text-break">
+Class SaveSpace  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="ProjetEasySave.html">ProjetEasySave</a>.<a class="xref" href="ProjetEasySave.Model.html">Model</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>EasySaveWPF.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Represents a configured backup job, managing its properties, associated tasks, and execution state.
+Acts as an observer to track changes from its underlying <a class="xref" href="ProjetEasySave.Model.SaveTask.html">SaveTask</a> instances.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class SaveSpace : SaveTaskObserver</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">SaveSpace</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="ProjetEasySave.Model.SaveTaskObserver.html">SaveTaskObserver</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="ProjetEasySave_Model_SaveSpace__ctor_" data-uid="ProjetEasySave.Model.SaveSpace.#ctor*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace__ctor_System_String_System_String_System_String_System_String_System_Collections_Generic_List_System_String__System_Threading_SemaphoreSlim_System_String_" data-uid="ProjetEasySave.Model.SaveSpace.#ctor(System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.SemaphoreSlim,System.String)">
+  SaveSpace(string, string, string, string, List&lt;string&gt;, SemaphoreSlim, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="ProjetEasySave.Model.SaveSpace.html">SaveSpace</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SaveSpace(string name, string sourcePath, string destinationPath, string typeSave, List&lt;string&gt; priorityExt, SemaphoreSlim bigFileSemaphore, string completeSavePath = &quot;&quot;)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The designated name of the backup job.</p>
+</dd>
+    <dt><code>sourcePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The absolute path of the directory to back up.</p>
+</dd>
+    <dt><code>destinationPath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The absolute path where the backup will be saved.</p>
+</dd>
+    <dt><code>typeSave</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The strategy type for the backup (&quot;complete&quot; or &quot;differential&quot;).</p>
+</dd>
+    <dt><code>priorityExt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A list of file extensions that should be processed first.</p>
+</dd>
+    <dt><code>bigFileSemaphore</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.semaphoreslim">SemaphoreSlim</a></dt>
+    <dd><p>A semaphore used to control concurrent large file transfers.</p>
+</dd>
+    <dt><code>completeSavePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The reference path to a full backup (required if using a differential strategy).</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p>Thrown when an unsupported save strategy type is provided.</p>
+</dd>
+  </dl>
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_Pause_" data-uid="ProjetEasySave.Model.SaveSpace.Pause*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_Pause" data-uid="ProjetEasySave.Model.SaveSpace.Pause">
+  Pause()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Suspends the active backup process. The process will block until <a class="xref" href="ProjetEasySave.Model.SaveSpace.html#ProjetEasySave_Model_SaveSpace_Play">Play()</a> is called.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Pause()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_Play_" data-uid="ProjetEasySave.Model.SaveSpace.Play*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_Play" data-uid="ProjetEasySave.Model.SaveSpace.Play">
+  Play()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L181"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Resumes the backup process if it was previously paused.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Play()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_Stop_" data-uid="ProjetEasySave.Model.SaveSpace.Stop*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_Stop" data-uid="ProjetEasySave.Model.SaveSpace.Stop">
+  Stop()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Cancels the ongoing backup operation permanently.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Stop()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_executeSaveAsync_" data-uid="ProjetEasySave.Model.SaveSpace.executeSaveAsync*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_executeSaveAsync" data-uid="ProjetEasySave.Model.SaveSpace.executeSaveAsync">
+  executeSaveAsync()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L148"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously executes all underlying backup tasks configured for this save space.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;bool&gt; executeSaveAsync()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</dt>
+    <dd><p>A task that represents the asynchronous operation. Returns <code>true</code> if completed successfully; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_getCompleteSavePath_" data-uid="ProjetEasySave.Model.SaveSpace.getCompleteSavePath*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_getCompleteSavePath" data-uid="ProjetEasySave.Model.SaveSpace.getCompleteSavePath">
+  getCompleteSavePath()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L256"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the reference path utilized for complete saves when processing a differential backup.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getCompleteSavePath()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The path to the complete backup, or an empty string if not applicable.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_getDestinationPath_" data-uid="ProjetEasySave.Model.SaveSpace.getDestinationPath*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_getDestinationPath" data-uid="ProjetEasySave.Model.SaveSpace.getDestinationPath">
+  getDestinationPath()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L224"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the configured destination directory path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getDestinationPath()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The absolute path to the destination directory.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_getName_" data-uid="ProjetEasySave.Model.SaveSpace.getName*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_getName" data-uid="ProjetEasySave.Model.SaveSpace.getName">
+  getName()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L210"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the designated name of the save space.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getName()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the save space.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_getPriorityExt_" data-uid="ProjetEasySave.Model.SaveSpace.getPriorityExt*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_getPriorityExt" data-uid="ProjetEasySave.Model.SaveSpace.getPriorityExt">
+  getPriorityExt()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L231"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the list of priority file extensions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;string&gt; getPriorityExt()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A list of file extension strings.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_getSourcePath_" data-uid="ProjetEasySave.Model.SaveSpace.getSourcePath*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_getSourcePath" data-uid="ProjetEasySave.Model.SaveSpace.getSourcePath">
+  getSourcePath()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L217"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the configured source directory path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getSourcePath()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The absolute path to the source directory.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_getTaskStates_" data-uid="ProjetEasySave.Model.SaveSpace.getTaskStates*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_getTaskStates" data-uid="ProjetEasySave.Model.SaveSpace.getTaskStates">
+  getTaskStates()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L249"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the collection of current states for all managed tasks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;SaveTaskState&gt; getTaskStates()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="SaveTaskState.html">SaveTaskState</a>&gt;</dt>
+    <dd><p>A list containing the <a class="xref" href="SaveTaskState.html">SaveTaskState</a> values.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_getTypeSave_" data-uid="ProjetEasySave.Model.SaveSpace.getTypeSave*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_getTypeSave" data-uid="ProjetEasySave.Model.SaveSpace.getTypeSave">
+  getTypeSave()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L238"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the defined backup strategy type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getTypeSave()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The string representation of the backup strategy (e.g., &quot;complete&quot; or &quot;differential&quot;).</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_onSaveTaskStateChanged_" data-uid="ProjetEasySave.Model.SaveSpace.onSaveTaskStateChanged*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_onSaveTaskStateChanged_ProjetEasySave_Model_SaveTask_SaveTaskState_" data-uid="ProjetEasySave.Model.SaveSpace.onSaveTaskStateChanged(ProjetEasySave.Model.SaveTask,SaveTaskState)">
+  onSaveTaskStateChanged(SaveTask, SaveTaskState)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Handles state change notifications emitted by the underlying <a class="xref" href="ProjetEasySave.Model.SaveTask.html">SaveTask</a> instances.
+Logs the transition and notifies the UI layer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SaveTaskState onSaveTaskStateChanged(SaveTask task, SaveTaskState newState)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>task</code> <a class="xref" href="ProjetEasySave.Model.SaveTask.html">SaveTask</a></dt>
+    <dd><p>The task that triggered the state change.</p>
+</dd>
+    <dt><code>newState</code> <a class="xref" href="SaveTaskState.html">SaveTaskState</a></dt>
+    <dd><p>The newly applied state.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="SaveTaskState.html">SaveTaskState</a></dt>
+    <dd><p>The confirmed new state.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_setDestinationPath_" data-uid="ProjetEasySave.Model.SaveSpace.setDestinationPath*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_setDestinationPath_System_String_" data-uid="ProjetEasySave.Model.SaveSpace.setDestinationPath(System.String)">
+  setDestinationPath(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L285"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the destination directory path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setDestinationPath(string destinationPath)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>destinationPath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The new absolute path to the destination directory.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_setName_" data-uid="ProjetEasySave.Model.SaveSpace.setName*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_setName_System_String_" data-uid="ProjetEasySave.Model.SaveSpace.setName(System.String)">
+  setName(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L271"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the designated name of the save space.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setName(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The new name to apply.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_setPriorityExt_" data-uid="ProjetEasySave.Model.SaveSpace.setPriorityExt*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_setPriorityExt_System_String_" data-uid="ProjetEasySave.Model.SaveSpace.setPriorityExt(System.String)">
+  setPriorityExt(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L321"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parses and sets the priority file extensions from a comma-separated string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setPriorityExt(string priorityExt)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>priorityExt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>A comma-separated string of extensions (e.g., &quot;.txt,.docx&quot;).</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_setSourcePath_" data-uid="ProjetEasySave.Model.SaveSpace.setSourcePath*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_setSourcePath_System_String_" data-uid="ProjetEasySave.Model.SaveSpace.setSourcePath(System.String)">
+  setSourcePath(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L278"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the source directory path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setSourcePath(string sourcePath)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>sourcePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The new absolute path to the source directory.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveSpace_setTypeSave_" data-uid="ProjetEasySave.Model.SaveSpace.setTypeSave*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_setTypeSave_System_String_" data-uid="ProjetEasySave.Model.SaveSpace.setTypeSave(System.String)">
+  setTypeSave(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L295"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Modifies the backup strategy type and reinitializes the underlying tasks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setTypeSave(string typeSave)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSave</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The new strategy type (&quot;complete&quot; or &quot;differential&quot;).</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p>Thrown when an invalid strategy type is provided.</p>
+</dd>
+  </dl>
+
+
+
+  <h2 class="section" id="events">Events
+</h2>
+
+
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_ProgressChanged" data-uid="ProjetEasySave.Model.SaveSpace.ProgressChanged">
+  ProgressChanged
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Event triggered when the completion percentage or the current processing file changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event Action&lt;int, string&gt;? ProgressChanged</code></pre>
+  </div>
+
+
+
+
+
+
+  <h4 class="section">Event Type</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h3 id="ProjetEasySave_Model_SaveSpace_SaveTaskStateChanged" data-uid="ProjetEasySave.Model.SaveSpace.SaveTaskStateChanged">
+  SaveTaskStateChanged
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L142"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Event triggered whenever the state of the save space transitions (e.g., from RUNNING to PAUSED).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler? SaveTaskStateChanged</code></pre>
+  </div>
+
+
+
+
+
+
+  <h4 class="section">Event Type</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.eventhandler">EventHandler</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveSpace.cs/#L11" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

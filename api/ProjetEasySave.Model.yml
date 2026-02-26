@@ -1,0 +1,91 @@
+### YamlMime:ManagedReference
+items:
+- uid: ProjetEasySave.Model
+  commentId: N:ProjetEasySave.Model
+  id: ProjetEasySave.Model
+  children:
+  - ProjetEasySave.Model.CompleteSave
+  - ProjetEasySave.Model.DifferentialSave
+  - ProjetEasySave.Model.ISaveStrategy
+  - ProjetEasySave.Model.SaveModel
+  - ProjetEasySave.Model.SaveSpace
+  - ProjetEasySave.Model.SaveTask
+  - ProjetEasySave.Model.SaveTaskObserver
+  langs:
+  - csharp
+  - vb
+  name: ProjetEasySave.Model
+  nameWithType: ProjetEasySave.Model
+  fullName: ProjetEasySave.Model
+  type: Namespace
+  assemblies:
+  - EasySaveWPF
+references:
+- uid: ProjetEasySave.Model.CompleteSave
+  commentId: T:ProjetEasySave.Model.CompleteSave
+  href: ProjetEasySave.Model.CompleteSave.html
+  name: CompleteSave
+  nameWithType: CompleteSave
+  fullName: ProjetEasySave.Model.CompleteSave
+- uid: ProjetEasySave.Model.DifferentialSave
+  commentId: T:ProjetEasySave.Model.DifferentialSave
+  href: ProjetEasySave.Model.DifferentialSave.html
+  name: DifferentialSave
+  nameWithType: DifferentialSave
+  fullName: ProjetEasySave.Model.DifferentialSave
+- uid: ProjetEasySave.Model.ISaveStrategy
+  commentId: T:ProjetEasySave.Model.ISaveStrategy
+  parent: ProjetEasySave.Model
+  href: ProjetEasySave.Model.ISaveStrategy.html
+  name: ISaveStrategy
+  nameWithType: ISaveStrategy
+  fullName: ProjetEasySave.Model.ISaveStrategy
+- uid: ProjetEasySave.Model.SaveModel
+  commentId: T:ProjetEasySave.Model.SaveModel
+  href: ProjetEasySave.Model.SaveModel.html
+  name: SaveModel
+  nameWithType: SaveModel
+  fullName: ProjetEasySave.Model.SaveModel
+- uid: ProjetEasySave.Model.SaveSpace
+  commentId: T:ProjetEasySave.Model.SaveSpace
+  parent: ProjetEasySave.Model
+  href: ProjetEasySave.Model.SaveSpace.html
+  name: SaveSpace
+  nameWithType: SaveSpace
+  fullName: ProjetEasySave.Model.SaveSpace
+- uid: ProjetEasySave.Model.SaveTask
+  commentId: T:ProjetEasySave.Model.SaveTask
+  parent: ProjetEasySave.Model
+  href: ProjetEasySave.Model.SaveTask.html
+  name: SaveTask
+  nameWithType: SaveTask
+  fullName: ProjetEasySave.Model.SaveTask
+- uid: ProjetEasySave.Model.SaveTaskObserver
+  commentId: T:ProjetEasySave.Model.SaveTaskObserver
+  parent: ProjetEasySave.Model
+  href: ProjetEasySave.Model.SaveTaskObserver.html
+  name: SaveTaskObserver
+  nameWithType: SaveTaskObserver
+  fullName: ProjetEasySave.Model.SaveTaskObserver
+- uid: ProjetEasySave.Model
+  commentId: N:ProjetEasySave.Model
+  href: ProjetEasySave.html
+  name: ProjetEasySave.Model
+  nameWithType: ProjetEasySave.Model
+  fullName: ProjetEasySave.Model
+  spec.csharp:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.Model
+    name: Model
+    href: ProjetEasySave.Model.html
+  spec.vb:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.Model
+    name: Model
+    href: ProjetEasySave.Model.html

@@ -1,0 +1,123 @@
+### YamlMime:ManagedReference
+items:
+- uid: ProjetEasySave.Model.SaveTaskObserver
+  commentId: T:ProjetEasySave.Model.SaveTaskObserver
+  id: SaveTaskObserver
+  parent: ProjetEasySave.Model
+  children:
+  - ProjetEasySave.Model.SaveTaskObserver.onSaveTaskStateChanged(ProjetEasySave.Model.SaveTask,SaveTaskState)
+  langs:
+  - csharp
+  - vb
+  name: SaveTaskObserver
+  nameWithType: SaveTaskObserver
+  fullName: ProjetEasySave.Model.SaveTaskObserver
+  type: Interface
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveTaskObserver.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: SaveTaskObserver
+    path: EasySaveWPF/Model/SaveTaskObserver.cs
+    startLine: 6
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: >-
+    Defines an observer interface for monitoring state changes within a backup task.
+
+    Implementing classes (such as <xref href="ProjetEasySave.Model.SaveSpace" data-throw-if-not-resolved="false"></xref>) can use this to track and react to the lifecycle events of a <xref href="ProjetEasySave.Model.SaveTask" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public interface SaveTaskObserver
+    content.vb: Public Interface SaveTaskObserver
+  derivedClasses:
+  - ProjetEasySave.Model.SaveSpace
+- uid: ProjetEasySave.Model.SaveTaskObserver.onSaveTaskStateChanged(ProjetEasySave.Model.SaveTask,SaveTaskState)
+  commentId: M:ProjetEasySave.Model.SaveTaskObserver.onSaveTaskStateChanged(ProjetEasySave.Model.SaveTask,SaveTaskState)
+  id: onSaveTaskStateChanged(ProjetEasySave.Model.SaveTask,SaveTaskState)
+  parent: ProjetEasySave.Model.SaveTaskObserver
+  langs:
+  - csharp
+  - vb
+  name: onSaveTaskStateChanged(SaveTask, SaveTaskState)
+  nameWithType: SaveTaskObserver.onSaveTaskStateChanged(SaveTask, SaveTaskState)
+  fullName: ProjetEasySave.Model.SaveTaskObserver.onSaveTaskStateChanged(ProjetEasySave.Model.SaveTask, SaveTaskState)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/Model/SaveTaskObserver.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: onSaveTaskStateChanged
+    path: EasySaveWPF/Model/SaveTaskObserver.cs
+    startLine: 14
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.Model
+  summary: Invoked when the state of an observed <xref href="ProjetEasySave.Model.SaveTask" data-throw-if-not-resolved="false"></xref> changes.
+  example: []
+  syntax:
+    content: SaveTaskState onSaveTaskStateChanged(SaveTask task, SaveTaskState newState)
+    parameters:
+    - id: task
+      type: ProjetEasySave.Model.SaveTask
+      description: The specific <xref href="ProjetEasySave.Model.SaveTask" data-throw-if-not-resolved="false"></xref> instance that triggered the state change.
+    - id: newState
+      type: SaveTaskState
+      description: The new <xref href="SaveTaskState" data-throw-if-not-resolved="false"></xref> applied to the task.
+    return:
+      type: SaveTaskState
+      description: The confirmed <xref href="SaveTaskState" data-throw-if-not-resolved="false"></xref> after processing the change.
+    content.vb: Function onSaveTaskStateChanged(task As SaveTask, newState As SaveTaskState) As SaveTaskState
+  overload: ProjetEasySave.Model.SaveTaskObserver.onSaveTaskStateChanged*
+references:
+- uid: ProjetEasySave.Model.SaveSpace
+  commentId: T:ProjetEasySave.Model.SaveSpace
+  parent: ProjetEasySave.Model
+  href: ProjetEasySave.Model.SaveSpace.html
+  name: SaveSpace
+  nameWithType: SaveSpace
+  fullName: ProjetEasySave.Model.SaveSpace
+- uid: ProjetEasySave.Model.SaveTask
+  commentId: T:ProjetEasySave.Model.SaveTask
+  parent: ProjetEasySave.Model
+  href: ProjetEasySave.Model.SaveTask.html
+  name: SaveTask
+  nameWithType: SaveTask
+  fullName: ProjetEasySave.Model.SaveTask
+- uid: ProjetEasySave.Model
+  commentId: N:ProjetEasySave.Model
+  href: ProjetEasySave.html
+  name: ProjetEasySave.Model
+  nameWithType: ProjetEasySave.Model
+  fullName: ProjetEasySave.Model
+  spec.csharp:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.Model
+    name: Model
+    href: ProjetEasySave.Model.html
+  spec.vb:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.Model
+    name: Model
+    href: ProjetEasySave.Model.html
+- uid: SaveTaskState
+  commentId: T:SaveTaskState
+  href: SaveTaskState.html
+  name: SaveTaskState
+  nameWithType: SaveTaskState
+  fullName: SaveTaskState
+- uid: ProjetEasySave.Model.SaveTaskObserver.onSaveTaskStateChanged*
+  commentId: Overload:ProjetEasySave.Model.SaveTaskObserver.onSaveTaskStateChanged
+  href: ProjetEasySave.Model.SaveTaskObserver.html#ProjetEasySave_Model_SaveTaskObserver_onSaveTaskStateChanged_ProjetEasySave_Model_SaveTask_SaveTaskState_
+  name: onSaveTaskStateChanged
+  nameWithType: SaveTaskObserver.onSaveTaskStateChanged
+  fullName: ProjetEasySave.Model.SaveTaskObserver.onSaveTaskStateChanged

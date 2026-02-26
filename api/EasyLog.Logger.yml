@@ -1,0 +1,1068 @@
+### YamlMime:ManagedReference
+items:
+- uid: EasyLog.Logger
+  commentId: T:EasyLog.Logger
+  id: Logger
+  parent: EasyLog
+  children:
+  - EasyLog.Logger.formatCompleteSaveMessage(System.String,System.String,System.String,System.String)
+  - EasyLog.Logger.formatErrMessage(System.String)
+  - EasyLog.Logger.formatInfoRealTimeMessage(System.String,System.String,System.String,System.String,System.Object)
+  - EasyLog.Logger.formatLogMessage(System.String,System.String,System.String,System.Int32,System.Double,System.String)
+  - EasyLog.Logger.getCurrentFormat
+  - EasyLog.Logger.getInstance(EasyLog.IConfig)
+  - EasyLog.Logger.getLogsFormat
+  - EasyLog.Logger.isConnectedToServer
+  - EasyLog.Logger.log(System.Collections.Generic.Dictionary{System.String,System.String})
+  - EasyLog.Logger.logRealTime(System.Collections.Generic.Dictionary{System.String,System.String})
+  - EasyLog.Logger.reconnectToServer
+  - EasyLog.Logger.setCurrentFormat(EasyLog.LogFormat)
+  - EasyLog.Logger.setLogsFormat(System.String)
+  langs:
+  - csharp
+  - vb
+  name: Logger
+  nameWithType: Logger
+  fullName: EasyLog.Logger
+  type: Class
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: Logger
+    path: EasyLog/Logger.cs
+    startLine: 22
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: >-
+    Handles the generation, formatting, and dispatching of application logs.
+
+    Supports writing to local files and streaming to a remote centralized logging server via TCP sockets.
+
+    Implements the Singleton pattern to ensure a single logging stream across the application.
+  example: []
+  syntax:
+    content: public class Logger
+    content.vb: Public Class Logger
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: EasyLog.Logger.getInstance(EasyLog.IConfig)
+  commentId: M:EasyLog.Logger.getInstance(EasyLog.IConfig)
+  id: getInstance(EasyLog.IConfig)
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: getInstance(IConfig)
+  nameWithType: Logger.getInstance(IConfig)
+  fullName: EasyLog.Logger.getInstance(EasyLog.IConfig)
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getInstance
+    path: EasyLog/Logger.cs
+    startLine: 73
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Retrieves the thread-safe singleton instance of the <xref href="EasyLog.Logger" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public static Logger getInstance(IConfig config)
+    parameters:
+    - id: config
+      type: EasyLog.IConfig
+      description: The configuration provider to use if the logger needs to be initialized.
+    return:
+      type: EasyLog.Logger
+      description: The single active instance of the <xref href="EasyLog.Logger" data-throw-if-not-resolved="false"></xref>.
+    content.vb: Public Shared Function getInstance(config As IConfig) As Logger
+  overload: EasyLog.Logger.getInstance*
+- uid: EasyLog.Logger.log(System.Collections.Generic.Dictionary{System.String,System.String})
+  commentId: M:EasyLog.Logger.log(System.Collections.Generic.Dictionary{System.String,System.String})
+  id: log(System.Collections.Generic.Dictionary{System.String,System.String})
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: log(Dictionary<string, string>)
+  nameWithType: Logger.log(Dictionary<string, string>)
+  fullName: EasyLog.Logger.log(System.Collections.Generic.Dictionary<string, string>)
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: log
+    path: EasyLog/Logger.cs
+    startLine: 93
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: >-
+    Records a historical log entry. It appends the log to a local daily file and/or sends it to the remote server, 
+
+    depending on the active configuration settings.
+  example: []
+  syntax:
+    content: public bool log(Dictionary<string, string> message)
+    parameters:
+    - id: message
+      type: System.Collections.Generic.Dictionary{System.String,System.String}
+      description: A dictionary containing the key-value pairs representing the log data.
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the log was successfully recorded/sent everywhere it was supposed to go; otherwise, <code>false</code>.
+    content.vb: Public Function log(message As Dictionary(Of String, String)) As Boolean
+  overload: EasyLog.Logger.log*
+  nameWithType.vb: Logger.log(Dictionary(Of String, String))
+  fullName.vb: EasyLog.Logger.log(System.Collections.Generic.Dictionary(Of String, String))
+  name.vb: log(Dictionary(Of String, String))
+- uid: EasyLog.Logger.reconnectToServer
+  commentId: M:EasyLog.Logger.reconnectToServer
+  id: reconnectToServer
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: reconnectToServer()
+  nameWithType: Logger.reconnectToServer()
+  fullName: EasyLog.Logger.reconnectToServer()
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: reconnectToServer
+    path: EasyLog/Logger.cs
+    startLine: 174
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Forces a disconnection and attempts to establish a new connection to the remote logging server.
+  example: []
+  syntax:
+    content: public bool reconnectToServer()
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the reconnection was successful; otherwise, <code>false</code>.
+    content.vb: Public Function reconnectToServer() As Boolean
+  overload: EasyLog.Logger.reconnectToServer*
+- uid: EasyLog.Logger.isConnectedToServer
+  commentId: M:EasyLog.Logger.isConnectedToServer
+  id: isConnectedToServer
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: isConnectedToServer()
+  nameWithType: Logger.isConnectedToServer()
+  fullName: EasyLog.Logger.isConnectedToServer()
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: isConnectedToServer
+    path: EasyLog/Logger.cs
+    startLine: 194
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Checks whether the logger currently has an active TCP connection to the remote server.
+  example: []
+  syntax:
+    content: public bool isConnectedToServer()
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the socket is connected; otherwise, <code>false</code>.
+    content.vb: Public Function isConnectedToServer() As Boolean
+  overload: EasyLog.Logger.isConnectedToServer*
+- uid: EasyLog.Logger.logRealTime(System.Collections.Generic.Dictionary{System.String,System.String})
+  commentId: M:EasyLog.Logger.logRealTime(System.Collections.Generic.Dictionary{System.String,System.String})
+  id: logRealTime(System.Collections.Generic.Dictionary{System.String,System.String})
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: logRealTime(Dictionary<string, string>)
+  nameWithType: Logger.logRealTime(Dictionary<string, string>)
+  fullName: EasyLog.Logger.logRealTime(System.Collections.Generic.Dictionary<string, string>)
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: logRealTime
+    path: EasyLog/Logger.cs
+    startLine: 218
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: >-
+    Records a real-time log entry by completely overwriting the target file.
+
+    This is used to maintain a constant "current state" of the application for external monitoring tools.
+  example: []
+  syntax:
+    content: public bool logRealTime(Dictionary<string, string> message)
+    parameters:
+    - id: message
+      type: System.Collections.Generic.Dictionary{System.String,System.String}
+      description: A dictionary containing the state data.
+    return:
+      type: System.Boolean
+      description: <code>true</code> if the file was successfully overwritten; otherwise, <code>false</code>.
+    content.vb: Public Function logRealTime(message As Dictionary(Of String, String)) As Boolean
+  overload: EasyLog.Logger.logRealTime*
+  nameWithType.vb: Logger.logRealTime(Dictionary(Of String, String))
+  fullName.vb: EasyLog.Logger.logRealTime(System.Collections.Generic.Dictionary(Of String, String))
+  name.vb: logRealTime(Dictionary(Of String, String))
+- uid: EasyLog.Logger.formatInfoRealTimeMessage(System.String,System.String,System.String,System.String,System.Object)
+  commentId: M:EasyLog.Logger.formatInfoRealTimeMessage(System.String,System.String,System.String,System.String,System.Object)
+  id: formatInfoRealTimeMessage(System.String,System.String,System.String,System.String,System.Object)
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: formatInfoRealTimeMessage(string, string, string, string, dynamic)
+  nameWithType: Logger.formatInfoRealTimeMessage(string, string, string, string, dynamic)
+  fullName: EasyLog.Logger.formatInfoRealTimeMessage(string, string, string, string, dynamic)
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: formatInfoRealTimeMessage
+    path: EasyLog/Logger.cs
+    startLine: 342
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Formats the raw data of a real-time state change into a dictionary structure suitable for logging.
+  example: []
+  syntax:
+    content: public static Dictionary<string, string> formatInfoRealTimeMessage(string name, string source, string target, string time, dynamic saveTaskState)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the backup job.
+    - id: source
+      type: System.String
+      description: The source file path.
+    - id: target
+      type: System.String
+      description: The target file path.
+    - id: time
+      type: System.String
+      description: The timestamp of the event.
+    - id: saveTaskState
+      type: dynamic
+      description: The dynamic state of the task (e.g., RUNNING, PAUSED).
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.String}
+      description: A dictionary containing the structured data.
+    content.vb: Public Shared Function formatInfoRealTimeMessage(name As String, source As String, target As String, time As String, saveTaskState As Object) As Dictionary(Of String, String)
+  overload: EasyLog.Logger.formatInfoRealTimeMessage*
+  nameWithType.vb: Logger.formatInfoRealTimeMessage(String, String, String, String, Object)
+  fullName.vb: EasyLog.Logger.formatInfoRealTimeMessage(String, String, String, String, Object)
+  name.vb: formatInfoRealTimeMessage(String, String, String, String, Object)
+- uid: EasyLog.Logger.formatLogMessage(System.String,System.String,System.String,System.Int32,System.Double,System.String)
+  commentId: M:EasyLog.Logger.formatLogMessage(System.String,System.String,System.String,System.Int32,System.Double,System.String)
+  id: formatLogMessage(System.String,System.String,System.String,System.Int32,System.Double,System.String)
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: formatLogMessage(string, string, string, int, double, string)
+  nameWithType: Logger.formatLogMessage(string, string, string, int, double, string)
+  fullName: EasyLog.Logger.formatLogMessage(string, string, string, int, double, string)
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: formatLogMessage
+    path: EasyLog/Logger.cs
+    startLine: 365
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Formats the raw data of a completed file transfer into a dictionary structure suitable for logging.
+  example: []
+  syntax:
+    content: public static Dictionary<string, string> formatLogMessage(string name, string source, string target, int size, double transferTime, string time)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the backup job.
+    - id: source
+      type: System.String
+      description: The source file path.
+    - id: target
+      type: System.String
+      description: The target file path.
+    - id: size
+      type: System.Int32
+      description: The size of the transferred file in bytes.
+    - id: transferTime
+      type: System.Double
+      description: The time taken to copy the file in milliseconds.
+    - id: time
+      type: System.String
+      description: The timestamp of the completion.
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.String}
+      description: A dictionary containing the structured data.
+    content.vb: Public Shared Function formatLogMessage(name As String, source As String, target As String, size As Integer, transferTime As Double, time As String) As Dictionary(Of String, String)
+  overload: EasyLog.Logger.formatLogMessage*
+  nameWithType.vb: Logger.formatLogMessage(String, String, String, Integer, Double, String)
+  fullName.vb: EasyLog.Logger.formatLogMessage(String, String, String, Integer, Double, String)
+  name.vb: formatLogMessage(String, String, String, Integer, Double, String)
+- uid: EasyLog.Logger.formatCompleteSaveMessage(System.String,System.String,System.String,System.String)
+  commentId: M:EasyLog.Logger.formatCompleteSaveMessage(System.String,System.String,System.String,System.String)
+  id: formatCompleteSaveMessage(System.String,System.String,System.String,System.String)
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: formatCompleteSaveMessage(string, string, string, string)
+  nameWithType: Logger.formatCompleteSaveMessage(string, string, string, string)
+  fullName: EasyLog.Logger.formatCompleteSaveMessage(string, string, string, string)
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: formatCompleteSaveMessage
+    path: EasyLog/Logger.cs
+    startLine: 387
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Formats the summary data of a fully completed backup job into a dictionary structure suitable for logging.
+  example: []
+  syntax:
+    content: public static Dictionary<string, string> formatCompleteSaveMessage(string name, string source, string target, string time)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the backup job.
+    - id: source
+      type: System.String
+      description: The root source directory.
+    - id: target
+      type: System.String
+      description: The root target directory.
+    - id: time
+      type: System.String
+      description: The timestamp of completion.
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.String}
+      description: A dictionary containing the structured data.
+    content.vb: Public Shared Function formatCompleteSaveMessage(name As String, source As String, target As String, time As String) As Dictionary(Of String, String)
+  overload: EasyLog.Logger.formatCompleteSaveMessage*
+  nameWithType.vb: Logger.formatCompleteSaveMessage(String, String, String, String)
+  fullName.vb: EasyLog.Logger.formatCompleteSaveMessage(String, String, String, String)
+  name.vb: formatCompleteSaveMessage(String, String, String, String)
+- uid: EasyLog.Logger.formatErrMessage(System.String)
+  commentId: M:EasyLog.Logger.formatErrMessage(System.String)
+  id: formatErrMessage(System.String)
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: formatErrMessage(string)
+  nameWithType: Logger.formatErrMessage(string)
+  fullName: EasyLog.Logger.formatErrMessage(string)
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: formatErrMessage
+    path: EasyLog/Logger.cs
+    startLine: 403
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Formats an application exception or error message into a dictionary structure suitable for logging.
+  example: []
+  syntax:
+    content: public static Dictionary<string, string> formatErrMessage(string errorMessage)
+    parameters:
+    - id: errorMessage
+      type: System.String
+      description: The raw error string or exception message.
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.String}
+      description: A dictionary containing the error string and a timestamp.
+    content.vb: Public Shared Function formatErrMessage(errorMessage As String) As Dictionary(Of String, String)
+  overload: EasyLog.Logger.formatErrMessage*
+  nameWithType.vb: Logger.formatErrMessage(String)
+  fullName.vb: EasyLog.Logger.formatErrMessage(String)
+  name.vb: formatErrMessage(String)
+- uid: EasyLog.Logger.getCurrentFormat
+  commentId: M:EasyLog.Logger.getCurrentFormat
+  id: getCurrentFormat
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: getCurrentFormat()
+  nameWithType: Logger.getCurrentFormat()
+  fullName: EasyLog.Logger.getCurrentFormat()
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getCurrentFormat
+    path: EasyLog/Logger.cs
+    startLine: 417
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Gets the current <xref href="EasyLog.LogFormat" data-throw-if-not-resolved="false"></xref> enum value being used by the logger.
+  example: []
+  syntax:
+    content: public LogFormat getCurrentFormat()
+    return:
+      type: EasyLog.LogFormat
+      description: The active log format.
+    content.vb: Public Function getCurrentFormat() As LogFormat
+  overload: EasyLog.Logger.getCurrentFormat*
+- uid: EasyLog.Logger.setCurrentFormat(EasyLog.LogFormat)
+  commentId: M:EasyLog.Logger.setCurrentFormat(EasyLog.LogFormat)
+  id: setCurrentFormat(EasyLog.LogFormat)
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: setCurrentFormat(LogFormat)
+  nameWithType: Logger.setCurrentFormat(LogFormat)
+  fullName: EasyLog.Logger.setCurrentFormat(EasyLog.LogFormat)
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setCurrentFormat
+    path: EasyLog/Logger.cs
+    startLine: 426
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Sets the <xref href="EasyLog.LogFormat" data-throw-if-not-resolved="false"></xref> enum and persists the change to the global configuration file.
+  example: []
+  syntax:
+    content: public void setCurrentFormat(LogFormat format)
+    parameters:
+    - id: format
+      type: EasyLog.LogFormat
+      description: The new <xref href="EasyLog.LogFormat" data-throw-if-not-resolved="false"></xref> to apply.
+    content.vb: Public Sub setCurrentFormat(format As LogFormat)
+  overload: EasyLog.Logger.setCurrentFormat*
+- uid: EasyLog.Logger.getLogsFormat
+  commentId: M:EasyLog.Logger.getLogsFormat
+  id: getLogsFormat
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: getLogsFormat()
+  nameWithType: Logger.getLogsFormat()
+  fullName: EasyLog.Logger.getLogsFormat()
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getLogsFormat
+    path: EasyLog/Logger.cs
+    startLine: 436
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Retrieves the current format as a string (useful for UI data binding).
+  example: []
+  syntax:
+    content: public string getLogsFormat()
+    return:
+      type: System.String
+      description: A string representation of the format (e.g., "Json" or "Xml").
+    content.vb: Public Function getLogsFormat() As String
+  overload: EasyLog.Logger.getLogsFormat*
+- uid: EasyLog.Logger.setLogsFormat(System.String)
+  commentId: M:EasyLog.Logger.setLogsFormat(System.String)
+  id: setLogsFormat(System.String)
+  parent: EasyLog.Logger
+  langs:
+  - csharp
+  - vb
+  name: setLogsFormat(string)
+  nameWithType: Logger.setLogsFormat(string)
+  fullName: EasyLog.Logger.setLogsFormat(string)
+  type: Method
+  source:
+    remote:
+      path: EasyLog/Logger.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setLogsFormat
+    path: EasyLog/Logger.cs
+    startLine: 445
+  assemblies:
+  - EasyLog
+  namespace: EasyLog
+  summary: Attempts to parse a string input into a <xref href="EasyLog.LogFormat" data-throw-if-not-resolved="false"></xref> enum and updates the logger.
+  example: []
+  syntax:
+    content: public void setLogsFormat(string format)
+    parameters:
+    - id: format
+      type: System.String
+      description: A string representing the format ("json" or "xml", case-insensitive).
+    content.vb: Public Sub setLogsFormat(format As String)
+  overload: EasyLog.Logger.setLogsFormat*
+  nameWithType.vb: Logger.setLogsFormat(String)
+  fullName.vb: EasyLog.Logger.setLogsFormat(String)
+  name.vb: setLogsFormat(String)
+references:
+- uid: EasyLog
+  commentId: N:EasyLog
+  href: EasyLog.html
+  name: EasyLog
+  nameWithType: EasyLog
+  fullName: EasyLog
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: EasyLog.Logger
+  commentId: T:EasyLog.Logger
+  parent: EasyLog
+  href: EasyLog.Logger.html
+  name: Logger
+  nameWithType: Logger
+  fullName: EasyLog.Logger
+- uid: EasyLog.Logger.getInstance*
+  commentId: Overload:EasyLog.Logger.getInstance
+  href: EasyLog.Logger.html#EasyLog_Logger_getInstance_EasyLog_IConfig_
+  name: getInstance
+  nameWithType: Logger.getInstance
+  fullName: EasyLog.Logger.getInstance
+- uid: EasyLog.IConfig
+  commentId: T:EasyLog.IConfig
+  parent: EasyLog
+  href: EasyLog.IConfig.html
+  name: IConfig
+  nameWithType: IConfig
+  fullName: EasyLog.IConfig
+- uid: EasyLog.Logger.log*
+  commentId: Overload:EasyLog.Logger.log
+  href: EasyLog.Logger.html#EasyLog_Logger_log_System_Collections_Generic_Dictionary_System_String_System_String__
+  name: log
+  nameWithType: Logger.log
+  fullName: EasyLog.Logger.log
+- uid: System.Collections.Generic.Dictionary{System.String,System.String}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, string>
+  nameWithType: Dictionary<string, string>
+  fullName: System.Collections.Generic.Dictionary<string, string>
+  nameWithType.vb: Dictionary(Of String, String)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, String)
+  name.vb: Dictionary(Of String, String)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: EasyLog.Logger.reconnectToServer*
+  commentId: Overload:EasyLog.Logger.reconnectToServer
+  href: EasyLog.Logger.html#EasyLog_Logger_reconnectToServer
+  name: reconnectToServer
+  nameWithType: Logger.reconnectToServer
+  fullName: EasyLog.Logger.reconnectToServer
+- uid: EasyLog.Logger.isConnectedToServer*
+  commentId: Overload:EasyLog.Logger.isConnectedToServer
+  href: EasyLog.Logger.html#EasyLog_Logger_isConnectedToServer
+  name: isConnectedToServer
+  nameWithType: Logger.isConnectedToServer
+  fullName: EasyLog.Logger.isConnectedToServer
+- uid: EasyLog.Logger.logRealTime*
+  commentId: Overload:EasyLog.Logger.logRealTime
+  href: EasyLog.Logger.html#EasyLog_Logger_logRealTime_System_Collections_Generic_Dictionary_System_String_System_String__
+  name: logRealTime
+  nameWithType: Logger.logRealTime
+  fullName: EasyLog.Logger.logRealTime
+- uid: EasyLog.Logger.formatInfoRealTimeMessage*
+  commentId: Overload:EasyLog.Logger.formatInfoRealTimeMessage
+  href: EasyLog.Logger.html#EasyLog_Logger_formatInfoRealTimeMessage_System_String_System_String_System_String_System_String_System_Object_
+  name: formatInfoRealTimeMessage
+  nameWithType: Logger.formatInfoRealTimeMessage
+  fullName: EasyLog.Logger.formatInfoRealTimeMessage
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: dynamic
+  commentId: T:System.Object
+  isExternal: true
+  name: dynamic
+  nameWithType: dynamic
+  fullName: dynamic
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: EasyLog.Logger.formatLogMessage*
+  commentId: Overload:EasyLog.Logger.formatLogMessage
+  href: EasyLog.Logger.html#EasyLog_Logger_formatLogMessage_System_String_System_String_System_String_System_Int32_System_Double_System_String_
+  name: formatLogMessage
+  nameWithType: Logger.formatLogMessage
+  fullName: EasyLog.Logger.formatLogMessage
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: EasyLog.Logger.formatCompleteSaveMessage*
+  commentId: Overload:EasyLog.Logger.formatCompleteSaveMessage
+  href: EasyLog.Logger.html#EasyLog_Logger_formatCompleteSaveMessage_System_String_System_String_System_String_System_String_
+  name: formatCompleteSaveMessage
+  nameWithType: Logger.formatCompleteSaveMessage
+  fullName: EasyLog.Logger.formatCompleteSaveMessage
+- uid: EasyLog.Logger.formatErrMessage*
+  commentId: Overload:EasyLog.Logger.formatErrMessage
+  href: EasyLog.Logger.html#EasyLog_Logger_formatErrMessage_System_String_
+  name: formatErrMessage
+  nameWithType: Logger.formatErrMessage
+  fullName: EasyLog.Logger.formatErrMessage
+- uid: EasyLog.LogFormat
+  commentId: T:EasyLog.LogFormat
+  parent: EasyLog
+  href: EasyLog.LogFormat.html
+  name: LogFormat
+  nameWithType: LogFormat
+  fullName: EasyLog.LogFormat
+- uid: EasyLog.Logger.getCurrentFormat*
+  commentId: Overload:EasyLog.Logger.getCurrentFormat
+  href: EasyLog.Logger.html#EasyLog_Logger_getCurrentFormat
+  name: getCurrentFormat
+  nameWithType: Logger.getCurrentFormat
+  fullName: EasyLog.Logger.getCurrentFormat
+- uid: EasyLog.Logger.setCurrentFormat*
+  commentId: Overload:EasyLog.Logger.setCurrentFormat
+  href: EasyLog.Logger.html#EasyLog_Logger_setCurrentFormat_EasyLog_LogFormat_
+  name: setCurrentFormat
+  nameWithType: Logger.setCurrentFormat
+  fullName: EasyLog.Logger.setCurrentFormat
+- uid: EasyLog.Logger.getLogsFormat*
+  commentId: Overload:EasyLog.Logger.getLogsFormat
+  href: EasyLog.Logger.html#EasyLog_Logger_getLogsFormat
+  name: getLogsFormat
+  nameWithType: Logger.getLogsFormat
+  fullName: EasyLog.Logger.getLogsFormat
+- uid: EasyLog.Logger.setLogsFormat*
+  commentId: Overload:EasyLog.Logger.setLogsFormat
+  href: EasyLog.Logger.html#EasyLog_Logger_setLogsFormat_System_String_
+  name: setLogsFormat
+  nameWithType: Logger.setLogsFormat
+  fullName: EasyLog.Logger.setLogsFormat

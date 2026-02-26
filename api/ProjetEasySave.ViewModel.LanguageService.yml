@@ -1,0 +1,487 @@
+### YamlMime:ManagedReference
+items:
+- uid: ProjetEasySave.ViewModel.LanguageService
+  commentId: T:ProjetEasySave.ViewModel.LanguageService
+  id: LanguageService
+  parent: ProjetEasySave.ViewModel
+  children:
+  - ProjetEasySave.ViewModel.LanguageService.getInstance
+  - ProjetEasySave.ViewModel.LanguageService.getLanguage
+  - ProjetEasySave.ViewModel.LanguageService.setLanguage(System.String)
+  - ProjetEasySave.ViewModel.LanguageService.translate(System.String)
+  langs:
+  - csharp
+  - vb
+  name: LanguageService
+  nameWithType: LanguageService
+  fullName: ProjetEasySave.ViewModel.LanguageService
+  type: Class
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/LanguageService.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: LanguageService
+    path: EasySaveWPF/ViewModel/LanguageService.cs
+    startLine: 10
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: >-
+    Provides internationalization and translation services for the EasySave application.
+
+    This class implements the Singleton pattern to ensure a single, thread-safe instance manages all translations.
+  example: []
+  syntax:
+    content: public class LanguageService
+    content.vb: Public Class LanguageService
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: ProjetEasySave.ViewModel.LanguageService.getInstance
+  commentId: M:ProjetEasySave.ViewModel.LanguageService.getInstance
+  id: getInstance
+  parent: ProjetEasySave.ViewModel.LanguageService
+  langs:
+  - csharp
+  - vb
+  name: getInstance()
+  nameWithType: LanguageService.getInstance()
+  fullName: ProjetEasySave.ViewModel.LanguageService.getInstance()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/LanguageService.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getInstance
+    path: EasySaveWPF/ViewModel/LanguageService.cs
+    startLine: 47
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Retrieves the thread-safe singleton instance of the <xref href="ProjetEasySave.ViewModel.LanguageService" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public static LanguageService getInstance()
+    return:
+      type: ProjetEasySave.ViewModel.LanguageService
+      description: The single active instance of the translation service.
+    content.vb: Public Shared Function getInstance() As LanguageService
+  overload: ProjetEasySave.ViewModel.LanguageService.getInstance*
+- uid: ProjetEasySave.ViewModel.LanguageService.setLanguage(System.String)
+  commentId: M:ProjetEasySave.ViewModel.LanguageService.setLanguage(System.String)
+  id: setLanguage(System.String)
+  parent: ProjetEasySave.ViewModel.LanguageService
+  langs:
+  - csharp
+  - vb
+  name: setLanguage(string)
+  nameWithType: LanguageService.setLanguage(string)
+  fullName: ProjetEasySave.ViewModel.LanguageService.setLanguage(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/LanguageService.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setLanguage
+    path: EasySaveWPF/ViewModel/LanguageService.cs
+    startLine: 66
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: >-
+    Changes the current application language if the specified language code exists in the loaded translation dictionary.
+
+    It also updates the persistent configuration file with the new selection.
+  example: []
+  syntax:
+    content: public void setLanguage(string languageCode)
+    parameters:
+    - id: languageCode
+      type: System.String
+      description: The new language code to apply (e.g., "en", "fr").
+    content.vb: Public Sub setLanguage(languageCode As String)
+  overload: ProjetEasySave.ViewModel.LanguageService.setLanguage*
+  nameWithType.vb: LanguageService.setLanguage(String)
+  fullName.vb: ProjetEasySave.ViewModel.LanguageService.setLanguage(String)
+  name.vb: setLanguage(String)
+- uid: ProjetEasySave.ViewModel.LanguageService.getLanguage
+  commentId: M:ProjetEasySave.ViewModel.LanguageService.getLanguage
+  id: getLanguage
+  parent: ProjetEasySave.ViewModel.LanguageService
+  langs:
+  - csharp
+  - vb
+  name: getLanguage()
+  nameWithType: LanguageService.getLanguage()
+  fullName: ProjetEasySave.ViewModel.LanguageService.getLanguage()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/LanguageService.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getLanguage
+    path: EasySaveWPF/ViewModel/LanguageService.cs
+    startLine: 79
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Retrieves the currently active language code.
+  example: []
+  syntax:
+    content: public string getLanguage()
+    return:
+      type: System.String
+      description: A string representing the current language code.
+    content.vb: Public Function getLanguage() As String
+  overload: ProjetEasySave.ViewModel.LanguageService.getLanguage*
+- uid: ProjetEasySave.ViewModel.LanguageService.translate(System.String)
+  commentId: M:ProjetEasySave.ViewModel.LanguageService.translate(System.String)
+  id: translate(System.String)
+  parent: ProjetEasySave.ViewModel.LanguageService
+  langs:
+  - csharp
+  - vb
+  name: translate(string)
+  nameWithType: LanguageService.translate(string)
+  fullName: ProjetEasySave.ViewModel.LanguageService.translate(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/LanguageService.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: translate
+    path: EasySaveWPF/ViewModel/LanguageService.cs
+    startLine: 89
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Translates a given key into the currently selected language.
+  example: []
+  syntax:
+    content: public string translate(string key)
+    parameters:
+    - id: key
+      type: System.String
+      description: The string key corresponding to the desired text.
+    return:
+      type: System.String
+      description: The translated string. If the key or translation is not found, the original key is returned as a fallback.
+    content.vb: Public Function translate(key As String) As String
+  overload: ProjetEasySave.ViewModel.LanguageService.translate*
+  nameWithType.vb: LanguageService.translate(String)
+  fullName.vb: ProjetEasySave.ViewModel.LanguageService.translate(String)
+  name.vb: translate(String)
+references:
+- uid: ProjetEasySave.ViewModel
+  commentId: N:ProjetEasySave.ViewModel
+  href: ProjetEasySave.html
+  name: ProjetEasySave.ViewModel
+  nameWithType: ProjetEasySave.ViewModel
+  fullName: ProjetEasySave.ViewModel
+  spec.csharp:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.ViewModel
+    name: ViewModel
+    href: ProjetEasySave.ViewModel.html
+  spec.vb:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.ViewModel
+    name: ViewModel
+    href: ProjetEasySave.ViewModel.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ProjetEasySave.ViewModel.LanguageService
+  commentId: T:ProjetEasySave.ViewModel.LanguageService
+  parent: ProjetEasySave.ViewModel
+  href: ProjetEasySave.ViewModel.LanguageService.html
+  name: LanguageService
+  nameWithType: LanguageService
+  fullName: ProjetEasySave.ViewModel.LanguageService
+- uid: ProjetEasySave.ViewModel.LanguageService.getInstance*
+  commentId: Overload:ProjetEasySave.ViewModel.LanguageService.getInstance
+  href: ProjetEasySave.ViewModel.LanguageService.html#ProjetEasySave_ViewModel_LanguageService_getInstance
+  name: getInstance
+  nameWithType: LanguageService.getInstance
+  fullName: ProjetEasySave.ViewModel.LanguageService.getInstance
+- uid: ProjetEasySave.ViewModel.LanguageService.setLanguage*
+  commentId: Overload:ProjetEasySave.ViewModel.LanguageService.setLanguage
+  href: ProjetEasySave.ViewModel.LanguageService.html#ProjetEasySave_ViewModel_LanguageService_setLanguage_System_String_
+  name: setLanguage
+  nameWithType: LanguageService.setLanguage
+  fullName: ProjetEasySave.ViewModel.LanguageService.setLanguage
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: ProjetEasySave.ViewModel.LanguageService.getLanguage*
+  commentId: Overload:ProjetEasySave.ViewModel.LanguageService.getLanguage
+  href: ProjetEasySave.ViewModel.LanguageService.html#ProjetEasySave_ViewModel_LanguageService_getLanguage
+  name: getLanguage
+  nameWithType: LanguageService.getLanguage
+  fullName: ProjetEasySave.ViewModel.LanguageService.getLanguage
+- uid: ProjetEasySave.ViewModel.LanguageService.translate*
+  commentId: Overload:ProjetEasySave.ViewModel.LanguageService.translate
+  href: ProjetEasySave.ViewModel.LanguageService.html#ProjetEasySave_ViewModel_LanguageService_translate_System_String_
+  name: translate
+  nameWithType: LanguageService.translate
+  fullName: ProjetEasySave.ViewModel.LanguageService.translate

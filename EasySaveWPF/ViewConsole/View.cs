@@ -1,21 +1,28 @@
 ﻿using ProjetEasySave.Model;
-using ProjetEasySave.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Xml.Linq;
 
 namespace ProjetEasySave.View
 {
+    /// <summary>
+    /// Represents the console-based User Interface for the EasySave application.
+    /// Handles command-line arguments, displays the interactive menu, captures user input, and communicates with the <see cref="ViewModel"/>.
+    /// </summary>
     public class View
     {
         private readonly ViewModel.ViewModel _viewModel;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="View"/> class and sets up the underlying ViewModel.
+        /// </summary>
         public View()
         {
             _viewModel = new ViewModel.ViewModel();
         }
 
+        /// <summary>
+        /// Starts the view logic. If command-line arguments are provided, it parses and executes them directly.
+        /// Otherwise, it launches the interactive console menu.
+        /// </summary>
+        /// <param name="args">An array of command-line arguments passed to the application.</param>
         public async void run(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -162,6 +169,9 @@ namespace ProjetEasySave.View
             }
         }
 
+        /// <summary>
+        /// Clears the console and displays the application header.
+        /// </summary>
         private void renderHeader()
         {
             Console.Clear();
@@ -170,6 +180,9 @@ namespace ProjetEasySave.View
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Displays the interactive main menu options to the user.
+        /// </summary>
         private void renderMenu()
         {
             Console.WriteLine();
@@ -187,6 +200,9 @@ namespace ProjetEasySave.View
 
         }
 
+        /// <summary>
+        /// Handles the interactive flow for creating and adding a new backup job (Save Space).
+        /// </summary>
         private void addSaveSpaceFlow()
         {
             Console.Write(_viewModel.translate("Name") + ": ");
@@ -216,6 +232,9 @@ namespace ProjetEasySave.View
             pause();
         }
 
+        /// <summary>
+        /// Handles the interactive flow for removing an existing backup job.
+        /// </summary>
         private void removeSaveSpaceFlow()
         {
             Console.Write(_viewModel.translate("Name") + ": ");
@@ -226,6 +245,9 @@ namespace ProjetEasySave.View
             pause();
         }
 
+        /// <summary>
+        /// Handles the interactive flow for manually starting a specific backup job.
+        /// </summary>
         private async void startSaveFlow()
         {
             Console.Write(_viewModel.translate("Name") + ": ");
@@ -236,6 +258,9 @@ namespace ProjetEasySave.View
             pause();
         }
 
+        /// <summary>
+        /// Displays a list of all currently configured backup jobs and their details.
+        /// </summary>
         private void listSaveSpacesFlow()
         {
             List<SaveSpace> spaces = _viewModel.getSaveSpaces();
@@ -266,6 +291,10 @@ namespace ProjetEasySave.View
             pause();
         }
 
+        /// <summary>
+        /// Displays the real-time execution state of all configured backup jobs.
+        /// Refreshes automatically until the user presses Enter.
+        /// </summary>
         private void viewSaveSpacesStateFlow()
         {
             while (true)
@@ -310,6 +339,9 @@ namespace ProjetEasySave.View
             }
         }
 
+        /// <summary>
+        /// Handles the interactive flow for changing the application's display language.
+        /// </summary>
         private void changeLanguageFlow()
         {
             Console.Write(_viewModel.translate("LanguageCodePrompt") + ": ");
@@ -320,6 +352,9 @@ namespace ProjetEasySave.View
             pause();
         }
 
+        /// <summary>
+        /// Handles the interactive flow for changing the format of the generated log files (e.g., JSON or XML).
+        /// </summary>
         private void changeLogFormatFlow()
         {
             renderHeader();
@@ -340,11 +375,22 @@ namespace ProjetEasySave.View
             pause();
         }
 
+        /// <summary>
+        /// Helper method to display a success or failure message based on a boolean condition.
+        /// </summary>
+        /// <param name="ok">The boolean condition determining which message to show.</param>
+        /// <param name="success">The message to display if true.</param>
+        /// <param name="fail">The message to display if false.</param>
         private static void renderResult(bool ok, string success, string fail)
         {
             renderMessage(ok ? success : fail, ok ? ConsoleColor.Green : ConsoleColor.Red);
         }
 
+        /// <summary>
+        /// Helper method to print a colored message to the console.
+        /// </summary>
+        /// <param name="message">The text string to display.</param>
+        /// <param name="color">The <see cref="ConsoleColor"/> to apply to the text.</param>
         private static void renderMessage(string message, ConsoleColor color)
         {
             Console.ForegroundColor = color;
@@ -352,6 +398,9 @@ namespace ProjetEasySave.View
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Pauses the application flow and waits for the user to press the Enter key before continuing.
+        /// </summary>
         private void pause()
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
