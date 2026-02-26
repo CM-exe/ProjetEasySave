@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class SaveTask | EasySaveDocs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SaveTask | EasySaveDocs ">
+      
+      <meta name="description" content="Represents an individual execution unit for a backup operation. This class wraps a specific backup strategy (Complete or Differential) and manages its lifecycle and state.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Natjom/ProjetEasySave/new/draft/V3-docfx/apiSpec/new?filename=ProjetEasySave_Model_SaveTask.md&amp;value=---%0Auid%3A%20ProjetEasySave.Model.SaveTask%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="EasySaveDocs">
+            EasySaveDocs
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="ProjetEasySave.Model.SaveTask">
+
+
+
+  <h1 id="ProjetEasySave_Model_SaveTask" data-uid="ProjetEasySave.Model.SaveTask" class="text-break">
+Class SaveTask  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveTask.cs/#L7"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="ProjetEasySave.html">ProjetEasySave</a>.<a class="xref" href="ProjetEasySave.Model.html">Model</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>EasySaveWPF.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Represents an individual execution unit for a backup operation.
+This class wraps a specific backup strategy (Complete or Differential) and manages its lifecycle and state.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class SaveTask</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">SaveTask</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="ProjetEasySave_Model_SaveTask__ctor_" data-uid="ProjetEasySave.Model.SaveTask.#ctor*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveTask__ctor_System_String_ProjetEasySave_Model_SaveSpace_System_Threading_SemaphoreSlim_System_String_" data-uid="ProjetEasySave.Model.SaveTask.#ctor(System.String,ProjetEasySave.Model.SaveSpace,System.Threading.SemaphoreSlim,System.String)">
+  SaveTask(string, SaveSpace, SemaphoreSlim, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveTask.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="ProjetEasySave.Model.SaveTask.html">SaveTask</a> class, instantiating the appropriate backup strategy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SaveTask(string strategy, SaveSpace space, SemaphoreSlim bigFileSemaphore, string completeFolder = &quot;&quot;)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>strategy</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The type of strategy to use (&quot;complete&quot; or &quot;differential&quot;).</p>
+</dd>
+    <dt><code>space</code> <a class="xref" href="ProjetEasySave.Model.SaveSpace.html">SaveSpace</a></dt>
+    <dd><p>The parent <a class="xref" href="ProjetEasySave.Model.SaveSpace.html">SaveSpace</a> that owns this task.</p>
+</dd>
+    <dt><code>bigFileSemaphore</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.semaphoreslim">SemaphoreSlim</a></dt>
+    <dd><p>A semaphore used to throttle the transfer of large files.</p>
+</dd>
+    <dt><code>completeFolder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The reference path to a full backup. Required if the strategy is &quot;differential&quot;.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p>Thrown when a differential strategy lacks a complete folder path, or if an unknown strategy type is provided.</p>
+</dd>
+  </dl>
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="ProjetEasySave_Model_SaveTask_getCompleteSavePath_" data-uid="ProjetEasySave.Model.SaveTask.getCompleteSavePath*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveTask_getCompleteSavePath" data-uid="ProjetEasySave.Model.SaveTask.getCompleteSavePath">
+  getCompleteSavePath()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveTask.cs/#L145"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves the reference full backup path used if the current strategy is differential.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getCompleteSavePath()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The path to the full backup directory, or an empty string if not applicable.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveTask_getStrategyType_" data-uid="ProjetEasySave.Model.SaveTask.getStrategyType*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveTask_getStrategyType" data-uid="ProjetEasySave.Model.SaveTask.getStrategyType">
+  getStrategyType()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveTask.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Identifies the type of strategy currently assigned to this task.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getStrategyType()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>A string representing the strategy type (&quot;complete&quot;, &quot;differential&quot;, or &quot;unknown&quot;).</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveTask_onSaveTaskStateUpdated_" data-uid="ProjetEasySave.Model.SaveTask.onSaveTaskStateUpdated*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveTask_onSaveTaskStateUpdated_ProjetEasySave_Model_ISaveStrategy_" data-uid="ProjetEasySave.Model.SaveTask.onSaveTaskStateUpdated(ProjetEasySave.Model.ISaveStrategy)">
+  onSaveTaskStateUpdated(ISaveStrategy)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveTask.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Callback method triggered by the underlying <a class="xref" href="ProjetEasySave.Model.ISaveStrategy.html">ISaveStrategy</a> when its internal state changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SaveTaskState onSaveTaskStateUpdated(ISaveStrategy strategy)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>strategy</code> <a class="xref" href="ProjetEasySave.Model.ISaveStrategy.html">ISaveStrategy</a></dt>
+    <dd><p>The strategy reporting the state change.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="SaveTaskState.html">SaveTaskState</a></dt>
+    <dd><p>The newly applied <a class="xref" href="SaveTaskState.html">SaveTaskState</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_Model_SaveTask_save_" data-uid="ProjetEasySave.Model.SaveTask.save*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveTask_save_System_String_System_String_System_Collections_Generic_List_System_String__System_Threading_CancellationToken_System_Threading_ManualResetEventSlim_System_Action_System_Int32_System_String__" data-uid="ProjetEasySave.Model.SaveTask.save(System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.CancellationToken,System.Threading.ManualResetEventSlim,System.Action{System.Int32,System.String})">
+  save(string, string, List&lt;string&gt;, CancellationToken, ManualResetEventSlim, Action&lt;int, string&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveTask.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Synchronously executes the backup operation using the configured strategy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool save(string sourceFolder, string destinationFolder, List&lt;string&gt; priorityExt, CancellationToken token, ManualResetEventSlim pauseEvent, Action&lt;int, string&gt;? progress)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>sourceFolder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The absolute path of the directory to back up.</p>
+</dd>
+    <dt><code>destinationFolder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The absolute path where the backup will be saved.</p>
+</dd>
+    <dt><code>priorityExt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A list of file extensions that should be processed with higher priority.</p>
+</dd>
+    <dt><code>token</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token to handle explicit stop requests.</p>
+</dd>
+    <dt><code>pauseEvent</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.manualreseteventslim">ManualResetEventSlim</a></dt>
+    <dd><p>A manual reset event to manage pausing and resuming the backup process.</p>
+</dd>
+    <dt><code>progress</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>An action delegate to report progress updates back to the UI.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the backup completes successfully; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.operationcanceledexception">OperationCanceledException</a></dt>
+    <dd><p>Thrown when the backup process is explicitly stopped via the cancellation token.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="ProjetEasySave_Model_SaveTask_saveAsync_" data-uid="ProjetEasySave.Model.SaveTask.saveAsync*"></a>
+
+  <h3 id="ProjetEasySave_Model_SaveTask_saveAsync_System_String_System_String_System_Collections_Generic_List_System_String__System_Threading_CancellationToken_System_Threading_ManualResetEventSlim_System_Action_System_Int32_System_String__" data-uid="ProjetEasySave.Model.SaveTask.saveAsync(System.String,System.String,System.Collections.Generic.List{System.String},System.Threading.CancellationToken,System.Threading.ManualResetEventSlim,System.Action{System.Int32,System.String})">
+  saveAsync(string, string, List&lt;string&gt;, CancellationToken, ManualResetEventSlim, Action&lt;int, string&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveTask.cs/#L164"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously executes the backup operation using the configured strategy by running it on a background thread.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;bool&gt; saveAsync(string sourceFolder, string destinationFolder, List&lt;string&gt; priorityExt, CancellationToken token, ManualResetEventSlim pauseEvent, Action&lt;int, string&gt;? progress = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>sourceFolder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The absolute path of the directory to back up.</p>
+</dd>
+    <dt><code>destinationFolder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The absolute path where the backup will be saved.</p>
+</dd>
+    <dt><code>priorityExt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A list of file extensions that should be processed with higher priority.</p>
+</dd>
+    <dt><code>token</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token to handle explicit stop requests.</p>
+</dd>
+    <dt><code>pauseEvent</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.manualreseteventslim">ManualResetEventSlim</a></dt>
+    <dd><p>A manual reset event to manage pausing and resuming the backup process.</p>
+</dd>
+    <dt><code>progress</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>An action delegate to report progress updates back to the UI (optional).</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</dt>
+    <dd><p>A task representing the asynchronous save operation, containing a boolean result of success or failure.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="events">Events
+</h2>
+
+
+
+  <h3 id="ProjetEasySave_Model_SaveTask_ProgressUpdated" data-uid="ProjetEasySave.Model.SaveTask.ProgressUpdated">
+  ProgressUpdated
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveTask.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Event triggered when the backup progress updates, providing the completion percentage and the current file name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event Action&lt;int, string&gt;? ProgressUpdated</code></pre>
+  </div>
+
+
+
+
+
+
+  <h4 class="section">Event Type</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/Model/SaveTask.cs/#L7" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

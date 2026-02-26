@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class ViewModel | EasySaveDocs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ViewModel | EasySaveDocs ">
+      
+      <meta name="description" content="The central ViewModel for the application, acting as the intermediary between the View layer and the underlying Models. Manages application state, UI translations, business logic routing, and background monitoring tasks.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Natjom/ProjetEasySave/new/draft/V3-docfx/apiSpec/new?filename=ProjetEasySave_ViewModel_ViewModel.md&amp;value=---%0Auid%3A%20ProjetEasySave.ViewModel.ViewModel%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="EasySaveDocs">
+            EasySaveDocs
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="ProjetEasySave.ViewModel.ViewModel">
+
+
+
+  <h1 id="ProjetEasySave_ViewModel_ViewModel" data-uid="ProjetEasySave.ViewModel.ViewModel" class="text-break">
+Class ViewModel  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="ProjetEasySave.html">ProjetEasySave</a>.<a class="xref" href="ProjetEasySave.ViewModel.html">ViewModel</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>EasySaveWPF.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The central ViewModel for the application, acting as the intermediary between the View layer and the underlying Models.
+Manages application state, UI translations, business logic routing, and background monitoring tasks.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ViewModel : INotifyPropertyChanged</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">ViewModel</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel__ctor_" data-uid="ProjetEasySave.ViewModel.ViewModel.#ctor*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel__ctor" data-uid="ProjetEasySave.ViewModel.ViewModel.#ctor">
+  ViewModel()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L164"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="ProjetEasySave.ViewModel.ViewModel.html">ViewModel</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ViewModel()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_BusinessSoftwareStateChanged" data-uid="ProjetEasySave.ViewModel.ViewModel.BusinessSoftwareStateChanged">
+  BusinessSoftwareStateChanged
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L126"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Event triggered when the background monitor detects the launch or closure of restricted business software.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Action&lt;bool&gt;? BusinessSoftwareStateChanged</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_CurrentFileLabel_" data-uid="ProjetEasySave.ViewModel.ViewModel.CurrentFileLabel*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_CurrentFileLabel" data-uid="ProjetEasySave.ViewModel.ViewModel.CurrentFileLabel">
+  CurrentFileLabel
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the localized label for the current file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string CurrentFileLabel { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_JobStates_" data-uid="ProjetEasySave.ViewModel.ViewModel.JobStates*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_JobStates" data-uid="ProjetEasySave.ViewModel.ViewModel.JobStates">
+  JobStates
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L106"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets a dictionary containing the real-time execution states for each backup job, mapped by job name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, SaveJobState&gt; JobStates { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="ProjetEasySave.ViewModel.SaveJobState.html">SaveJobState</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_PausePendingSuffix_" data-uid="ProjetEasySave.ViewModel.ViewModel.PausePendingSuffix*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_PausePendingSuffix" data-uid="ProjetEasySave.ViewModel.ViewModel.PausePendingSuffix">
+  PausePendingSuffix
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the localized suffix applied when a job is pending a pause.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string PausePendingSuffix { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_PausedSuffix_" data-uid="ProjetEasySave.ViewModel.ViewModel.PausedSuffix*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_PausedSuffix" data-uid="ProjetEasySave.ViewModel.ViewModel.PausedSuffix">
+  PausedSuffix
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the localized suffix applied when a job is fully paused.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string PausedSuffix { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_SaveCompletedMessage_" data-uid="ProjetEasySave.ViewModel.ViewModel.SaveCompletedMessage*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_SaveCompletedMessage" data-uid="ProjetEasySave.ViewModel.ViewModel.SaveCompletedMessage">
+  SaveCompletedMessage
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the localized message displayed when a save completes successfully.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string SaveCompletedMessage { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_SaveStoppedMessage_" data-uid="ProjetEasySave.ViewModel.ViewModel.SaveStoppedMessage*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_SaveStoppedMessage" data-uid="ProjetEasySave.ViewModel.ViewModel.SaveStoppedMessage">
+  SaveStoppedMessage
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the localized message displayed when a save is stopped manually.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string SaveStoppedMessage { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_SaveWindowTitle_" data-uid="ProjetEasySave.ViewModel.ViewModel.SaveWindowTitle*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_SaveWindowTitle" data-uid="ProjetEasySave.ViewModel.ViewModel.SaveWindowTitle">
+  SaveWindowTitle
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the localized window title for the active save process.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string SaveWindowTitle { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_StoppedSuffix_" data-uid="ProjetEasySave.ViewModel.ViewModel.StoppedSuffix*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_StoppedSuffix" data-uid="ProjetEasySave.ViewModel.ViewModel.StoppedSuffix">
+  StoppedSuffix
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the localized suffix applied when a job is completely stopped.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string StoppedSuffix { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_GetJobState_" data-uid="ProjetEasySave.ViewModel.ViewModel.GetJobState*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_GetJobState_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.GetJobState(System.String)">
+  GetJobState(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves the <a class="xref" href="ProjetEasySave.ViewModel.SaveJobState.html">SaveJobState</a> for a specific backup job, creating it if it does not already exist.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SaveJobState GetJobState(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the backup job.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="ProjetEasySave.ViewModel.SaveJobState.html">SaveJobState</a></dt>
+    <dd><p>The <a class="xref" href="ProjetEasySave.ViewModel.SaveJobState.html">SaveJobState</a> associated with the specified job.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_OnPropertyChanged_" data-uid="ProjetEasySave.ViewModel.ViewModel.OnPropertyChanged*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_OnPropertyChanged_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.OnPropertyChanged(System.String)">
+  OnPropertyChanged(string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Triggers the <a class="xref" href="ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_PropertyChanged">PropertyChanged</a> event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void OnPropertyChanged(string? name = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the changed property.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_PauseSave_" data-uid="ProjetEasySave.ViewModel.ViewModel.PauseSave*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_PauseSave_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.PauseSave(System.String)">
+  PauseSave(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L314"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Requests a pause for the currently active backup job.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void PauseSave(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the job to pause.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_ResumeSave_" data-uid="ProjetEasySave.ViewModel.ViewModel.ResumeSave*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_ResumeSave_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.ResumeSave(System.String)">
+  ResumeSave(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L327"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Resumes a previously paused backup job.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ResumeSave(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the job to resume.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_StartSaveAsync_" data-uid="ProjetEasySave.ViewModel.ViewModel.StartSaveAsync*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_StartSaveAsync_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.StartSaveAsync(System.String)">
+  StartSaveAsync(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L212"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes the UI state for a backup job, starts the background business software watcher, and begins the asynchronous execution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;bool&gt; StartSaveAsync(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the backup job to run.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</dt>
+    <dd><p>A task containing the execution result.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_StopSave_" data-uid="ProjetEasySave.ViewModel.ViewModel.StopSave*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_StopSave_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.StopSave(System.String)">
+  StopSave(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L340"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Stops and cancels an ongoing backup job.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StopSave(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the job to stop.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_TriggerRealPause_" data-uid="ProjetEasySave.ViewModel.ViewModel.TriggerRealPause*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_TriggerRealPause_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.TriggerRealPause(System.String)">
+  TriggerRealPause(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L142"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Safely updates the UI thread to reflect that a backup job has actually paused, applying the correct UI suffixes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TriggerRealPause(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the backup job.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_addSaveSpace_" data-uid="ProjetEasySave.ViewModel.ViewModel.addSaveSpace*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_addSaveSpace_System_String_System_String_System_String_System_String_System_Collections_Generic_List_System_String__System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.addSaveSpace(System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)">
+  addSaveSpace(string, string, string, string, List&lt;string&gt;, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L182"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a new backup job configuration to the model.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool addSaveSpace(string name, string sourcePath, string destinationPath, string typeSave, List&lt;string&gt; priorityExt, string completeSavePath = &quot;&quot;)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The job name.</p>
+</dd>
+    <dt><code>sourcePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The source directory path.</p>
+</dd>
+    <dt><code>destinationPath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The destination directory path.</p>
+</dd>
+    <dt><code>typeSave</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The strategy type (complete or differential).</p>
+</dd>
+    <dt><code>priorityExt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A list of priority file extensions.</p>
+</dd>
+    <dt><code>completeSavePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The reference path to a full backup (if applicable).</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if successfully added; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_getBoolLogsOnLocal_" data-uid="ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnLocal*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_getBoolLogsOnLocal" data-uid="ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnLocal">
+  getBoolLogsOnLocal()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L430"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a value indicating whether logs should be saved locally.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool getBoolLogsOnLocal()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_getBoolLogsOnServer_" data-uid="ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnServer*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_getBoolLogsOnServer" data-uid="ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnServer">
+  getBoolLogsOnServer()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L424"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a value indicating whether logs should be sent to a remote server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool getBoolLogsOnServer()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_getBusinessSoftwareName_" data-uid="ProjetEasySave.ViewModel.ViewModel.getBusinessSoftwareName*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_getBusinessSoftwareName" data-uid="ProjetEasySave.ViewModel.ViewModel.getBusinessSoftwareName">
+  getBusinessSoftwareName()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L497"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the name of the restricted business software that pauses backups when launched.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getBusinessSoftwareName()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_getLanguage_" data-uid="ProjetEasySave.ViewModel.ViewModel.getLanguage*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_getLanguage" data-uid="ProjetEasySave.ViewModel.ViewModel.getLanguage">
+  getLanguage()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L367"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves the currently active application language code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getLanguage()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The active language code string.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_getLogsFormat_" data-uid="ProjetEasySave.ViewModel.ViewModel.getLogsFormat*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_getLogsFormat" data-uid="ProjetEasySave.ViewModel.ViewModel.getLogsFormat">
+  getLogsFormat()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L394"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves the current global formatting style for logs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getLogsFormat()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The current log format string.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_getMaxSize_" data-uid="ProjetEasySave.ViewModel.ViewModel.getMaxSize*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_getMaxSize" data-uid="ProjetEasySave.ViewModel.ViewModel.getMaxSize">
+  getMaxSize()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L411"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the configured maximum file size threshold for concurrent transfers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int getMaxSize()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The maximum size in kilobytes.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_getSaveSpaces_" data-uid="ProjetEasySave.ViewModel.ViewModel.getSaveSpaces*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_getSaveSpaces" data-uid="ProjetEasySave.ViewModel.ViewModel.getSaveSpaces">
+  getSaveSpaces()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L349"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Retrieves all configured backup jobs from the model.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;SaveSpace&gt; getSaveSpaces()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="ProjetEasySave.Model.SaveSpace.html">SaveSpace</a>&gt;</dt>
+    <dd><p>A list of <a class="xref" href="ProjetEasySave.Model.SaveSpace.html">SaveSpace</a> instances.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_getServerIp_" data-uid="ProjetEasySave.ViewModel.ViewModel.getServerIp*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_getServerIp" data-uid="ProjetEasySave.ViewModel.ViewModel.getServerIp">
+  getServerIp()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L448"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the configured IP address of the remote logging server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string getServerIp()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_getServerPort_" data-uid="ProjetEasySave.ViewModel.ViewModel.getServerPort*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_getServerPort" data-uid="ProjetEasySave.ViewModel.ViewModel.getServerPort">
+  getServerPort()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L454"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the configured port number of the remote logging server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int getServerPort()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_isBusinessSoftwareRunning_" data-uid="ProjetEasySave.ViewModel.ViewModel.isBusinessSoftwareRunning*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_isBusinessSoftwareRunning" data-uid="ProjetEasySave.ViewModel.ViewModel.isBusinessSoftwareRunning">
+  isBusinessSoftwareRunning()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L484"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks whether any restricted business software is currently running on the system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool isBusinessSoftwareRunning()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_isConnectedToServer_" data-uid="ProjetEasySave.ViewModel.ViewModel.isConnectedToServer*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_isConnectedToServer" data-uid="ProjetEasySave.ViewModel.ViewModel.isConnectedToServer">
+  isConnectedToServer()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L478"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks whether a connection to the remote logging server is currently active.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool isConnectedToServer()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_reconnectToServer_" data-uid="ProjetEasySave.ViewModel.ViewModel.reconnectToServer*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_reconnectToServer" data-uid="ProjetEasySave.ViewModel.ViewModel.reconnectToServer">
+  reconnectToServer()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L472"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Attempts to re-establish a connection with the remote logging server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void reconnectToServer()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_removeSaveSpace_" data-uid="ProjetEasySave.ViewModel.ViewModel.removeSaveSpace*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_removeSaveSpace_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.removeSaveSpace(System.String)">
+  removeSaveSpace(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L192"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes an existing backup job configuration from the model.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool removeSaveSpace(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the job to remove.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if successfully removed; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_setBoolLogsOnLocal_" data-uid="ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnLocal*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_setBoolLogsOnLocal_System_Boolean_" data-uid="ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnLocal(System.Boolean)">
+  setBoolLogsOnLocal(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L442"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets whether logs should be persisted locally.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setBoolLogsOnLocal(bool value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_setBoolLogsOnServer_" data-uid="ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnServer*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_setBoolLogsOnServer_System_Boolean_" data-uid="ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnServer(System.Boolean)">
+  setBoolLogsOnServer(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L436"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets whether logs should be transmitted to a remote server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setBoolLogsOnServer(bool value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_setBusinessSoftwareName_" data-uid="ProjetEasySave.ViewModel.ViewModel.setBusinessSoftwareName*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_setBusinessSoftwareName_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.setBusinessSoftwareName(System.String)">
+  setBusinessSoftwareName(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L504"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the name of the restricted business software.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setBusinessSoftwareName(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The process name of the business software.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_setEncryptionKey_" data-uid="ProjetEasySave.ViewModel.ViewModel.setEncryptionKey*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_setEncryptionKey_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.setEncryptionKey(System.String)">
+  setEncryptionKey(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L491"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the global encryption key used by the CryptoSoft tool.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setEncryptionKey(string key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The new encryption key.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_setLanguage_" data-uid="ProjetEasySave.ViewModel.ViewModel.setLanguage*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_setLanguage_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.setLanguage(System.String)">
+  setLanguage(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L358"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Updates the application's current language via the LanguageService.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setLanguage(string languageCode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>languageCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The target language code (e.g., &quot;en&quot;, &quot;fr&quot;).</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_setLogsFormat_" data-uid="ProjetEasySave.ViewModel.ViewModel.setLogsFormat*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_setLogsFormat_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.setLogsFormat(System.String)">
+  setLogsFormat(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L377"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the global formatting style for logs (e.g., JSON or XML).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool setLogsFormat(string format)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The target log format.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if successfully updated; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_setMaxSize_" data-uid="ProjetEasySave.ViewModel.ViewModel.setMaxSize*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_setMaxSize_System_Int32_" data-uid="ProjetEasySave.ViewModel.ViewModel.setMaxSize(System.Int32)">
+  setMaxSize(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L418"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the global maximum file size threshold for concurrent transfers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setMaxSize(int size)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>size</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The size in kilobytes.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_setServerIp_" data-uid="ProjetEasySave.ViewModel.ViewModel.setServerIp*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_setServerIp_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.setServerIp(System.String)">
+  setServerIp(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L460"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the IP address of the remote logging server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setServerIp(string ip)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>ip</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_setServerPort_" data-uid="ProjetEasySave.ViewModel.ViewModel.setServerPort*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_setServerPort_System_Int32_" data-uid="ProjetEasySave.ViewModel.ViewModel.setServerPort(System.Int32)">
+  setServerPort(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L466"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the port number of the remote logging server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void setServerPort(int port)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>port</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_startSave_" data-uid="ProjetEasySave.ViewModel.ViewModel.startSave*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_startSave_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.startSave(System.String)">
+  startSave(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L202"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initiates the backup process asynchronously.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;bool&gt; startSave(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the job to execute.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</dt>
+    <dd><p>A task representing the asynchronous operation, containing the success status.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="ProjetEasySave_ViewModel_ViewModel_translate_" data-uid="ProjetEasySave.ViewModel.ViewModel.translate*"></a>
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_translate_System_String_" data-uid="ProjetEasySave.ViewModel.ViewModel.translate(System.String)">
+  translate(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L404"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Fetches the translated string for a given translation key based on the active language.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string translate(string key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The dictionary key mapped to a translated string.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The translated text, or the key itself if no translation is found.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="events">Events
+</h2>
+
+
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_PropertyChanged" data-uid="ProjetEasySave.ViewModel.ViewModel.PropertyChanged">
+  PropertyChanged
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Occurs when a ViewModel property value changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event PropertyChangedEventHandler? PropertyChanged</code></pre>
+  </div>
+
+
+
+
+
+
+  <h4 class="section">Event Type</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventhandler">PropertyChangedEventHandler</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h3 id="ProjetEasySave_ViewModel_ViewModel_RealPaused" data-uid="ProjetEasySave.ViewModel.ViewModel.RealPaused">
+  RealPaused
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L123"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Event triggered when a backup job fully transitions into a paused state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event Action&lt;string&gt;? RealPaused</code></pre>
+  </div>
+
+
+
+
+
+
+  <h4 class="section">Event Type</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Natjom/ProjetEasySave/blob/draft/V3-docfx/EasySaveWPF/ViewModel/ViewModel.cs/#L79" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
