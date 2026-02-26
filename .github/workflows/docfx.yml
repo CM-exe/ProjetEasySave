@@ -8,7 +8,7 @@ on:
 
 jobs:
   docfx:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
@@ -24,9 +24,6 @@ jobs:
         
       - name: Update Path for DocFX
         run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
-        
-      - name: Debug print Path
-        run: ls -la
 
       - name: Restore NuGet packages
         run: dotnet restore EasySaveWPF/EasySaveWPF.slnx
