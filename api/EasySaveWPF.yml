@@ -1,0 +1,37 @@
+### YamlMime:ManagedReference
+items:
+- uid: EasySaveWPF
+  commentId: N:EasySaveWPF
+  id: EasySaveWPF
+  children:
+  - EasySaveWPF.App
+  - EasySaveWPF.MainWindow
+  - EasySaveWPF.SaveProgressWindow
+  langs:
+  - csharp
+  - vb
+  name: EasySaveWPF
+  nameWithType: EasySaveWPF
+  fullName: EasySaveWPF
+  type: Namespace
+  assemblies:
+  - EasySaveWPF
+references:
+- uid: EasySaveWPF.App
+  commentId: T:EasySaveWPF.App
+  href: EasySaveWPF.App.html
+  name: App
+  nameWithType: App
+  fullName: EasySaveWPF.App
+- uid: EasySaveWPF.MainWindow
+  commentId: T:EasySaveWPF.MainWindow
+  href: EasySaveWPF.MainWindow.html
+  name: MainWindow
+  nameWithType: MainWindow
+  fullName: EasySaveWPF.MainWindow
+- uid: EasySaveWPF.SaveProgressWindow
+  commentId: T:EasySaveWPF.SaveProgressWindow
+  href: EasySaveWPF.SaveProgressWindow.html
+  name: SaveProgressWindow
+  nameWithType: SaveProgressWindow
+  fullName: EasySaveWPF.SaveProgressWindow

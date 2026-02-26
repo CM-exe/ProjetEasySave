@@ -1,0 +1,2603 @@
+### YamlMime:ManagedReference
+items:
+- uid: ProjetEasySave.ViewModel.ViewModel
+  commentId: T:ProjetEasySave.ViewModel.ViewModel
+  id: ViewModel
+  parent: ProjetEasySave.ViewModel
+  children:
+  - ProjetEasySave.ViewModel.ViewModel.#ctor
+  - ProjetEasySave.ViewModel.ViewModel.BusinessSoftwareStateChanged
+  - ProjetEasySave.ViewModel.ViewModel.CurrentFileLabel
+  - ProjetEasySave.ViewModel.ViewModel.GetJobState(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.JobStates
+  - ProjetEasySave.ViewModel.ViewModel.OnPropertyChanged(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.PausePendingSuffix
+  - ProjetEasySave.ViewModel.ViewModel.PauseSave(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.PausedSuffix
+  - ProjetEasySave.ViewModel.ViewModel.PropertyChanged
+  - ProjetEasySave.ViewModel.ViewModel.RealPaused
+  - ProjetEasySave.ViewModel.ViewModel.ResumeSave(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.SaveCompletedMessage
+  - ProjetEasySave.ViewModel.ViewModel.SaveStoppedMessage
+  - ProjetEasySave.ViewModel.ViewModel.SaveWindowTitle
+  - ProjetEasySave.ViewModel.ViewModel.StartSaveAsync(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.StopSave(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.StoppedSuffix
+  - ProjetEasySave.ViewModel.ViewModel.TriggerRealPause(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.addSaveSpace(System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)
+  - ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnLocal
+  - ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnServer
+  - ProjetEasySave.ViewModel.ViewModel.getBusinessSoftwareName
+  - ProjetEasySave.ViewModel.ViewModel.getLanguage
+  - ProjetEasySave.ViewModel.ViewModel.getLogsFormat
+  - ProjetEasySave.ViewModel.ViewModel.getMaxSize
+  - ProjetEasySave.ViewModel.ViewModel.getSaveSpaces
+  - ProjetEasySave.ViewModel.ViewModel.getServerIp
+  - ProjetEasySave.ViewModel.ViewModel.getServerPort
+  - ProjetEasySave.ViewModel.ViewModel.isBusinessSoftwareRunning
+  - ProjetEasySave.ViewModel.ViewModel.isConnectedToServer
+  - ProjetEasySave.ViewModel.ViewModel.reconnectToServer
+  - ProjetEasySave.ViewModel.ViewModel.removeSaveSpace(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnLocal(System.Boolean)
+  - ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnServer(System.Boolean)
+  - ProjetEasySave.ViewModel.ViewModel.setBusinessSoftwareName(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.setEncryptionKey(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.setLanguage(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.setLogsFormat(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.setMaxSize(System.Int32)
+  - ProjetEasySave.ViewModel.ViewModel.setServerIp(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.setServerPort(System.Int32)
+  - ProjetEasySave.ViewModel.ViewModel.startSave(System.String)
+  - ProjetEasySave.ViewModel.ViewModel.translate(System.String)
+  langs:
+  - csharp
+  - vb
+  name: ViewModel
+  nameWithType: ViewModel
+  fullName: ProjetEasySave.ViewModel.ViewModel
+  type: Class
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: ViewModel
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 78
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: >-
+    The central ViewModel for the application, acting as the intermediary between the View layer and the underlying Models.
+
+    Manages application state, UI translations, business logic routing, and background monitoring tasks.
+  example: []
+  syntax:
+    content: 'public class ViewModel : INotifyPropertyChanged'
+    content.vb: Public Class ViewModel Implements INotifyPropertyChanged
+  inheritance:
+  - System.Object
+  implements:
+  - System.ComponentModel.INotifyPropertyChanged
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: ProjetEasySave.ViewModel.ViewModel.CurrentFileLabel
+  commentId: P:ProjetEasySave.ViewModel.ViewModel.CurrentFileLabel
+  id: CurrentFileLabel
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: CurrentFileLabel
+  nameWithType: ViewModel.CurrentFileLabel
+  fullName: ProjetEasySave.ViewModel.ViewModel.CurrentFileLabel
+  type: Property
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: CurrentFileLabel
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 88
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets the localized label for the current file.
+  example: []
+  syntax:
+    content: public string CurrentFileLabel { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property CurrentFileLabel As String
+  overload: ProjetEasySave.ViewModel.ViewModel.CurrentFileLabel*
+- uid: ProjetEasySave.ViewModel.ViewModel.PausedSuffix
+  commentId: P:ProjetEasySave.ViewModel.ViewModel.PausedSuffix
+  id: PausedSuffix
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: PausedSuffix
+  nameWithType: ViewModel.PausedSuffix
+  fullName: ProjetEasySave.ViewModel.ViewModel.PausedSuffix
+  type: Property
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: PausedSuffix
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 90
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets the localized suffix applied when a job is fully paused.
+  example: []
+  syntax:
+    content: public string PausedSuffix { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property PausedSuffix As String
+  overload: ProjetEasySave.ViewModel.ViewModel.PausedSuffix*
+- uid: ProjetEasySave.ViewModel.ViewModel.PausePendingSuffix
+  commentId: P:ProjetEasySave.ViewModel.ViewModel.PausePendingSuffix
+  id: PausePendingSuffix
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: PausePendingSuffix
+  nameWithType: ViewModel.PausePendingSuffix
+  fullName: ProjetEasySave.ViewModel.ViewModel.PausePendingSuffix
+  type: Property
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: PausePendingSuffix
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 92
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets the localized suffix applied when a job is pending a pause.
+  example: []
+  syntax:
+    content: public string PausePendingSuffix { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property PausePendingSuffix As String
+  overload: ProjetEasySave.ViewModel.ViewModel.PausePendingSuffix*
+- uid: ProjetEasySave.ViewModel.ViewModel.StoppedSuffix
+  commentId: P:ProjetEasySave.ViewModel.ViewModel.StoppedSuffix
+  id: StoppedSuffix
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: StoppedSuffix
+  nameWithType: ViewModel.StoppedSuffix
+  fullName: ProjetEasySave.ViewModel.ViewModel.StoppedSuffix
+  type: Property
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: StoppedSuffix
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 94
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets the localized suffix applied when a job is completely stopped.
+  example: []
+  syntax:
+    content: public string StoppedSuffix { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property StoppedSuffix As String
+  overload: ProjetEasySave.ViewModel.ViewModel.StoppedSuffix*
+- uid: ProjetEasySave.ViewModel.ViewModel.SaveCompletedMessage
+  commentId: P:ProjetEasySave.ViewModel.ViewModel.SaveCompletedMessage
+  id: SaveCompletedMessage
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: SaveCompletedMessage
+  nameWithType: ViewModel.SaveCompletedMessage
+  fullName: ProjetEasySave.ViewModel.ViewModel.SaveCompletedMessage
+  type: Property
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: SaveCompletedMessage
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 96
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets the localized message displayed when a save completes successfully.
+  example: []
+  syntax:
+    content: public string SaveCompletedMessage { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property SaveCompletedMessage As String
+  overload: ProjetEasySave.ViewModel.ViewModel.SaveCompletedMessage*
+- uid: ProjetEasySave.ViewModel.ViewModel.SaveStoppedMessage
+  commentId: P:ProjetEasySave.ViewModel.ViewModel.SaveStoppedMessage
+  id: SaveStoppedMessage
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: SaveStoppedMessage
+  nameWithType: ViewModel.SaveStoppedMessage
+  fullName: ProjetEasySave.ViewModel.ViewModel.SaveStoppedMessage
+  type: Property
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: SaveStoppedMessage
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 98
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets the localized message displayed when a save is stopped manually.
+  example: []
+  syntax:
+    content: public string SaveStoppedMessage { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property SaveStoppedMessage As String
+  overload: ProjetEasySave.ViewModel.ViewModel.SaveStoppedMessage*
+- uid: ProjetEasySave.ViewModel.ViewModel.SaveWindowTitle
+  commentId: P:ProjetEasySave.ViewModel.ViewModel.SaveWindowTitle
+  id: SaveWindowTitle
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: SaveWindowTitle
+  nameWithType: ViewModel.SaveWindowTitle
+  fullName: ProjetEasySave.ViewModel.ViewModel.SaveWindowTitle
+  type: Property
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: SaveWindowTitle
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 100
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets the localized window title for the active save process.
+  example: []
+  syntax:
+    content: public string SaveWindowTitle { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property SaveWindowTitle As String
+  overload: ProjetEasySave.ViewModel.ViewModel.SaveWindowTitle*
+- uid: ProjetEasySave.ViewModel.ViewModel.JobStates
+  commentId: P:ProjetEasySave.ViewModel.ViewModel.JobStates
+  id: JobStates
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: JobStates
+  nameWithType: ViewModel.JobStates
+  fullName: ProjetEasySave.ViewModel.ViewModel.JobStates
+  type: Property
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: JobStates
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 105
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets or sets a dictionary containing the real-time execution states for each backup job, mapped by job name.
+  example: []
+  syntax:
+    content: public Dictionary<string, SaveJobState> JobStates { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,ProjetEasySave.ViewModel.SaveJobState}
+    content.vb: Public Property JobStates As Dictionary(Of String, SaveJobState)
+  overload: ProjetEasySave.ViewModel.ViewModel.JobStates*
+- uid: ProjetEasySave.ViewModel.ViewModel.GetJobState(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.GetJobState(System.String)
+  id: GetJobState(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: GetJobState(string)
+  nameWithType: ViewModel.GetJobState(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.GetJobState(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: GetJobState
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 112
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Retrieves the <xref href="ProjetEasySave.ViewModel.SaveJobState" data-throw-if-not-resolved="false"></xref> for a specific backup job, creating it if it does not already exist.
+  example: []
+  syntax:
+    content: public SaveJobState GetJobState(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the backup job.
+    return:
+      type: ProjetEasySave.ViewModel.SaveJobState
+      description: The <xref href="ProjetEasySave.ViewModel.SaveJobState" data-throw-if-not-resolved="false"></xref> associated with the specified job.
+    content.vb: Public Function GetJobState(name As String) As SaveJobState
+  overload: ProjetEasySave.ViewModel.ViewModel.GetJobState*
+  nameWithType.vb: ViewModel.GetJobState(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.GetJobState(String)
+  name.vb: GetJobState(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.RealPaused
+  commentId: E:ProjetEasySave.ViewModel.ViewModel.RealPaused
+  id: RealPaused
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: RealPaused
+  nameWithType: ViewModel.RealPaused
+  fullName: ProjetEasySave.ViewModel.ViewModel.RealPaused
+  type: Event
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: RealPaused
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 122
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Event triggered when a backup job fully transitions into a paused state.
+  example: []
+  syntax:
+    content: public event Action<string>? RealPaused
+    return:
+      type: System.Action{System.String}
+    content.vb: Public Event RealPaused As Action(Of String)
+- uid: ProjetEasySave.ViewModel.ViewModel.BusinessSoftwareStateChanged
+  commentId: F:ProjetEasySave.ViewModel.ViewModel.BusinessSoftwareStateChanged
+  id: BusinessSoftwareStateChanged
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: BusinessSoftwareStateChanged
+  nameWithType: ViewModel.BusinessSoftwareStateChanged
+  fullName: ProjetEasySave.ViewModel.ViewModel.BusinessSoftwareStateChanged
+  type: Field
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: BusinessSoftwareStateChanged
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 125
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Event triggered when the background monitor detects the launch or closure of restricted business software.
+  example: []
+  syntax:
+    content: public Action<bool>? BusinessSoftwareStateChanged
+    return:
+      type: System.Action{System.Boolean}
+    content.vb: Public BusinessSoftwareStateChanged As Action(Of Boolean)
+- uid: ProjetEasySave.ViewModel.ViewModel.PropertyChanged
+  commentId: E:ProjetEasySave.ViewModel.ViewModel.PropertyChanged
+  id: PropertyChanged
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: PropertyChanged
+  nameWithType: ViewModel.PropertyChanged
+  fullName: ProjetEasySave.ViewModel.ViewModel.PropertyChanged
+  type: Event
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: PropertyChanged
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 128
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Occurs when a ViewModel property value changes.
+  example: []
+  syntax:
+    content: public event PropertyChangedEventHandler? PropertyChanged
+    return:
+      type: System.ComponentModel.PropertyChangedEventHandler
+    content.vb: Public Event PropertyChanged As PropertyChangedEventHandler
+  implements:
+  - System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+- uid: ProjetEasySave.ViewModel.ViewModel.OnPropertyChanged(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.OnPropertyChanged(System.String)
+  id: OnPropertyChanged(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: OnPropertyChanged(string?)
+  nameWithType: ViewModel.OnPropertyChanged(string?)
+  fullName: ProjetEasySave.ViewModel.ViewModel.OnPropertyChanged(string?)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: OnPropertyChanged
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 132
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Triggers the <xref href="ProjetEasySave.ViewModel.ViewModel.PropertyChanged" data-throw-if-not-resolved="false"></xref> event.
+  example: []
+  syntax:
+    content: protected void OnPropertyChanged(string? name = null)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the changed property.
+    content.vb: Protected Sub OnPropertyChanged(name As String = Nothing)
+  overload: ProjetEasySave.ViewModel.ViewModel.OnPropertyChanged*
+  nameWithType.vb: ViewModel.OnPropertyChanged(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.OnPropertyChanged(String)
+  name.vb: OnPropertyChanged(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.TriggerRealPause(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.TriggerRealPause(System.String)
+  id: TriggerRealPause(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: TriggerRealPause(string)
+  nameWithType: ViewModel.TriggerRealPause(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.TriggerRealPause(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: TriggerRealPause
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 141
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Safely updates the UI thread to reflect that a backup job has actually paused, applying the correct UI suffixes.
+  example: []
+  syntax:
+    content: public void TriggerRealPause(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the backup job.
+    content.vb: Public Sub TriggerRealPause(name As String)
+  overload: ProjetEasySave.ViewModel.ViewModel.TriggerRealPause*
+  nameWithType.vb: ViewModel.TriggerRealPause(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.TriggerRealPause(String)
+  name.vb: TriggerRealPause(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.#ctor
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.#ctor
+  id: '#ctor'
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: ViewModel()
+  nameWithType: ViewModel.ViewModel()
+  fullName: ProjetEasySave.ViewModel.ViewModel.ViewModel()
+  type: Constructor
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: .ctor
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 163
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Initializes a new instance of the <xref href="ProjetEasySave.ViewModel.ViewModel" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public ViewModel()
+    content.vb: Public Sub New()
+  overload: ProjetEasySave.ViewModel.ViewModel.#ctor*
+  nameWithType.vb: ViewModel.New()
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.New()
+  name.vb: New()
+- uid: ProjetEasySave.ViewModel.ViewModel.addSaveSpace(System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.addSaveSpace(System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)
+  id: addSaveSpace(System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: addSaveSpace(string, string, string, string, List<string>, string)
+  nameWithType: ViewModel.addSaveSpace(string, string, string, string, List<string>, string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.addSaveSpace(string, string, string, string, System.Collections.Generic.List<string>, string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: addSaveSpace
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 181
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Adds a new backup job configuration to the model.
+  example: []
+  syntax:
+    content: public bool addSaveSpace(string name, string sourcePath, string destinationPath, string typeSave, List<string> priorityExt, string completeSavePath = "")
+    parameters:
+    - id: name
+      type: System.String
+      description: The job name.
+    - id: sourcePath
+      type: System.String
+      description: The source directory path.
+    - id: destinationPath
+      type: System.String
+      description: The destination directory path.
+    - id: typeSave
+      type: System.String
+      description: The strategy type (complete or differential).
+    - id: priorityExt
+      type: System.Collections.Generic.List{System.String}
+      description: A list of priority file extensions.
+    - id: completeSavePath
+      type: System.String
+      description: The reference path to a full backup (if applicable).
+    return:
+      type: System.Boolean
+      description: <code>true</code> if successfully added; otherwise, <code>false</code>.
+    content.vb: Public Function addSaveSpace(name As String, sourcePath As String, destinationPath As String, typeSave As String, priorityExt As List(Of String), completeSavePath As String = "") As Boolean
+  overload: ProjetEasySave.ViewModel.ViewModel.addSaveSpace*
+  nameWithType.vb: ViewModel.addSaveSpace(String, String, String, String, List(Of String), String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.addSaveSpace(String, String, String, String, System.Collections.Generic.List(Of String), String)
+  name.vb: addSaveSpace(String, String, String, String, List(Of String), String)
+- uid: ProjetEasySave.ViewModel.ViewModel.removeSaveSpace(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.removeSaveSpace(System.String)
+  id: removeSaveSpace(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: removeSaveSpace(string)
+  nameWithType: ViewModel.removeSaveSpace(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.removeSaveSpace(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: removeSaveSpace
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 191
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Removes an existing backup job configuration from the model.
+  example: []
+  syntax:
+    content: public bool removeSaveSpace(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the job to remove.
+    return:
+      type: System.Boolean
+      description: <code>true</code> if successfully removed; otherwise, <code>false</code>.
+    content.vb: Public Function removeSaveSpace(name As String) As Boolean
+  overload: ProjetEasySave.ViewModel.ViewModel.removeSaveSpace*
+  nameWithType.vb: ViewModel.removeSaveSpace(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.removeSaveSpace(String)
+  name.vb: removeSaveSpace(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.startSave(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.startSave(System.String)
+  id: startSave(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: startSave(string)
+  nameWithType: ViewModel.startSave(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.startSave(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: startSave
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 201
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Initiates the backup process asynchronously.
+  example: []
+  syntax:
+    content: public Task<bool> startSave(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the job to execute.
+    return:
+      type: System.Threading.Tasks.Task{System.Boolean}
+      description: A task representing the asynchronous operation, containing the success status.
+    content.vb: Public Function startSave(name As String) As Task(Of Boolean)
+  overload: ProjetEasySave.ViewModel.ViewModel.startSave*
+  nameWithType.vb: ViewModel.startSave(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.startSave(String)
+  name.vb: startSave(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.StartSaveAsync(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.StartSaveAsync(System.String)
+  id: StartSaveAsync(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: StartSaveAsync(string)
+  nameWithType: ViewModel.StartSaveAsync(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.StartSaveAsync(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: StartSaveAsync
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 211
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Initializes the UI state for a backup job, starts the background business software watcher, and begins the asynchronous execution.
+  example: []
+  syntax:
+    content: public Task<bool> StartSaveAsync(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the backup job to run.
+    return:
+      type: System.Threading.Tasks.Task{System.Boolean}
+      description: A task containing the execution result.
+    content.vb: Public Function StartSaveAsync(name As String) As Task(Of Boolean)
+  overload: ProjetEasySave.ViewModel.ViewModel.StartSaveAsync*
+  nameWithType.vb: ViewModel.StartSaveAsync(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.StartSaveAsync(String)
+  name.vb: StartSaveAsync(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.PauseSave(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.PauseSave(System.String)
+  id: PauseSave(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: PauseSave(string)
+  nameWithType: ViewModel.PauseSave(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.PauseSave(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: PauseSave
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 313
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Requests a pause for the currently active backup job.
+  example: []
+  syntax:
+    content: public void PauseSave(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the job to pause.
+    content.vb: Public Sub PauseSave(name As String)
+  overload: ProjetEasySave.ViewModel.ViewModel.PauseSave*
+  nameWithType.vb: ViewModel.PauseSave(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.PauseSave(String)
+  name.vb: PauseSave(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.ResumeSave(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.ResumeSave(System.String)
+  id: ResumeSave(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: ResumeSave(string)
+  nameWithType: ViewModel.ResumeSave(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.ResumeSave(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: ResumeSave
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 326
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Resumes a previously paused backup job.
+  example: []
+  syntax:
+    content: public void ResumeSave(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the job to resume.
+    content.vb: Public Sub ResumeSave(name As String)
+  overload: ProjetEasySave.ViewModel.ViewModel.ResumeSave*
+  nameWithType.vb: ViewModel.ResumeSave(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.ResumeSave(String)
+  name.vb: ResumeSave(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.StopSave(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.StopSave(System.String)
+  id: StopSave(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: StopSave(string)
+  nameWithType: ViewModel.StopSave(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.StopSave(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: StopSave
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 339
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Stops and cancels an ongoing backup job.
+  example: []
+  syntax:
+    content: public void StopSave(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the job to stop.
+    content.vb: Public Sub StopSave(name As String)
+  overload: ProjetEasySave.ViewModel.ViewModel.StopSave*
+  nameWithType.vb: ViewModel.StopSave(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.StopSave(String)
+  name.vb: StopSave(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.getSaveSpaces
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.getSaveSpaces
+  id: getSaveSpaces
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: getSaveSpaces()
+  nameWithType: ViewModel.getSaveSpaces()
+  fullName: ProjetEasySave.ViewModel.ViewModel.getSaveSpaces()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getSaveSpaces
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 348
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Retrieves all configured backup jobs from the model.
+  example: []
+  syntax:
+    content: public List<SaveSpace> getSaveSpaces()
+    return:
+      type: System.Collections.Generic.List{ProjetEasySave.Model.SaveSpace}
+      description: A list of <xref href="ProjetEasySave.Model.SaveSpace" data-throw-if-not-resolved="false"></xref> instances.
+    content.vb: Public Function getSaveSpaces() As List(Of SaveSpace)
+  overload: ProjetEasySave.ViewModel.ViewModel.getSaveSpaces*
+- uid: ProjetEasySave.ViewModel.ViewModel.setLanguage(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.setLanguage(System.String)
+  id: setLanguage(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: setLanguage(string)
+  nameWithType: ViewModel.setLanguage(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.setLanguage(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setLanguage
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 357
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Updates the application's current language via the LanguageService.
+  example: []
+  syntax:
+    content: public void setLanguage(string languageCode)
+    parameters:
+    - id: languageCode
+      type: System.String
+      description: The target language code (e.g., "en", "fr").
+    content.vb: Public Sub setLanguage(languageCode As String)
+  overload: ProjetEasySave.ViewModel.ViewModel.setLanguage*
+  nameWithType.vb: ViewModel.setLanguage(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.setLanguage(String)
+  name.vb: setLanguage(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.getLanguage
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.getLanguage
+  id: getLanguage
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: getLanguage()
+  nameWithType: ViewModel.getLanguage()
+  fullName: ProjetEasySave.ViewModel.ViewModel.getLanguage()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getLanguage
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 366
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Retrieves the currently active application language code.
+  example: []
+  syntax:
+    content: public string getLanguage()
+    return:
+      type: System.String
+      description: The active language code string.
+    content.vb: Public Function getLanguage() As String
+  overload: ProjetEasySave.ViewModel.ViewModel.getLanguage*
+- uid: ProjetEasySave.ViewModel.ViewModel.setLogsFormat(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.setLogsFormat(System.String)
+  id: setLogsFormat(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: setLogsFormat(string)
+  nameWithType: ViewModel.setLogsFormat(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.setLogsFormat(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setLogsFormat
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 376
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Sets the global formatting style for logs (e.g., JSON or XML).
+  example: []
+  syntax:
+    content: public bool setLogsFormat(string format)
+    parameters:
+    - id: format
+      type: System.String
+      description: The target log format.
+    return:
+      type: System.Boolean
+      description: <code>true</code> if successfully updated; otherwise, <code>false</code>.
+    content.vb: Public Function setLogsFormat(format As String) As Boolean
+  overload: ProjetEasySave.ViewModel.ViewModel.setLogsFormat*
+  nameWithType.vb: ViewModel.setLogsFormat(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.setLogsFormat(String)
+  name.vb: setLogsFormat(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.getLogsFormat
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.getLogsFormat
+  id: getLogsFormat
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: getLogsFormat()
+  nameWithType: ViewModel.getLogsFormat()
+  fullName: ProjetEasySave.ViewModel.ViewModel.getLogsFormat()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getLogsFormat
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 393
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Retrieves the current global formatting style for logs.
+  example: []
+  syntax:
+    content: public string getLogsFormat()
+    return:
+      type: System.String
+      description: The current log format string.
+    content.vb: Public Function getLogsFormat() As String
+  overload: ProjetEasySave.ViewModel.ViewModel.getLogsFormat*
+- uid: ProjetEasySave.ViewModel.ViewModel.translate(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.translate(System.String)
+  id: translate(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: translate(string)
+  nameWithType: ViewModel.translate(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.translate(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: translate
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 403
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Fetches the translated string for a given translation key based on the active language.
+  example: []
+  syntax:
+    content: public string translate(string key)
+    parameters:
+    - id: key
+      type: System.String
+      description: The dictionary key mapped to a translated string.
+    return:
+      type: System.String
+      description: The translated text, or the key itself if no translation is found.
+    content.vb: Public Function translate(key As String) As String
+  overload: ProjetEasySave.ViewModel.ViewModel.translate*
+  nameWithType.vb: ViewModel.translate(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.translate(String)
+  name.vb: translate(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.getMaxSize
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.getMaxSize
+  id: getMaxSize
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: getMaxSize()
+  nameWithType: ViewModel.getMaxSize()
+  fullName: ProjetEasySave.ViewModel.ViewModel.getMaxSize()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getMaxSize
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 410
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets the configured maximum file size threshold for concurrent transfers.
+  example: []
+  syntax:
+    content: public int getMaxSize()
+    return:
+      type: System.Int32
+      description: The maximum size in kilobytes.
+    content.vb: Public Function getMaxSize() As Integer
+  overload: ProjetEasySave.ViewModel.ViewModel.getMaxSize*
+- uid: ProjetEasySave.ViewModel.ViewModel.setMaxSize(System.Int32)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.setMaxSize(System.Int32)
+  id: setMaxSize(System.Int32)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: setMaxSize(int)
+  nameWithType: ViewModel.setMaxSize(int)
+  fullName: ProjetEasySave.ViewModel.ViewModel.setMaxSize(int)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setMaxSize
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 417
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Sets the global maximum file size threshold for concurrent transfers.
+  example: []
+  syntax:
+    content: public void setMaxSize(int size)
+    parameters:
+    - id: size
+      type: System.Int32
+      description: The size in kilobytes.
+    content.vb: Public Sub setMaxSize(size As Integer)
+  overload: ProjetEasySave.ViewModel.ViewModel.setMaxSize*
+  nameWithType.vb: ViewModel.setMaxSize(Integer)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.setMaxSize(Integer)
+  name.vb: setMaxSize(Integer)
+- uid: ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnServer
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnServer
+  id: getBoolLogsOnServer
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: getBoolLogsOnServer()
+  nameWithType: ViewModel.getBoolLogsOnServer()
+  fullName: ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnServer()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getBoolLogsOnServer
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 423
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets a value indicating whether logs should be sent to a remote server.
+  example: []
+  syntax:
+    content: public bool getBoolLogsOnServer()
+    return:
+      type: System.Boolean
+    content.vb: Public Function getBoolLogsOnServer() As Boolean
+  overload: ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnServer*
+- uid: ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnLocal
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnLocal
+  id: getBoolLogsOnLocal
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: getBoolLogsOnLocal()
+  nameWithType: ViewModel.getBoolLogsOnLocal()
+  fullName: ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnLocal()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getBoolLogsOnLocal
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 429
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets a value indicating whether logs should be saved locally.
+  example: []
+  syntax:
+    content: public bool getBoolLogsOnLocal()
+    return:
+      type: System.Boolean
+    content.vb: Public Function getBoolLogsOnLocal() As Boolean
+  overload: ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnLocal*
+- uid: ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnServer(System.Boolean)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnServer(System.Boolean)
+  id: setBoolLogsOnServer(System.Boolean)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: setBoolLogsOnServer(bool)
+  nameWithType: ViewModel.setBoolLogsOnServer(bool)
+  fullName: ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnServer(bool)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setBoolLogsOnServer
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 435
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Sets whether logs should be transmitted to a remote server.
+  example: []
+  syntax:
+    content: public void setBoolLogsOnServer(bool value)
+    parameters:
+    - id: value
+      type: System.Boolean
+    content.vb: Public Sub setBoolLogsOnServer(value As Boolean)
+  overload: ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnServer*
+  nameWithType.vb: ViewModel.setBoolLogsOnServer(Boolean)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnServer(Boolean)
+  name.vb: setBoolLogsOnServer(Boolean)
+- uid: ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnLocal(System.Boolean)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnLocal(System.Boolean)
+  id: setBoolLogsOnLocal(System.Boolean)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: setBoolLogsOnLocal(bool)
+  nameWithType: ViewModel.setBoolLogsOnLocal(bool)
+  fullName: ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnLocal(bool)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setBoolLogsOnLocal
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 441
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Sets whether logs should be persisted locally.
+  example: []
+  syntax:
+    content: public void setBoolLogsOnLocal(bool value)
+    parameters:
+    - id: value
+      type: System.Boolean
+    content.vb: Public Sub setBoolLogsOnLocal(value As Boolean)
+  overload: ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnLocal*
+  nameWithType.vb: ViewModel.setBoolLogsOnLocal(Boolean)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnLocal(Boolean)
+  name.vb: setBoolLogsOnLocal(Boolean)
+- uid: ProjetEasySave.ViewModel.ViewModel.getServerIp
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.getServerIp
+  id: getServerIp
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: getServerIp()
+  nameWithType: ViewModel.getServerIp()
+  fullName: ProjetEasySave.ViewModel.ViewModel.getServerIp()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getServerIp
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 447
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets the configured IP address of the remote logging server.
+  example: []
+  syntax:
+    content: public string getServerIp()
+    return:
+      type: System.String
+    content.vb: Public Function getServerIp() As String
+  overload: ProjetEasySave.ViewModel.ViewModel.getServerIp*
+- uid: ProjetEasySave.ViewModel.ViewModel.getServerPort
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.getServerPort
+  id: getServerPort
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: getServerPort()
+  nameWithType: ViewModel.getServerPort()
+  fullName: ProjetEasySave.ViewModel.ViewModel.getServerPort()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getServerPort
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 453
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets the configured port number of the remote logging server.
+  example: []
+  syntax:
+    content: public int getServerPort()
+    return:
+      type: System.Int32
+    content.vb: Public Function getServerPort() As Integer
+  overload: ProjetEasySave.ViewModel.ViewModel.getServerPort*
+- uid: ProjetEasySave.ViewModel.ViewModel.setServerIp(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.setServerIp(System.String)
+  id: setServerIp(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: setServerIp(string)
+  nameWithType: ViewModel.setServerIp(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.setServerIp(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setServerIp
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 459
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Sets the IP address of the remote logging server.
+  example: []
+  syntax:
+    content: public void setServerIp(string ip)
+    parameters:
+    - id: ip
+      type: System.String
+    content.vb: Public Sub setServerIp(ip As String)
+  overload: ProjetEasySave.ViewModel.ViewModel.setServerIp*
+  nameWithType.vb: ViewModel.setServerIp(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.setServerIp(String)
+  name.vb: setServerIp(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.setServerPort(System.Int32)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.setServerPort(System.Int32)
+  id: setServerPort(System.Int32)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: setServerPort(int)
+  nameWithType: ViewModel.setServerPort(int)
+  fullName: ProjetEasySave.ViewModel.ViewModel.setServerPort(int)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setServerPort
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 465
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Sets the port number of the remote logging server.
+  example: []
+  syntax:
+    content: public void setServerPort(int port)
+    parameters:
+    - id: port
+      type: System.Int32
+    content.vb: Public Sub setServerPort(port As Integer)
+  overload: ProjetEasySave.ViewModel.ViewModel.setServerPort*
+  nameWithType.vb: ViewModel.setServerPort(Integer)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.setServerPort(Integer)
+  name.vb: setServerPort(Integer)
+- uid: ProjetEasySave.ViewModel.ViewModel.reconnectToServer
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.reconnectToServer
+  id: reconnectToServer
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: reconnectToServer()
+  nameWithType: ViewModel.reconnectToServer()
+  fullName: ProjetEasySave.ViewModel.ViewModel.reconnectToServer()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: reconnectToServer
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 471
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Attempts to re-establish a connection with the remote logging server.
+  example: []
+  syntax:
+    content: public void reconnectToServer()
+    content.vb: Public Sub reconnectToServer()
+  overload: ProjetEasySave.ViewModel.ViewModel.reconnectToServer*
+- uid: ProjetEasySave.ViewModel.ViewModel.isConnectedToServer
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.isConnectedToServer
+  id: isConnectedToServer
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: isConnectedToServer()
+  nameWithType: ViewModel.isConnectedToServer()
+  fullName: ProjetEasySave.ViewModel.ViewModel.isConnectedToServer()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: isConnectedToServer
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 477
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Checks whether a connection to the remote logging server is currently active.
+  example: []
+  syntax:
+    content: public bool isConnectedToServer()
+    return:
+      type: System.Boolean
+    content.vb: Public Function isConnectedToServer() As Boolean
+  overload: ProjetEasySave.ViewModel.ViewModel.isConnectedToServer*
+- uid: ProjetEasySave.ViewModel.ViewModel.isBusinessSoftwareRunning
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.isBusinessSoftwareRunning
+  id: isBusinessSoftwareRunning
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: isBusinessSoftwareRunning()
+  nameWithType: ViewModel.isBusinessSoftwareRunning()
+  fullName: ProjetEasySave.ViewModel.ViewModel.isBusinessSoftwareRunning()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: isBusinessSoftwareRunning
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 483
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Checks whether any restricted business software is currently running on the system.
+  example: []
+  syntax:
+    content: public bool isBusinessSoftwareRunning()
+    return:
+      type: System.Boolean
+    content.vb: Public Function isBusinessSoftwareRunning() As Boolean
+  overload: ProjetEasySave.ViewModel.ViewModel.isBusinessSoftwareRunning*
+- uid: ProjetEasySave.ViewModel.ViewModel.setEncryptionKey(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.setEncryptionKey(System.String)
+  id: setEncryptionKey(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: setEncryptionKey(string)
+  nameWithType: ViewModel.setEncryptionKey(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.setEncryptionKey(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setEncryptionKey
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 490
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Sets the global encryption key used by the CryptoSoft tool.
+  example: []
+  syntax:
+    content: public void setEncryptionKey(string key)
+    parameters:
+    - id: key
+      type: System.String
+      description: The new encryption key.
+    content.vb: Public Sub setEncryptionKey(key As String)
+  overload: ProjetEasySave.ViewModel.ViewModel.setEncryptionKey*
+  nameWithType.vb: ViewModel.setEncryptionKey(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.setEncryptionKey(String)
+  name.vb: setEncryptionKey(String)
+- uid: ProjetEasySave.ViewModel.ViewModel.getBusinessSoftwareName
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.getBusinessSoftwareName
+  id: getBusinessSoftwareName
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: getBusinessSoftwareName()
+  nameWithType: ViewModel.getBusinessSoftwareName()
+  fullName: ProjetEasySave.ViewModel.ViewModel.getBusinessSoftwareName()
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: getBusinessSoftwareName
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 496
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Gets the name of the restricted business software that pauses backups when launched.
+  example: []
+  syntax:
+    content: public string getBusinessSoftwareName()
+    return:
+      type: System.String
+    content.vb: Public Function getBusinessSoftwareName() As String
+  overload: ProjetEasySave.ViewModel.ViewModel.getBusinessSoftwareName*
+- uid: ProjetEasySave.ViewModel.ViewModel.setBusinessSoftwareName(System.String)
+  commentId: M:ProjetEasySave.ViewModel.ViewModel.setBusinessSoftwareName(System.String)
+  id: setBusinessSoftwareName(System.String)
+  parent: ProjetEasySave.ViewModel.ViewModel
+  langs:
+  - csharp
+  - vb
+  name: setBusinessSoftwareName(string)
+  nameWithType: ViewModel.setBusinessSoftwareName(string)
+  fullName: ProjetEasySave.ViewModel.ViewModel.setBusinessSoftwareName(string)
+  type: Method
+  source:
+    remote:
+      path: EasySaveWPF/ViewModel/ViewModel.cs
+      branch: draft/V3-docfx
+      repo: https://github.com/Natjom/ProjetEasySave.git
+    id: setBusinessSoftwareName
+    path: EasySaveWPF/ViewModel/ViewModel.cs
+    startLine: 503
+  assemblies:
+  - EasySaveWPF
+  namespace: ProjetEasySave.ViewModel
+  summary: Sets the name of the restricted business software.
+  example: []
+  syntax:
+    content: public void setBusinessSoftwareName(string name)
+    parameters:
+    - id: name
+      type: System.String
+      description: The process name of the business software.
+    content.vb: Public Sub setBusinessSoftwareName(name As String)
+  overload: ProjetEasySave.ViewModel.ViewModel.setBusinessSoftwareName*
+  nameWithType.vb: ViewModel.setBusinessSoftwareName(String)
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.setBusinessSoftwareName(String)
+  name.vb: setBusinessSoftwareName(String)
+references:
+- uid: ProjetEasySave.ViewModel
+  commentId: N:ProjetEasySave.ViewModel
+  href: ProjetEasySave.html
+  name: ProjetEasySave.ViewModel
+  nameWithType: ProjetEasySave.ViewModel
+  fullName: ProjetEasySave.ViewModel
+  spec.csharp:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.ViewModel
+    name: ViewModel
+    href: ProjetEasySave.ViewModel.html
+  spec.vb:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.ViewModel
+    name: ViewModel
+    href: ProjetEasySave.ViewModel.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.ComponentModel.INotifyPropertyChanged
+  commentId: T:System.ComponentModel.INotifyPropertyChanged
+  parent: System.ComponentModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged
+  name: INotifyPropertyChanged
+  nameWithType: INotifyPropertyChanged
+  fullName: System.ComponentModel.INotifyPropertyChanged
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ComponentModel
+  commentId: N:System.ComponentModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.ComponentModel
+  nameWithType: System.ComponentModel
+  fullName: System.ComponentModel
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.ComponentModel
+    name: ComponentModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.ComponentModel
+    name: ComponentModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+- uid: ProjetEasySave.ViewModel.ViewModel.CurrentFileLabel*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.CurrentFileLabel
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_CurrentFileLabel
+  name: CurrentFileLabel
+  nameWithType: ViewModel.CurrentFileLabel
+  fullName: ProjetEasySave.ViewModel.ViewModel.CurrentFileLabel
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: ProjetEasySave.ViewModel.ViewModel.PausedSuffix*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.PausedSuffix
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_PausedSuffix
+  name: PausedSuffix
+  nameWithType: ViewModel.PausedSuffix
+  fullName: ProjetEasySave.ViewModel.ViewModel.PausedSuffix
+- uid: ProjetEasySave.ViewModel.ViewModel.PausePendingSuffix*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.PausePendingSuffix
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_PausePendingSuffix
+  name: PausePendingSuffix
+  nameWithType: ViewModel.PausePendingSuffix
+  fullName: ProjetEasySave.ViewModel.ViewModel.PausePendingSuffix
+- uid: ProjetEasySave.ViewModel.ViewModel.StoppedSuffix*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.StoppedSuffix
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_StoppedSuffix
+  name: StoppedSuffix
+  nameWithType: ViewModel.StoppedSuffix
+  fullName: ProjetEasySave.ViewModel.ViewModel.StoppedSuffix
+- uid: ProjetEasySave.ViewModel.ViewModel.SaveCompletedMessage*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.SaveCompletedMessage
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_SaveCompletedMessage
+  name: SaveCompletedMessage
+  nameWithType: ViewModel.SaveCompletedMessage
+  fullName: ProjetEasySave.ViewModel.ViewModel.SaveCompletedMessage
+- uid: ProjetEasySave.ViewModel.ViewModel.SaveStoppedMessage*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.SaveStoppedMessage
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_SaveStoppedMessage
+  name: SaveStoppedMessage
+  nameWithType: ViewModel.SaveStoppedMessage
+  fullName: ProjetEasySave.ViewModel.ViewModel.SaveStoppedMessage
+- uid: ProjetEasySave.ViewModel.ViewModel.SaveWindowTitle*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.SaveWindowTitle
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_SaveWindowTitle
+  name: SaveWindowTitle
+  nameWithType: ViewModel.SaveWindowTitle
+  fullName: ProjetEasySave.ViewModel.ViewModel.SaveWindowTitle
+- uid: ProjetEasySave.ViewModel.ViewModel.JobStates*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.JobStates
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_JobStates
+  name: JobStates
+  nameWithType: ViewModel.JobStates
+  fullName: ProjetEasySave.ViewModel.ViewModel.JobStates
+- uid: System.Collections.Generic.Dictionary{System.String,ProjetEasySave.ViewModel.SaveJobState}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,ProjetEasySave.ViewModel.SaveJobState}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, SaveJobState>
+  nameWithType: Dictionary<string, SaveJobState>
+  fullName: System.Collections.Generic.Dictionary<string, ProjetEasySave.ViewModel.SaveJobState>
+  nameWithType.vb: Dictionary(Of String, SaveJobState)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, ProjetEasySave.ViewModel.SaveJobState)
+  name.vb: Dictionary(Of String, SaveJobState)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: ProjetEasySave.ViewModel.SaveJobState
+    name: SaveJobState
+    href: ProjetEasySave.ViewModel.SaveJobState.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: ProjetEasySave.ViewModel.SaveJobState
+    name: SaveJobState
+    href: ProjetEasySave.ViewModel.SaveJobState.html
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: ProjetEasySave.ViewModel.SaveJobState
+  commentId: T:ProjetEasySave.ViewModel.SaveJobState
+  parent: ProjetEasySave.ViewModel
+  href: ProjetEasySave.ViewModel.SaveJobState.html
+  name: SaveJobState
+  nameWithType: SaveJobState
+  fullName: ProjetEasySave.ViewModel.SaveJobState
+- uid: ProjetEasySave.ViewModel.ViewModel.GetJobState*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.GetJobState
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_GetJobState_System_String_
+  name: GetJobState
+  nameWithType: ViewModel.GetJobState
+  fullName: ProjetEasySave.ViewModel.ViewModel.GetJobState
+- uid: System.Action{System.String}
+  commentId: T:System.Action{System.String}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<string>
+  nameWithType: Action<string>
+  fullName: System.Action<string>
+  nameWithType.vb: Action(Of String)
+  fullName.vb: System.Action(Of String)
+  name.vb: Action(Of String)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Action{System.Boolean}
+  commentId: T:System.Action{System.Boolean}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<bool>
+  nameWithType: Action<bool>
+  fullName: System.Action<bool>
+  nameWithType.vb: Action(Of Boolean)
+  fullName.vb: System.Action(Of Boolean)
+  name.vb: Action(Of Boolean)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+  commentId: E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+  parent: System.ComponentModel.INotifyPropertyChanged
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged.propertychanged
+  name: PropertyChanged
+  nameWithType: INotifyPropertyChanged.PropertyChanged
+  fullName: System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+- uid: System.ComponentModel.PropertyChangedEventHandler
+  commentId: T:System.ComponentModel.PropertyChangedEventHandler
+  parent: System.ComponentModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventhandler
+  name: PropertyChangedEventHandler
+  nameWithType: PropertyChangedEventHandler
+  fullName: System.ComponentModel.PropertyChangedEventHandler
+- uid: ProjetEasySave.ViewModel.ViewModel.PropertyChanged
+  commentId: E:ProjetEasySave.ViewModel.ViewModel.PropertyChanged
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_PropertyChanged
+  name: PropertyChanged
+  nameWithType: ViewModel.PropertyChanged
+  fullName: ProjetEasySave.ViewModel.ViewModel.PropertyChanged
+- uid: ProjetEasySave.ViewModel.ViewModel.OnPropertyChanged*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.OnPropertyChanged
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_OnPropertyChanged_System_String_
+  name: OnPropertyChanged
+  nameWithType: ViewModel.OnPropertyChanged
+  fullName: ProjetEasySave.ViewModel.ViewModel.OnPropertyChanged
+- uid: ProjetEasySave.ViewModel.ViewModel.TriggerRealPause*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.TriggerRealPause
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_TriggerRealPause_System_String_
+  name: TriggerRealPause
+  nameWithType: ViewModel.TriggerRealPause
+  fullName: ProjetEasySave.ViewModel.ViewModel.TriggerRealPause
+- uid: ProjetEasySave.ViewModel.ViewModel
+  commentId: T:ProjetEasySave.ViewModel.ViewModel
+  parent: ProjetEasySave.ViewModel
+  href: ProjetEasySave.ViewModel.ViewModel.html
+  name: ViewModel
+  nameWithType: ViewModel
+  fullName: ProjetEasySave.ViewModel.ViewModel
+- uid: ProjetEasySave.ViewModel.ViewModel.#ctor*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.#ctor
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel__ctor
+  name: ViewModel
+  nameWithType: ViewModel.ViewModel
+  fullName: ProjetEasySave.ViewModel.ViewModel.ViewModel
+  nameWithType.vb: ViewModel.New
+  fullName.vb: ProjetEasySave.ViewModel.ViewModel.New
+  name.vb: New
+- uid: ProjetEasySave.ViewModel.ViewModel.addSaveSpace*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.addSaveSpace
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_addSaveSpace_System_String_System_String_System_String_System_String_System_Collections_Generic_List_System_String__System_String_
+  name: addSaveSpace
+  nameWithType: ViewModel.addSaveSpace
+  fullName: ProjetEasySave.ViewModel.ViewModel.addSaveSpace
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: ProjetEasySave.ViewModel.ViewModel.removeSaveSpace*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.removeSaveSpace
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_removeSaveSpace_System_String_
+  name: removeSaveSpace
+  nameWithType: ViewModel.removeSaveSpace
+  fullName: ProjetEasySave.ViewModel.ViewModel.removeSaveSpace
+- uid: ProjetEasySave.ViewModel.ViewModel.startSave*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.startSave
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_startSave_System_String_
+  name: startSave
+  nameWithType: ViewModel.startSave
+  fullName: ProjetEasySave.ViewModel.ViewModel.startSave
+- uid: System.Threading.Tasks.Task{System.Boolean}
+  commentId: T:System.Threading.Tasks.Task{System.Boolean}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<bool>
+  nameWithType: Task<bool>
+  fullName: System.Threading.Tasks.Task<bool>
+  nameWithType.vb: Task(Of Boolean)
+  fullName.vb: System.Threading.Tasks.Task(Of Boolean)
+  name.vb: Task(Of Boolean)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: ProjetEasySave.ViewModel.ViewModel.StartSaveAsync*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.StartSaveAsync
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_StartSaveAsync_System_String_
+  name: StartSaveAsync
+  nameWithType: ViewModel.StartSaveAsync
+  fullName: ProjetEasySave.ViewModel.ViewModel.StartSaveAsync
+- uid: ProjetEasySave.ViewModel.ViewModel.PauseSave*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.PauseSave
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_PauseSave_System_String_
+  name: PauseSave
+  nameWithType: ViewModel.PauseSave
+  fullName: ProjetEasySave.ViewModel.ViewModel.PauseSave
+- uid: ProjetEasySave.ViewModel.ViewModel.ResumeSave*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.ResumeSave
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_ResumeSave_System_String_
+  name: ResumeSave
+  nameWithType: ViewModel.ResumeSave
+  fullName: ProjetEasySave.ViewModel.ViewModel.ResumeSave
+- uid: ProjetEasySave.ViewModel.ViewModel.StopSave*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.StopSave
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_StopSave_System_String_
+  name: StopSave
+  nameWithType: ViewModel.StopSave
+  fullName: ProjetEasySave.ViewModel.ViewModel.StopSave
+- uid: ProjetEasySave.Model.SaveSpace
+  commentId: T:ProjetEasySave.Model.SaveSpace
+  parent: ProjetEasySave.Model
+  href: ProjetEasySave.Model.SaveSpace.html
+  name: SaveSpace
+  nameWithType: SaveSpace
+  fullName: ProjetEasySave.Model.SaveSpace
+- uid: ProjetEasySave.ViewModel.ViewModel.getSaveSpaces*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.getSaveSpaces
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_getSaveSpaces
+  name: getSaveSpaces
+  nameWithType: ViewModel.getSaveSpaces
+  fullName: ProjetEasySave.ViewModel.ViewModel.getSaveSpaces
+- uid: System.Collections.Generic.List{ProjetEasySave.Model.SaveSpace}
+  commentId: T:System.Collections.Generic.List{ProjetEasySave.Model.SaveSpace}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<SaveSpace>
+  nameWithType: List<SaveSpace>
+  fullName: System.Collections.Generic.List<ProjetEasySave.Model.SaveSpace>
+  nameWithType.vb: List(Of SaveSpace)
+  fullName.vb: System.Collections.Generic.List(Of ProjetEasySave.Model.SaveSpace)
+  name.vb: List(Of SaveSpace)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: ProjetEasySave.Model.SaveSpace
+    name: SaveSpace
+    href: ProjetEasySave.Model.SaveSpace.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: ProjetEasySave.Model.SaveSpace
+    name: SaveSpace
+    href: ProjetEasySave.Model.SaveSpace.html
+  - name: )
+- uid: ProjetEasySave.Model
+  commentId: N:ProjetEasySave.Model
+  href: ProjetEasySave.html
+  name: ProjetEasySave.Model
+  nameWithType: ProjetEasySave.Model
+  fullName: ProjetEasySave.Model
+  spec.csharp:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.Model
+    name: Model
+    href: ProjetEasySave.Model.html
+  spec.vb:
+  - uid: ProjetEasySave
+    name: ProjetEasySave
+    href: ProjetEasySave.html
+  - name: .
+  - uid: ProjetEasySave.Model
+    name: Model
+    href: ProjetEasySave.Model.html
+- uid: ProjetEasySave.ViewModel.ViewModel.setLanguage*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.setLanguage
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_setLanguage_System_String_
+  name: setLanguage
+  nameWithType: ViewModel.setLanguage
+  fullName: ProjetEasySave.ViewModel.ViewModel.setLanguage
+- uid: ProjetEasySave.ViewModel.ViewModel.getLanguage*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.getLanguage
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_getLanguage
+  name: getLanguage
+  nameWithType: ViewModel.getLanguage
+  fullName: ProjetEasySave.ViewModel.ViewModel.getLanguage
+- uid: ProjetEasySave.ViewModel.ViewModel.setLogsFormat*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.setLogsFormat
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_setLogsFormat_System_String_
+  name: setLogsFormat
+  nameWithType: ViewModel.setLogsFormat
+  fullName: ProjetEasySave.ViewModel.ViewModel.setLogsFormat
+- uid: ProjetEasySave.ViewModel.ViewModel.getLogsFormat*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.getLogsFormat
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_getLogsFormat
+  name: getLogsFormat
+  nameWithType: ViewModel.getLogsFormat
+  fullName: ProjetEasySave.ViewModel.ViewModel.getLogsFormat
+- uid: ProjetEasySave.ViewModel.ViewModel.translate*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.translate
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_translate_System_String_
+  name: translate
+  nameWithType: ViewModel.translate
+  fullName: ProjetEasySave.ViewModel.ViewModel.translate
+- uid: ProjetEasySave.ViewModel.ViewModel.getMaxSize*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.getMaxSize
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_getMaxSize
+  name: getMaxSize
+  nameWithType: ViewModel.getMaxSize
+  fullName: ProjetEasySave.ViewModel.ViewModel.getMaxSize
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: ProjetEasySave.ViewModel.ViewModel.setMaxSize*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.setMaxSize
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_setMaxSize_System_Int32_
+  name: setMaxSize
+  nameWithType: ViewModel.setMaxSize
+  fullName: ProjetEasySave.ViewModel.ViewModel.setMaxSize
+- uid: ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnServer*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnServer
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_getBoolLogsOnServer
+  name: getBoolLogsOnServer
+  nameWithType: ViewModel.getBoolLogsOnServer
+  fullName: ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnServer
+- uid: ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnLocal*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnLocal
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_getBoolLogsOnLocal
+  name: getBoolLogsOnLocal
+  nameWithType: ViewModel.getBoolLogsOnLocal
+  fullName: ProjetEasySave.ViewModel.ViewModel.getBoolLogsOnLocal
+- uid: ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnServer*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnServer
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_setBoolLogsOnServer_System_Boolean_
+  name: setBoolLogsOnServer
+  nameWithType: ViewModel.setBoolLogsOnServer
+  fullName: ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnServer
+- uid: ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnLocal*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnLocal
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_setBoolLogsOnLocal_System_Boolean_
+  name: setBoolLogsOnLocal
+  nameWithType: ViewModel.setBoolLogsOnLocal
+  fullName: ProjetEasySave.ViewModel.ViewModel.setBoolLogsOnLocal
+- uid: ProjetEasySave.ViewModel.ViewModel.getServerIp*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.getServerIp
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_getServerIp
+  name: getServerIp
+  nameWithType: ViewModel.getServerIp
+  fullName: ProjetEasySave.ViewModel.ViewModel.getServerIp
+- uid: ProjetEasySave.ViewModel.ViewModel.getServerPort*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.getServerPort
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_getServerPort
+  name: getServerPort
+  nameWithType: ViewModel.getServerPort
+  fullName: ProjetEasySave.ViewModel.ViewModel.getServerPort
+- uid: ProjetEasySave.ViewModel.ViewModel.setServerIp*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.setServerIp
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_setServerIp_System_String_
+  name: setServerIp
+  nameWithType: ViewModel.setServerIp
+  fullName: ProjetEasySave.ViewModel.ViewModel.setServerIp
+- uid: ProjetEasySave.ViewModel.ViewModel.setServerPort*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.setServerPort
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_setServerPort_System_Int32_
+  name: setServerPort
+  nameWithType: ViewModel.setServerPort
+  fullName: ProjetEasySave.ViewModel.ViewModel.setServerPort
+- uid: ProjetEasySave.ViewModel.ViewModel.reconnectToServer*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.reconnectToServer
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_reconnectToServer
+  name: reconnectToServer
+  nameWithType: ViewModel.reconnectToServer
+  fullName: ProjetEasySave.ViewModel.ViewModel.reconnectToServer
+- uid: ProjetEasySave.ViewModel.ViewModel.isConnectedToServer*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.isConnectedToServer
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_isConnectedToServer
+  name: isConnectedToServer
+  nameWithType: ViewModel.isConnectedToServer
+  fullName: ProjetEasySave.ViewModel.ViewModel.isConnectedToServer
+- uid: ProjetEasySave.ViewModel.ViewModel.isBusinessSoftwareRunning*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.isBusinessSoftwareRunning
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_isBusinessSoftwareRunning
+  name: isBusinessSoftwareRunning
+  nameWithType: ViewModel.isBusinessSoftwareRunning
+  fullName: ProjetEasySave.ViewModel.ViewModel.isBusinessSoftwareRunning
+- uid: ProjetEasySave.ViewModel.ViewModel.setEncryptionKey*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.setEncryptionKey
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_setEncryptionKey_System_String_
+  name: setEncryptionKey
+  nameWithType: ViewModel.setEncryptionKey
+  fullName: ProjetEasySave.ViewModel.ViewModel.setEncryptionKey
+- uid: ProjetEasySave.ViewModel.ViewModel.getBusinessSoftwareName*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.getBusinessSoftwareName
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_getBusinessSoftwareName
+  name: getBusinessSoftwareName
+  nameWithType: ViewModel.getBusinessSoftwareName
+  fullName: ProjetEasySave.ViewModel.ViewModel.getBusinessSoftwareName
+- uid: ProjetEasySave.ViewModel.ViewModel.setBusinessSoftwareName*
+  commentId: Overload:ProjetEasySave.ViewModel.ViewModel.setBusinessSoftwareName
+  href: ProjetEasySave.ViewModel.ViewModel.html#ProjetEasySave_ViewModel_ViewModel_setBusinessSoftwareName_System_String_
+  name: setBusinessSoftwareName
+  nameWithType: ViewModel.setBusinessSoftwareName
+  fullName: ProjetEasySave.ViewModel.ViewModel.setBusinessSoftwareName
