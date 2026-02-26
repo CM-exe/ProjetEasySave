@@ -8,6 +8,10 @@ Groupe (5 membres) : Noa PIERRÉ - Thomas DE CALUWE - Iyas AL HARIRI - Nathan AU
 
 ---
 
+Documentation pour les développeurs : [doc-développeur-en-ligne](https://cm-exe.github.io/ProjetEasySave/api/CryptoSoft.html)
+
+---
+
 ## 📌 Contexte du projet
 
 Ce projet s’inscrit dans le cadre de l’intégration de l’équipe au sein de l’éditeur de logiciels ProSoft, sous la responsabilité du DSI.
