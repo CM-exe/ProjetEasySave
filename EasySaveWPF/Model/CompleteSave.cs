@@ -9,6 +9,14 @@ using System.Windows;
 
 namespace ProjetEasySave.Model
 {
+    /// <summary>
+    /// Represents the complete backup strategy implementation of the <see cref="ISaveStrategy"/> interface.
+    /// </summary>
+    /// <remarks>
+    /// This strategy copies all files from the source directory to the destination directory. 
+    /// It handles large files using a semaphore, encrypts files based on user configuration, 
+    /// and pauses operations if restricted business software is running.
+    /// </remarks>
     public class CompleteSave : ISaveStrategy
     {
         /*
@@ -25,7 +33,11 @@ namespace ProjetEasySave.Model
         private SemaphoreSlim _bigFileSemaphore; // Semaphore for big file handling
         private Queue<string> _pendingFiles; // Queue to manage pending files when big file is being processed
 
-        // Constructor
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompleteSave"/> class.
+        /// </summary>
+        /// <param name="saveTask">The main task object associated with this backup operation.</param>
+        /// <param name="bigFileSemaphore">The semaphore used to limit concurrent transfers of large files across the application.</param>
         public CompleteSave(SaveTask saveTask, SemaphoreSlim bigFileSemaphore)
         {
             _saveTask = saveTask;
@@ -33,7 +45,10 @@ namespace ProjetEasySave.Model
             _pendingFiles = new Queue<string>();
         }
 
-        // Instance method to check if the business software is running
+        /// <summary>
+        /// Checks whether the configured business software is currently running on the system.
+        /// </summary>
+        /// <returns><c>true</c> if the business software is running; otherwise, <c>false</c>.</returns>
         public bool isBusinessSoftwareRunning()
         {
             // Name of the process to look for
@@ -46,6 +61,9 @@ namespace ProjetEasySave.Model
             return processes.Length > 0;
         }
 
+        /// <summary>
+        /// Suspends the backup thread and waits until all instances of the conflicting business software are closed.
+        /// </summary>
         public void waitForBusinessSoftwareToClose()
         {
             string businessSoftwareName = config.getBusinessSoftwareName();
@@ -68,7 +86,11 @@ namespace ProjetEasySave.Model
             setState(SaveTaskState.RUNNING);
         }
 
-        // Update the state of the save task
+        /// <summary>
+        /// Updates the execution state of the backup task and notifies listeners.
+        /// </summary>
+        /// <param name="state">The new <see cref="SaveTaskState"/> to apply.</param>
+        /// <returns>The updated state.</returns>
         public SaveTaskState setState(SaveTaskState state)
         {
             _state = state;
@@ -76,12 +98,29 @@ namespace ProjetEasySave.Model
             return state;
         }
 
-        // Getter for state
+        /// <summary>
+        /// Retrieves the current execution state of the backup task.
+        /// </summary>
+        /// <returns>The current <see cref="SaveTaskState"/>.</returns>
         public SaveTaskState getState()
         {
             return _state;
         }
 
+        /// <summary>
+        /// Processes a single file by copying it to the destination, applying encryption if required.
+        /// </summary>
+        /// <param name="file">The full path of the source file.</param>
+        /// <param name="sourcePath">The root directory path of the backup source.</param>
+        /// <param name="destinationPath">The root directory path of the backup destination.</param>
+        /// <param name="cryptoKey">The key used for file encryption.</param>
+        /// <param name="cryptoExtensions">A list of file extensions that require encryption.</param>
+        /// <param name="totalBytes">The total size in bytes of the entire backup job.</param>
+        /// <param name="copiedBytes">The total number of bytes successfully copied so far (passed by reference).</param>
+        /// <param name="token">A cancellation token to observe for stop requests.</param>
+        /// <param name="pauseEvent">A reset event used to pause and resume the copying process.</param>
+        /// <param name="progress">A delegate used to report the progress percentage and the current file name to the UI.</param>
+        /// <returns>The duration of the encryption process in milliseconds, <c>0</c> if no encryption occurred, or <c>-1</c> if an error happened.</returns>
         private int processFile(
             string file,
             string sourcePath,
@@ -186,7 +225,17 @@ namespace ProjetEasySave.Model
             return (int)encryptionDuration;
         }
 
-        // Interface method implementation
+        /// <summary>
+        /// Executes the complete backup process, reading files from the source directory, formatting the destination, and copying all contents.
+        /// </summary>
+        /// <param name="sourcePath">The path of the directory to be backed up.</param>
+        /// <param name="destinationPath">The path where the backup will be stored.</param>
+        /// <param name="priorityExt">A list of extensions dictating which files should be processed first.</param>
+        /// <param name="token">A cancellation token to handle stop requests mid-process.</param>
+        /// <param name="pauseEvent">A manual reset event to handle pause and resume functionalities.</param>
+        /// <param name="progress">An action delegate used to push progress updates to the UI thread.</param>
+        /// <returns><c>true</c> if the save process successfully completed; otherwise, <c>false</c>.</returns>
+        /// <exception cref="OperationCanceledException">Thrown when the backup process is explicitly cancelled by the user.</exception>
         public bool doSave(
             string sourcePath,
             string destinationPath,
